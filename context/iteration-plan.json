@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Iteration Plan Context",
+  "type": "object",
+  "properties": {
+    "iteration_id": {"type": "string"},
+    "previous_iteration": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "planned_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "type": {"type": "string", "enum": ["bug", "enhancement", "feature", "tech_debt"]},
+          "title": {"type": "string"},
+          "priority_score": {"type": "number"},
+          "estimated_effort": {"type": "string"},
+          "source": {"type": "string", "enum": ["impact", "feedback", "debt"]}
+        }
+      }
+    },
+    "capacity_allocation": {
+      "type": "object",
+      "properties": {
+        "features": {"type": "string"},
+        "bugs": {"type": "string"},
+        "tech_debt": {"type": "string"}
+      }
+    },
+    "metrics_to_track": {"type": "array", "items": {"type": "string"}},
+    "next_steps": {"type": "array", "items": {"type": "string"}}
+  }
+}

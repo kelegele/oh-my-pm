@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Competitive Analysis Context",
+  "type": "object",
+  "properties": {
+    "analyses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "timestamp": {"type": "string", "format": "date-time"},
+          "competitors": {"type": "array", "items": {"type": "string"}},
+          "feature_matrix": {"type": "object"},
+          "gaps": {
+            "type": "object",
+            "properties": {
+              "missing_features": {"type": "array", "items": {"type": "string"}},
+              "unique_advantages": {"type": "array", "items": {"type": "string"}}
+            }
+          },
+          "opportunities": {"type": "array", "items": {"type": "string"}},
+          "recommendations": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "last_updated": {"type": "string", "format": "date-time"}
+  }
+}

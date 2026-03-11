@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Impact Analysis Context",
+  "type": "object",
+  "properties": {
+    "feature_id": {"type": "string"},
+    "launched_at": {"type": "string", "format": "date-time"},
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "adoption_rate": {"type": "number"},
+        "retention": {"type": "number"},
+        "conversion": {"type": "number"},
+        "nps": {"type": "number"}
+      }
+    },
+    "roi_analysis": {"type": "object"},
+    "findings": {"type": "array", "items": {"type": "string"}},
+    "last_updated": {"type": "string"}
+  }
+}

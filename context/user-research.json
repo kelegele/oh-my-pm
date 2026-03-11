@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "User Research Context",
+  "type": "object",
+  "properties": {
+    "personas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "description": {"type": "string"},
+          "goals": {"type": "array", "items": {"type": "string"}},
+          "pain_points": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "pain_points": {"type": "array", "items": {"type": "string"}},
+    "opportunities": {"type": "array", "items": {"type": "string"}},
+    "last_updated": {"type": "string"}
+  }
+}

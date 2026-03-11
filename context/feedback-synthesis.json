@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Feedback Synthesis Context",
+  "type": "object",
+  "properties": {
+    "feature_id": {"type": "string"},
+    "feedback_summary": {
+      "type": "object",
+      "properties": {
+        "positive": {"type": "array", "items": {"type": "string"}},
+        "negative": {"type": "array", "items": {"type": "string"}},
+        "suggestions": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "hot_issues": {"type": "array", "items": {"type": "string"}},
+    "improvement_suggestions": {"type": "array", "items": {"type": "string"}},
+    "last_updated": {"type": "string"}
+  }
+}
