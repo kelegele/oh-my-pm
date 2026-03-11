@@ -1,0 +1,142 @@
+{
+  "project": {
+    "title": "Oh-My-PM Roadmap",
+    "description": "Product management workflow for Oh-My-PM Skills development",
+    "columns": [
+      {
+        "id": "backlog",
+        "name": "Backlog",
+        "description": "Items not yet prioritized"
+      },
+      {
+        "id": "todo",
+        "name": "To Do",
+        "description": "Prioritized, ready to start"
+      },
+      {
+        "id": "in-progress",
+        "name": "In Progress",
+        "description": "Currently being worked on"
+      },
+      {
+        "id": "review",
+        "name": "Review",
+        "description": "Under review/testing"
+      },
+      {
+        "id": "done",
+        "name": "Done",
+        "description": "Completed and released"
+      }
+    ],
+    "labels": [
+      {"name": "perception", "color": "0075ca"},
+      {"name": "strategy", "color": "5319e7"},
+      {"name": "design", "color": "fbca04"},
+      {"name": "delivery", "color": "d4c5f9"},
+      {"name": "validation", "color": "e99695"},
+      {"name": "workflow", "color": "bfd4f2"},
+      {"name": "bug", "color": "d73a4a"},
+      {"name": "enhancement", "color": "a2eeef"},
+      {"name": "documentation", "color": "0075ca"}
+    ],
+    "initial_items": [
+      {
+        "title": "Add prototype-design skill",
+        "column": "backlog",
+        "labels": ["design"],
+        "description": "Create skill for assisting with prototype design and Figma integration"
+      },
+      {
+        "title": "Add process-optimization skill",
+        "column": "backlog",
+        "labels": ["design"],
+        "description": "Create skill for identifying and optimizing product workflows"
+      },
+      {
+        "title": "Add market-intelligence skill",
+        "column": "backlog",
+        "labels": ["perception"],
+        "description": "Create skill for gathering market trends and intelligence"
+      },
+      {
+        "title": "Add user-research skill",
+        "column": "backlog",
+        "labels": ["perception"],
+        "description": "Create skill for analyzing user research data"
+      },
+      {
+        "title": "Add data-monitoring skill",
+        "column": "backlog",
+        "labels": ["perception"],
+        "description": "Create skill for monitoring product metrics and alerts"
+      },
+      {
+        "title": "Add product-positioning skill",
+        "column": "backlog",
+        "labels": ["strategy"],
+        "description": "Create skill for defining product positioning"
+      },
+      {
+        "title": "Add roadmap-planning skill",
+        "column": "backlog",
+        "labels": ["strategy"],
+        "description": "Create skill for generating product roadmaps"
+      },
+      {
+        "title": "Add prioritization skill",
+        "column": "backlog",
+        "labels": ["strategy"],
+        "description": "Create skill for prioritizing features using RICE/MoSCoW"
+      },
+      {
+        "title": "Add requirement-review skill",
+        "column": "backlog",
+        "labels": ["delivery"],
+        "description": "Create skill for conducting requirement reviews"
+      },
+      {
+        "title": "Add project-coordination skill",
+        "column": "backlog",
+        "labels": ["delivery"],
+        "description": "Create skill for coordinating development work"
+      },
+      {
+        "title": "Add release-management skill",
+        "column": "backlog",
+        "labels": ["delivery"],
+        "description": "Create skill for managing releases"
+      },
+      {
+        "title": "Add impact-analysis skill",
+        "column": "backlog",
+        "labels": ["validation"],
+        "description": "Create skill for analyzing post-release impact"
+      },
+      {
+        "title": "Add feedback-synthesis skill",
+        "column": "backlog",
+        "labels": ["validation"],
+        "description": "Create skill for synthesizing user feedback"
+      },
+      {
+        "title": "Create full-pm-cycle workflow",
+        "column": "backlog",
+        "labels": ["workflow"],
+        "description": "Orchestrate all 16 skills into complete PM workflow"
+      },
+      {
+        "title": "Add skill trigger rate testing",
+        "column": "todo",
+        "labels": ["enhancement"],
+        "description": "Automate testing of skill description trigger rates"
+      },
+      {
+        "title": "Add context schema validation",
+        "column": "todo",
+        "labels": ["enhancement"],
+        "description": "Add JSON schema validation for context files"
+      }
+    ]
+  }
+}
