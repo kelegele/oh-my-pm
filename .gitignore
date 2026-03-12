@@ -1,0 +1,22 @@
+# Agent memory (local scope - don't commit)
+.claude/agent-memory-local/
+
+# Agent memory (project scope - commit for team sharing)
+# .claude/agent-memory/  <- Uncomment to exclude project memory too
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
