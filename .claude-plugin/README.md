@@ -1,133 +1,62 @@
-# Oh-My-PM
+# Oh-My-PM Plugin for Claude Code
 
-<div align="center">
+> 面向产品经理的 AI Agent 工作流系统 — 完整产品管理闭环
 
-> 面向产品经理的 AI Agent 工作流系统 — 通过 Claude Code Skill 插件实现
-
-[![Claude Code](https://img.shields.io/badge/Claude-Code-forest?logo=anthropic)](https://claude.ai/code)
-[![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
-[![Version](https://img.shields.io/github/v/release/kelegele/oh-my-pm)](https://github.com/kelegele/oh-my-pm/releases)
-
-**五层架构 · 19 个专业 Skills · 完整产品闭环**
-
-[快速开始](#快速开始) • [技能列表](#全部-skills) • [使用指南](#使用指南) • [贡献](#贡献指南)
-
-</div>
-
----
-
-## 简介
+## 插件概述
 
 Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系统。它不构建独立的 SaaS 平台，而是通过 AI Agent 插件和工作流编排，实现产品管理任务的自动化与增强。
 
-### 核心特性
+## 安装
 
-| 特性 | 说明 |
-|:-----|:-----|
-| **五层工作流架构** | 从需求感知到价值验证的完整闭环 |
-| **场景驱动 PRD** | 迭代更新/新功能/0-1 产品，拒绝随意 YY |
-| **行业基准校验** | 自动对标最佳实践，确保方案专业度 |
-| **人机协作模式** | Autopilot / Copilot / Manual 灵活切换 |
-
----
-
-## 快速开始
-
-### 前置要求
-
-- [Claude Code](https://claude.ai/code) CLI 工具
-- 将此仓库克隆到本地项目目录
-
-### 安装
-
-#### 方式一：克隆到本地
+### 方式一：克隆到本地
 
 ```bash
+# 克隆仓库到本地项目目录
 git clone https://github.com/kelegele/oh-my-pm.git
-cd oh-my-pm
-```
 
-#### 方式二：作为 Claude Code 插件安装
-
-```bash
-# 克隆到 Claude Code 插件目录
+# 或克隆到 Claude Code 插件目录
 mkdir -p ~/.claude/plugins
 git clone https://github.com/kelegele/oh-my-pm.git ~/.claude/plugins/oh-my-pm
+```
 
-# 或创建符号链接（如果已有项目仓库）
+### 方式二：符号链接
+
+```bash
+# 如果已有项目仓库，创建符号链接
 ln -s /path/to/oh-my-pm ~/.claude/plugins/oh-my-pm
 ```
 
-查看 [.claude-plugin](.claude-plugin/) 目录了解插件配置详情。
-
-### 使用
-
-#### 方式一：作为插件目录加载（推荐）
-
-```bash
-# 在项目目录下启动 Claude Code，自动加载插件
-cd /path/to/oh-my-pm
-claude
-
-# 或指定插件目录
-claude --plugin-dir /path/to/oh-my-pm
-```
-
-#### 方式二：直接对话触发
-
-在 Claude Code 中直接对话即可触发相关 Skill：
-
-```bash
-# 示例对话
-"帮我分析一下 Notion 和飞书文档的竞品差异"
-"写一个用户个人中心改版的 PRD"
-"快速生成一个带竞品分析的需求文档"
-"分析我们上周发布的功能效果"
-```
-
-#### 方式三：显式调用 Skill
-
-```bash
-# 使用 / 前缀显式调用特定 Skill
-/competitive-analysis 分析 Notion vs 飞书
-/prd-gen 生成用户中心改版需求文档
-/full-pm-cycle 规划一个新的项目管理工具
-```
-
----
-
-## 五层架构
+## 架构概览
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │  第一层：需求感知 (Perception)     4 Skills                  │
-│  市场情报 · 用户研究 · 竞品分析 · 数据监控                   │
+│  market-intelligence · user-research · competitive-analysis │
+│  data-monitoring                                              │
 └─────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  第二层：策略规划 (Strategy)       3 Skills                  │
-│  产品定位 · 路线图规划 · 优先级排序                          │
+│  product-positioning · roadmap-planning · prioritization     │
 └─────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  第三层：方案设计 (Design)         3 Skills                  │
-│  PRD 生成 · 原型设计 · 流程优化                              │
+│  prd-gen · prototype-design · process-optimization           │
 └─────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  第四层：交付协调 (Delivery)       3 Skills                  │
-│  需求评审 · 项目协调 · 发布管理                              │
+│  requirement-review · project-coordination · release-mgmt    │
 └─────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  第五层：价值验证 (Validation)     3 Skills                  │
-│  效果分析 · 反馈综合 · 迭代规划 ──→ 反馈闭环                 │
+│  impact-analysis · feedback-synthesis · iteration-planning   │
 └─────────────────────────────────────────────────────────────┘
 ```
 
----
-
-## 全部 Skills (v0.2.0)
+## 可用 Skills
 
 ### 📊 需求感知层 (Perception)
 
@@ -178,7 +107,55 @@ claude --plugin-dir /path/to/oh-my-pm
 | `full-pm-cycle` | 完整产品周期 (0-1) | "完整产品规划"、"0-1 产品" |
 | `feature-launch` | 功能发布工作流 | "功能发布"、"发布协调" |
 
----
+## 使用方式
+
+### 直接对话触发
+
+在 Claude Code 中直接对话，系统会自动识别并调用相应 Skill：
+
+```bash
+# 示例对话
+"帮我分析一下 Notion 和飞书文档的竞品差异"
+"写一个用户个人中心改版的 PRD"
+"快速生成一个带竞品分析的需求文档"
+"分析我们上周发布的功能效果"
+```
+
+### 显式调用 Skill
+
+使用 `/` 前缀显式调用特定 Skill：
+
+```bash
+/competitive-analysis 分析 Notion vs 飞书
+/prd-gen 生成用户中心改版需求文档
+/full-pm-cycle 规划一个新的项目管理工具
+```
+
+## 人机协作模式
+
+| 模式 | 描述 | 适用场景 |
+|:-----|:-----|:---------|
+| `autopilot` | AI 自动执行，人工仅审阅 | 数据监控、报告生成 |
+| `copilot` | AI 建议，人工决策确认 | PRD 生成、方案设计 |
+| `manual` | 人工主导，AI 辅助 | 战略决策、创意工作 |
+
+## 上下文文件
+
+系统通过 `context/` 目录在 Skills 之间传递数据：
+
+```
+context/
+├── current-workflow.json      # 当前工作流状态
+├── market-analysis.json       # 市场分析结果
+├── user-research.json         # 用户研究结果
+├── competitive-analysis/      # 竞品分析文件
+├── positioning.md             # 产品定位声明
+├── roadmap.md                 # 产品路线图
+├── prioritization.json        # 优先级排序结果
+├── prd/                       # PRD 文档
+├── impact-analysis.json       # 效果分析结果
+└── feedback-synthesis.json    # 反馈汇总结果
+```
 
 ## PRD 生成的三种场景
 
@@ -190,64 +167,21 @@ claude --plugin-dir /path/to/oh-my-pm
 | **新功能** | 产品架构 + 设计规范 + 入口位置 | 从 context/ 读取 |
 | **0-1 新产品** | 产品背景 + 资源约束 + 参考产品 | 用户输入 + 竞品分析 |
 
-**核心原则**：不随意 YY，基于行业最佳实践输出。
+## 版本历史
+
+### v0.2.0 (2026-03-12)
+- 完整五层架构 (19 Skills)
+- 三个工作流编排器
+- 场景驱动 PRD 生成
+
+### v0.1.0 (2026-03-11)
+- MVP 版本 (4 Skills)
+- 基础上下文传递
+
+## 开源协议
+
+[MIT License](../LICENSE)
 
 ---
-
-## 使用指南
-
-### 人机协作模式
-
-| 模式 | 描述 | 适用场景 |
-|:-----|:-----|:---------|
-| `autopilot` | AI 自动执行，人工仅审阅 | 数据监控、报告生成 |
-| `copilot` | AI 建议，人工决策确认 | PRD 生成、方案设计 |
-| `manual` | 人工主导，AI 辅助 | 战略决策、创意工作 |
-
-### 目录结构
-
-```
-oh-my-pm/
-├── skills/               # Skill 插件目录
-│   ├── perception/       # 需求感知层 (4)
-│   ├── strategy/         # 策略规划层 (3)
-│   ├── design/           # 方案设计层 (3)
-│   ├── delivery/         # 交付协调层 (3)
-│   ├── validation/       # 价值验证层 (3)
-│   └── workflows/        # 工作流编排器 (3)
-├── context/              # 上下文传递目录
-├── docs/                 # 设计文档
-├── tests/                # 测试脚本
-└── CLAUDE.md             # 项目配置
-```
-
----
-
-## 开发路线图
-
-| 版本 | 目标 | 状态 |
-|:-----|:-----|:-----|
-| v0.1.0 | MVP (4 Skills) | ✅ |
-| v0.2.0 | 完整五层架构 (19 Skills) | ✅ |
-| v0.3.0 | 工作流优化与模板库 | 🔄 |
-| v1.0.0 | 企业版与集成能力 | ⏳ |
-
-查看 [Project Board](https://github.com/users/kelegele/projects/4) 了解完整规划。
-
----
-
-## 贡献指南
-
-欢迎贡献！请查看 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详情。
-
-## 许可证
-
-[MIT License](LICENSE)
-
----
-
-<div align="center">
 
 **Made with** [Claude Code](https://claude.ai/code) **by** [@kelegele](https://github.com/kelegele)
-
-</div>

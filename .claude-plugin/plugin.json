@@ -1,0 +1,254 @@
+{
+  "name": "oh-my-pm",
+  "displayName": "Oh-My-PM",
+  "description": "面向产品经理的 AI Agent 工作流系统 — 通过 Claude Code Skill 插件实现完整产品管理闭环",
+  "version": "0.2.0",
+  "author": "kelegele",
+  "license": "MIT",
+  "homepage": "https://github.com/kelegele/oh-my-pm",
+  "repository": "https://github.com/kelegele/oh-my-pm",
+  "keywords": [
+    "product-management",
+    "pm",
+    "workflow",
+    "prd",
+    "agile",
+    "roadmap",
+    "competitive-analysis",
+    "product-strategy"
+  ],
+  "skills": [
+    {
+      "name": "competitive-analysis",
+      "displayName": "Competitive Analysis",
+      "description": "分析竞品功能差异，生成对比矩阵",
+      "category": "perception",
+      "layer": "perception",
+      "path": "skills/perception/competitive-analysis/SKILL.md",
+      "triggers": ["分析竞品", "对比", "competitive analysis", "竞品分析"]
+    },
+    {
+      "name": "market-intelligence",
+      "displayName": "Market Intelligence",
+      "description": "市场趋势分析与机会识别",
+      "category": "perception",
+      "layer": "perception",
+      "path": "skills/perception/market-intelligence/SKILL.md",
+      "triggers": ["市场分析", "行业趋势", "market intelligence", "市场研究"]
+    },
+    {
+      "name": "user-research",
+      "displayName": "User Research",
+      "description": "用户访谈、画像创建与用户旅程映射",
+      "category": "perception",
+      "layer": "perception",
+      "path": "skills/perception/user-research/SKILL.md",
+      "triggers": ["用户访谈", "用户画像", "user research", "用户研究"]
+    },
+    {
+      "name": "data-monitoring",
+      "displayName": "Data Monitoring",
+      "description": "产品指标监控与异常检测",
+      "category": "perception",
+      "layer": "perception",
+      "path": "skills/perception/data-monitoring/SKILL.md",
+      "triggers": ["监控指标", "数据看板", "data monitoring", "指标分析"]
+    },
+    {
+      "name": "product-positioning",
+      "displayName": "Product Positioning",
+      "description": "产品定位声明与差异化策略",
+      "category": "strategy",
+      "layer": "strategy",
+      "path": "skills/strategy/product-positioning/SKILL.md",
+      "triggers": ["产品定位", "差异化", "positioning", "价值主张"]
+    },
+    {
+      "name": "roadmap-planning",
+      "displayName": "Roadmap Planning",
+      "description": "产品路线图规划与里程碑管理",
+      "category": "strategy",
+      "layer": "strategy",
+      "path": "skills/strategy/roadmap-planning/SKILL.md",
+      "triggers": ["产品路线图", "版本规划", "roadmap", "路线图"]
+    },
+    {
+      "name": "prioritization",
+      "displayName": "Prioritization",
+      "description": "RICE/MoSCoW 优先级排序框架",
+      "category": "strategy",
+      "layer": "strategy",
+      "path": "skills/strategy/prioritization/SKILL.md",
+      "triggers": ["优先级排序", "需求优先级", "prioritization", "RICE"]
+    },
+    {
+      "name": "prd-gen",
+      "displayName": "PRD Generator",
+      "description": "场景驱动的结构化 PRD 生成",
+      "category": "design",
+      "layer": "design",
+      "path": "skills/design/prd-gen/SKILL.md",
+      "triggers": ["写 PRD", "需求文档", "PRD", "产品需求"]
+    },
+    {
+      "name": "prototype-design",
+      "displayName": "Prototype Design",
+      "description": "交互原型与 UI 流程设计",
+      "category": "design",
+      "layer": "design",
+      "path": "skills/design/prototype-design/SKILL.md",
+      "triggers": ["设计原型", "原型", "prototype", "交互设计"]
+    },
+    {
+      "name": "process-optimization",
+      "displayName": "Process Optimization",
+      "description": "业务流程分析与优化",
+      "category": "design",
+      "layer": "design",
+      "path": "skills/design/process-optimization/SKILL.md",
+      "triggers": ["流程优化", "提效", "process optimization", "流程改进"]
+    },
+    {
+      "name": "requirement-review",
+      "displayName": "Requirement Review",
+      "description": "需求评审会议与干系人对齐",
+      "category": "delivery",
+      "layer": "delivery",
+      "path": "skills/delivery/requirement-review/SKILL.md",
+      "triggers": ["需求评审", "评审会议", "requirement review", "需求对齐"]
+    },
+    {
+      "name": "project-coordination",
+      "displayName": "Project Coordination",
+      "description": "项目进度跟踪与风险管理",
+      "category": "delivery",
+      "layer": "delivery",
+      "path": "skills/delivery/project-coordination/SKILL.md",
+      "triggers": ["项目状态", "进度跟踪", "project coordination", "项目管理"]
+    },
+    {
+      "name": "release-management",
+      "displayName": "Release Management",
+      "description": "发布计划与上线检查",
+      "category": "delivery",
+      "layer": "delivery",
+      "path": "skills/delivery/release-management/SKILL.md",
+      "triggers": ["发布计划", "上线检查", "release", "发布管理"]
+    },
+    {
+      "name": "impact-analysis",
+      "displayName": "Impact Analysis",
+      "description": "上线后效果分析与目标对比",
+      "category": "validation",
+      "layer": "validation",
+      "path": "skills/validation/impact-analysis/SKILL.md",
+      "triggers": ["效果分析", "上线复盘", "impact analysis", "效果评估"]
+    },
+    {
+      "name": "feedback-synthesis",
+      "displayName": "Feedback Synthesis",
+      "description": "用户反馈汇总与分析",
+      "category": "validation",
+      "layer": "validation",
+      "path": "skills/validation/feedback-synthesis/SKILL.md",
+      "triggers": ["反馈分析", "用户反馈", "feedback", "反馈汇总"]
+    },
+    {
+      "name": "iteration-planning",
+      "displayName": "Iteration Planning",
+      "description": "基于数据反馈的迭代规划",
+      "category": "validation",
+      "layer": "validation",
+      "path": "skills/validation/iteration-planning/SKILL.md",
+      "triggers": ["迭代规划", "版本排期", "iteration planning", "sprint planning"]
+    },
+    {
+      "name": "quick-prd",
+      "displayName": "Quick PRD",
+      "description": "竞品分析 + PRD 一体化工作流",
+      "category": "workflow",
+      "layer": "workflow",
+      "path": "skills/workflows/quick-prd/SKILL.md",
+      "triggers": ["快速 PRD", "带竞品分析的需求", "quick prd"]
+    },
+    {
+      "name": "full-pm-cycle",
+      "displayName": "Full PM Cycle",
+      "description": "完整产品周期工作流 (0-1)",
+      "category": "workflow",
+      "layer": "workflow",
+      "path": "skills/workflows/full-pm-cycle/SKILL.md",
+      "triggers": ["完整产品规划", "0-1 产品", "full pm cycle", "产品全周期"]
+    },
+    {
+      "name": "feature-launch",
+      "displayName": "Feature Launch",
+      "description": "功能发布端到端工作流",
+      "category": "workflow",
+      "layer": "workflow",
+      "path": "skills/workflows/feature-launch/SKILL.md",
+      "triggers": ["功能发布", "发布协调", "feature launch", "发布工作流"]
+    }
+  ],
+  "layers": {
+    "perception": {
+      "name": "需求感知层",
+      "description": "市场情报、用户研究、竞品分析、数据监控",
+      "color": "#3B82F6"
+    },
+    "strategy": {
+      "name": "策略规划层",
+      "description": "产品定位、路线图规划、优先级排序",
+      "color": "#8B5CF6"
+    },
+    "design": {
+      "name": "方案设计层",
+      "description": "PRD 生成、原型设计、流程优化",
+      "color": "#EC4899"
+    },
+    "delivery": {
+      "name": "交付协调层",
+      "description": "需求评审、项目协调、发布管理",
+      "color": "#F59E0B"
+    },
+    "validation": {
+      "name": "价值验证层",
+      "description": "效果分析、反馈综合、迭代规划",
+      "color": "#10B981"
+    },
+    "workflow": {
+      "name": "工作流编排器",
+      "description": "多 Skill 协同编排",
+      "color": "#6366F1"
+    }
+  },
+  "context": {
+    "directory": "context",
+    "files": {
+      "current-workflow": "current-workflow.json",
+      "market-analysis": "market-analysis.json",
+      "user-research": "user-research.json",
+      "competitive-analysis": "competitive-analysis/",
+      "positioning": "positioning.md",
+      "roadmap": "roadmap.md",
+      "prioritization": "prioritization.json",
+      "prd": "prd/",
+      "impact-analysis": "impact-analysis.json",
+      "feedback-synthesis": "feedback-synthesis.json"
+    }
+  },
+  "modes": {
+    "autopilot": {
+      "description": "AI 自动执行，人工仅审阅",
+      "useFor": ["数据监控", "报告生成", "信息汇总"]
+    },
+    "copilot": {
+      "description": "AI 建议，人工决策确认",
+      "useFor": ["PRD 生成", "方案设计", "风险评估"]
+    },
+    "manual": {
+      "description": "人工主导，AI 辅助",
+      "useFor": ["战略决策", "创意发散", "危机处理"]
+    }
+  }
+}
