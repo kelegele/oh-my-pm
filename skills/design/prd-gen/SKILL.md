@@ -5,7 +5,15 @@ layer: design
 input-from: product-positioning,prioritization,competitive-analysis
 output-to: requirement-review,prototype-design
 mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.2.0
+context-requirements:
+  - scenario: iteration
+    required: [current_feature_desc, ui_state, iteration_goal]
+    ui_state_options: [screenshot, html_file, online_url]
+  - scenario: new_feature
+    required: [product_architecture, design_specs, entry_point]
+  - scenario: new_product
+    required: [background, constraints, reference_products]
 ---
 
 # PRD Generation
@@ -25,15 +33,64 @@ Activate this skill when:
 - User mentions user stories, acceptance criteria, or success metrics
 - Need to formalize a rough idea into structured documentation
 
+## Scenario Detection (CRITICAL - First Step)
+
+**Before generating any PRD content, you MUST identify the scenario.**
+
+Use `AskUserQuestion` to determine which scenario applies:
+
+### Q: 请选择 PRD 生成场景
+
+| Option | Description |
+|:-------|-------------|
+| **迭代更新** | 基于现有功能进行迭代优化 |
+| **新功能** | 在现有产品上添加新模块 |
+| **0-1 新产品** | 从零开始规划全新产品 |
+
+### Context Collection by Scenario
+
+Once scenario is identified, collect required context:
+
+| Scenario | Required Information | Collection Method |
+|:---------|:--------------------|:------------------|
+| **迭代更新** | 1. 当前功能描述<br>2. UI 状态（截图/HTML/链接）<br>3. 迭代目标 | User input + AskUserQuestion for UI state option |
+| **新功能** | 1. 产品整体架构<br>2. 设计规范（组件库/交互模式）<br>3. 入口位置 | Read from `context/` or user input |
+| **0-1 新产品** | 1. 产品背景与目标用户<br>2. 资源约束<br>3. 参考产品 | User input + competitive analysis |
+
+**UI State Collection for Iteration Updates**:
+When user selects "迭代更新", ask how they want to provide current UI state:
+- **截图** - User provides screenshot, use `mcp__zai-mcp-server__ui_to_artifact` or `mcp__4_5v_mcp__analyze_image`
+- **HTML 文件** - User provides local HTML path, use `Read` tool to parse DOM structure
+- **在线链接** - User provides URL, use `mcp__web_reader__webReader` (no login required)
+
+### Industry Benchmark Check
+
+After scenario detection and context collection:
+
+1. **User-provided benchmarks** (priority): User-specified reference products
+2. **Agent supplemental search**: Auto-search industry best practices based on scenario keywords
+3. **Extract best practices**: 3-5 benchmark interaction patterns/feature designs
+4. **Cite in PRD**: Reference benchmark solutions with rationale for adoption/differentiation
+
+**Search Keyword Mapping**:
+| Scenario | Search Keywords |
+|:---------|:----------------|
+| 迭代更新 | "{功能名} 最佳实践", "行业 {功能名} 设计" |
+| 新功能 | "{产品类型} {模块名} 方案", "同类产品 {功能}" |
+| 0-1 新产品 | "{行业} 产品框架", "{领域} 产品地图" |
+
 ## How It Works
 
 The generation process ensures complete, actionable PRDs:
 
-1. **Parse requirements** - Structure the user's feature request into key components
-2. **Gather context** - Read market analysis, competitive insights, user research
-3. **Assemble sections** - Build each PRD section with appropriate detail
-4. **Verify completeness** - Check against quality standards
-5. **Generate output** - Write to `context/prd-draft.md`
+1. **Scenario Detection** - Use AskUserQuestion to identify iteration/new-feature/new-product
+2. **Context Collection** - Gather required information based on scenario type
+3. **Industry Benchmark Research** - Search and extract best practices (user-specified + agent search)
+4. **Parse requirements** - Structure the user's feature request into key components
+5. **Gather context** - Read market analysis, competitive insights, user research
+6. **Assemble sections** - Build each PRD section with appropriate detail
+7. **Verify completeness** - Check against quality standards
+8. **Generate output** - Write to `context/prd/{feature-name}-{date}-v{version}.md`
 
 ## Input Parameters
 
@@ -53,6 +110,19 @@ The PRD follows this structure for consistency:
 ## Document Info
 - **Created**: YYYY-MM-DD
 - **Status**: Draft/Review/Approved
+- **Scenario**: iteration/new-feature/new-product
+- **Version**: v{N}
+
+## 0. Industry Benchmarks (NEW - REQUIRED)
+### 0.1 Reference Products
+| Product | Key Features | Adoption/Differentiation |
+|:---------|:-------------|:------------------------|
+| [Benchmark A] | XXX | We adopt their XXX pattern because... |
+| [Benchmark B] | XXX | We differentiate by... |
+
+### 0.2 Best Practice Summary
+- **Interaction Pattern**: [Industry standard pattern used]
+- **Key Differentiator**: [What makes this solution unique]
 
 ## 1. Background & Goals
 ### 1.1 Business Context
@@ -151,11 +221,22 @@ So that [business value]
 ## Quality Standards
 
 Before delivering, the PRD should include:
+- **Scenario identified** (iteration/new-feature/new-product)
+- **Required context collected** for the identified scenario
+- **3+ industry benchmarks** referenced with rationale
 - All 6 required sections (background, user stories, features, non-functional, constraints, milestones)
 - User stories in "As a... I want... So that..." format
 - 3+ quantifiable success metrics
 - Dependencies and constraints clearly identified
 - References to context sources
+
+**Quality Gate Checklist**:
+- [ ] Scenario type confirmed with user
+- [ ] All required context for this scenario collected
+- [ ] Industry benchmarks researched (3+ references)
+- [ ] PRD sections complete
+- [ ] Success metrics quantified
+- [ ] Dependencies documented
 
 ## Collaboration Modes
 
@@ -175,7 +256,8 @@ This skill reads from and writes to the shared context:
 - `context/user-research.json` - User insights
 
 **Writes:**
-- `context/prd-draft.md` - The generated PRD
+- `context/prd/{feature-name}-{date}-v{version}.md` - The generated PRD (versioned output)
+- Legacy: `context/prd-draft.md` for backward compatibility
 
 ## Example Usage
 

@@ -1,8 +1,29 @@
 {
-  "workflow_id": null,
-  "status": "idle",
-  "current_layer": null,
-  "current_skill": null,
-  "completed_skills": [],
-  "context": {}
+  "workflow_id": "wf-20260312-001",
+  "workflow_name": "quick-prd",
+  "status": "completed",
+  "current_layer": "design",
+  "current_skill": "prd-gen",
+  "completed_skills": ["competitive-analysis", "prd-gen"],
+  "mode": "copilot",
+  "started_at": "2026-03-12T10:00:00Z",
+  "updated_at": "2026-03-12T10:20:00Z",
+  "inputs": {
+    "feature_name": "直播配置助理Agent",
+    "requirements": "根据用户语言描述生成任务",
+    "competitors": [
+      "抖音直播工具AI助手",
+      "抖音电商直播AI助手"
+    ]
+  },
+  "outputs": {
+    "competitive_analysis_json": "context/competitive-analysis/直播配置助理-20260312.json",
+    "competitive_analysis_md": "context/competitive-analysis/直播配置助理-20260312.md",
+    "prd": "context/prd/直播配置助理-Agent-20260312-v1.md"
+  },
+  "next_steps": [
+    "运行需求评审会议",
+    "激活 /prototype-design 生成原型",
+    "与干系人分享PRD文档"
+  ]
 }

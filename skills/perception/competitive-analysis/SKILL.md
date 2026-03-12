@@ -47,7 +47,7 @@ The analysis follows a systematic approach:
 
 The skill generates two outputs:
 
-1. **JSON file** (`context/competitive-analysis.json`) - Structured data for other skills to consume
+1. **JSON file** (`context/competitive-analysis/{feature-name}-{date}.json`) - Structured data for other skills to consume
 2. **Markdown report** - Human-readable analysis with tables and recommendations
 
 ### JSON Output Format
@@ -139,7 +139,9 @@ This skill reads from and writes to the shared context:
 - `context/market-analysis.json` - Market trends that inform competitive landscape
 
 **Writes:**
-- `context/competitive-analysis.json` - Analysis results for other skills (prd-gen, product-positioning)
+- `context/competitive-analysis/{feature-name}-{date}.json` - Analysis results for other skills (prd-gen, product-positioning)
+- `context/competitive-analysis/{feature-name}-{date}.md` - Human-readable markdown report
+- Legacy: `context/competitive-analysis.json` for backward compatibility
 
 ## Example Usage
 

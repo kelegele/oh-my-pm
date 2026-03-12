@@ -8,10 +8,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Issue templates (Bug Report, Feature Request, Skill Improvement)
-- Contributing guidelines (CONTRIBUTING.md)
-- Project roadmap document (docs/roadmap.md)
-- Project board configuration (.github/project-board.json)
+- Project README.md with comprehensive documentation
+- Scenario-based PRD generation (iteration/new-feature/new-product)
+- Industry benchmark checking (user-specified + agent search)
+- UI state collection for iteration updates (screenshot/HTML/URL)
+- Context requirements per scenario in YAML frontmatter
+
+### Changed
+- `prd-gen` skill v0.1.0 → v0.2.0: Added scenario detection and context collection
+- `quick-prd` workflow v0.1.0 → v0.2.0: Added scenario detection as Step 0
 
 ## [0.1.0] - 2026-03-11
 
