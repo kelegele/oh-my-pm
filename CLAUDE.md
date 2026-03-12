@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Oh-My-PM 是面向产品经理的 AI Agent 工作流系统，通过 **Claude Code Skill 插件** 形式实现。
 
-系统核心是五层工作流架构和 16 个专业化 Skill，实现产品管理任务的自动化与增强。
+系统核心是五层工作流架构和 19 个专业化 Skill (16 层级 Skills + 3 工作流编排器)，实现产品管理任务的自动化与增强。
 
 ## 五层工作流架构
 
@@ -115,15 +115,31 @@ output-to: requirement-review,prototype-design
 - **可扩展性**: 新增 Skill 不影响现有体系
 - **可评估性**: 每个 Skill 具备明确的输入输出标准
 
-## MVP 范围
+## 实现状态 (v0.2.0)
 
-先实现 3 个核心 Skills 验证流程：
+全部 19 个 Skill 已实现完成：
 
-| Skill | 功能 |
-|:---|:---|
-| `/prd-gen` | 快速生成 PRD 文档 |
-| `/competitive-analysis` | 竞品功能对比分析 |
-| `/iteration-planning` | 基于数据反馈的迭代规划 |
+| Skill | 版本 | 状态 |
+|:---|:---|:---|
+| `market-intelligence` | 0.1.0 | ✅ |
+| `user-research` | 0.1.0 | ✅ |
+| `competitive-analysis` | 0.1.0 | ✅ |
+| `data-monitoring` | 0.1.0 | ✅ |
+| `product-positioning` | 0.1.0 | ✅ |
+| `roadmap-planning` | 0.1.0 | ✅ |
+| `prioritization` | 0.1.0 | ✅ |
+| `prd-gen` | 0.2.0 | ✅ |
+| `prototype-design` | 0.1.0 | ✅ |
+| `process-optimization` | 0.1.0 | ✅ |
+| `requirement-review` | 0.1.0 | ✅ |
+| `project-coordination` | 0.1.0 | ✅ |
+| `release-management` | 0.1.0 | ✅ |
+| `impact-analysis` | 0.1.0 | ✅ |
+| `feedback-synthesis` | 0.1.0 | ✅ |
+| `iteration-planning` | 0.1.0 | ✅ |
+| `quick-prd` (workflow) | 0.2.0 | ✅ |
+| `full-pm-cycle` (workflow) | 0.1.0 | ✅ |
+| `feature-launch` (workflow) | 0.1.0 | ✅ |
 
 ## 参考文档
 

@@ -1,0 +1,81 @@
+{
+  "analyses": [{
+    "id": "ca-20260312-001",
+    "timestamp": "2026-03-12T10:00:00Z",
+    "feature_name": "直播配置助理Agent",
+    "competitors": [
+      "抖音直播工具AI助手",
+      "抖音电商直播AI助手"
+    ],
+    "feature_matrix": {
+      "自然语言任务生成": {
+        "our_product": "planned",
+        "douyin_live_tool": "supported",
+        "douyin_ecommerce_ai": "supported"
+      },
+      "直播参数配置": {
+        "our_product": "planned",
+        "douyin_live_tool": "supported",
+        "douyin_ecommerce_ai": "supported"
+      },
+      "商品链接解析": {
+        "our_product": "planned",
+        "douyin_live_tool": "partial",
+        "douyin_ecommerce_ai": "supported"
+      },
+      "话术模板生成": {
+        "our_product": "planned",
+        "douyin_live_tool": "supported",
+        "douyin_ecommerce_ai": "supported"
+      },
+      "实时互动建议": {
+        "our_product": "planned",
+        "douyin_live_tool": "partial",
+        "douyin_ecommerce_ai": "partial"
+      },
+      "多平台适配": {
+        "our_product": "planned",
+        "douyin_live_tool": "not_supported",
+        "douyin_ecommerce_ai": "not_supported"
+      },
+      "配置预览验证": {
+        "our_product": "planned",
+        "douyin_live_tool": "not_supported",
+        "douyin_ecommerce_ai": "partial"
+      },
+      "历史配置复用": {
+        "our_product": "planned",
+        "douyin_live_tool": "not_supported",
+        "douyin_ecommerce_ai": "not_supported"
+      }
+    },
+    "gaps": {
+      "missing_features": [
+        "基础自然语言任务生成能力",
+        "直播参数自动配置",
+        "商品链接智能解析",
+        "话术模板自动生成"
+      ],
+      "unique_advantages": [
+        "多平台适配能力（不限于抖音）",
+        "配置预览与实时验证",
+        "历史配置模板复用",
+        "跨平台知识迁移"
+      ]
+    },
+    "opportunities": [
+      "抖音系助手仅限自家平台，存在跨平台整合机会",
+      "现有工具缺乏配置预览功能，可降低试错成本",
+      "历史配置复用功能可提升重复开播效率",
+      "开放平台架构可支持更多直播平台接入"
+    ],
+    "recommendations": [
+      "优先实现基础自然语言任务生成，达到市场基准",
+      "突出多平台适配作为核心差异化卖点",
+      "增加配置预览功能，降低用户学习成本",
+      "建立配置模板库，提升重复使用效率",
+      "考虑与主流直播平台开放API对接"
+    ]
+  }],
+  "last_updated": "2026-03-12T10:00:00Z"
+}

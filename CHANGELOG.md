@@ -7,16 +7,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-03-12
+
 ### Added
-- Project README.md with comprehensive documentation
-- Scenario-based PRD generation (iteration/new-feature/new-product)
-- Industry benchmark checking (user-specified + agent search)
-- UI state collection for iteration updates (screenshot/HTML/URL)
-- Context requirements per scenario in YAML frontmatter
+- **Complete 5-layer architecture** with all 16 skills + 3 workflows (19 total)
+
+#### Perception Layer (4 skills)
+- `market-intelligence` - Market trend analysis and opportunity identification
+- `user-research` - User interviews, personas, and user journey mapping
+- `data-monitoring` - Product metrics tracking and anomaly detection
+
+#### Strategy Layer (3 skills)
+- `product-positioning` - Positioning statements and differentiation strategy
+- `roadmap-planning` - Product roadmaps with milestones and timelines
+- `prioritization` - RICE/MoSCoW prioritization frameworks
+
+#### Design Layer (2 new skills)
+- `prototype-design` - Interactive prototypes and UI flow design
+- `process-optimization` - Business process analysis and optimization
+
+#### Delivery Layer (3 skills)
+- `requirement-review` - Requirement review meetings and stakeholder alignment
+- `project-coordination` - Project tracking, risk management, and status reporting
+- `release-management` - Release planning, checklists, and deployment coordination
+
+#### Validation Layer (2 new skills)
+- `impact-analysis` - Post-release impact measurement and goal comparison
+- `feedback-synthesis` - User feedback aggregation and analysis
+
+#### Workflow Orchestrators (2 new workflows)
+- `full-pm-cycle` - Complete product management cycle from research to post-launch
+- `feature-launch` - End-to-end feature launch workflow from PRD to analysis
 
 ### Changed
-- `prd-gen` skill v0.1.0 → v0.2.0: Added scenario detection and context collection
-- `quick-prd` workflow v0.1.0 → v0.2.0: Added scenario detection as Step 0
+- All skills now include: input-from/output-to metadata, mode-support (autopilot/copilot/manual), quality standards, context integration docs
+- Updated README.md with complete skill catalog
+- Updated CLAUDE.md with current architecture status
+
+### Project Structure
+```
+skills/
+├── perception/ (4)      # market-intelligence, user-research, competitive-analysis, data-monitoring
+├── strategy/ (3)        # product-positioning, roadmap-planning, prioritization
+├── design/ (3)          # prd-gen, prototype-design, process-optimization
+├── delivery/ (3)        # requirement-review, project-coordination, release-management
+├── validation/ (3)      # impact-analysis, feedback-synthesis, iteration-planning
+└── workflows/ (3)       # full-pm-cycle, feature-launch, quick-prd
+```
 
 ## [0.1.0] - 2026-03-11
 
