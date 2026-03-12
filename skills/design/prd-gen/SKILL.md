@@ -5,7 +5,7 @@ layer: design
 input-from: product-positioning,prioritization,competitive-analysis
 output-to: requirement-review,prototype-design
 mode-support: [autopilot, copilot, manual]
-version: 0.2.0
+version: 0.2.1
 context-requirements:
   - scenario: iteration
     required: [current_feature_desc, ui_state, iteration_goal]
@@ -62,6 +62,92 @@ When user selects "迭代更新", ask how they want to provide current UI state:
 - **截图** - User provides screenshot, use `mcp__zai-mcp-server__ui_to_artifact` or `mcp__4_5v_mcp__analyze_image`
 - **HTML 文件** - User provides local HTML path, use `Read` tool to parse DOM structure
 - **在线链接** - User provides URL, use `mcp__web_reader__webReader` (no login required)
+
+### TUI 环境下的图片处理指南
+
+在终端 (TUI) 环境下，用户可以通过以下方式提供图片：
+
+#### 方式一：本地文件路径（最简单）
+
+直接提供图片的本地路径，使用 Read 工具读取：
+
+```bash
+# 用户对话示例
+"分析这个 UI 截图: /Users/fh/Desktop/screenshot.png"
+"当前界面: ~/Screenshots/ui-2025-03-12.png"
+"参考图片: ./context/images/reference.png"
+```
+
+**支持的路径格式：**
+- 绝对路径: `/Users/fh/Desktop/screenshot.png`
+- 家目录缩写: `~/Screenshots/ui.png`
+- 相对路径: `./images/ui.png`
+
+**支持的图片格式：** PNG, JPG, JPEG, WebP, GIF
+
+#### 方式二：在线图片 URL
+
+用户将图片上传到图床/云存储后提供 URL：
+
+```bash
+# 用户对话示例
+"UI 截图: https://i.imgur.com/xyz.png"
+"参考图: https://s3.aws.com/bucket/screenshot.png"
+```
+
+使用 `mcp__4_5v_mcp__analyze_image` 或 `mcp__zai-mcp-server__ui_to_artifact` 工具读取远程图片。
+
+**推荐图床：**
+- imgur.com (免费，无需注册)
+- GitHub (作为 issue 附件)
+- 云存储 (AWS S3, 阿里云 OSS)
+
+#### 方式三：终端截图命令
+
+引导用户使用终端截图工具快速生成截图：
+
+**macOS:**
+```bash
+# 截取选定区域（交互式）
+screencapture -i ~/screenshot.png
+
+# 截取整个窗口
+screencapture -w ~/screenshot.png
+
+# 截取整个屏幕
+screencapture ~/screenshot.png
+```
+
+**Linux:**
+```bash
+# ImageMagick (需先安装: sudo apt install imagemagick)
+import ~/screenshot.png
+
+# gnome-screenshot (Ubuntu/GNOME)
+gnome-screenshot -a -f ~/screenshot.png
+
+#spectacle (KDE)
+spectacle -r -o ~/screenshot.png
+```
+
+#### 方式四：粘贴板直接获取（macOS）
+
+```bash
+# 安装 pngpaste 工具
+brew install pngpaste
+
+# 将粘贴板的图片保存为文件
+pngpaste ~/screenshot.png
+```
+
+#### 处理流程
+
+当用户提供图片后：
+
+1. **本地路径** → 使用 `Read` 工具直接读取
+2. **远程 URL** → 使用 `mcp__4_5v_mcp__analyze_image` 或 `mcp__zai-mcp-server__ui_to_artifact`
+3. **分析图片内容** → 提取 UI 结构、布局、交互元素
+4. **生成 PRD** → 基于图片分析结果生成需求文档
 
 ### Industry Benchmark Check
 
