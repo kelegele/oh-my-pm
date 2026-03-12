@@ -2,15 +2,15 @@
 
 <div align="center">
 
-> 面向产品经理的 AI Agent 工作流系统 — 通过 Claude Code Skill 插件实现
+> 面向产品经理的 AI Agent 工作流系统 — 通过 Claude Code Subagent 插件实现
 
 [![Claude Code](https://img.shields.io/badge/Claude-Code-forest?logo=anthropic)](https://claude.ai/code)
 [![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
 [![Version](https://img.shields.io/github/v/release/kelegele/oh-my-pm)](https://github.com/kelegele/oh-my-pm/releases)
 
-**五层架构 · 19 个专业 Skills · 完整产品闭环**
+**五层架构 · 8 个 Subagents · 19 个专业 Skills · 完整产品闭环**
 
-[快速开始](#快速开始) • [技能列表](#全部-skills) • [使用指南](#使用指南) • [贡献](#贡献指南)
+[快速开始](#快速开始) • [Subagents](#subagents-架构) • [Skills](#全部-skills) • [使用指南](#使用指南) • [贡献](#贡献指南)
 
 </div>
 
@@ -127,7 +127,86 @@ claude --plugin-dir /path/to/oh-my-pm
 
 ---
 
-## 全部 Skills (v0.2.0)
+## Subagents 架构 (v0.3.0)
+
+### 什么是 Subagents？
+
+Subagents 是专门的 AI 代理，运行在独立的上下文中，具有自定义系统提示、特定工具访问和独立权限。当 Claude 遇到匹配 subagent 描述的任务时，会委托给该 subagent 处理。
+
+### Subagents vs Skills
+
+| 特性 | Skills | Subagents |
+|:-----|:-------|:----------|
+| **上下文** | 主对话共享 | 独立隔离 |
+| **模型选择** | 继承主对话 | 可指定 (haiku/sonnet/opus) |
+| **工具限制** | 无限制 | 可配置 allowlist/denylist |
+| **持久记忆** | 无 | 支持跨会话积累 |
+| **适用场景** | 简单提示词注入 | 高容量输出隔离 |
+
+### 8 个 Subagents
+
+#### 📊 Perception 层 (4 个)
+
+| Subagent | 模型 | 特性 | 触发示例 |
+|:---------|:-----|:-----|:---------|
+| `market-researcher` | haiku | worktree 隔离 | "分析 X 市场"、"行业趋势" |
+| `competitive-analyst` | sonnet | GitHub 代码分析 | "竞品分析"、"对比 XX 和 YY" |
+| `user-interviewer` | sonnet | 用户研究记忆 | "创建用户画像"、"用户访谈" |
+| `data-monitor` | haiku | background 后台 | "监控指标"、"数据看板" |
+
+#### 🎨 Design 层 (1 个)
+
+| Subagent | 模型 | 特性 | 触发示例 |
+|:---------|:-----|:-----|:---------|
+| `process-optimizer` | sonnet | 只读模式 | "流程优化"、"提效方案" |
+
+#### 📈 Validation 层 (2 个)
+
+| Subagent | 模型 | 特性 | 触发示例 |
+|:---------|:-----|:-----|:---------|
+| `impact-analyst` | sonnet | 效果分析 | "上线效果"、"如何表现" |
+| `feedback-collector` | haiku | 反馈汇总 | "用户反馈"、"用户说什么" |
+
+#### 🔄 Workflows (1 个)
+
+| Subagent | 功能 | 触发示例 |
+|:---------|:-----|:---------|
+| `pm-orchestrator` | 协调完整 PM 周期，支持并行执行 | "完整产品规划"、"0-1 产品" |
+
+### 记忆系统
+
+每个 Subagent 都有独立的记忆目录 (`.claude/agent-memory/`)，用于跨会话积累知识：
+
+```
+.claude/agent-memory/
+├── market-researcher/    # 市场数据积累
+├── competitive-analyst/  # 竞品知识库
+├── user-interviewer/     # 用户研究模式
+├── data-monitor/         # 指标基线
+├── process-optimizer/    # 流程优化知识
+├── impact-analyst/       # 效果分析框架
+├── feedback-collector/   # 反馈主题模式
+└── pm-orchestrator/      # 工作流最佳实践
+```
+
+### 使用方式
+
+Subagents 由 Claude Code 自动识别并调用，无需显式触发：
+
+```bash
+# 自动识别并委托给 market-researcher
+"分析 AI 写助手的市场规模"
+
+# 自动识别并委托给 competitive-analyst
+"对比 ClickUp 和 Asana 的功能差异"
+
+# 自动识别并委托给 pm-orchestrator
+"为新的项目管理工具做完整产品规划"
+```
+
+---
+
+## 全部 Skills
 
 ### 📊 需求感知层 (Perception)
 
@@ -208,7 +287,14 @@ claude --plugin-dir /path/to/oh-my-pm
 
 ```
 oh-my-pm/
-├── skills/               # Skill 插件目录
+├── .claude/
+│   ├── agents/            # Subagent 定义 (8 个)
+│   │   ├── perception/    # 市场研究、竞品分析、用户研究、数据监控
+│   │   ├── design/        # 流程优化
+│   │   ├── validation/    # 效果分析、反馈汇总
+│   │   └── workflows/     # PM 编排器
+│   └── agent-memory/      # Subagent 记忆系统
+├── skills/               # Skill 插件目录 (19 个)
 │   ├── perception/       # 需求感知层 (4)
 │   ├── strategy/         # 策略规划层 (3)
 │   ├── design/           # 方案设计层 (3)
@@ -229,7 +315,8 @@ oh-my-pm/
 |:-----|:-----|:-----|
 | v0.1.0 | MVP (4 Skills) | ✅ |
 | v0.2.0 | 完整五层架构 (19 Skills) | ✅ |
-| v0.3.0 | 工作流优化与模板库 | 🔄 |
+| v0.3.0 | Subagent 混合架构 (8 Subagents + 记忆系统) | ✅ |
+| v0.4.0 | 工作流优化与模板库 | 🔄 |
 | v1.0.0 | 企业版与集成能力 | ⏳ |
 
 查看 [Project Board](https://github.com/users/kelegele/projects/4) 了解完整规划。
