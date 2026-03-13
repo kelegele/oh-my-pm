@@ -6,6 +6,16 @@
 
 Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系统。它不构建独立的 SaaS 平台，而是通过 AI Agent 插件和工作流编排，实现产品管理任务的自动化与增强。
 
+### 核心特性
+
+| 特性 | 说明 |
+|:-----|:-----|
+| **五层工作流架构** | 从需求感知到价值验证的完整闭环 |
+| **场景驱动 PRD** | 迭代更新/新功能/0-1 产品，拒绝随意 YY |
+| **行业基准校验** | 自动对标最佳实践，确保方案专业度 |
+| **Figma 原型集成** | PRD 后自动生成 Figma 原型图 |
+| **人机协作模式** | Autopilot / Copilot / Manual 灵活切换 |
+
 ## 安装
 
 ### 方式一：克隆到本地
@@ -14,16 +24,58 @@ Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系
 # 克隆仓库到本地项目目录
 git clone https://github.com/kelegele/oh-my-pm.git
 
-# 或克隆到 Claude Code 插件目录
+# 链接 Skills 到用户目录（必需！）
+cd oh-my-pm/skills
+for dir in */*; do ln -sf "$(pwd)/$dir" ~/.claude/skills/; done
+```
+
+### 方式二：克隆到插件目录
+
+```bash
 mkdir -p ~/.claude/plugins
 git clone https://github.com/kelegele/oh-my-pm.git ~/.claude/plugins/oh-my-pm
 ```
 
-### 方式二：符号链接
+> **重要说明**：`--plugin-dir` 不会自动注册 Skills，必须手动链接到 `~/.claude/skills/`
+
+## 使用方式
+
+### Commands（推荐）
+
+工作流 Commands 支持直接调用和命名空间调用：
 
 ```bash
-# 如果已有项目仓库，创建符号链接
-ln -s /path/to/oh-my-pm ~/.claude/plugins/oh-my-pm
+# 直接调用
+/quick-prd "用户个人中心改版" 淘宝 京东
+/full-pm-cycle "新项目管理工具"
+/feature-launch "用户注册流程"
+
+# 命名空间调用
+/ompm quick-prd "暗黑模式"
+/ompm full-pm-cycle "AI 助手功能"
+/ompm help  # 显示帮助信息
+```
+
+### 直接对话触发
+
+在 Claude Code 中直接对话，系统会自动识别并调用相应 Skill：
+
+```bash
+# 示例对话
+"帮我分析一下 Notion 和飞书文档的竞品差异"
+"写一个用户个人中心改版的 PRD"
+"快速生成一个带竞品分析的需求文档"
+"分析我们上周发布的功能效果"
+```
+
+### 显式调用 Skill
+
+使用 `/` 前缀显式调用特定 Skill：
+
+```bash
+/competitive-analysis 分析 Notion vs 飞书
+/prd-gen 生成用户中心改版需求文档
+/full-pm-cycle 规划一个新的项目管理工具
 ```
 
 ## 架构概览
@@ -41,8 +93,9 @@ ln -s /path/to/oh-my-pm ~/.claude/plugins/oh-my-pm
 └─────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────┐
-│  第三层：方案设计 (Design)         3 Skills                  │
-│  prd-gen · prototype-design · process-optimization           │
+│  第三层：方案设计 (Design)         4 Skills                  │
+│  prd-gen · figma-prototype · prototype-design               │
+│  process-optimization                                           │
 └─────────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────────┐
@@ -80,6 +133,7 @@ ln -s /path/to/oh-my-pm ~/.claude/plugins/oh-my-pm
 | Skill | 功能 | 触发示例 |
 |:-----|:-----|:---------|
 | `prd-gen` | 结构化 PRD 生成 (场景驱动) | "写 PRD"、"需求文档" |
+| `figma-prototype` | Figma 原型图生成 | "生成原型"、"Figma 设计" |
 | `prototype-design` | 原型设计与交互流程 | "设计原型"、"UI 流程" |
 | `process-optimization` | 业务流程优化 | "流程优化"、"提效方案" |
 
@@ -106,30 +160,6 @@ ln -s /path/to/oh-my-pm ~/.claude/plugins/oh-my-pm
 | `quick-prd` | 竞品分析 + PRD 一体化 | "快速 PRD"、"带竞品分析的需求" |
 | `full-pm-cycle` | 完整产品周期 (0-1) | "完整产品规划"、"0-1 产品" |
 | `feature-launch` | 功能发布工作流 | "功能发布"、"发布协调" |
-
-## 使用方式
-
-### 直接对话触发
-
-在 Claude Code 中直接对话，系统会自动识别并调用相应 Skill：
-
-```bash
-# 示例对话
-"帮我分析一下 Notion 和飞书文档的竞品差异"
-"写一个用户个人中心改版的 PRD"
-"快速生成一个带竞品分析的需求文档"
-"分析我们上周发布的功能效果"
-```
-
-### 显式调用 Skill
-
-使用 `/` 前缀显式调用特定 Skill：
-
-```bash
-/competitive-analysis 分析 Notion vs 飞书
-/prd-gen 生成用户中心改版需求文档
-/full-pm-cycle 规划一个新的项目管理工具
-```
 
 ## 人机协作模式
 
@@ -167,7 +197,35 @@ context/
 | **新功能** | 产品架构 + 设计规范 + 入口位置 | 从 context/ 读取 |
 | **0-1 新产品** | 产品背景 + 资源约束 + 参考产品 | 用户输入 + 竞品分析 |
 
+**核心原则**：不随意 YY，基于行业最佳实践输出。
+
+## Figma 原型生成
+
+PRD 生成后可自动生成 Figma 原型图：
+
+### 两种模式
+
+| 模式 | 要求 | 说明 |
+|:-----|:-----|:-----|
+| **迭代更新** | 当前 UI 截图/HTML/链接 | 匹配现有风格，标注修改点 |
+| **新功能/新产品** | 设计参考/组件库 | 基于参考生成，严禁凭空想象 |
+
+### 修改标注
+
+- 🟢 绿色 = 新增
+- 🟡 黄色 = 修改
+- 🔴 红色 = 删除
+
 ## 版本历史
+
+### v0.4.0 (2026-03-13)
+- Figma MCP 集成
+- 20 个 Skills (新增 figma-prototype)
+- Commands 支持 (`/quick-prd`, `/full-pm-cycle`, `/feature-launch`, `/ompm`)
+
+### v0.3.0 (2026-03-12)
+- Subagent 混合架构
+- 8 个 Subagents + 记忆系统
 
 ### v0.2.0 (2026-03-12)
 - 完整五层架构 (19 Skills)
