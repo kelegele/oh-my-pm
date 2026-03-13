@@ -1,6 +1,6 @@
 ---
 name: prd-gen
-description: Generate structured Product Requirements Documents (PRDs) from feature requirements. Use this skill whenever the user wants to create a PRD, document new features, write product specs, formalize user stories, says "write a PRD for X", needs to document requirements, or is preparing for product review meetings. Even if they don't say "PRD" explicitly, activate when they need structured product documentation with user stories, acceptance criteria, and success metrics.
+description: 从功能需求生成结构化产品需求文档（PRD）。当用户想要创建 PRD、记录新功能、编写产品规格、形式化用户故事、说"为 X 写 PRD"、需要记录需求、或正在准备产品评审会议时使用。即使没有明确说"PRD"，当用户需要包含用户故事、验收标准和成功指标的结构化产品文档时也应激活。
 layer: design
 input-from: product-positioning,prioritization,competitive-analysis
 output-to: requirement-review,prototype-design

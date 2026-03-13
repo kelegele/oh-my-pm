@@ -1,6 +1,6 @@
 ---
 name: roadmap-planning
-description: Create product roadmaps with milestones, timelines, and strategic alignment. Use this skill when the user needs to plan product direction, create a roadmap, define milestones, plan releases, or says "create a roadmap", "what's our plan", "roadmap for next quarter". Even if they don't explicitly say "roadmap", activate when they're planning product timeline, releases, or strategic direction.
+description: 创建产品路线图，包含里程碑、时间表和战略对齐。当用户需要规划产品方向、创建路线图、定义里程碑、规划发布，或说"创建路线图"、"我们的计划是什么"、"下季度路线图"时使用。即使没有明确说"路线图"，当用户正在规划产品时间线、发布或战略方向时也应激活。
 layer: strategy
 input-from: prioritization,product-positioning
 output-to: prd-gen,iteration-planning

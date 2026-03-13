@@ -1,6 +1,6 @@
 ---
 name: competitive-analysis
-description: Analyze competitor products, generate feature comparison matrices, and identify strategic opportunities. Use this skill whenever the user mentions competitors, competitive research, feature comparison, "what do competitors offer", "compare with [product]", market positioning, or needs to understand the competitive landscape. Even if they don't explicitly say "competitive analysis", activate when they're clearly evaluating their product against others.
+description: 竞品功能对比分析，生成对比矩阵并识别战略机会。当用户提到竞品、竞品研究、功能对比、"竞品有什么"、"对比XX产品"、市场定位，或需要了解竞争格局时使用。即使没有明确说"竞品分析"，当用户明显在评估自己产品与竞品差异时也应激活。
 layer: perception
 input-from: market-intelligence
 output-to: product-positioning,prioritization,prd-gen

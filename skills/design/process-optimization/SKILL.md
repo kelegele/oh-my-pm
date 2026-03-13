@@ -1,6 +1,6 @@
 ---
 name: process-optimization
-description: Analyze and optimize business processes and workflows. Use this skill when the user needs to improve processes, eliminate waste, streamline workflows, or says "optimize this process", "how can we be more efficient", "workflow improvement". Even if they don't explicitly say "process optimization", activate when they're analyzing how work gets done or looking for efficiency gains.
+description: 分析和优化业务流程与工作流。当用户需要改进流程、消除浪费、简化工作流，或说"优化这个流程"、"我们如何更高效"、"工作流改进"时使用。即使没有明确说"流程优化"，当用户正在分析工作如何完成或寻找效率提升时也应激活。
 layer: design
 input-from: feedback-synthesis,impact-analysis
 output-to: prd-gen,iteration-planning

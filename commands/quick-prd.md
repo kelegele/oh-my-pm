@@ -1,5 +1,5 @@
 ---
-description: Generate a complete PRD with competitive analysis in one workflow
+description: 在一个工作流中生成包含竞品分析的完整 PRD
 category: product-management
 argument-hint: "<feature description> [competitors...]"
 ---

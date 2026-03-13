@@ -1,6 +1,6 @@
 ---
 name: data-monitor
-description: Product metrics monitoring and anomaly detection specialist. Use proactively when user says "check metrics", "data dashboard", "monitor performance", "track X metric", "how is Y performing", "set up monitoring".
+description: 产品指标监控和异常检测专家。当用户说"检查指标"、"数据看板"、"监控性能"、"跟踪 X 指标"、"Y 表现如何"、"设置监控"时主动使用。
 model: haiku
 tools:
   - Bash

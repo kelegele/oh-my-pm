@@ -1,6 +1,6 @@
 ---
 name: market-intelligence
-description: Gather market trends, industry reports, and identify opportunities. Use this skill when the user needs market research, industry analysis, trend identification, "what's happening in X market", market size analysis, or needs to understand the competitive landscape before product planning. Even if they don't explicitly say "market intelligence", activate when they're researching a market or industry.
+description: 收集市场趋势、行业报告，并识别机会。当用户需要市场研究、行业分析、趋势识别、"X 市场发生了什么"、市场规模分析，或在产品规划前需要了解竞争格局时使用。即使没有明确说"市场情报"，当用户正在研究某个市场或行业时也应激活。
 layer: perception
 input-from: user
 output-to: product-positioning,competitive-analysis,roadmap-planning

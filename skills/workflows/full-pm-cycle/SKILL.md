@@ -1,6 +1,6 @@
 ---
 name: full-pm-cycle
-description: Orchestrate the complete product management cycle from market research through post-launch analysis. Use this skill for comprehensive product planning, 0-1 product development, or when the user says "full product plan", "complete PM cycle", "from research to launch".
+description: 编排从市场研究到上线后分析的完整产品管理周期。用于综合产品规划、0-1 产品开发，或当用户说"完整产品计划"、"完整 PM 周期"、"从研究到上线"时使用。
 layer: workflow
 input-from: user
 output-to: iteration-planning

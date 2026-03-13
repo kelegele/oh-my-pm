@@ -1,5 +1,5 @@
 ---
-description: Orchestrate complete product management cycle from research through post-launch
+description: 编排从市场研究到上线后分析的完整产品管理周期
 category: product-management
 argument-hint: "<product name> [type: new-product|new-feature|pivot]"
 ---

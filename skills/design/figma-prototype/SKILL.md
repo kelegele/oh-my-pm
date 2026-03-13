@@ -1,6 +1,6 @@
 ---
 name: figma-prototype
-description: Generate Figma prototypes from PRD with design reference. Use this skill when user needs UI/UX prototypes, wants to create Figma designs from requirements, says "generate prototype", "create Figma design", "make UI mockup", or after PRD generation when they approve creating prototypes. This skill integrates with Figma MCP to create design files, requires Figma API access token configuration, and supports both iteration mode (matching existing style) and new product mode (using design references).
+description: 基于 PRD 和设计参考生成 Figma 原型。当用户需要 UI/UX 原型、想要从需求创建 Figma 设计、说"生成原型"、"创建 Figma 设计"、"制作 UI 线框图"，或在 PRD 生成后用户同意创建原型时使用。此技能与 Figma MCP 集成创建设计文件，需要配置 Figma API 访问令牌，支持迭代模式（匹配现有样式）和新产品模式（使用设计参考）。
 layer: design
 input-from: prd-gen
 output-to: requirement-review

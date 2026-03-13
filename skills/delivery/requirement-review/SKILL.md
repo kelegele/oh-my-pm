@@ -1,6 +1,6 @@
 ---
 name: requirement-review
-description: Facilitate requirement review meetings and stakeholder alignment. Use this skill when the user needs to review requirements with stakeholders, get alignment on features, run a PRD review, or says "review this PRD", "get sign-off", "requirement review meeting". Even if they don't explicitly say "requirement review", activate when they're preparing for stakeholder meetings or need to align on requirements.
+description: 促进需求评审会议和干系人对齐。当用户需要与干系人评审需求、对功能达成一致、运行 PRD 评审，或说"评审这个 PRD"、"获得批准"、"需求评审会议"时使用。即使没有明确说"需求评审"，当用户正在准备干系人会议或需要对需求达成一致时也应激活。
 layer: delivery
 input-from: prd-gen
 output-to: project-coordination,prototype-design

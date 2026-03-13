@@ -1,6 +1,6 @@
 ---
 name: user-research
-description: Conduct user research including interviews, surveys, and persona creation. Use this skill when the user needs to understand user needs, create personas, analyze user feedback, conduct user interviews, or says "talk to users", "what do users want", "user research". Even if they don't explicitly say "user research", activate when they're trying to understand user behavior, needs, or pain points.
+description: 进行用户研究，包括访谈、调研和画像创建。当用户需要了解用户需求、创建用户画像、分析用户反馈、进行用户访谈，或说"和用户谈谈"、"用户想要什么"、"用户研究"时使用。即使没有明确说"用户研究"，当用户试图理解用户行为、需求或痛点时也应激活。
 layer: perception
 input-from: market-intelligence
 output-to: product-positioning,prd-gen,prioritization

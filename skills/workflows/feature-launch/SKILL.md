@@ -1,6 +1,6 @@
 ---
 name: feature-launch
-description: Orchestrate the complete feature launch workflow from PRD through post-launch analysis. Use this skill when preparing to launch a feature, coordinating a feature release, or when the user says "launch this feature", "feature launch plan", "from PRD to launch".
+description: 编排从 PRD 到上线后分析的完整功能发布工作流。当准备发布功能、协调功能发布，或用户说"发布这个功能"、"功能发布计划"、"从 PRD 到上线"时使用。
 layer: workflow
 input-from: prd-gen
 output-to: impact-analysis,iteration-planning

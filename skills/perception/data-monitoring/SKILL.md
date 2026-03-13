@@ -1,6 +1,6 @@
 ---
 name: data-monitoring
-description: Monitor product metrics, detect anomalies, and track KPIs. Use this skill when the user needs to set up monitoring, track product metrics, analyze data trends, create dashboards, detect anomalies, or says "track X metric", "how is Y performing", "set up monitoring". Even if they don't explicitly say "data monitoring", activate when they're dealing with metrics, analytics, or performance tracking.
+description: 监控产品指标、检测异常并跟踪 KPI。当用户需要设置监控、跟踪产品指标、分析数据趋势、创建仪表板、检测异常，或说"跟踪 X 指标"、"Y 表现如何"、"设置监控"时使用。即使没有明确说"数据监控"，当用户正在处理指标、分析或性能跟踪时也应激活。
 layer: perception
 input-from: prd-gen
 output-to: impact-analysis,iteration-planning

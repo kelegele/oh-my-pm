@@ -1,6 +1,6 @@
 ---
 name: product-positioning
-description: Define product positioning, differentiation strategy, and value proposition. Use this skill when the user needs to position their product, differentiate from competitors, define value proposition, craft positioning statements, or says "how do we position X", "what makes us different", "define our positioning". Even if they don't explicitly say "positioning", activate when they're working on strategy, messaging, or market differentiation.
+description: 定义产品定位、差异化策略和价值主张。当用户需要产品定位、与竞品差异化、定义价值主张、撰写定位声明，或说"我们如何定位 X"、"我们有什么不同"、"定义我们的定位"时使用。即使没有明确说"定位"，当用户正在制定战略、传播信息或市场差异化时也应激活。
 layer: strategy
 input-from: competitive-analysis,user-research,market-intelligence
 output-to: roadmap-planning,prioritization,prd-gen

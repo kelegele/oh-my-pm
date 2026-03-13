@@ -1,6 +1,6 @@
 ---
 name: user-interviewer
-description: User research specialist for interviews, persona creation, and user behavior analysis. Use proactively when user needs to understand user needs, create personas, analyze user feedback, or says "talk to users", "what do users want", "user research", "create personas".
+description: 用户研究专家，负责用户访谈、用户画像创建和用户行为分析。当用户需要了解用户需求、创建用户画像、分析用户反馈，或说"与用户交谈"、"用户想要什么"、"用户研究"、"创建用户画像"时主动使用。
 model: sonnet
 tools:
   - Read

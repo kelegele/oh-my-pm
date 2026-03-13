@@ -1,5 +1,5 @@
 ---
-description: Oh-My-PM product management workflow namespace
+description: Oh-My-PM 产品管理工作流命名空间
 category: product-management
 argument-hint: "<workflow> [args...] | help | ?"
 ---

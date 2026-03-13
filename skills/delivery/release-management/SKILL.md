@@ -1,6 +1,6 @@
 ---
 name: release-management
-description: Plan and execute product releases with quality checks and communication. Use this skill when the user needs to plan a release, create a release checklist, manage launch, or says "plan the release", "launch checklist", "release management". Even if they don't explicitly say "release management", activate when they're preparing to launch a feature or deploy to production.
+description: 规划并执行产品发布，包含质量检查和沟通。当用户需要规划发布、创建发布检查清单、管理上线，或说"规划发布"、"上线检查清单"、"发布管理"时使用。即使没有明确说"发布管理"，当用户正在准备发布功能或部署到生产环境时也应激活。
 layer: delivery
 input-from: project-coordination
 output-to: impact-analysis

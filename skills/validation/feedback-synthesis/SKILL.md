@@ -1,6 +1,6 @@
 ---
 name: feedback-synthesis
-description: Aggregate and synthesize user feedback from multiple sources. Use this skill when the user needs to analyze user feedback, categorize feedback themes, understand user sentiment, or says "analyze feedback", "what are users saying", "synthesize feedback". Even if they don't explicitly say "feedback synthesis", activate when they're working with user feedback from any source.
+description: 汇总和综合来自多个来源的用户反馈。当用户需要分析用户反馈、对反馈主题进行分类、了解用户情绪，或说"分析反馈"、"用户在说什么"、"综合反馈"时使用。即使没有明确说"反馈综合"，当用户正在处理来自任何来源的用户反馈时也应激活。
 layer: validation
 input-from: release-management
 output-to: iteration-planning,prioritization,user-research

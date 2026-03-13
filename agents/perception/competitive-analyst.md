@@ -1,6 +1,6 @@
 ---
 name: competitive-analyst
-description: Competitive analysis specialist for feature comparison and positioning. Use proactively for "analyze competitors", "compare X and Y", "competitive analysis", "what do competitors offer", "does [product] have [feature]".
+description: 竞品分析专家，负责功能对比和定位。当用户说"分析竞品"、"对比 X 和 Y"、"竞品分析"、"竞品有什么"、"[产品] 有 [功能] 吗"时主动使用。
 model: sonnet
 tools:
   - WebSearch

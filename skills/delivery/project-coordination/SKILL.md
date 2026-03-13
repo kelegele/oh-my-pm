@@ -1,6 +1,6 @@
 ---
 name: project-coordination
-description: Coordinate project execution, track progress, and manage risks. Use this skill when the user needs to manage a project, track progress, coordinate between teams, or says "project status", "track this project", "what's the progress". Even if they don't explicitly say "project coordination", activate when they're managing execution, dependencies, or cross-team work.
+description: 协调项目执行、跟踪进度并管理风险。当用户需要管理项目、跟踪进度、协调团队间工作，或说"项目状态"、"跟踪这个项目"、"进度如何"时使用。即使没有明确说"项目协调"，当用户正在管理执行、依赖关系或跨团队工作时也应激活。
 layer: delivery
 input-from: requirement-review,prototype-design
 output-to: release-management

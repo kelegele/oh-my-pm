@@ -1,5 +1,5 @@
 ---
-description: Orchestrate feature launch from PRD through post-launch analysis
+description: 编排从 PRD 到上线后分析的完整功能发布工作流
 category: product-management
 argument-hint: "<feature name> [launch-date]"
 ---

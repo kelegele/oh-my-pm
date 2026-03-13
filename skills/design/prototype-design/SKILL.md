@@ -1,6 +1,6 @@
 ---
 name: prototype-design
-description: Create interactive prototypes and UI flows to validate design solutions. Use this skill when the user needs to design UI/UX, create prototypes, design user flows, or says "create a prototype", "design this feature", "UI mockup". Even if they don't explicitly say "prototype", activate when they're working on user interface design, interaction design, or need to visualize how something will work.
+description: 创建交互式原型和 UI 流程以验证设计方案。当用户需要设计 UI/UX、创建原型、设计用户流程，或说"创建原型"、"设计这个功能"、"UI 原型"时使用。即使没有明确说"原型"，当用户正在处理用户界面设计、交互设计或需要可视化某事物如何工作时也应激活。
 layer: design
 input-from: prd-gen,user-research
 output-to: project-coordination,requirement-review

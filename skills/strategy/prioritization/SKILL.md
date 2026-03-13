@@ -1,6 +1,6 @@
 ---
 name: prioritization
-description: Prioritize features and initiatives using RICE, MoSCoW, and other frameworks. Use this skill when the user needs to prioritize the backlog, decide what to build, rank features, or says "prioritize this", "what should we build first", "how do we rank these". Even if they don't explicitly say "prioritization", activate when they're making decisions about what to work on next or ranking competing items.
+description: 使用 RICE、MoSCoW 等框架对功能和计划进行优先级排序。当用户需要对待办事项排序、决定构建什么、对功能排名，或说"给这个排优先级"、"我们应该先构建什么"、"如何对这些排名"时使用。即使没有明确说"优先级排序"，当用户正在决定接下来做什么或对竞争项目进行排名时也应激活。
 layer: strategy
 input-from: user-research,feedback-synthesis,market-intelligence
 output-to: roadmap-planning,prd-gen,iteration-planning

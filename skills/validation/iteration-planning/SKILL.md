@@ -1,6 +1,6 @@
 ---
 name: iteration-planning
-description: Plan the next product iteration based on impact analysis and user feedback. Use this skill when planning sprints, retrospectives, post-release analysis, prioritizing backlog items, allocating team capacity, or deciding what to work on next. Activate whenever the user says "plan the next sprint", "what should we build", "prioritize the backlog", "retrospective", or needs to balance new features, bugs, and technical debt.
+description: 基于效果分析和用户反馈规划下一个产品迭代。当用户规划冲刺、回顾、上线后分析、对待办事项排序、分配团队能力，或决定接下来做什么时使用。每当用户说"规划下一个冲刺"、"我们应该构建什么"、"对待办事项排序"、"回顾"或需要平衡新功能、缺陷和技术债务时激活。
 layer: validation
 input-from: impact-analysis,feedback-synthesis
 output-to: user-research,prd-gen

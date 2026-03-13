@@ -1,6 +1,6 @@
 ---
 name: impact-analysis
-description: Analyze post-release impact and measure success against goals. Use this skill when the user needs to evaluate launch results, measure feature success, analyze post-release metrics, or says "how did it perform", "measure impact", "post-launch analysis". Even if they don't explicitly say "impact analysis", activate when they're evaluating the results of a release or feature.
+description: 分析上线后影响并衡量目标达成情况。当用户需要评估上线结果、衡量功能成功、分析上线后指标，或说"表现如何"、"衡量影响"、"上线复盘"时使用。即使没有明确说"效果分析"，当用户正在评估发布或功能的结果时也应激活。
 layer: validation
 input-from: release-management,data-monitoring
 output-to: iteration-planning,feedback-synthesis
