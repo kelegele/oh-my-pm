@@ -88,6 +88,15 @@ skills:
         - 交互设计
         - wireframe
 
+    - name: figma-prototype
+      file: skills/design/figma-prototype/SKILL.md
+      triggers:
+        - Figma 原型
+        - 生成原型图
+        - Figma design
+        - 原型设计
+        - UI mockup
+
     - name: process-optimization
       file: skills/design/process-optimization/SKILL.md
       triggers:

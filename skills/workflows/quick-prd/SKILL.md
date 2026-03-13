@@ -37,7 +37,7 @@ Activate this workflow when:
 The workflow executes skills in sequence:
 
 ```
-User Input → Competitor Analysis (optional) → PRD Generation → Final Document
+User Input → Competitor Analysis (optional) → PRD Generation → Figma Prototype (optional) → Final Document
 ```
 
 ### Workflow Steps
@@ -47,6 +47,7 @@ User Input → Competitor Analysis (optional) → PRD Generation → Final Docum
 | 0 | scenario-detection | User input | Scenario type + required context | Never (critical first step) |
 | 1 | competitive-analysis | Competitor list | competitive-analysis.json + .md | No competitors provided |
 | 2 | prd-gen | Requirements + context + benchmarks | prd-{name}-{date}-v{version}.md | Never (core step) |
+| 3 | figma-prototype | PRD + design reference | Figma file link + updated PRD | User declines |
 
 ## Input Parameters
 
@@ -102,7 +103,22 @@ If competitors are provided:
 4. Generate complete PRD with all required sections including scenario-specific context
 5. Save to `context/prd/{feature-name}-{date}-v{version}.md`
 
-### Step 3: Summary
+### Step 3: Figma Prototype (Optional)
+
+1. After PRD generation, ask user: **"是否需要生成 Figma 原型图？"**
+2. If user declines, skip to Step 4
+3. If user approves, activate `/figma-prototype`:
+   - Check Figma API token (guide user if not configured)
+   - Determine mode: iteration vs new product
+   - Collect design reference (iteration: UI screenshots; new: style reference)
+   - Generate Figma prototype with proper styling
+   - Mark changes (iteration: green=new, yellow=modify, red=delete)
+   - Update PRD with Figma link
+4. Save updated PRD with Figma section
+
+**Skipped when**: User declines prototype generation
+
+### Step 4: Summary
 
 1. Compile all outputs
 2. Update `context/current-workflow.json` state
@@ -137,14 +153,19 @@ The workflow produces:
    - Benchmarks: 3+ industry references
    - Output: context/prd/{name}-{date}-v{version}.md
 
+4. ✅ figma-prototype (2 min) [if user approves]
+   - Figma file: https://www.figma.com/file/xxxxx
+   - PRD updated with prototype link
+
 ### Generated Documents
 📄 **PRD**: context/prd/{feature-name}-{date}-v{version}.md
 📊 **Competitive Analysis (JSON)**: context/competitive-analysis/{name}-{date}.json
 📊 **Competitive Analysis (MD)**: context/competitive-analysis/{name}-{date}.md
+🎨 **Figma Prototype**: https://www.figma.com/file/xxxxx [if generated]
 
 ### Next Steps
+- [ ] Review Figma prototype
 - [ ] Run requirement review meeting
-- [ ] Activate `/prototype-design` for mockups
 - [ ] Share with stakeholders
 ```
 

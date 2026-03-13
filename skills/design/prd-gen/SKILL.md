@@ -345,6 +345,28 @@ This skill reads from and writes to the shared context:
 - `context/prd/{feature-name}-{date}-v{version}.md` - The generated PRD (versioned output)
 - Legacy: `context/prd-draft.md` for backward compatibility
 
+## Figma Integration (NEW)
+
+After PRD generation, ask user if they need Figma prototype:
+
+```markdown
+## 🎨 PRD 已生成完成！
+
+📄 文档位置: `context/prd/{feature-name}-{date}-v{version}.md`
+
+是否需要生成 Figma 原型图？
+- ✅ 是，生成原型
+- ⏭️ 跳过
+```
+
+If user approves, activate `figma-prototype` skill to:
+1. Check Figma API token configuration
+2. Collect design reference (iteration mode: UI screenshots; new product: style reference)
+3. Generate Figma prototype with proper styling
+4. Mark changes (iteration mode: green=new, yellow=modify, red=delete)
+5. Update PRD with Figma link
+6. Notify user with prototype link
+
 ## Example Usage
 
 ```
