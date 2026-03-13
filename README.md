@@ -42,24 +42,18 @@ Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系
 ### 安装
 
 ```bash
-# 1. 克隆仓库
+# 克隆仓库
 git clone https://github.com/kelegele/oh-my-pm.git
 cd oh-my-pm
-
-# 2. 链接 Skills 到用户目录（必需！）
-cd skills
-for dir in */*; do ln -sf "$(pwd)/$dir" ~/.claude/skills/; done
 ```
 
-> **重要说明**：`--plugin-dir` 不会自动注册 Skills，必须手动链接到 `~/.claude/skills/`
+> **注意**：本插件通过 `--plugin-dir` 或插件市场安装。Skills 通过自然语言自动触发，无需手动配置。
 
 ### 使用
 
-安装后，Skills 和 Commands 可通过多种方式调用：
+#### Commands（直接调用）
 
-#### 方式 1：Commands（推荐）
-
-工作流 Commands 支持直接调用和命名空间调用：
+4 个工作流 Commands 可直接调用：
 
 ```bash
 # 直接调用
@@ -74,22 +68,19 @@ for dir in */*; do ln -sf "$(pwd)/$dir" ~/.claude/skills/; done
 /ompm help  # 显示帮助信息
 ```
 
-#### 方式 2：Skills
+#### Skills（自然语言触发）
 
-自然语言触发或显式调用：
+20 个 Skills 通过自然语言自动触发，无需手动调用：
 
 ```bash
-# 自然语言触发
-"帮我分析一下 Notion 和飞书文档的竞品差异"
-"写一个用户个人中心改版的 PRD"
-"快速生成一个带竞品分析的需求文档"
-"分析我们上周发布的功能效果"
-
-# 显式调用
-/prd-gen 生成用户中心改版需求文档
-/competitive-analysis 分析 Notion vs 飞书
-/full-pm-cycle 规划一个新的项目管理工具
+# 直接对话，系统自动识别并调用相应 Skill
+"帮我分析一下 Notion 和飞书文档的竞品差异"    # → competitive-analysis
+"写一个用户个人中心改版的 PRD"                # → prd-gen
+"这个功能上线后效果如何"                      # → impact-analysis
+"我们的产品应该如何定位"                      # → product-positioning
 ```
+
+**注意**：Skills 不支持 `/skill-name` 格式的显式调用，只能通过自然语言或工作流触发。
 
 
 ---
