@@ -1,6 +1,6 @@
 {
   "name": "oh-my-pm",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "description": "面向产品经理的 AI Agent 工作流系统。提供 3 种核心流程：快速 PRD（/quick-prd）、完整产品规划（/full-pm-cycle）、功能发布（/feature-launch）。包含 20 个 Skills（16 个可独立使用 + 3 个工作流编排）+ 8 个 Subagents + 4 个 Commands，覆盖需求感知→策略规划→方案设计→交付协调→价值验证完整闭环",
   "author": {
     "name": "kelegele"

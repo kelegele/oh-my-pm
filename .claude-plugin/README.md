@@ -381,9 +381,64 @@ PRD 生成后可自动生成 Figma 原型图：
 - 🟡 黄色 = 修改
 - 🔴 红色 = 删除
 
+### Figma MCP 配置
+
+使用 `figma-prototype` Skill 需要先启用 Figma MCP Server。**如果 MCP 不可用，Skill 会询问是否生成 HTML 原型作为替代方案。**
+
+**方式一：Remote MCP Server（推荐）**
+
+编辑 `~/.claude/settings.json`，添加：
+
+```json
+{
+  "mcpServers": {
+    "figma": {
+      "command": "npx",
+      "args": ["-y", "@figma/mcp-server"],
+      "env": {
+        "FIGMA_ACCESS_TOKEN": "你的_figma_token"
+      }
+    }
+  }
+}
+```
+
+**方式二：Desktop MCP Server**
+
+如果已安装 Figma 桌面版，编辑 `~/.claude/settings.json`，添加：
+
+```json
+{
+  "mcpServers": {
+    "figma-desktop": {
+      "command": "/Applications/Figma.app/Contents/MacOS/Figma",
+      "args": ["--mcp"]
+    }
+  }
+}
+```
+
+**获取 Figma Token：**
+1. 登录 [Figma](https://www.figma.com)
+2. 点击头像 → Settings → Security
+3. Personal access tokens → Generate new token
+4. 复制 token 并粘贴到配置中
+
+**配置完成后，重启 Claude Code 生效。**
+
+官方文档：https://help.figma.com/hc/en-us/articles/32132100833559
+
 ---
 
 # 版本历史
+
+### v0.4.2 (2026-03-13)
+- `figma-prototype` 新增 HTML 原型 fallback 模式
+- 当 Figma MCP 不可用时，询问用户是否生成 HTML 原型
+
+### v0.4.1 (2026-03-13)
+- 添加 Figma MCP 配置说明
+- `figma-prototype` Skill 新增前置条件指引
 
 ### v0.4.0 (2026-03-13)
 - Figma MCP 集成

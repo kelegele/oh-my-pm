@@ -1,16 +1,69 @@
 ---
 name: figma-prototype
-description: 基于 PRD 和设计参考生成 Figma 原型。当用户需要 UI/UX 原型、想要从需求创建 Figma 设计、说"生成原型"、"创建 Figma 设计"、"制作 UI 线框图"，或在 PRD 生成后用户同意创建原型时使用。此技能与 Figma MCP 集成创建设计文件，需要配置 Figma API 访问令牌，支持迭代模式（匹配现有样式）和新产品模式（使用设计参考）。
+description: 基于 PRD 和设计参考生成 Figma 原型或 HTML 原型。当用户需要 UI/UX 原型、想要从需求创建设计、说"生成原型"、"创建 Figma 设计"、"制作 UI 线框图"，或在 PRD 生成后用户同意创建原型时使用。优先使用 Figma MCP 创建设计文件，当 MCP 不可用时询问用户是否生成 HTML 原型作为替代。支持迭代模式（匹配现有样式）和新产品模式（使用设计参考）。
 layer: design
 input-from: prd-gen
 output-to: requirement-review
 mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.3.0
 ---
 
 # Figma Prototype Generation
 
 Generate Figma design prototypes from PRD requirements with design reference.
+
+## Prerequisites: Figma MCP Server
+
+**This skill requires Figma MCP Server to be enabled.**
+
+If you see "Figma MCP 工具在当前环境中不可用", follow these steps:
+
+### Option 1: Remote MCP Server (Recommended)
+
+Add to `~/.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "figma": {
+      "command": "npx",
+      "args": ["-y", "@figma/mcp-server"],
+      "env": {
+        "FIGMA_ACCESS_TOKEN": "你的_figma_token"
+      }
+    }
+  }
+}
+```
+
+### Option 2: Desktop MCP Server
+
+If you have Figma desktop app installed, add to `~/.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "figma-desktop": {
+      "command": "/Applications/Figma.app/Contents/MacOS/Figma",
+      "args": ["--mcp"]
+    }
+  }
+}
+```
+
+**After configuration**, restart Claude Code for changes to take effect.
+
+### Get Figma Access Token
+
+1. Login to [Figma](https://www.figma.com)
+2. Click avatar → **Settings**
+3. Go to **Security** → **Personal access tokens**
+4. Click **Generate new token**
+5. Name it (e.g., `Oh-My-PM-MCP`) and copy
+
+**Official docs**: https://help.figma.com/hc/en-us/articles/32132100833559
+
+---
 
 ## What This Skill Does
 
@@ -38,7 +91,7 @@ Activate this skill when:
 │                                                             │
 │  STEP 1: Check Configuration                                │
 │  ┌─────────────┐                                            │
-│  │ Check .env  │ → 有 Token? → No: 引导用户配置              │
+│  │Check MCP API│ → Available? → No: 询问用户是否生成 HTML   │
 │  └─────────────┘          Yes: 继续                          │
 │                                                             │
 │  STEP 2: Determine Mode                                     │
@@ -63,12 +116,39 @@ Activate this skill when:
 │  │ Green=New, Yellow=Modify, Red=Delete      │            │
 │  └─────────────────────────────────────────────┘            │
 │         ↓                                                        ↓
-│  STEP 6: Update PRD with Figma Link                              │
+│  STEP 6: Update PRD with Link (Figma or HTML)                  │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
 
-## Step 1: Check Figma Configuration
+## Step 1: Check Figma MCP Availability
+
+**First, check if Figma MCP tools are available in the current environment.**
+
+Try to use Figma MCP tools (e.g., list available tools or a simple Figma API call).
+
+### If Figma MCP is NOT Available
+
+Use `AskUserQuestion` to ask the user:
+
+```markdown
+## ⚠️ Figma MCP 不可用
+
+检测到 Figma MCP 工具在当前环境中不可用。请选择：
+
+| 选项 | 说明 |
+|:-----|:-----|
+| **生成 HTML 原型** | 直接生成可交互的 HTML 原型文件，可在浏览器中预览 |
+| **配置 Figma MCP** | 按照 Skill 文件中的配置说明启用 Figma MCP |
+```
+
+If user chooses **生成 HTML 原型**, skip to "HTML Prototype Generation Mode" section below.
+
+If user chooses **配置 Figma MCP**, show the configuration guide from Prerequisites section.
+
+### If Figma MCP is Available
+
+Continue to Step 2.
 
 **Check if Figma API token is configured:**
 
@@ -286,15 +366,232 @@ Frame 注释内容：
 | Figma API error | Show error message, suggest retry |
 | File write failed | Check permissions, report issue |
 
+---
+
+## HTML Prototype Generation Mode
+
+**When Figma MCP is not available and user chooses to generate HTML prototype.**
+
+### Overview
+
+Generate standalone HTML/CSS/JS prototype files that can be opened directly in a browser. This mode provides:
+- Immediate visual feedback
+- No external dependencies
+- Interactive prototype with basic functionality
+- Easy sharing via file transfer or hosting
+
+### Step 1: Collect Design Reference (Same as Figma Mode)
+
+Determine mode (Iteration / New Product) and collect design reference using the same process as Figma mode.
+
+### Step 2: Generate HTML Prototype
+
+**File Structure:**
+```
+context/prototypes/{feature-name}-{date}/
+├── index.html          # Main page / navigation
+├── css/
+│   └── style.css       # All styles
+├── js/
+│   └── main.js         # Interactions
+└── pages/              # Individual page HTMLs
+    ├── page1.html
+    ├── page2.html
+    └── ...
+```
+
+**CSS Framework Choice:**
+
+Use `AskUserQuestion` to ask:
+
+| 选项 | 说明 | 适用场景 |
+|:-----|:-----|:---------|
+| **Tailwind CSS (CDN)** | 快速开发，工具类优先 | 快速原型、现代设计 |
+| **原生 CSS** | 无依赖，完全自定义 | 简单页面、学习目的 |
+| **Bootstrap (CDN)** | 成熟组件库 | 传统企业应用 |
+
+### Step 3: HTML Template Structure
+
+**Base Template:**
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{页面名称} - 原型</title>
+    <!-- CSS framework based on user choice -->
+</head>
+<body>
+    <header>
+        <!-- Navigation / Header -->
+    </header>
+    <main>
+        <!-- Main content based on PRD requirements -->
+    </main>
+    <footer>
+        <!-- Footer -->
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+</html>
+```
+
+### Step 4: Apply Design Tokens
+
+Extract and apply design tokens from reference:
+
+```css
+/* Design tokens extracted from {design-reference} */
+:root {
+    /* Colors */
+    --color-primary: #1890ff;
+    --color-secondary: #52c41a;
+    --color-background: #ffffff;
+    --color-text: #000000d9;
+    --color-border: #d9d9d9;
+
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-size-base: 14px;
+    --font-size-lg: 16px;
+    --font-size-sm: 12px;
+
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* Border */
+    --border-radius: 4px;
+}
+```
+
+### Step 5: Mark Changes (Iteration Mode Only)
+
+For iteration updates, use CSS classes to mark changes:
+
+```css
+/* Change annotations */
+.change-new {
+    outline: 2px solid #52c41a;
+    outline-offset: 2px;
+    position: relative;
+}
+.change-new::after {
+    content: "[新增]";
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    background: #52c41a;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+.change-modified {
+    outline: 2px solid #faad14;
+    outline-offset: 2px;
+    position: relative;
+}
+.change-modified::after {
+    content: "[修改]";
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    background: #faad14;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+.change-deleted {
+    outline: 2px solid #ff4d4f;
+    outline-offset: 2px;
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+.change-deleted::after {
+    content: "[删除]";
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    background: #ff4d4f;
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+```
+
+### Step 6: Update PRD with HTML Link
+
+**Append to PRD file:**
+
+```markdown
+## 7. 原型设计
+
+### HTML 原型文件
+- **本地路径**: `context/prototypes/{feature-name}-{date}/index.html`
+- **打开方式**: 双击 index.html 在浏览器中查看
+
+### 原型说明
+- **设计参考**: [参考来源]
+- **生成模式**: {迭代更新 / 新功能/新产品}
+- **CSS 框架**: {Tailwind CSS / 原生 CSS / Bootstrap}
+- **修改标注**:
+  - 🟢 绿色边框 = 新增
+  - 🟡 黄色边框 = 修改
+  - 🔴 红色边框 + 删除线 = 删除
+
+### 页面清单
+1. {页面名称} - pages/page1.html
+2. {页面名称} - pages/page2.html
+3. ...
+```
+
+### Step 7: Notify User
+
+**Success Message:**
+
+```markdown
+## ✅ HTML 原型已生成！
+
+📄 **PRD 文档**: context/prd/{feature-name}-{date}-v{version}.md
+🌐 **HTML 原型**: context/prototypes/{feature-name}-{date}/index.html
+
+### 原型说明
+- 共生成 {N} 个页面
+- 基于 {设计参考} 风格
+- 使用 {CSS 框架}
+- 双击 index.html 在浏览器中预览
+
+原型路径已附在 PRD 文档中。
+```
+
+---
+
 ## Quality Standards
 
-Before completing, verify:
-- [ ] Figma token is configured and valid
+**For Figma Prototype:**
+- [ ] Figma MCP is available and token is valid
 - [ ] Design reference collected (based on mode)
 - [ ] Prototype matches design reference style
 - [ ] Changes marked (iteration mode)
 - [ ] PRD updated with Figma link
 - [ ] User notified with links
+
+**For HTML Prototype:**
+- [ ] Design reference collected (based on mode)
+- [ ] HTML/CSS/JS files created in correct structure
+- [ ] Design tokens extracted and applied
+- [ ] Changes marked with CSS classes (iteration mode)
+- [ ] PRD updated with HTML file path
+- [ ] User notified with file location
 
 ## Technical Notes
 
@@ -319,20 +616,31 @@ curl -H "X-Figma-Token: $FIGMA_ACCESS_TOKEN" \
 ## Context Integration
 
 **Reads:**
-- `.env` - Figma API token
+- `.env` - Figma API token (for Figma mode)
 - `context/prd/{prd-file}.md` - PRD requirements
 - User-provided design references (images, URLs, docs)
 
-**Writes:**
+**Writes (Figma Mode):**
 - `.env` - Token configuration (if guiding user)
 - `context/prd/{prd-file}.md` - Updated with Figma link
 - Figma design file via MCP API
+
+**Writes (HTML Mode):**
+- `context/prototypes/{feature-name}-{date}/` - HTML prototype directory
+  - `index.html` - Main navigation page
+  - `css/style.css` - All styles
+  - `js/main.js` - Interactions
+  - `pages/*.html` - Individual pages
+- `context/prd/{prd-file}.md` - Updated with HTML path
 
 ## Example Usage
 
 ```
 User: "生成 Figma 原型"
-→ Check token → Prompt for mode → Generate prototype → Update PRD
+→ Check MCP → Available? → No: Ask user (HTML or Configure Figma?)
+                              Yes: Continue with Figma
+                              HTML: Generate HTML prototype
+→ Generate prototype → Update PRD
 
 User: "为用户改版功能创建原型"
 → Detect iteration mode → Collect UI screenshots →
