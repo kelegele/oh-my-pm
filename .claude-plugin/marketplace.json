@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-  "name": "oh-my-pm",
-  "description": "面向产品经理的 AI Agent 工作流系统",
+  "name": "oh-my-pm-marketplace",
+  "description": "面向产品经理的 AI Agent 工作流系统 Marketplace",
   "owner": {
     "name": "kelegele"
   },
