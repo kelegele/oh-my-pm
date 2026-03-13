@@ -1,0 +1,43 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "oh-my-pm",
+  "description": "面向产品经理的 AI Agent 工作流系统",
+  "owner": {
+    "name": "kelegele"
+  },
+  "metadata": {
+    "description": "面向产品经理的 AI Agent 工作流系统 — 完整产品管理闭环"
+  },
+  "plugins": [
+    {
+      "name": "oh-my-pm",
+      "source": "./",
+      "description": "面向产品经理的 AI Agent 工作流系统 — 通过 Claude Code Skill 插件实现完整产品管理闭环",
+      "version": "0.3.0",
+      "author": {
+        "name": "kelegele"
+      },
+      "homepage": "https://github.com/kelegele/oh-my-pm",
+      "repository": "https://github.com/kelegele/oh-my-pm",
+      "license": "MIT",
+      "keywords": [
+        "product-management",
+        "pm",
+        "workflow",
+        "prd",
+        "agile",
+        "roadmap",
+        "competitive-analysis",
+        "product-strategy"
+      ],
+      "category": "workflow",
+      "tags": [
+        "product-management",
+        "pm",
+        "workflow",
+        "prd"
+      ],
+      "strict": false
+    }
+  ]
+}

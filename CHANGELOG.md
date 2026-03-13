@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- **Plugin loading issues** - Fixed directory structure and manifest configuration
+  - Moved `agents/` from `.claude/agents/` to root directory (plugin resources must be at root)
+  - Fixed `plugin.json` author format (changed from string to object)
+  - Removed invalid `agents` field from `plugin.json` (agents loaded via agents.yaml, not plugin.json)
+  - Added `marketplace.json` for future marketplace distribution
+  - Added missing `LICENSE` file
+
+### Lessons Learned
+
+#### Plugin Structure
+- **Plugin resource location**: Skills and agents must be in project root, not in `.claude/`
+- **plugin.json fields**: `skills` takes directory path, `agents` is not a valid field (use agents.yaml)
+- **Author field**: Must be object `{"name": "..."}` not a string
+
+#### Plugin Loading - Critical Discovery
+- **`--plugin-dir` does NOT load skills into `/skills` command**:
+  - `--plugin-dir` only loads plugin config, NOT skill registration
+  - Skills from `--plugin-dir` loaded plugins are NOT callable via `/skill-name`
+  - Skills must be in `~/.claude/skills/` to be discovered
+- **Solution for local development**: Symlink individual skill directories to `~/.claude/skills/`:
+  ```bash
+  cd ~/Projects/oh-my-pm/skills
+  for dir in */*; do ln -sf "$(pwd)/$dir" ~/.claude/skills/; done
+  ```
+- **Marketplace vs local plugin**:
+  - Marketplace plugins: Skills are automatically registered
+  - Local `--plugin-dir` plugins: Skills are NOT automatically registered
+  - Symbolic marketplace links: Require registration in `known_marketplaces.json`
+
 ## [0.2.0] - 2026-03-12
 
 ### Added

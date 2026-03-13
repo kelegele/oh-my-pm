@@ -10,7 +10,7 @@ subagents:
   # ========== 需求感知层 ==========
   perception:
     - name: market-researcher
-      file: .claude/agents/perception/market-researcher.md
+      file: agents/perception/market-researcher.md
       triggers:
         - 分析 X 市场
         - 市场规模
@@ -19,7 +19,7 @@ subagents:
         - 市场研究
 
     - name: competitive-analyst
-      file: .claude/agents/perception/competitive-analyst.md
+      file: agents/perception/competitive-analyst.md
       triggers:
         - 竞品分析
         - 对比 XX 和 YY
@@ -27,7 +27,7 @@ subagents:
         - 竞品对比
 
     - name: user-interviewer
-      file: .claude/agents/perception/user-interviewer.md
+      file: agents/perception/user-interviewer.md
       triggers:
         - 用户访谈
         - 用户画像
@@ -35,7 +35,7 @@ subagents:
         - 用户研究
 
     - name: data-monitor
-      file: .claude/agents/perception/data-monitor.md
+      file: agents/perception/data-monitor.md
       triggers:
         - 监控指标
         - 数据看板
@@ -45,7 +45,7 @@ subagents:
   # ========== 方案设计层 ==========
   design:
     - name: process-optimizer
-      file: .claude/agents/design/process-optimizer.md
+      file: agents/design/process-optimizer.md
       triggers:
         - 流程优化
         - 提效方案
@@ -55,7 +55,7 @@ subagents:
   # ========== 价值验证层 ==========
   validation:
     - name: impact-analyst
-      file: .claude/agents/validation/impact-analyst.md
+      file: agents/validation/impact-analyst.md
       triggers:
         - 上线效果
         - 效果分析
@@ -63,7 +63,7 @@ subagents:
         - 如何表现
 
     - name: feedback-collector
-      file: .claude/agents/validation/feedback-collector.md
+      file: agents/validation/feedback-collector.md
       triggers:
         - 用户反馈
         - 反馈分析
@@ -73,7 +73,7 @@ subagents:
   # ========== 工作流编排器 ==========
   workflows:
     - name: pm-orchestrator
-      file: .claude/agents/workflows/pm-orchestrator.md
+      file: agents/workflows/pm-orchestrator.md
       triggers:
         - 完整产品规划
         - 0-1 产品
