@@ -1,7 +1,7 @@
 {
   "name": "oh-my-pm",
   "version": "0.4.0",
-  "description": "面向产品经理的 AI Agent 工作流系统 — 通过 Claude Code Skill 插件实现完整产品管理闭环",
+  "description": "面向产品经理的 AI Agent 工作流系统 — 通过 20 个 Skills + 8 个 Subagents + 4 个 Commands 实现完整产品管理闭环",
   "author": {
     "name": "kelegele"
   },
@@ -16,13 +16,249 @@
     "agile",
     "roadmap",
     "competitive-analysis",
-    "product-strategy"
+    "product-strategy",
+    "figma",
+    "prototype"
   ],
-  "skills": "./skills/",
+  "skills": [
+    {
+      "name": "competitive-analysis",
+      "file": "skills/perception/competitive-analysis/SKILL.md",
+      "description": "竞品功能对比分析，生成对比矩阵和差异化建议",
+      "layer": "perception",
+      "triggers": ["分析竞品", "对比", "竞品分析"]
+    },
+    {
+      "name": "market-intelligence",
+      "file": "skills/perception/market-intelligence/SKILL.md",
+      "description": "市场情报收集，识别行业趋势和市场机会",
+      "layer": "perception",
+      "triggers": ["市场分析", "行业趋势", "市场研究"]
+    },
+    {
+      "name": "user-research",
+      "file": "skills/perception/user-research/SKILL.md",
+      "description": "用户研究与画像创建，设计访谈脚本",
+      "layer": "perception",
+      "triggers": ["用户访谈", "用户画像", "用户研究"]
+    },
+    {
+      "name": "data-monitoring",
+      "file": "skills/perception/data-monitoring/SKILL.md",
+      "description": "产品指标监控与异常检测，建立数据基线",
+      "layer": "perception",
+      "triggers": ["监控指标", "数据看板", "指标分析"]
+    },
+    {
+      "name": "product-positioning",
+      "file": "skills/strategy/product-positioning/SKILL.md",
+      "description": "产品定位与差异化策略，撰写定位声明",
+      "layer": "strategy",
+      "triggers": ["产品定位", "差异化", "价值主张"]
+    },
+    {
+      "name": "roadmap-planning",
+      "file": "skills/strategy/roadmap-planning/SKILL.md",
+      "description": "产品路线图规划，定义里程碑和时间表",
+      "layer": "strategy",
+      "triggers": ["产品路线图", "版本规划", "路线图"]
+    },
+    {
+      "name": "prioritization",
+      "file": "skills/strategy/prioritization/SKILL.md",
+      "description": "需求优先级排序，支持 RICE/MoSCoW 框架",
+      "layer": "strategy",
+      "triggers": ["优先级排序", "需求优先级", "RICE", "MoSCoW"]
+    },
+    {
+      "name": "prd-gen",
+      "file": "skills/design/prd-gen/SKILL.md",
+      "description": "结构化 PRD 生成，支持迭代/新功能/0-1产品三种场景",
+      "layer": "design",
+      "triggers": ["写 PRD", "需求文档", "PRD", "产品需求"]
+    },
+    {
+      "name": "figma-prototype",
+      "file": "skills/design/figma-prototype/SKILL.md",
+      "description": "Figma 原型图生成，支持迭代和新产品两种模式",
+      "layer": "design",
+      "triggers": ["Figma 原型", "生成原型图", "Figma design", "UI mockup"]
+    },
+    {
+      "name": "prototype-design",
+      "file": "skills/design/prototype-design/SKILL.md",
+      "description": "原型设计与交互流程规划",
+      "layer": "design",
+      "triggers": ["设计原型", "原型", "交互设计", "wireframe"]
+    },
+    {
+      "name": "process-optimization",
+      "file": "skills/design/process-optimization/SKILL.md",
+      "description": "业务流程分析与优化建议",
+      "layer": "design",
+      "triggers": ["流程优化", "提效", "流程改进"]
+    },
+    {
+      "name": "requirement-review",
+      "file": "skills/delivery/requirement-review/SKILL.md",
+      "description": "需求评审会议组织，干系人对齐",
+      "layer": "delivery",
+      "triggers": ["需求评审", "评审会议", "需求对齐"]
+    },
+    {
+      "name": "project-coordination",
+      "file": "skills/delivery/project-coordination/SKILL.md",
+      "description": "项目进度跟踪与风险管理",
+      "layer": "delivery",
+      "triggers": ["项目状态", "进度跟踪", "项目管理"]
+    },
+    {
+      "name": "release-management",
+      "file": "skills/delivery/release-management/SKILL.md",
+      "description": "发布计划制定与上线检查清单",
+      "layer": "delivery",
+      "triggers": ["发布计划", "上线检查", "发布管理", "上线"]
+    },
+    {
+      "name": "impact-analysis",
+      "file": "skills/validation/impact-analysis/SKILL.md",
+      "description": "上线效果分析，目标达成度评估",
+      "layer": "validation",
+      "triggers": ["效果分析", "上线复盘", "效果评估"]
+    },
+    {
+      "name": "feedback-synthesis",
+      "file": "skills/validation/feedback-synthesis/SKILL.md",
+      "description": "用户反馈汇总与主题分析",
+      "layer": "validation",
+      "triggers": ["反馈分析", "用户反馈", "反馈汇总"]
+    },
+    {
+      "name": "iteration-planning",
+      "file": "skills/validation/iteration-planning/SKILL.md",
+      "description": "基于数据的迭代规划",
+      "layer": "validation",
+      "triggers": ["迭代规划", "版本排期", "sprint planning"]
+    },
+    {
+      "name": "quick-prd",
+      "file": "skills/workflows/quick-prd/SKILL.md",
+      "description": "竞品分析 + PRD 一体化工作流",
+      "layer": "workflows",
+      "type": "workflow",
+      "triggers": ["快速 PRD", "带竞品分析的需求"]
+    },
+    {
+      "name": "full-pm-cycle",
+      "file": "skills/workflows/full-pm-cycle/SKILL.md",
+      "description": "完整产品管理周期，从需求感知到价值验证",
+      "layer": "workflows",
+      "type": "workflow",
+      "triggers": ["完整产品规划", "0-1 产品", "产品全周期"]
+    },
+    {
+      "name": "feature-launch",
+      "file": "skills/workflows/feature-launch/SKILL.md",
+      "description": "功能发布端到端工作流",
+      "layer": "workflows",
+      "type": "workflow",
+      "triggers": ["功能发布", "发布协调", "发布工作流"]
+    }
+  ],
+  "agents": [
+    {
+      "name": "market-researcher",
+      "file": "agents/perception/market-researcher.md",
+      "description": "市场研究专家，工作树隔离，负责行业趋势和市场规模分析",
+      "layer": "perception",
+      "model": "haiku",
+      "triggers": ["分析 X 市场", "市场规模", "行业趋势", "市场研究"]
+    },
+    {
+      "name": "competitive-analyst",
+      "file": "agents/perception/competitive-analyst.md",
+      "description": "竞品分析专家，支持 GitHub 代码分析",
+      "layer": "perception",
+      "model": "sonnet",
+      "triggers": ["竞品分析", "对比 XX 和 YY", "竞品对比"]
+    },
+    {
+      "name": "user-interviewer",
+      "file": "agents/perception/user-interviewer.md",
+      "description": "用户研究专家，维护用户研究记忆",
+      "layer": "perception",
+      "model": "sonnet",
+      "triggers": ["用户访谈", "用户画像", "用户研究"]
+    },
+    {
+      "name": "data-monitor",
+      "file": "agents/perception/data-monitor.md",
+      "description": "数据监控专家，后台持续运行",
+      "layer": "perception",
+      "model": "haiku",
+      "triggers": ["监控指标", "数据看板", "指标分析"]
+    },
+    {
+      "name": "process-optimizer",
+      "file": "agents/design/process-optimizer.md",
+      "description": "流程优化专家，只读模式分析",
+      "layer": "design",
+      "model": "sonnet",
+      "triggers": ["流程优化", "提效方案", "效率改进"]
+    },
+    {
+      "name": "impact-analyst",
+      "file": "agents/validation/impact-analyst.md",
+      "description": "效果分析专家",
+      "layer": "validation",
+      "model": "sonnet",
+      "triggers": ["上线效果", "效果分析", "如何表现"]
+    },
+    {
+      "name": "feedback-collector",
+      "file": "agents/validation/feedback-collector.md",
+      "description": "反馈汇总专家",
+      "layer": "validation",
+      "model": "haiku",
+      "triggers": ["用户反馈", "反馈分析", "用户说什么"]
+    },
+    {
+      "name": "pm-orchestrator",
+      "file": "agents/workflows/pm-orchestrator.md",
+      "description": "PM 工作流编排器，协调完整 PM 周期，支持并行执行",
+      "layer": "workflows",
+      "type": "orchestrator",
+      "triggers": ["完整产品规划", "0-1 产品", "产品全周期"]
+    }
+  ],
   "commands": [
-    "./commands/quick-prd.md",
-    "./commands/full-pm-cycle.md",
-    "./commands/feature-launch.md",
-    "./commands/ompm.md"
+    {
+      "name": "quick-prd",
+      "file": "commands/quick-prd.md",
+      "description": "快速生成带竞品分析的 PRD",
+      "usage": "/quick-prd \"需求描述\" [竞品1] [竞品2]",
+      "example": "/quick-prd \"用户个人中心改版\" 淘宝 京东"
+    },
+    {
+      "name": "full-pm-cycle",
+      "file": "commands/full-pm-cycle.md",
+      "description": "完整产品管理周期 (0-1 产品)",
+      "usage": "/full-pm-cycle \"产品描述\"",
+      "example": "/full-pm-cycle \"新项目管理工具\""
+    },
+    {
+      "name": "feature-launch",
+      "file": "commands/feature-launch.md",
+      "description": "功能发布工作流",
+      "usage": "/feature-launch \"功能描述\"",
+      "example": "/feature-launch \"用户注册流程\""
+    },
+    {
+      "name": "ompm",
+      "file": "commands/ompm.md",
+      "description": "命名空间分发器，支持所有工作流命令和帮助",
+      "usage": "/ompm [command] 或 /ompm help",
+      "example": "/ompm quick-prd \"暗黑模式\" 或 /ompm help"
+    }
   ]
 }
