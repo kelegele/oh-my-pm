@@ -18,5 +18,11 @@
     "competitive-analysis",
     "product-strategy"
   ],
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "commands": [
+    "./commands/quick-prd.md",
+    "./commands/full-pm-cycle.md",
+    "./commands/feature-launch.md",
+    "./commands/ompm.md"
+  ]
 }

@@ -5,6 +5,21 @@ All notable changes to Oh-My-PM will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2026-03-13
+
+### Added
+- **Commands support** - Registered 3 workflow commands for direct invocation
+  - `/quick-prd` - Quick PRD with competitive analysis
+  - `/full-pm-cycle` - Complete product management lifecycle
+  - `/feature-launch` - Feature launch coordination
+  - `/ompm` - Namespace dispatcher for all workflows with help (`/ompm help`)
+- **Dual invocation methods** - Both direct (`/workflow-name`) and namespace (`/ompm workflow-name`) calling supported
+- `commands/` directory at project root with 4 command files
+
+### Changed
+- `plugin.json` - Added `commands` field with command file paths
+- README.md - Updated usage section with command examples
+
 ## [Unreleased]
 
 ### Fixed

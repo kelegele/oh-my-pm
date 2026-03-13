@@ -54,19 +54,37 @@ for dir in */*; do ln -sf "$(pwd)/$dir" ~/.claude/skills/; done
 
 ### 使用
 
-安装后，Skills 会在对话中自动触发：
+安装后，Skills 和 Commands 可通过多种方式调用：
+
+#### 方式 1：Commands（推荐）
+
+工作流 Commands 支持直接调用和命名空间调用：
 
 ```bash
-# 示例对话
+# 直接调用
+/quick-prd "用户个人中心改版" 淘宝 京东
+/full-pm-cycle "新项目管理工具"
+/feature-launch "用户注册流程"
+
+# 命名空间调用
+/ompm quick-prd "暗黑模式"
+/ompm full-pm-cycle "AI 助手功能"
+/ompm feature-launch "购物车改版"
+/ompm help  # 显示帮助信息
+```
+
+#### 方式 2：Skills
+
+自然语言触发或显式调用：
+
+```bash
+# 自然语言触发
 "帮我分析一下 Notion 和飞书文档的竞品差异"
 "写一个用户个人中心改版的 PRD"
 "快速生成一个带竞品分析的需求文档"
 "分析我们上周发布的功能效果"
-```
 
-或显式调用：
-
-```bash
+# 显式调用
 /prd-gen 生成用户中心改版需求文档
 /competitive-analysis 分析 Notion vs 飞书
 /full-pm-cycle 规划一个新的项目管理工具
