@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Oh-My-PM 是面向产品经理的 AI Agent 工作流系统，通过 **Claude Code Skill 插件** 形式实现。
 
-系统核心是五层工作流架构和 19 个专业化 Skill (16 层级 Skills + 3 工作流编排器)，实现产品管理任务的自动化与增强。
+系统核心是五层工作流架构和 20 个专业化 Skill (17 层级 Skills + 3 工作流编排器)，实现产品管理任务的自动化与增强。
 
 ## 五层工作流架构
 
@@ -32,9 +32,10 @@ oh-my-pm/
 │   │   ├── product-positioning/SKILL.md
 │   │   ├── roadmap-planning/SKILL.md
 │   │   └── prioritization/SKILL.md
-│   ├── design/                  # 方案设计层 (3)
+│   ├── design/                  # 方案设计层 (4)
 │   │   ├── prd-gen/SKILL.md
 │   │   ├── prototype-design/SKILL.md
+│   │   ├── figma-prototype/SKILL.md
 │   │   └── process-optimization/SKILL.md
 │   ├── delivery/                # 交付协调层 (3)
 │   │   ├── requirement-review/SKILL.md
@@ -115,9 +116,9 @@ output-to: requirement-review,prototype-design
 - **可扩展性**: 新增 Skill 不影响现有体系
 - **可评估性**: 每个 Skill 具备明确的输入输出标准
 
-## 实现状态 (v0.2.0)
+## 实现状态 (v0.4.0)
 
-全部 19 个 Skill 已实现完成：
+全部 20 个 Skill 已实现完成：
 
 | Skill | 版本 | 状态 |
 |:---|:---|:---|
@@ -128,8 +129,9 @@ output-to: requirement-review,prototype-design
 | `product-positioning` | 0.1.0 | ✅ |
 | `roadmap-planning` | 0.1.0 | ✅ |
 | `prioritization` | 0.1.0 | ✅ |
-| `prd-gen` | 0.2.0 | ✅ |
+| `prd-gen` | 0.2.1 | ✅ |
 | `prototype-design` | 0.1.0 | ✅ |
+| `figma-prototype` | 0.1.0 | ✅ |
 | `process-optimization` | 0.1.0 | ✅ |
 | `requirement-review` | 0.1.0 | ✅ |
 | `project-coordination` | 0.1.0 | ✅ |

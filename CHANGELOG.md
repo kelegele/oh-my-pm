@@ -20,6 +20,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `plugin.json` - Added `commands` field with command file paths
 - README.md - Updated usage section with command examples
 
+## [0.4.0] - 2026-03-13
+
+### Added
+- **Figma MCP Integration** - Comprehensive Figma prototype generation from PRD
+  - `figma-prototype` skill - Generate Figma prototypes with design reference
+  - **Two prototype modes**:
+    - **Iteration mode** - Match existing style exactly from UI screenshots/HTML/URL, mark changes (green=new, yellow=modify, red=delete)
+    - **New product mode** - Require design reference (component library/style guide/Figma Community)
+  - **Token configuration guide** - Step-by-step Figma Personal Access Token setup (90-day expiration)
+  - **PRD integration** - Automatically asks user after PRD generation if they need Figma prototype
+  - **Workflow integration** - Integrated into `quick-prd`, `prd-gen` with optional Figma step
+
+### Changed
+- `prd-gen` (v0.2.1) - Added Figma Integration section with user prompt after PRD generation
+- `quick-prd` (v0.2.0) - Added Step 3: Figma Prototype (Optional) to workflow
+- `skills.yaml` - Registered `figma-prototype` skill in design layer
+- Updated README.md core features table with "Figma 原型集成"
+
+### Design Philosophy
+- **No hallucination** - Never generate styles without explicit design reference
+- **Style consistency** - Iteration mode strictly follows existing UI patterns
+- **Change annotation** - Clear visual marking of modifications (green/yellow/red)
+
 ## [Unreleased]
 
 ### Fixed
@@ -132,5 +155,9 @@ context/
 └── ...
 ```
 
-[Unreleased]: https://github.com/kelegele/oh-my-pm/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/kelegele/oh-my-pm/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/kelegele/oh-my-pm/compare/v0.3.1...v0.4.0
+[0.3.1]: https://github.com/kelegele/oh-my-pm/compare/v0.3.0...v0.3.1
+[0.3.0]: https://github.com/kelegele/oh-my-pm/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/kelegele/oh-my-pm/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/kelegele/oh-my-pm/releases/tag/v0.1.0

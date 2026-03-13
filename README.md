@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
 [![Version](https://img.shields.io/github/v/release/kelegele/oh-my-pm)](https://github.com/kelegele/oh-my-pm/releases)
 
-**五层架构 · 8 个 Subagents · 19 个专业 Skills · 完整产品闭环**
+**五层架构 · 8 个 Subagents · 20 个专业 Skills · Figma 集成 · 完整产品闭环**
 
 [快速开始](#快速开始) • [Subagents](#subagents-架构) • [Skills](#全部-skills) • [使用指南](#使用指南) • [贡献](#贡献指南)
 
@@ -27,6 +27,7 @@ Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系
 | **五层工作流架构** | 从需求感知到价值验证的完整闭环 |
 | **场景驱动 PRD** | 迭代更新/新功能/0-1 产品，拒绝随意 YY |
 | **行业基准校验** | 自动对标最佳实践，确保方案专业度 |
+| **Figma 原型集成** | PRD 后自动生成 Figma 原型图 |
 | **人机协作模式** | Autopilot / Copilot / Manual 灵活切换 |
 
 ---
@@ -227,6 +228,7 @@ Subagents 由 Claude Code 自动识别并调用，无需显式触发：
 | Skill | 功能 | 触发示例 |
 |:-----|:-----|:---------|
 | `prd-gen` | 结构化 PRD 生成 (场景驱动) | "写 PRD"、"需求文档" |
+| `figma-prototype` | Figma 原型图生成 (需配置 Token) | "生成原型"、"Figma 设计" |
 | `prototype-design` | 原型设计与交互流程 | "设计原型"、"UI 流程" |
 | `process-optimization` | 业务流程优化 | "流程优化"、"提效方案" |
 
@@ -319,7 +321,8 @@ oh-my-pm/
 | v0.1.0 | MVP (4 Skills) | ✅ |
 | v0.2.0 | 完整五层架构 (19 Skills) | ✅ |
 | v0.3.0 | Subagent 混合架构 (8 Subagents + 记忆系统) | ✅ |
-| v0.4.0 | 工作流优化与模板库 | 🔄 |
+| v0.4.0 | Figma MCP 集成 (20 Skills + Commands) | ✅ |
+| v0.5.0 | 工作流优化与模板库 | ⏳ |
 | v1.0.0 | 企业版与集成能力 | ⏳ |
 
 查看 [Project Board](https://github.com/users/kelegele/projects/4) 了解完整规划。

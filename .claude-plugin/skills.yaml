@@ -2,7 +2,7 @@
 # 用于 Claude Code 自动发现和加载 Skills
 
 manifest:
-  version: "0.3.0"
+  version: "0.4.0"
   plugin: "oh-my-pm"
   description: "产品经理 AI Agent 工作流系统 (Skills + Subagents)"
 
