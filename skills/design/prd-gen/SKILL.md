@@ -5,7 +5,7 @@ layer: design
 input-from: product-positioning,prioritization,competitive-analysis
 output-to: requirement-review,prototype-design
 mode-support: [autopilot, copilot, manual]
-version: 0.2.1
+version: 0.3.0
 context-requirements:
   - scenario: iteration
     required: [current_feature_desc, ui_state, iteration_goal]
@@ -188,100 +188,169 @@ The generation process ensures complete, actionable PRDs:
 
 ## Output Structure
 
-The PRD follows this structure for consistency:
+The PRD follows this structure (aligned with standard PRD template):
 
 ```markdown
 # [Feature Name] PRD
 
-## Document Info
-- **Created**: YYYY-MM-DD
-- **Status**: Draft/Review/Approved
-- **Scenario**: iteration/new-feature/new-product
-- **Version**: v{N}
+## 文档基本信息
+- **文档版本**: v1.0
+- **创建日期**: YYYY-MM-DD
+- **最后更新**: YYYY-MM-DD
+- **文档状态**: Draft/Review/Approved
+- **创建人**: [用户名]
+- **审阅人**: [待定]
 
-## 0. Industry Benchmarks (NEW - REQUIRED)
-### 0.1 Reference Products
-| Product | Key Features | Adoption/Differentiation |
-|:---------|:-------------|:------------------------|
-| [Benchmark A] | XXX | We adopt their XXX pattern because... |
-| [Benchmark B] | XXX | We differentiate by... |
+## 修订记录
+| 版本 | 日期 | 修订内容 | 修订人 |
+|:-----|:-----|:---------|:-------|
+| v1.0 | YYYY-MM-DD | 初始版本 | [创建人] |
 
-### 0.2 Best Practice Summary
-- **Interaction Pattern**: [Industry standard pattern used]
-- **Key Differentiator**: [What makes this solution unique]
+## 0. 行业对标分析
+### 0.1 参考产品
+| 产品 | 关键功能 | 采纳/差异化 |
+|:-----|:---------|:-----------|
+| [竞品A] | XXX | 采纳其 XXX 模式，因为... |
+| [竞品B] | XXX | 差异化点在于... |
 
-## 1. Background & Goals
-### 1.1 Business Context
-[Market and competitive background from context files]
+### 0.2 最佳实践总结
+- **交互模式**: [采用的行业标准交互模式]
+- **核心差异化**: [本方案的独特之处]
 
-### 1.2 Objectives
-- **Primary**: [Quantified core objective]
-- **Secondary**: [Supporting objectives]
+## 1. 项目概述
+### 1.1 项目背景
+[市场背景、竞争背景、用户需求背景]
 
-### 1.3 Success Metrics
-| Metric | Baseline | Target | How to Measure |
-|:-------||:---------|:-------|:---------------|
-| XXX | 0 | 100 | Event tracking |
+### 1.2 项目目标
+#### 1.2.1 核心目标
+- [可量化的核心目标]
 
-## 2. User Stories
-### 2.1 Target Users
-| Role | Description | Core Needs |
-|:-----|:-----------|:-----------|
-| User A | [From user-research] | XXX |
+#### 1.2.2 次要目标
+- [支撑性目标]
 
-### 2.2 User Stories
-- **US-1**: As a [role], I want [feature], so that [value]
-  - Acceptance: Given [context], When [action], Then [outcome]
+### 1.3 项目范围
+#### 1.3.1 包含范围
+- [本次迭代/功能包含的内容]
 
-- **US-2**: ...
+#### 1.3.2 不包含范围
+- [明确不在本次范围内的事项]
 
-## 3. Functional Requirements
-### 3.1 Core Features
-| ID | Description | Priority | Dependencies |
-|:---|:-----------|::--------|:-------------|
-| F-001 | XXX | P0 | None |
+## 2. 业务分析
+### 2.1 目标用户
+| 用户角色 | 描述 | 核心需求 |
+|:---------|:-----|:---------|
+| 用户A | [来自用户研究] | XXX |
+| 用户B | [来自用户研究] | XXX |
 
-### 3.2 Feature Details
-#### F-001: [Feature Name]
-**Description**: [Detailed description]
+### 2.2 用户痛点
+| 痛点ID | 痛点描述 | 影响程度 |
+|:-------|:---------|:---------|
+| P-001 | XXX | 高/中/低 |
+| P-002 | XXX | 高/中/低 |
 
-**Interaction Flow**:
-1. Step one
-2. Step two
+### 2.3 市场分析
+[行业趋势、竞争格局、市场机会点]
 
-**Edge Cases**:
-- Normal: ...
-- Exception: ...
+## 3. 功能需求
+### 3.1 核心功能列表
+| 功能ID | 功能名称 | 优先级 | 描述 |
+|:-------|:---------|:-------|:-----|
+| F-001 | XXX | P0/P1/P2 | XXX |
+| F-002 | XXX | P0/P1/P2 | XXX |
 
-### 3.3 Non-Functional Requirements
-- **Performance**: Response time < 200ms
-- **Security**: Encrypted data storage
-- **Compatibility**: iOS 14+, Android 10+
+### 3.2 用户故事
+#### US-1: [功能名称]
+**作为** [用户角色]
+**我希望** [功能描述]
+**以便** [业务价值]
 
-## 4. Constraints & Dependencies
-### 4.1 Technical Constraints
-- [List technical limitations]
+**验收标准**:
+- Given [前置条件]
+- When [执行操作]
+- Then [预期结果]
 
-### 4.2 Business Constraints
-- [List business limitations]
+**优先级**: P0/P1/P2
+**估算**: X Story Points
 
-### 4.3 External Dependencies
-- [External systems/services required]
+#### US-2: [功能名称]
+...
 
-## 5. Milestones & Timeline
-| Phase | Deliverable | Timeline |
-|:------|:------------|:---------|
-| Design | Prototype | Week 1 |
-| Development | Feature launch | Week 3 |
+### 3.3 功能详情
+#### F-001: [功能名称]
+**描述**: [详细功能描述]
 
-## 6. Risks & Mitigation
-| Risk | Probability | Impact | Mitigation |
-|:-----|:------------|:-------|:-----------|
-| XXX | Medium | High | XXX |
+**交互流程**:
+1. 步骤一
+2. 步骤二
+3. 步骤三
 
-## Appendix
-- References: [links]
-- Competitive analysis: [link]
+**边界情况**:
+- 正常流程: ...
+- 异常情况: ...
+
+## 4. 非功能性需求
+### 4.1 性能需求
+- 页面响应时间 < XXXms
+- 支持 XXX 并发用户
+### 4.2 安全需求
+- 数据加密存储
+- 用户权限控制
+### 4.3 可用性需求
+- 系统可用性 > 99.9%
+### 4.4 兼容性需求
+- iOS 14+, Android 10+
+- 主流浏览器兼容
+
+## 5. 用户体验流程
+### 5.1 用户旅程
+[关键用户路径描述]
+1. 用户进入 → 2. 执行操作 → 3. 达成目标
+
+### 5.2 页面流程图
+[页面跳转关系说明]
+- 页面A → 页面B → 页面C
+
+## 6. 项目风险与应对
+| 风险ID | 风险描述 | 概率 | 影响 | 应对措施 |
+|:-------|:---------|:-----|:-----|:---------|
+| R-001 | XXX | 高/中/低 | 高/中/低 | XXX |
+| R-002 | XXX | 高/中/低 | 高/中/低 | XXX |
+
+## 7. 原型设计
+### 7.1 原型链接
+- **Figma**: [链接] 或 **HTML**: [本地路径]
+- 待生成...
+
+### 7.2 设计说明
+- **设计参考**: [来源]
+- **设计风格**: [描述]
+
+## 8. 项目计划
+| 阶段 | 交付物 | 时间 | 负责人 |
+|:-----|:-------|:-----|:-------|
+| 设计 | 原型图 | Week 1 | XXX |
+| 开发 | 功能上线 | Week 3 | XXX |
+| 测试 | 测试报告 | Week 4 | XXX |
+
+## 9. 成功指标
+### 9.1 北极星指标
+- [核心业务指标]: 目标值
+
+### 9.2 过程指标
+| 指标名称 | 基线值 | 目标值 | 测量方式 |
+|:---------|:-------|:-------|:---------|
+| XXX | 0 | 100 | 事件统计 |
+| XXX | 0 | 100 | 用户行为分析 |
+
+### 9.3 结果指标
+| 指标名称 | 基线值 | 目标值 | 测量方式 |
+|:---------|:-------|:-------|:---------|
+| XXX | 0 | 100 | 数据分析 |
+| XXX | 0 | 100 | 业务报表 |
+
+## 附录
+- 参考文档: [链接]
+- 竞品分析: [链接]
 ```
 
 ## User Story Format
@@ -309,9 +378,15 @@ So that [business value]
 Before delivering, the PRD should include:
 - **Scenario identified** (iteration/new-feature/new-product)
 - **Required context collected** for the identified scenario
-- **3+ industry benchmarks** referenced with rationale
-- All 6 required sections (background, user stories, features, non-functional, constraints, milestones)
-- User stories in "As a... I want... So that..." format
+- **3+ industry benchmarks** referenced with rationale (第0章)
+- All 9 required sections complete (第1-9章)
+- **文档基本信息** with version and revision history
+- **用户痛点** identified and documented (第2.2节)
+- User stories in "作为...我希望...以便..." format (第3.2节)
+- **非功能性需求** as standalone section (第4章)
+- **用户体验流程** with user journey (第5章)
+- **原型设计** section (第7章)
+- **成功指标** split into North Star, process, and outcome metrics (第9章)
 - 3+ quantifiable success metrics
 - Dependencies and constraints clearly identified
 - References to context sources
@@ -320,8 +395,16 @@ Before delivering, the PRD should include:
 - [ ] Scenario type confirmed with user
 - [ ] All required context for this scenario collected
 - [ ] Industry benchmarks researched (3+ references)
-- [ ] PRD sections complete
-- [ ] Success metrics quantified
+- [ ] 文档基本信息 complete (version, status, creator, reviewer)
+- [ ] 项目概述 complete (background, objectives, scope)
+- [ ] 业务分析 complete (target users, pain points, market analysis)
+- [ ] 功能需求 complete (feature list, user stories, details)
+- [ ] 非功能性需求 complete (performance, security, availability, compatibility)
+- [ ] 用户体验流程 complete (user journey, page flow)
+- [ ] 项目风险 documented with mitigation
+- [ ] 原型设计 section present
+- [ ] 项目计划 with timeline
+- [ ] 成功指标 quantified (North Star + process + outcome)
 - [ ] Dependencies documented
 
 ## Collaboration Modes
