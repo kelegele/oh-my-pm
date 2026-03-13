@@ -40,42 +40,21 @@ Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系
 
 ### 安装
 
-#### 方式一：克隆到本地
-
 ```bash
+# 1. 克隆仓库
 git clone https://github.com/kelegele/oh-my-pm.git
 cd oh-my-pm
+
+# 2. 链接 Skills 到用户目录（必需！）
+cd skills
+for dir in */*; do ln -sf "$(pwd)/$dir" ~/.claude/skills/; done
 ```
 
-#### 方式二：作为 Claude Code 插件安装
-
-```bash
-# 克隆到 Claude Code 插件目录
-mkdir -p ~/.claude/plugins
-git clone https://github.com/kelegele/oh-my-pm.git ~/.claude/plugins/oh-my-pm
-
-# 或创建符号链接（如果已有项目仓库）
-ln -s /path/to/oh-my-pm ~/.claude/plugins/oh-my-pm
-```
-
-查看 [.claude-plugin](.claude-plugin/) 目录了解插件配置详情。
+> **重要说明**：`--plugin-dir` 不会自动注册 Skills，必须手动链接到 `~/.claude/skills/`
 
 ### 使用
 
-#### 方式一：作为插件目录加载（推荐）
-
-```bash
-# 在项目目录下启动 Claude Code，自动加载插件
-cd /path/to/oh-my-pm
-claude
-
-# 或指定插件目录
-claude --plugin-dir /path/to/oh-my-pm
-```
-
-#### 方式二：直接对话触发
-
-在 Claude Code 中直接对话即可触发相关 Skill：
+安装后，Skills 会在对话中自动触发：
 
 ```bash
 # 示例对话
@@ -85,14 +64,14 @@ claude --plugin-dir /path/to/oh-my-pm
 "分析我们上周发布的功能效果"
 ```
 
-#### 方式三：显式调用 Skill
+或显式调用：
 
 ```bash
-# 使用 / 前缀显式调用特定 Skill
-/competitive-analysis 分析 Notion vs 飞书
 /prd-gen 生成用户中心改版需求文档
+/competitive-analysis 分析 Notion vs 飞书
 /full-pm-cycle 规划一个新的项目管理工具
 ```
+
 
 ---
 
@@ -287,24 +266,30 @@ Subagents 由 Claude Code 自动识别并调用，无需显式触发：
 
 ```
 oh-my-pm/
+├── agents/              # Subagent 定义 (8 个) - 在根目录！
+│   ├── perception/      # 市场研究、竞品分析、用户研究、数据监控
+│   ├── design/          # 流程优化
+│   ├── validation/      # 效果分析、反馈汇总
+│   └── workflows/       # PM 编排器
+├── skills/              # Skill 插件目录 (19 个)
+│   ├── perception/      # 需求感知层 (4)
+│   ├── strategy/        # 策略规划层 (3)
+│   ├── design/          # 方案设计层 (3)
+│   ├── delivery/        # 交付协调层 (3)
+│   ├── validation/      # 价值验证层 (3)
+│   └── workflows/       # 工作流编排器 (3)
 ├── .claude/
-│   ├── agents/            # Subagent 定义 (8 个)
-│   │   ├── perception/    # 市场研究、竞品分析、用户研究、数据监控
-│   │   ├── design/        # 流程优化
-│   │   ├── validation/    # 效果分析、反馈汇总
-│   │   └── workflows/     # PM 编排器
-│   └── agent-memory/      # Subagent 记忆系统
-├── skills/               # Skill 插件目录 (19 个)
-│   ├── perception/       # 需求感知层 (4)
-│   ├── strategy/         # 策略规划层 (3)
-│   ├── design/           # 方案设计层 (3)
-│   ├── delivery/         # 交付协调层 (3)
-│   ├── validation/       # 价值验证层 (3)
-│   └── workflows/        # 工作流编排器 (3)
-├── context/              # 上下文传递目录
-├── docs/                 # 设计文档
-├── tests/                # 测试脚本
-└── CLAUDE.md             # 项目配置
+│   ├── agent-memory/    # Subagent 记忆系统
+│   └── settings.local.json
+├── .claude-plugin/      # 插件配置
+│   ├── plugin.json
+│   ├── agents.yaml
+│   ├── skills.yaml
+│   └── marketplace.json
+├── context/             # 上下文传递目录
+├── docs/                # 设计文档
+├── tests/               # 测试脚本
+└── CLAUDE.md            # 项目配置
 ```
 
 ---
