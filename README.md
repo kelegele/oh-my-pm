@@ -2,329 +2,339 @@
 
 <div align="center">
 
-> 面向产品经理的 AI Agent 工作流系统 — 通过 Claude Code Subagent 插件实现
+> AI Agent Workflow System for Product Managers — Powered by Claude Code Skills
 
 [![Claude Code](https://img.shields.io/badge/Claude-Code-forest?logo=anthropic)](https://claude.ai/code)
 [![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
 [![Version](https://img.shields.io/github/v/release/kelegele/oh-my-pm)](https://github.com/kelegele/oh-my-pm/releases)
+[![Skills](https://img.shields.io/badge/Skills-20-blue)](skills/)
+[![Agents](https://img.shields.io/badge/Agents-8-purple)](agents/)
 
-**五层架构 · 8 个 Subagents · 19 个专业 Skills · 完整产品闭环**
+**5-Layer Architecture · 8 Subagents · 20 Professional Skills · Complete Product Lifecycle**
 
-[快速开始](#快速开始) • [Subagents](#subagents-架构) • [Skills](#全部-skills) • [使用指南](#使用指南) • [贡献](#贡献指南)
+[Quick Start](#quick-start) • [Skills](#all-skills) • [Subagents](#subagents-architecture) • [Contributing](#contributing)
 
 </div>
 
 ---
 
-## 简介
+## Overview
 
-Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系统。它不构建独立的 SaaS 平台，而是通过 AI Agent 插件和工作流编排，实现产品管理任务的自动化与增强。
+Oh-My-PM is a comprehensive AI Agent workflow system for Product Managers, built as a **Claude Code Plugin**. Instead of building a standalone SaaS platform, it leverages AI Agent plugins and workflow orchestration to automate and enhance product management tasks.
 
-### 核心特性
+### Core Features
 
-| 特性 | 说明 |
-|:-----|:-----|
-| **五层工作流架构** | 从需求感知到价值验证的完整闭环 |
-| **场景驱动 PRD** | 迭代更新/新功能/0-1 产品，拒绝随意 YY |
-| **行业基准校验** | 自动对标最佳实践，确保方案专业度 |
-| **HTML 原型生成** | PRD 后可生成 HTML 交互原型图 |
-| **人机协作模式** | Autopilot / Copilot / Manual 灵活切换 |
+| Feature | Description |
+|:---------|:-------------|
+| **5-Layer Architecture** | Complete closed-loop from requirement sensing to value validation |
+| **Scenario-Driven PRD** | Iteration updates / New features / 0-1 products — no random assumptions |
+| **Industry Benchmarking** | Auto-benchmark against best practices for professional output |
+| **HTML Prototype Generation** | Generate interactive HTML prototypes from PRDs |
+| **Human-AI Collaboration** | Autopilot / Copilot / Manual modes |
 
 ---
 
-## 快速开始
+## Quick Start
 
-### 前置要求
+### Prerequisites
 
-- [Claude Code](https://claude.ai/code) CLI 工具
-- 将此仓库克隆到本地项目目录
+- [Claude Code](https://claude.ai/code) CLI tool
+- Clone this repository to your local project directory
 
-### 安装
+### Installation via skills.sh
 
 ```bash
-# 克隆仓库
+# Install directly via skills.sh
+npx skills add kelegele/oh-my-pm -a claude-code
+```
+
+### Manual Installation
+
+```bash
+# Clone repository
 git clone https://github.com/kelegele/oh-my-pm.git
 cd oh-my-pm
 ```
 
-> **注意**：本插件通过 `--plugin-dir` 或插件市场安装。Skills 通过自然语言自动触发，无需手动配置。
+> **Note**: This plugin installs via `--plugin-dir` or plugin marketplace. Skills trigger automatically through natural language—no manual configuration needed.
 
-### 使用
+### Usage
 
-#### Commands（直接调用）
+#### Commands (Direct Invocation)
 
-4 个工作流 Commands 可直接调用：
-
-```bash
-# 直接调用
-/quick-prd "用户个人中心改版" 淘宝 京东
-/full-pm-cycle "新项目管理工具"
-/feature-launch "用户注册流程"
-
-# 命名空间调用
-/ompm quick-prd "暗黑模式"
-/ompm full-pm-cycle "AI 助手功能"
-/ompm feature-launch "购物车改版"
-/ompm help  # 显示帮助信息
-```
-
-#### Skills（自然语言触发）
-
-20 个 Skills 通过自然语言自动触发，无需手动调用：
+4 workflow Commands can be invoked directly:
 
 ```bash
-# 直接对话，系统自动识别并调用相应 Skill
-"帮我分析一下 Notion 和飞书文档的竞品差异"    # → competitive-analysis
-"写一个用户个人中心改版的 PRD"                # → prd-gen
-"这个功能上线后效果如何"                      # → impact-analysis
-"我们的产品应该如何定位"                      # → product-positioning
+# Direct invocation
+/quick-prd "User profile redesign" taobao jd
+/full-pm-cycle "New project management tool"
+/feature-launch "User registration flow"
+
+# Namespace invocation
+/ompm quick-prd "Dark mode"
+/ompm full-pm-cycle "AI assistant feature"
+/ompm feature-launch "Cart redesign"
+/ompm help  # Show help
 ```
 
-**注意**：Skills 不支持 `/skill-name` 格式的显式调用，只能通过自然语言或工作流触发。
+#### Skills (Natural Language Triggering)
 
+20 Skills trigger automatically through natural language:
+
+```bash
+# Direct conversation—system identifies and calls the relevant Skill
+"Analyze the competitive differences between Notion and Feishu docs"  # → competitive-analysis
+"Write a PRD for user profile redesign"                 # → prd-gen
+"How did this feature perform after launch?"            # → impact-analysis
+"How should we position our product?"                   # → product-positioning
+```
+
+**Note**: Skills do not support `/skill-name` explicit invocation—they trigger through natural language or workflows.
 
 ---
 
-## 五层架构
+## 5-Layer Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  第一层：需求感知 (Perception)     4 Skills                  │
-│  市场情报 · 用户研究 · 竞品分析 · 数据监控                   │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│  Layer 1: Perception (Requirement)     4 Skills      │
+│  Market Intelligence · User Research · Competitive Analysis   │
+│  · Data Monitoring                                      │
+└─────────────────────────────────────────────────────────┘
                               ↓
-┌─────────────────────────────────────────────────────────────┐
-│  第二层：策略规划 (Strategy)       3 Skills                  │
-│  产品定位 · 路线图规划 · 优先级排序                          │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│  Layer 2: Strategy            3 Skills      │
+│  Product Positioning · Roadmap Planning · Prioritization │
+└─────────────────────────────────────────────────────────┘
                               ↓
-┌─────────────────────────────────────────────────────────────┐
-│  第三层：方案设计 (Design)         3 Skills                  │
-│  PRD 生成 · 原型设计 · 流程优化                              │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│  Layer 3: Design             3 Skills      │
+│  PRD Generation · Prototype Design · Process Optimization│
+└─────────────────────────────────────────────────────────┘
                               ↓
-┌─────────────────────────────────────────────────────────────┐
-│  第四层：交付协调 (Delivery)       3 Skills                  │
-│  需求评审 · 项目协调 · 发布管理                              │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│  Layer 4: Delivery            3 Skills      │
+│  Requirement Review · Project Coordination · Release Management│
+└─────────────────────────────────────────────────────────┘
                               ↓
-┌─────────────────────────────────────────────────────────────┐
-│  第五层：价值验证 (Validation)     3 Skills                  │
-│  效果分析 · 反馈综合 · 迭代规划 ──→ 反馈闭环                 │
-└─────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│  Layer 5: Validation          3 Skills      │
+│  Impact Analysis · Feedback Synthesis · Iteration Planning│
+└─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Subagents 架构 (v0.3.0)
+## Subagents Architecture (v0.8.0)
 
-### 什么是 Subagents？
+### What are Subagents?
 
-Subagents 是专门的 AI 代理，运行在独立的上下文中，具有自定义系统提示、特定工具访问和独立权限。当 Claude 遇到匹配 subagent 描述的任务时，会委托给该 subagent 处理。
+Subagents are specialized AI agents that run in isolated contexts with custom system prompts, specific tool access, and independent permissions. When Claude encounters tasks matching a subagent's description, it delegates to that subagent for processing.
 
 ### Subagents vs Skills
 
-| 特性 | Skills | Subagents |
-|:-----|:-------|:----------|
-| **上下文** | 主对话共享 | 独立隔离 |
-| **模型选择** | 继承主对话 | 可指定 (haiku/sonnet/opus) |
-| **工具限制** | 无限制 | 可配置 allowlist/denylist |
-| **持久记忆** | 无 | 支持跨会话积累 |
-| **适用场景** | 简单提示词注入 | 高容量输出隔离 |
+| Feature | Skills | Subagents |
+|:---------|:----------|:------------|
+| **Context** | Shared with main conversation | Independently isolated |
+| **Model Selection** | Inherits from main conversation | Configurable (haiku/sonnet/opus) |
+| **Tool Access** | Unlimited | Configurable allowlist/denylist |
+| **Persistent Memory** | None | Supports cross-session knowledge accumulation |
+| **Use Case** | Simple prompt injection | High-capacity output isolation |
 
-### 8 个 Subagents
+### 8 Subagents
 
-#### 📊 Perception 层 (4 个)
+#### 📊 Perception Layer (4)
 
-| Subagent | 模型 | 特性 | 触发示例 |
-|:---------|:-----|:-----|:---------|
-| `market-researcher` | haiku | worktree 隔离 | "分析 X 市场"、"行业趋势" |
-| `competitive-analyst` | sonnet | GitHub 代码分析 | "竞品分析"、"对比 XX 和 YY" |
-| `user-interviewer` | sonnet | 用户研究记忆 | "创建用户画像"、"用户访谈" |
-| `data-monitor` | haiku | background 后台 | "监控指标"、"数据看板" |
+| Subagent | Model | Features | Trigger Examples |
+|:----------|:--------|:----------|:-----------------|
+| `market-researcher` | haiku | Worktree isolation | "Analyze X market", "Industry trends" |
+| `competitive-analyst` | sonnet | GitHub code analysis | "Competitive analysis", "Compare XX and YY" |
+| `user-interviewer` | sonnet | User research memory | "Create user persona", "User interviews" |
+| `data-monitor` | haiku | Background daemon | "Monitor metrics", "Data dashboard" |
 
-#### 🎨 Design 层 (1 个)
+#### 🎨 Design Layer (1)
 
-| Subagent | 模型 | 特性 | 触发示例 |
-|:---------|:-----|:-----|:---------|
-| `process-optimizer` | sonnet | 只读模式 | "流程优化"、"提效方案" |
+| Subagent | Model | Features | Trigger Examples |
+|:----------|:--------|:----------|:-----------------|
+| `process-optimizer` | sonnet | Read-only mode | "Process optimization", "Efficiency solutions" |
 
-#### 📈 Validation 层 (2 个)
+#### 📈 Validation Layer (2)
 
-| Subagent | 模型 | 特性 | 触发示例 |
-|:---------|:-----|:-----|:---------|
-| `impact-analyst` | sonnet | 效果分析 | "上线效果"、"如何表现" |
-| `feedback-collector` | haiku | 反馈汇总 | "用户反馈"、"用户说什么" |
+| Subagent | Model | Features | Trigger Examples |
+|:----------|:--------|:----------|:-----------------|
+| `impact-analyst` | sonnet | Performance analysis | "Launch performance", "How is it performing" |
+| `feedback-collector` | haiku | Feedback aggregation | "User feedback", "What users are saying" |
 
-#### 🔄 Workflows (1 个)
+#### 🔄 Workflows (1)
 
-| Subagent | 功能 | 触发示例 |
-|:---------|:-----|:---------|
-| `pm-orchestrator` | 协调完整 PM 周期，支持并行执行 | "完整产品规划"、"0-1 产品" |
+| Subagent | Functionality | Trigger Examples |
+|:----------|:--------------|:-----------------|
+| `pm-orchestrator` | Orchestrates complete PM cycle with parallel execution | "Complete product planning", "0-1 product" |
 
-### 记忆系统
+### Memory System
 
-每个 Subagent 都有独立的记忆目录 (`.claude/agent-memory/`)，用于跨会话积累知识：
+Each subagent has an independent memory directory (`.claude/agent-memory/`) for cross-session knowledge accumulation:
 
 ```
 .claude/agent-memory/
-├── market-researcher/    # 市场数据积累
-├── competitive-analyst/  # 竞品知识库
-├── user-interviewer/     # 用户研究模式
-├── data-monitor/         # 指标基线
-├── process-optimizer/    # 流程优化知识
-├── impact-analyst/       # 效果分析框架
-├── feedback-collector/   # 反馈主题模式
-└── pm-orchestrator/      # 工作流最佳实践
+├── market-researcher/    # Market data accumulation
+├── competitive-analyst/  # Competitor knowledge base
+├── user-interviewer/     # User research patterns
+├── data-monitor/         # Metrics baseline
+├── process-optimizer/    # Process optimization knowledge
+├── impact-analyst/       # Impact analysis framework
+├── feedback-collector/   # Feedback theme patterns
+└── pm-orchestrator/      # Workflow best practices
 ```
 
-### 使用方式
+### Usage
 
-Subagents 由 Claude Code 自动识别并调用，无需显式触发：
+Subagents are automatically recognized and called by Claude Code—no explicit triggering needed:
 
 ```bash
-# 自动识别并委托给 market-researcher
-"分析 AI 写助手的市场规模"
+# Auto-identify and delegate to market-researcher
+"Analyze the market size for AI writing assistants"
 
-# 自动识别并委托给 competitive-analyst
-"对比 ClickUp 和 Asana 的功能差异"
+# Auto-identify and delegate to competitive-analyst
+"Compare feature differences between ClickUp and Asana"
 
-# 自动识别并委托给 pm-orchestrator
-"为新的项目管理工具做完整产品规划"
+# Auto-identify and delegate to pm-orchestrator
+"Do complete product planning for a new project management tool"
 ```
 
 ---
 
-## 全部 Skills
+## All Skills
 
-### 📊 需求感知层 (Perception)
+### 📊 Perception Layer
 
-| Skill | 功能 | 触发示例 |
-|:-----|:-----|:---------|
-| `competitive-analysis` | 竞品功能对比分析 | "分析竞品"、"对比 XX 和 YY" |
-| `market-intelligence` | 市场情报收集与分析 | "市场分析"、"行业趋势" |
-| `user-research` | 用户研究与人设创建 | "用户访谈"、"创建用户画像" |
-| `data-monitoring` | 产品指标监控与异常检测 | "监控指标"、"数据看板" |
+| Skill | Function | Trigger Examples |
+|:-------|:---------|:-----------------|
+| `competitive-analysis` | Competitive feature comparison | "Analyze competitors", "Compare XX and YY" |
+| `market-intelligence` | Market intelligence collection & analysis | "Market analysis", "Industry trends" |
+| `user-research` | User research & persona creation | "User interviews", "Create user persona" |
+| `data-monitoring` | Product metrics monitoring & anomaly detection | "Monitor metrics", "Data dashboard" |
 
-### 🎯 策略规划层 (Strategy)
+### 🎯 Strategy Layer
 
-| Skill | 功能 | 触发示例 |
-|:-----|:-----|:---------|
-| `product-positioning` | 产品定位与差异化策略 | "产品定位"、"差异化策略" |
-| `roadmap-planning` | 产品路线图规划 | "产品路线图"、"版本规划" |
-| `prioritization` | 优先级排序 (RICE/MoSCoW) | "优先级排序"、"需求优先级" |
+| Skill | Function | Trigger Examples |
+|:-------|:---------|:-----------------|
+| `product-positioning` | Product positioning & differentiation strategy | "Product positioning", "Differentiation strategy" |
+| `roadmap-planning` | Product roadmap planning | "Product roadmap", "Version planning" |
+| `prioritization` | Prioritization (RICE/MoSCoW frameworks) | "Prioritization", "Feature priority" |
 
-### 🎨 方案设计层 (Design)
+### 🎨 Design Layer
 
-| Skill | 功能 | 触发示例 |
-|:-----|:-----|:---------|
-| `prd-gen` | 结构化 PRD 生成 (场景驱动) | "写 PRD"、"需求文档" |
-| `prototype-design` | HTML 原型生成（迭代模式+新产品模式） | "设计原型"、"HTML 原型"、"UI 流程" |
-| `process-optimization` | 业务流程优化 | "流程优化"、"提效方案" |
+| Skill | Function | Trigger Examples |
+|:-------|:---------|:-----------------|
+| `prd-gen` | Structured PRD generation (scenario-driven) | "Write PRD", "Requirements document" |
+| `prototype-design` | HTML prototype generation (iteration mode + new product mode) | "Design prototype", "HTML prototype", "UI flow" |
+| `process-optimization` | Business process optimization | "Process optimization", "Efficiency solutions" |
 
-### 🚢 交付协调层 (Delivery)
+### 🚢 Delivery Layer
 
-| Skill | 功能 | 触发示例 |
-|:-----|:-----|:---------|
-| `requirement-review` | 需求评审与干系人对齐 | "需求评审"、"评审会议" |
-| `project-coordination` | 项目进度与风险管理 | "项目状态"、"进度跟踪" |
-| `release-management` | 发布管理与上线检查 | "发布计划"、"上线检查" |
+| Skill | Function | Trigger Examples |
+|:-------|:---------|:-----------------|
+| `requirement-review` | Requirement review & stakeholder alignment | "Requirement review", "Review meeting" |
+| `project-coordination` | Project progress & risk management | "Project status", "Progress tracking" |
+| `release-management` | Release management & launch checklist | "Release plan", "Launch checklist" |
 
-### 📈 价值验证层 (Validation)
+### 📈 Validation Layer
 
-| Skill | 功能 | 触发示例 |
-|:-----|:-----|:---------|
-| `impact-analysis` | 上线效果分析与目标对比 | "效果分析"、"上线复盘" |
-| `feedback-synthesis` | 用户反馈汇总与分析 | "反馈分析"、"用户反馈" |
-| `iteration-planning` | 基于数据的迭代规划 | "迭代规划"、"版本排期" |
+| Skill | Function | Trigger Examples |
+|:-------|:---------|:-----------------|
+| `impact-analysis` | Post-launch impact analysis & goal comparison | "Impact analysis", "Post-launch review" |
+| `feedback-synthesis` | User feedback aggregation & analysis | "Feedback analysis", "User feedback" |
+| `iteration-planning` | Data-driven iteration planning | "Iteration planning", "Version scheduling" |
 
-### 🔄 工作流编排器 (Workflows)
+### 🔄 Workflow Orchestrators
 
-| Workflow | 功能 | 触发示例 |
-|:---------|:-----|:---------|
-| `quick-prd` | 竞品分析 + PRD 一体化 | "快速 PRD"、"带竞品分析的需求" |
-| `full-pm-cycle` | 完整产品周期 (0-1) | "完整产品规划"、"0-1 产品" |
-| `feature-launch` | 功能发布工作流 | "功能发布"、"发布协调" |
-
----
-
-## PRD 生成的三种场景
-
-`/prd-gen` 支持智能场景识别：
-
-| 场景 | 必需信息 | UI 提取方式 |
-|:-----|:---------|:-----------|
-| **迭代更新** | 功能描述 + UI 状态 + 迭代目标 | 截图 / HTML / 链接 |
-| **新功能** | 产品架构 + 设计规范 + 入口位置 | 从 context/ 读取 |
-| **0-1 新产品** | 产品背景 + 资源约束 + 参考产品 | 用户输入 + 竞品分析 |
-
-**核心原则**：不随意 YY，基于行业最佳实践输出。
+| Workflow | Function | Trigger Examples |
+|:----------|:---------|:-----------------|
+| `quick-prd` | Competitive analysis + PRD integration | "Quick PRD", "Requirements with competitive analysis" |
+| `full-pm-cycle` | Complete product lifecycle (0-1) | "Complete product planning", "0-1 product" |
+| `feature-launch` | Feature launch workflow | "Feature launch", "Launch coordination" |
 
 ---
 
-## 使用指南
+## PRD Generation Scenarios
 
-### 人机协作模式
+`/prd-gen` supports intelligent scenario recognition:
 
-| 模式 | 描述 | 适用场景 |
-|:-----|:-----|:---------|
-| `autopilot` | AI 自动执行，人工仅审阅 | 数据监控、报告生成 |
-| `copilot` | AI 建议，人工决策确认 | PRD 生成、方案设计 |
-| `manual` | 人工主导，AI 辅助 | 战略决策、创意工作 |
+| Scenario | Required Info | UI Extraction Method |
+|:---------|:---------------|:---------------------|
+| **Iteration Update** | Feature description + UI state + iteration goals | Screenshot / HTML / Link |
+| **New Feature** | Product architecture + design spec + entry point | Read from context/ |
+| **0-1 New Product** | Product context + resource constraints + reference products | User input + competitive analysis |
 
-### 目录结构
+**Core Principle**: No random assumptions—output based on industry best practices.
+
+---
+
+## Usage Guide
+
+### Human-AI Collaboration Modes
+
+| Mode | Description | Use Case |
+|:-----|:-------------|:-----------|
+| `autopilot` | AI auto-executes, human reviews only | Data monitoring, report generation |
+| `copilot` | AI suggests, human decides & confirms | PRD generation, solution design |
+| `manual` | Human leads, AI assists | Strategic decisions, creative work |
+
+### Directory Structure
 
 ```
 oh-my-pm/
-├── agents/              # Subagent 定义 (8 个) - 在根目录！
-│   ├── perception/      # 市场研究、竞品分析、用户研究、数据监控
-│   ├── design/          # 流程优化
-│   ├── validation/      # 效果分析、反馈汇总
-│   └── workflows/       # PM 编排器
-├── skills/              # Skill 插件目录 (19 个)
-│   ├── perception/      # 需求感知层 (4)
-│   ├── strategy/        # 策略规划层 (3)
-│   ├── design/          # 方案设计层 (3)
-│   ├── delivery/        # 交付协调层 (3)
-│   ├── validation/      # 价值验证层 (3)
-│   └── workflows/       # 工作流编排器 (3)
+├── agents/              # Subagent definitions (8) - at root!
+│   ├── perception/      # Market research, competitive analysis, user research, data monitoring
+│   ├── design/          # Process optimization
+│   ├── validation/      # Impact analysis, feedback aggregation
+│   └── workflows/       # PM orchestrator
+├── skills/              # Skill plugin directory (20)
+│   ├── perception/      # Perception layer (4)
+│   ├── strategy/        # Strategy layer (3)
+│   ├── design/          # Design layer (3)
+│   ├── delivery/        # Delivery layer (3)
+│   ├── validation/      # Validation layer (3)
+│   └── workflows/       # Workflow orchestrators (3)
 ├── .claude/
-│   ├── agent-memory/    # Subagent 记忆系统
+│   ├── agent-memory/    # Subagent memory system
 │   └── settings.local.json
-├── .claude-plugin/      # 插件配置
+├── .claude-plugin/      # Plugin configuration
 │   ├── plugin.json
 │   ├── agents.yaml
 │   ├── skills.yaml
 │   └── marketplace.json
-├── context/             # 上下文传递目录
-├── docs/                # 设计文档
-├── tests/               # 测试脚本
-└── CLAUDE.md            # 项目配置
+├── context/             # Context passing directory
+├── docs/                # Design documents
+├── tests/               # Test scripts
+└── CLAUDE.md            # Project configuration
 ```
 
 ---
 
-## 开发路线图
+## Roadmap
 
-| 版本 | 目标 | 状态 |
-|:-----|:-----|:-----|
+| Version | Goal | Status |
+|:--------|:-----|:-----|
 | v0.1.0 | MVP (4 Skills) | ✅ |
-| v0.2.0 | 完整五层架构 (19 Skills) | ✅ |
-| v0.3.0 | Subagent 混合架构 (8 Subagents + 记忆系统) | ✅ |
-| v0.4.0 | Commands 集成 (20 Skills + 4 Commands) | ✅ |
-| v0.5.1 | 移除 Figma 依赖，转向 HTML 原型 (19 Skills) | ✅ |
-| v0.6.0 | HTML 原型生成能力（迭代+新产品模式） | ✅ |
-| v1.0.0 | 企业版与集成能力 | ⏳ |
+| v0.2.0 | Complete 5-layer architecture (19 Skills) | ✅ |
+| v0.3.0 | Subagent hybrid architecture (8 Subagents + memory system) | ✅ |
+| v0.4.0 | Commands integration (20 Skills + 4 Commands) | ✅ |
+| v0.5.1 | Remove Figma dependency, switch to HTML prototypes (19 Skills) | ✅ |
+| v0.6.0 | HTML prototype generation (iteration + new product modes) | ✅ |
+| v0.8.0 | Plan-and-Execute workflow, Pencil integration | ✅ |
+| v1.0.0 | Enterprise edition & integrations | ⏳ |
 
-查看 [Project Board](https://github.com/users/kelegele/projects/4) 了解完整规划。
+See [Project Board](https://github.com/users/kelegele/projects/4) for full planning.
 
 ---
 
-## 贡献指南
+## Contributing
 
-欢迎贡献！请查看 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详情。
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-## 许可证
+## License
 
 [MIT License](LICENSE)
 
