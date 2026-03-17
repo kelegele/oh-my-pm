@@ -1,7 +1,7 @@
 {
   "name": "oh-my-pm",
-  "version": "0.5.0",
-  "description": "面向产品经理的 AI Agent 工作流系统。提供 3 种核心流程：快速 PRD（/quick-prd）、完整产品规划（/full-pm-cycle）、功能发布（/feature-launch）。包含 20 个 Skills（16 个可独立使用 + 3 个工作流编排）+ 8 个 Subagents + 4 个 Commands，覆盖需求感知→策略规划→方案设计→交付协调→价值验证完整闭环",
+  "version": "0.6.0",
+  "description": "面向产品经理的 AI Agent 工作流系统。提供 3 种核心流程：快速 PRD（/quick-prd）、完整产品规划（/full-pm-cycle）、功能发布（/feature-launch）。包含 19 个 Skills（15 个可独立使用 + 3 个工作流编排 + 1 个 HTML 原型设计）+ 8 个 Subagents + 4 个 Commands，支持迭代模式（基于截图/HTML）和新产品模式（自定义设计规范），覆盖需求感知→策略规划→方案设计→交付协调→价值验证完整闭环",
   "author": {
     "name": "kelegele"
   },
@@ -17,8 +17,8 @@
     "roadmap",
     "competitive-analysis",
     "product-strategy",
-    "figma",
-    "prototype"
+    "prototype",
+    "html-prototype"
   ],
   "skills": [
     {
@@ -78,18 +78,11 @@
       "triggers": ["写 PRD", "需求文档", "PRD", "产品需求"]
     },
     {
-      "name": "figma-prototype",
-      "file": "skills/design/figma-prototype/SKILL.md",
-      "description": "Figma 原型图生成，支持迭代和新产品两种模式",
-      "layer": "design",
-      "triggers": ["Figma 原型", "生成原型图", "Figma design", "UI mockup"]
-    },
-    {
       "name": "prototype-design",
       "file": "skills/design/prototype-design/SKILL.md",
-      "description": "原型设计与交互流程规划",
+      "description": "HTML 原型生成，支持迭代模式（基于截图/HTML）和新产品模式（自定义设计规范）",
       "layer": "design",
-      "triggers": ["设计原型", "原型", "交互设计", "wireframe"]
+      "triggers": ["设计原型", "原型", "交互设计", "wireframe", "HTML 原型"]
     },
     {
       "name": "process-optimization",

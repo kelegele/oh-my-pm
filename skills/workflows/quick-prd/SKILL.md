@@ -37,7 +37,7 @@ Activate this workflow when:
 The workflow executes skills in sequence:
 
 ```
-User Input → Competitor Analysis (optional) → PRD Generation → Figma Prototype (optional) → Final Document
+User Input → Competitor Analysis (optional) → PRD Generation → HTML Prototype (optional) → Final Document
 ```
 
 ### Workflow Steps
@@ -47,7 +47,7 @@ User Input → Competitor Analysis (optional) → PRD Generation → Figma Proto
 | 0 | scenario-detection | User input | Scenario type + required context | Never (critical first step) |
 | 1 | competitive-analysis | Competitor list | competitive-analysis.json + .md | No competitors provided |
 | 2 | prd-gen | Requirements + context + benchmarks | prd-{name}-{date}-v{version}.md | Never (core step) |
-| 3 | figma-prototype | PRD + design reference | Figma file link + updated PRD | User declines |
+| 3 | prototype-design | PRD + design reference | HTML prototype file + updated PRD | User declines |
 
 ## Input Parameters
 
@@ -103,18 +103,16 @@ If competitors are provided:
 4. Generate complete PRD with all required sections including scenario-specific context
 5. Save to `context/prd/{feature-name}-{date}-v{version}.md`
 
-### Step 3: Figma Prototype (Optional)
+### Step 3: HTML Prototype (Optional)
 
-1. After PRD generation, ask user: **"是否需要生成 Figma 原型图？"**
+1. After PRD generation, ask user: **"是否需要生成 HTML 原型图？"**
 2. If user declines, skip to Step 4
-3. If user approves, activate `/figma-prototype`:
-   - Check Figma API token (guide user if not configured)
-   - Determine mode: iteration vs new product
-   - Collect design reference (iteration: UI screenshots; new: style reference)
-   - Generate Figma prototype with proper styling
-   - Mark changes (iteration: green=new, yellow=modify, red=delete)
-   - Update PRD with Figma link
-4. Save updated PRD with Figma section
+3. If user approves, activate `/prototype-design`:
+   - Generate interactive HTML prototype based on PRD content
+   - Output to `context/prototypes/{feature-name}.html`
+   - Include basic styling and interaction for demonstration
+   - Update PRD with HTML prototype link
+4. Save updated PRD with prototype section
 
 **Skipped when**: User declines prototype generation
 
@@ -153,18 +151,18 @@ The workflow produces:
    - Benchmarks: 3+ industry references
    - Output: context/prd/{name}-{date}-v{version}.md
 
-4. ✅ figma-prototype (2 min) [if user approves]
-   - Figma file: https://www.figma.com/file/xxxxx
+4. ✅ prototype-design (1 min) [if user approves]
+   - HTML file: context/prototypes/{feature-name}.html
    - PRD updated with prototype link
 
 ### Generated Documents
 📄 **PRD**: context/prd/{feature-name}-{date}-v{version}.md
 📊 **Competitive Analysis (JSON)**: context/competitive-analysis/{name}-{date}.json
 📊 **Competitive Analysis (MD)**: context/competitive-analysis/{name}-{date}.md
-🎨 **Figma Prototype**: https://www.figma.com/file/xxxxx [if generated]
+🎨 **HTML Prototype**: context/prototypes/{feature-name}.html [if generated]
 
 ### Next Steps
-- [ ] Review Figma prototype
+- [ ] Open HTML prototype in browser
 - [ ] Run requirement review meeting
 - [ ] Share with stakeholders
 ```

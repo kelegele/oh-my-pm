@@ -2,7 +2,7 @@
 # 用于 Claude Code 自动发现和加载 Skills
 
 manifest:
-  version: "0.4.0"
+  version: "0.6.0"
   plugin: "oh-my-pm"
   description: "产品经理 AI Agent 工作流系统 (Skills + Subagents)"
 
@@ -87,15 +87,6 @@ skills:
         - prototype
         - 交互设计
         - wireframe
-
-    - name: figma-prototype
-      file: skills/design/figma-prototype/SKILL.md
-      triggers:
-        - Figma 原型
-        - 生成原型图
-        - Figma design
-        - 原型设计
-        - UI mockup
 
     - name: process-optimization
       file: skills/design/process-optimization/SKILL.md
