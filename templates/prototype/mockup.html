@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{FEATURE_NAME}} - 高保真模型</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 40px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .header p {
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+
+        .nav {
+            display: flex;
+            background: #f8fafc;
+            padding: 16px 24px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .nav-item {
+            padding: 12px 20px;
+            color: #4b5563;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+
+        .content {
+            padding: 32px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1f2937;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5b21b6;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #1f2937;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{FEATURE_NAME}}</h1>
+            <p>{{FEATURE_DESCRIPTION}}</p>
+        </div>
+
+        <div class="nav">
+            <div class="nav-item">首页</div>
+            <div class="nav-item">功能页面</div>
+            <div class="nav-item">设置页面</div>
+        </div>
+
+        <div class="content">
+            <div class="card">
+                <h3>功能列表</h3>
+                <div class="card-grid">
+                    <div class="form-group">
+                        <label>功能名称</label>
+                        <input type="text" class="form-input" placeholder="输入功能名称">
+                    </div>
+                    <div class="form-group">
+                        <label>描述</label>
+                        <textarea class="form-input" rows="3" placeholder="输入功能描述"></textarea>
+                    </div>
+                    <button class="btn btn-primary">提交</button>
+                    <button class="btn btn-secondary">取消</button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">128</div>
+                    <div class="stat-label">活跃用户</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">89%</div>
+                    <div class="stat-label">完成率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">4.8</div>
+                    <div class="stat-label">平均评分</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

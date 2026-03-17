@@ -1,7 +1,7 @@
 {
   "name": "oh-my-pm",
-  "version": "0.6.0",
-  "description": "面向产品经理的 AI Agent 工作流系统。提供 3 种核心流程：快速 PRD（/quick-prd）、完整产品规划（/full-pm-cycle）、功能发布（/feature-launch）。包含 19 个 Skills（15 个可独立使用 + 3 个工作流编排 + 1 个 HTML 原型设计）+ 8 个 Subagents + 4 个 Commands，支持迭代模式（基于截图/HTML）和新产品模式（自定义设计规范），覆盖需求感知→策略规划→方案设计→交付协调→价值验证完整闭环",
+  "version": "0.8.0",
+  "description": "面向产品经理的 AI Agent 工作流系统。提供 3 种核心流程：快速 PRD（/quick-prd）、完整产品规划（/full-pm-cycle）、功能发布（/feature-launch）。包含 20 个 Skills（16 个可独立使用 + 3 个工作流编排 + 1 个 HTML 原型设计）+ 8 个 Subagents + 4 个 Commands，支持迭代模式（基于截图/HTML）和新产品模式（自定义设计规范），覆盖需求感知→策略规划→方案设计→交付协调→价值验证完整闭环。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。",
   "author": {
     "name": "kelegele"
   },
@@ -18,7 +18,9 @@
     "competitive-analysis",
     "product-strategy",
     "prototype",
-    "html-prototype"
+    "html-prototype",
+    "pencil",
+    "pen"
   ],
   "skills": [
     {
@@ -26,112 +28,181 @@
       "file": "skills/perception/competitive-analysis/SKILL.md",
       "description": "竞品功能对比分析，生成对比矩阵和差异化建议",
       "layer": "perception",
-      "triggers": ["分析竞品", "对比", "竞品分析"]
+      "triggers": [
+        "分析竞品",
+        "对比",
+        "竞品分析"
+      ]
     },
     {
       "name": "market-intelligence",
       "file": "skills/perception/market-intelligence/SKILL.md",
       "description": "市场情报收集，识别行业趋势和市场机会",
       "layer": "perception",
-      "triggers": ["市场分析", "行业趋势", "市场研究"]
+      "triggers": [
+        "市场分析",
+        "行业趋势",
+        "市场研究"
+      ]
     },
     {
       "name": "user-research",
       "file": "skills/perception/user-research/SKILL.md",
       "description": "用户研究与画像创建，设计访谈脚本",
       "layer": "perception",
-      "triggers": ["用户访谈", "用户画像", "用户研究"]
+      "triggers": [
+        "用户访谈",
+        "用户画像",
+        "用户研究"
+      ]
     },
     {
       "name": "data-monitoring",
       "file": "skills/perception/data-monitoring/SKILL.md",
       "description": "产品指标监控与异常检测，建立数据基线",
       "layer": "perception",
-      "triggers": ["监控指标", "数据看板", "指标分析"]
+      "triggers": [
+        "监控指标",
+        "数据看板",
+        "指标分析"
+      ]
     },
     {
       "name": "product-positioning",
       "file": "skills/strategy/product-positioning/SKILL.md",
       "description": "产品定位与差异化策略，撰写定位声明",
       "layer": "strategy",
-      "triggers": ["产品定位", "差异化", "价值主张"]
+      "triggers": [
+        "产品定位",
+        "差异化",
+        "价值主张"
+      ]
     },
     {
       "name": "roadmap-planning",
       "file": "skills/strategy/roadmap-planning/SKILL.md",
       "description": "产品路线图规划，定义里程碑和时间表",
       "layer": "strategy",
-      "triggers": ["产品路线图", "版本规划", "路线图"]
+      "triggers": [
+        "产品路线图",
+        "版本规划",
+        "路线图"
+      ]
     },
     {
       "name": "prioritization",
       "file": "skills/strategy/prioritization/SKILL.md",
       "description": "需求优先级排序，支持 RICE/MoSCoW 框架",
       "layer": "strategy",
-      "triggers": ["优先级排序", "需求优先级", "RICE", "MoSCoW"]
+      "triggers": [
+        "优先级排序",
+        "需求优先级",
+        "RICE",
+        "MoSCoW"
+      ]
     },
     {
       "name": "prd-gen",
       "file": "skills/design/prd-gen/SKILL.md",
       "description": "结构化 PRD 生成，支持迭代/新功能/0-1产品三种场景",
       "layer": "design",
-      "triggers": ["写 PRD", "需求文档", "PRD", "产品需求"]
+      "triggers": [
+        "写 PRD",
+        "需求文档",
+        "PRD",
+        "产品需求"
+      ]
     },
     {
       "name": "prototype-design",
       "file": "skills/design/prototype-design/SKILL.md",
       "description": "HTML 原型生成，支持迭代模式（基于截图/HTML）和新产品模式（自定义设计规范）",
       "layer": "design",
-      "triggers": ["设计原型", "原型", "交互设计", "wireframe", "HTML 原型"]
+      "triggers": [
+        "设计原型",
+        "原型",
+        "交互设计",
+        "wireframe",
+        "HTML 原型"
+      ]
     },
     {
       "name": "process-optimization",
       "file": "skills/design/process-optimization/SKILL.md",
       "description": "业务流程分析与优化建议",
       "layer": "design",
-      "triggers": ["流程优化", "提效", "流程改进"]
+      "triggers": [
+        "流程优化",
+        "提效",
+        "流程改进"
+      ]
     },
     {
       "name": "requirement-review",
       "file": "skills/delivery/requirement-review/SKILL.md",
       "description": "需求评审会议组织，干系人对齐",
       "layer": "delivery",
-      "triggers": ["需求评审", "评审会议", "需求对齐"]
+      "triggers": [
+        "需求评审",
+        "评审会议",
+        "需求对齐"
+      ]
     },
     {
       "name": "project-coordination",
       "file": "skills/delivery/project-coordination/SKILL.md",
       "description": "项目进度跟踪与风险管理",
       "layer": "delivery",
-      "triggers": ["项目状态", "进度跟踪", "项目管理"]
+      "triggers": [
+        "项目状态",
+        "进度跟踪",
+        "项目管理"
+      ]
     },
     {
       "name": "release-management",
       "file": "skills/delivery/release-management/SKILL.md",
       "description": "发布计划制定与上线检查清单",
       "layer": "delivery",
-      "triggers": ["发布计划", "上线检查", "发布管理", "上线"]
+      "triggers": [
+        "发布计划",
+        "上线检查",
+        "发布管理",
+        "上线"
+      ]
     },
     {
       "name": "impact-analysis",
       "file": "skills/validation/impact-analysis/SKILL.md",
       "description": "上线效果分析，目标达成度评估",
       "layer": "validation",
-      "triggers": ["效果分析", "上线复盘", "效果评估"]
+      "triggers": [
+        "效果分析",
+        "上线复盘",
+        "效果评估"
+      ]
     },
     {
       "name": "feedback-synthesis",
       "file": "skills/validation/feedback-synthesis/SKILL.md",
       "description": "用户反馈汇总与主题分析",
       "layer": "validation",
-      "triggers": ["反馈分析", "用户反馈", "反馈汇总"]
+      "triggers": [
+        "反馈分析",
+        "用户反馈",
+        "反馈汇总"
+      ]
     },
     {
       "name": "iteration-planning",
       "file": "skills/validation/iteration-planning/SKILL.md",
       "description": "基于数据的迭代规划",
       "layer": "validation",
-      "triggers": ["迭代规划", "版本排期", "sprint planning"]
+      "triggers": [
+        "迭代规划",
+        "版本排期",
+        "sprint planning"
+      ]
     },
     {
       "name": "quick-prd",
@@ -139,7 +210,10 @@
       "description": "竞品分析 + PRD 一体化工作流",
       "layer": "workflows",
       "type": "workflow",
-      "triggers": ["快速 PRD", "带竞品分析的需求"]
+      "triggers": [
+        "快速 PRD",
+        "带竞品分析的需求"
+      ]
     },
     {
       "name": "full-pm-cycle",
@@ -147,7 +221,11 @@
       "description": "完整产品管理周期，从需求感知到价值验证",
       "layer": "workflows",
       "type": "workflow",
-      "triggers": ["完整产品规划", "0-1 产品", "产品全周期"]
+      "triggers": [
+        "完整产品规划",
+        "0-1 产品",
+        "产品全周期"
+      ]
     },
     {
       "name": "feature-launch",
@@ -155,7 +233,24 @@
       "description": "功能发布端到端工作流",
       "layer": "workflows",
       "type": "workflow",
-      "triggers": ["功能发布", "发布协调", "发布工作流"]
+      "triggers": [
+        "功能发布",
+        "发布协调",
+        "发布工作流"
+      ]
+    },
+    {
+      "name": "pencil-design",
+      "file": "skills/design/pencil-design/SKILL.md",
+      "description": "使用 Pencil MCP 生成专业设计稿（.pen 文件）。支持结构化设计数据、设计系统组件和代码导出。当用户选择 Pencil 格式时使用，或明确需要专业设计工具集成时激活。",
+      "layer": "design",
+      "triggers": [
+        "Pencil",
+        "设计稿",
+        ".pen",
+        "Pencil design"
+      ],
+      "type": "object"
     }
   ],
   "agents": [
@@ -165,7 +260,12 @@
       "description": "市场研究专家，工作树隔离，负责行业趋势和市场规模分析",
       "layer": "perception",
       "model": "haiku",
-      "triggers": ["分析 X 市场", "市场规模", "行业趋势", "市场研究"]
+      "triggers": [
+        "分析 X 市场",
+        "市场规模",
+        "行业趋势",
+        "市场研究"
+      ]
     },
     {
       "name": "competitive-analyst",
@@ -173,7 +273,11 @@
       "description": "竞品分析专家，支持 GitHub 代码分析",
       "layer": "perception",
       "model": "sonnet",
-      "triggers": ["竞品分析", "对比 XX 和 YY", "竞品对比"]
+      "triggers": [
+        "竞品分析",
+        "对比 XX 和 YY",
+        "竞品对比"
+      ]
     },
     {
       "name": "user-interviewer",
@@ -181,7 +285,11 @@
       "description": "用户研究专家，维护用户研究记忆",
       "layer": "perception",
       "model": "sonnet",
-      "triggers": ["用户访谈", "用户画像", "用户研究"]
+      "triggers": [
+        "用户访谈",
+        "用户画像",
+        "用户研究"
+      ]
     },
     {
       "name": "data-monitor",
@@ -189,7 +297,11 @@
       "description": "数据监控专家，后台持续运行",
       "layer": "perception",
       "model": "haiku",
-      "triggers": ["监控指标", "数据看板", "指标分析"]
+      "triggers": [
+        "监控指标",
+        "数据看板",
+        "指标分析"
+      ]
     },
     {
       "name": "process-optimizer",
@@ -197,7 +309,11 @@
       "description": "流程优化专家，只读模式分析",
       "layer": "design",
       "model": "sonnet",
-      "triggers": ["流程优化", "提效方案", "效率改进"]
+      "triggers": [
+        "流程优化",
+        "提效方案",
+        "效率改进"
+      ]
     },
     {
       "name": "impact-analyst",
@@ -205,7 +321,11 @@
       "description": "效果分析专家",
       "layer": "validation",
       "model": "sonnet",
-      "triggers": ["上线效果", "效果分析", "如何表现"]
+      "triggers": [
+        "上线效果",
+        "效果分析",
+        "如何表现"
+      ]
     },
     {
       "name": "feedback-collector",
@@ -213,7 +333,11 @@
       "description": "反馈汇总专家",
       "layer": "validation",
       "model": "haiku",
-      "triggers": ["用户反馈", "反馈分析", "用户说什么"]
+      "triggers": [
+        "用户反馈",
+        "反馈分析",
+        "用户说什么"
+      ]
     },
     {
       "name": "pm-orchestrator",
@@ -221,7 +345,11 @@
       "description": "PM 工作流编排器，协调完整 PM 周期，支持并行执行",
       "layer": "workflows",
       "type": "orchestrator",
-      "triggers": ["完整产品规划", "0-1 产品", "产品全周期"]
+      "triggers": [
+        "完整产品规划",
+        "0-1 产品",
+        "产品全周期"
+      ]
     }
   ],
   "commands": [

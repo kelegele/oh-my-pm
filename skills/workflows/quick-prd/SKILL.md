@@ -1,252 +1,470 @@
 ---
 name: quick-prd
-description: 在一个工作流中生成包含竞品分析的完整 PRD。当用户需要带竞品上下文的 PRD、想要快速记录功能、说"写一个带竞品对比的 PRD"、或需要综合的产品需求文档时使用。当用户提到创建 PRD 并附带竞品研究，或说"分析竞品并写需求"、"快速为 X 写 PRD"时激活。
+description: 在一个工作流中生成包含竞品分析的完整 PRD。当用户需要带竞品上下文的 PRD、想要快速记录功能、说"写一个带竞品对比的 PRD"、或需要综合的产品需求文档时使用。当用户提到创建 PRD 并附带竞品研究，或说"分析竞品并写需求"、"快速为 X 写 PRD"时激活。支持 HTML 原型和 Pencil 设计稿两种输出格式。
 layer: workflow
 input-from: user
 output-to: requirement-review,prototype-design
 mode-support: [autopilot, copilot, manual]
-version: 0.2.0
-context-requirements:
-  - scenario: iteration
-    required: [current_feature_desc, ui_state, iteration_goal]
-    ui_state_options: [screenshot, html_file, online_url]
-  - scenario: new_feature
-    required: [product_architecture, design_specs, entry_point]
-  - scenario: new_product
-    required: [background, constraints, reference_products]
+version: 0.8.0
 ---
 
 # Quick PRD Workflow
 
-Generate a complete PRD with competitive analysis in one workflow.
+Generate a complete PRD with competitive analysis in one workflow. Supports **HTML 原型**和 **Pencil 设计稿**两种输出格式。
 
 ## What This Workflow Does
 
-Orchestrates multiple skills to produce a complete PRD with competitive context. First analyzes competitors (if provided), then generates the PRD incorporating those insights. Saves time by automating the full research-to-documentation flow.
+Orchestrates multiple skills to produce a complete PRD with competitive context. First analyzes competitors (if provided), then generates PRD incorporating those insights. Finally, creates prototype in user-selected format (HTML/Pencil/Both).
 
-## When to Use
+## Workflow Architecture
 
-Activate this workflow when:
-- User needs a PRD with competitive analysis included
-- Phrases like "quick PRD", "PRD with competitor comparison", "analyze and document"
-- Preparing for product review with comprehensive context
-- User wants both competitive insights AND structured requirements
+本工作流采用 **Plan-and-Execute 模式**组织，确保完整的阶段定义、状态追踪和质量门控。
 
-## How It Works
+### 五层对应阶段
 
-The workflow executes skills in sequence:
+| Stage ID | 名称 | 对应层 | 说明 |
+|:---------|:-----|:---------|:----------|
+| S0 | Setup | 初始化 | 创建工作流状态文件 |
+| S1 | Perception | 需求感知 | 市场研究、用户画像、竞品分析 |
+| S2 | Strategy | 策略规划 | 产品定位、路线图规划、优先级排序 |
+| S3 | Design | 方案设计 | PRD 生成、原型设计 |
+| S4 | Delivery | 交付协调 | 需求评审、项目计划、发布管理 |
+| S5 | Validation | 价值验证 | 效果分析、反馈综合、迭代规划 |
 
-```
-User Input → Competitor Analysis (optional) → PRD Generation → HTML Prototype (optional) → Final Document
-```
+---
 
-### Workflow Steps
+## Workflow Stages
 
-| Step | Skill | Input | Output | Skip When |
-|:-----|:-----|:------|:-------|:----------|
-| 0 | scenario-detection | User input | Scenario type + required context | Never (critical first step) |
-| 1 | competitive-analysis | Competitor list | competitive-analysis.json + .md | No competitors provided |
-| 2 | prd-gen | Requirements + context + benchmarks | prd-{name}-{date}-v{version}.md | Never (core step) |
-| 3 | prototype-design | PRD + design reference | HTML prototype file + updated PRD | User declines |
+| Stage ID | 名称 | 质量门控 | 下阶段 |
+|:---------|:-----|:---------|:----------|
+| S0 | Setup | - | S1 | Perception |
+| S1 | Perception | 市场研究完成 | S2 | Strategy |
+| S2 | Strategy | 定位完成 | S3 | Design |
+| S3 | Design | PRD 完整 | S4 | Delivery |
+| S3 | Design | 原型验证 | S5 | Validation |
+| S4 | Delivery | 需求评审 | S5 | Validation |
 
-## Input Parameters
+**阶段执行顺序**：S0 → S1 → S2 → S3 → S4 → S5
 
-| Parameter | Type | Required | Description |
-|:---|:---|:---|:---|
-| `requirements` | string | Yes | Feature description to document |
-| `competitors` | list | No | Competitors to analyze (optional) |
-| `target_audience` | string | No | Target user segment |
-| `mode` | string | No | `autopilot`/`copilot`/`manual` (default: `copilot`) |
+---
 
-## Execution Flow
+## Stage 0: Setup
 
-### Step 0: Scenario Detection (REQUIRED - CRITICAL)
+**目标**：初始化工作流状态和上下文目录
 
-**Before any PRD generation, you MUST identify the scenario.**
+**活动**：
+- 创建 `context/workflow-state/` 目录用于工作流快照
+- 初始化 `context/current-workflow.json` 当前状态文件
 
-1. Use `AskUserQuestion` to determine scenario type:
-   - **迭代更新** - Iterating on existing feature
-   - **新功能** - Adding new module to existing product
-   - **0-1 新产品** - Building product from scratch
+**输出**：
+- `context/workflow-state/` 目录
+- `context/current-workflow.json` 空模板
 
-2. Collect required context based on scenario:
+**质量门控**：
+- ✅ 目录结构创建完成
+- ✅ 状态模板初始化完成
 
-| Scenario | Required Information | Collection Method |
-|:---------|:--------------------|:------------------|
-| 迭代更新 | Current feature desc, UI state, iteration goal | User input + AskUserQuestion for UI option |
-| 新功能 | Product architecture, design specs, entry point | Read from `context/` or user input |
-| 0-1 新产品 | Background, constraints, reference products | User input + competitive analysis |
+---
 
-3. For **迭代更新**, ask user how to provide UI state:
-   - **截图** (Screenshot) - Use image analysis tools
-   - **HTML 文件** (HTML file) - Use Read tool
-   - **在线链接** (Online URL) - Use web_reader (if accessible)
+## Stage 1: Perception
 
-**Skipped when**: NEVER - This step is mandatory
+**目标**：完成需求感知层的数据收集和分析
 
-### Step 1: Competitive Analysis (Optional)
+**活动**：
+1. 竞品分析 - `competitive-analysis` skill
+2. 市场研究 - `market-intelligence` skill
+3. 用户研究 - `user-research` skill
 
-If competitors are provided:
+**技能调用**：
+- Step 1.1: 调用 `/competitive-analysis`
+- Step 1.2: 调用 `/market-intelligence`
+- Step 1.3: 调用 `/user-research`
 
-1. Activate `/competitive-analysis` with the competitor list
-2. Extract feature focus from the requirements
-3. Generate comparison matrix and recommendations
-4. Save to `context/competitive-analysis/{feature-name}-{date}.json` + `.md`
+**输出**：
+- `context/competitive-analysis/{feature-name}-{date}.json` + `.md`
+- `context/market-analysis.json`
+- `context/user-research.json`
+- `context/user-personas.json`
 
-**Skipped when**: No competitors specified or user opts out
+**质量门控**：
+- ✅ 竞品分析完成 - 2+ 个竞品功能对比
+- ✅ 市场研究完成 - 市场规模、趋势、机会点
+- ✅ 用户画像完成 - 2+ 个用户角色定义
+- **质量门控通过** - 进入 Strategy 阶段
 
-### Step 2: PRD Generation (Required)
-
-1. Activate `/prd-gen` with the requirements, scenario type, and collected context
-2. Automatically reference competitive analysis (if available)
-3. Include industry benchmarks research (user-specified + agent search)
-4. Generate complete PRD with all required sections including scenario-specific context
-5. Save to `context/prd/{feature-name}-{date}-v{version}.md`
-
-### Step 3: HTML Prototype (Optional)
-
-1. After PRD generation, ask user: **"是否需要生成 HTML 原型图？"**
-2. If user declines, skip to Step 4
-3. If user approves, activate `/prototype-design`:
-   - Generate interactive HTML prototype based on PRD content
-   - Output to `context/prototypes/{feature-name}.html`
-   - Include basic styling and interaction for demonstration
-   - Update PRD with HTML prototype link
-4. Save updated PRD with prototype section
-
-**Skipped when**: User declines prototype generation
-
-### Step 4: Summary
-
-1. Compile all outputs
-2. Update `context/current-workflow.json` state
-3. Present final results to user
-
-## Output Format
-
-The workflow produces:
-
-### Terminal Summary
-
-```markdown
-## Quick PRD Workflow Complete ✅
-
-### Execution Summary
-- **Workflow ID**: wf-20260311-001
-- **Mode**: copilot
-- **Scenario**: [iteration/new-feature/new-product]
-- **Duration**: ~3 minutes
-
-### Skills Executed
-1. ✅ scenario-detection (30 sec)
-   - Scenario: [迭代更新/新功能/0-1新产品]
-   - Context collected: [UI state/architecture/background]
-
-2. ✅ competitive-analysis (2 min)
-   - Analyzed: [Competitor A, Competitor B]
-   - Output: context/competitive-analysis/{name}-{date}.json + .md
-
-3. ✅ prd-gen (1 min)
-   - Requirements: XXX
-   - Benchmarks: 3+ industry references
-   - Output: context/prd/{name}-{date}-v{version}.md
-
-4. ✅ prototype-design (1 min) [if user approves]
-   - HTML file: context/prototypes/{feature-name}.html
-   - PRD updated with prototype link
-
-### Generated Documents
-📄 **PRD**: context/prd/{feature-name}-{date}-v{version}.md
-📊 **Competitive Analysis (JSON)**: context/competitive-analysis/{name}-{date}.json
-📊 **Competitive Analysis (MD)**: context/competitive-analysis/{name}-{date}.md
-🎨 **HTML Prototype**: context/prototypes/{feature-name}.html [if generated]
-
-### Next Steps
-- [ ] Open HTML prototype in browser
-- [ ] Run requirement review meeting
-- [ ] Share with stakeholders
-```
-
-### State Update
-
+**状态更新**：
 ```json
 {
-  "workflow_id": "wf-20260311-001",
-  "status": "completed",
-  "current_layer": "design",
-  "current_skill": "prd-gen",
-  "completed_skills": ["scenario-detection", "competitive-analysis", "prd-gen"],
-  "mode": "copilot",
-  "scenario": "iteration",
-  "started_at": "2026-03-11T...",
-  "updated_at": "2026-03-11T...",
-  "outputs": {
-    "prd": "context/prd/{feature-name}-{date}-v{version}.md",
-    "competitive_analysis_json": "context/competitive-analysis/{name}-{date}.json",
-    "competitive_analysis_md": "context/competitive-analysis/{name}-{date}.md"
-  }
+  "workflow_id": "wf-{{timestamp}}",
+  "workflow_name": "quick-prd",
+  "status": "in_progress",
+  "current_layer": "perception",
+  "current_skill": "competitive-analysis",
+  "current_stage": "S1",
+  "completed_stages": ["S0"],
+  "mode": "copilot"
+  "started_at": "{{ISO_8601}}",
+  "updated_at": "{{ISO_8601}}"
 }
 ```
 
-## Collaboration Modes
+---
 
-| Mode | Step 0 (Scenario Detection) | Step 1 (Competitive Analysis) | Step 2 (PRD Generation) |
-|:-----|:---------------------------|:------------------------------|:------------------------|
-| `autopilot` | Ask once, proceed | Auto-execute, no confirmation | Auto-execute, no confirmation |
-| `copilot` | Ask and confirm each input | Show results, wait for confirmation | Show outline, confirm sections |
-| `manual` | Provide guidance, you decide | Provide suggestions, you decide | Provide template, you fill in |
+## Stage 2: Strategy
 
-## Context Integration
+**目标**：完成策略规划层的工作
 
-**Reads:**
-- User input parameters
+**活动**：
+1. 产品定位 - `product-positioning` skill
+2. 路线图规划 - `roadmap-planning` skill
+3. 优先级排序 - `prioritization` skill
 
-**Writes:**
-- `context/competitive-analysis/{feature-name}-{date}.json` (Step 1, if competitors provided)
-- `context/competitive-analysis/{feature-name}-{date}.md` (Step 1, human-readable report)
-- `context/prd/{feature-name}-{date}-v{version}.md` (Step 2)
-- `context/current-workflow.json` (state update)
+**技能调用**：
+- Step 2.1: 调用 `/product-positioning`
+- Step 2.2: 调用 `/roadmap-planning`
+- Step 2.3: 调用 `/prioritization`
 
-## Quality Standards
+**输出**：
+- `context/positioning.md`
+- `context/roadmap.md`
+- `context/prioritization.json`
 
-Before completing, the workflow should:
-- Execute scenario-detection (MANDATORY - never skip)
-- Scenario type confirmed with user
-- All required context for that scenario collected
-- Execute prd-gen at minimum
-- Have PRD generated with scenario field and benchmarks
-- Reference competitive analysis in PRD (if analysis was run)
-- Update current-workflow.json to "completed" status with scenario field
+**质量门控**：
+- ✅ 产品定位完成 - 价值主张清晰、差异化策略明确
+- ✅ 路线图完成 - 12 个月里程碑规划
+- ✅ 优先级排序完成 - RICE/MoSCoW 框架应用
+- **质量门控通过** - 进入 Design 阶段
 
-## Error Handling
-
-| Error Scenario | Handling |
-|:---------------|:----------|
-| Competitive analysis fails | Warn user, continue with PRD generation |
-| PRD generation fails | Terminate workflow, report error |
-| Context write fails | Terminate workflow, check permissions |
-| User interrupts | Save progress, support resume |
-
-## Example Usage
-
-### With Competitor Analysis
-
-```
-User: "Quick PRD for user profile redesign, compare with Taobao and JD"
-→ Analyzes Taobao/JD user profiles
-→ Generates PRD with competitive insights
-→ Outputs complete documentation
+**状态更新**：
+```json
+{
+  "completed_stages": ["S0", "S1"],
+  "current_layer": "strategy",
+  "current_skill": "prioritization",
+  "current_stage": "S2",
+  "status": "in_progress",
+  "mode": "copilot",
+  "updated_at": "{{ISO_8601}}"
+}
 ```
 
-### PRD Only (Skip Competitor Analysis)
+---
 
+## Stage 3: Design
+
+**目标**：完成方案设计层的 PRD 生成和原型创建
+
+**活动**：
+1. PRD 生成 - `prd-gen` skill
+2. 原型设计 - `prototype-design` skill（HTML/Pencil/Both）
+
+**技能调用**：
+- Step 3.1: 调用 `/prd-gen`
+- Step 3.2: 调用 `/prototype-design`
+
+**输出**：
+- `context/prd/{feature-name}-{date}-v{version}.md`
+- `context/prototypes/{feature-name}.html`（如选择）
+- `context/prototypes/{feature-name}.pen`（如选择）
+- `context/prototypes/{feature-name}-preview.png`（Pencil 预览图）
+
+**原型格式选择**：
+
+在 PRD 生成后，询问用户选择原型输出格式：
+
+| Option | Description | 输出位置 |
+|:-------|-------------|:-----------|
+| **HTML 原型** | 可在浏览器直接预览、演示交互 | `context/prototypes/{name}.html` |
+| **Pencil 设计稿** | 结构化设计数据、专业设计工具、可导出代码 | `context/prototypes/{name}.pen` |
+| **两者都生成** | 同时生成 HTML 和 Pencil 两种格式 | 两者 |
+
+**质量门控**：
+- ✅ PRD 完整（9 章节 + 行业基准）
+- ✅ 原型已创建（HTML 或 Pencil）
+- **质量门控通过** - 进入 Delivery 阶段
+
+**状态更新**：
+```json
+{
+  "completed_stages": ["S0", "S1", "S2"],
+  "current_layer": "design",
+  "current_skill": "prototype-design",
+  "current_stage": "S3",
+  "status": "in_progress",
+  "mode": "copilot",
+  "updated_at": "{{ISO_8601}}"
+}
 ```
-User: "Quick PRD for dark mode"
-→ Skips competitor analysis
-→ Generates PRD directly
-→ Outputs documentation
+
+---
+
+## Stage 4: Delivery
+
+**目标**：完成交付协调层的工作
+
+**活动**：
+1. 需求评审 - `requirement-review` skill
+2. 项目计划 - `project-coordination` skill
+3. 发布管理 - `release-management` skill
+
+**技能调用**：
+- Step 4.1: 调用 `/requirement-review`
+- Step 4.2: 调用 `/project-coordination`
+- Step 4.3: 调用 `/release-management`
+
+**输出**：
+- `context/review-notes/[feature]-review.md`
+- `context/project-plan.md`
+- `context/release-plan.md`
+
+**质量门控**：
+- ✅ 需求评审完成 - 干系人对齐、签字确认
+- ✅ 项目计划完成 - 任务分配、时间线确认
+- ✅ 发布准备完成 - 代码冻结、发布包就绪
+- **质量门控通过** - 进入 Validation 阶段
+
+**状态更新**：
+```json
+{
+  "completed_stages": ["S0", "S1", "S2", "S3"],
+  "current_layer": "delivery",
+  "current_skill": "release-management",
+  "current_stage": "S4",
+  "status": "in_progress",
+  "mode": "copilot",
+  "updated_at": "{{ISO_8601}}"
+}
 ```
 
-## Notes
+---
 
-This is a focused workflow for design-layer output. For the complete product management cycle (all 5 layers), use `/full-pm-cycle` when available.
+## Stage 5: Validation
+
+**目标**：完成价值验证层的数据收集和分析
+
+**活动**：
+1. 效果分析 - `impact-analysis` skill
+2. 反馈综合 - `feedback-synthesis` skill
+3. 迭代规划 - `iteration-planning` skill
+
+**技能调用**：
+- Step 5.1: 调用 `/impact-analysis`
+- Step 5.2: 调用 `/feedback-synthesis`
+- Step 5.3: 调用 `/iteration-planning`
+
+**输出**：
+- `context/impact-analysis/{feature-name}-{date}.json`
+- `context/feedback-synthesis/{feature-name}-{date}.json`
+- `context/iteration-plan.json`
+
+**质量门控**：
+- ✅ 效果分析完成 - 目标达成度分析、关键指标收集
+- ✅ 反馈综合完成 - 用户反馈收集、主题分析、改进建议
+- ✅ 迭代规划完成 - 下一轮迭代计划制定
+- **工作流完成** - 全部 5 个阶段完成
+
+**状态更新**：
+```json
+{
+  "completed_stages": ["S0", "S1", "S2", "S3", "S4"],
+  "current_layer": "validation",
+  "current_skill": "iteration-planning",
+  "current_stage": "S5",
+  "status": "completed",
+  "mode": "copilot",
+  "updated_at": "{{ISO_8601}}"
+}
+```
+
+---
+
+## 工作流状态管理
+
+### 状态字段
+
+```json
+{
+  "workflow_id": "唯一的工作流ID",
+  "workflow_name": "工作流名称",
+  "status": "in_progress | completed | blocked",
+  "current_layer": "perception | strategy | design | delivery | validation",
+  "current_skill": "当前执行的 Skill",
+  "current_stage": "当前阶段 (S0-S5)",
+  "completed_stages": "已完成的阶段列表",
+  "mode": "协作模式 (autopilot | copilot | manual)",
+  "started_at": "ISO 8601 时间戳",
+  "updated_at": "最后更新时间 (ISO 8601)"
+}
+```
+
+---
+
+## 协作模式 (Collaboration Modes)
+
+| 模式 | 描述 | 适用场景 |
+|:-----|:-----|:---------|
+| `autopilot` | AI 自动执行 | 快速验证、演示、数据监控 |
+| `copilot` | AI 建议、人工确认 | PRD 生成、需求评审、项目计划 |
+| `manual` | 人工主导、AI 辅助 | 战略决策、创意发散、危机处理 |
+
+---
+
+## 质量门控 (Quality Gates)
+
+每个阶段完成后必须满足对应的质量标准才能进入下一阶段：
+
+### Perception 层质量门控
+
+```yaml
+perception_gates:
+  S1_to_S2:
+    - market_research_complete:
+        - 市场研究完成
+        - 竞品列表确定
+        - 关键玩家识别
+    - user_research_complete:
+        - 用户访谈完成
+        - 用户画像创建
+        - 痛点识别
+    - competitive_analysis_complete:
+        - 竞品分析完成
+        - 功能对比矩阵
+        - 差异化识别
+```
+
+### Strategy 层质量门控
+
+```yaml
+strategy_gates:
+  S2_to_S3:
+    - positioning_complete:
+        - 定位声明创建
+        - 价值主张明确
+        - 差异化策略制定
+    - roadmap_complete:
+        - 里程碑规划完成
+        - 时间线设定
+    - prioritization_complete:
+        - RICE 评分完成
+        - 优先级列表确定
+```
+
+### Design 层质量门控
+
+```yaml
+design_gates:
+  S3_to_S4:
+    - prd_complete:
+        - PRD 完整（9 章）
+        - 用户故事映射
+        - 验收标准定义
+    - prototype_validated:
+        - 原型已创建
+        - 交互功能验证
+        - 设计一致性检查
+```
+
+### Delivery 层质量门控
+
+```yaml
+delivery_gates:
+  S4_to_S5:
+    - requirement_review_complete:
+        - 需求评审完成
+        - 干系人对齐
+        - 签字确认
+    - project_plan_complete:
+        - 任务分配完成
+        - 时间线确认
+    - release_ready:
+        - 代码冻结
+        - 发布包就绪
+```
+
+### Validation 层质量门控
+
+```yaml
+validation_gates:
+  S5_complete:
+    - impact_analysis_complete:
+        - 目标达成度分析
+        - 关键指标收集
+    - feedback_synthesis_complete:
+        - 反馈收集完成
+        - 主题分析完成
+    - iteration_planning_complete:
+        - 下一轮迭代计划制定
+```
+
+---
+
+## 上下文集成
+
+**读取**：
+- `context/current-workflow.json` - 当前工作流状态
+- `context/prd/*.md` - PRD 文档
+- `context/competitive-analysis/*.json` - 竞品分析数据
+- `context/prototypes/*.html` - HTML 原型
+- `context/prototypes/*.pen` - Pencil 设计稿
+
+**写入**：
+- `context/workflow-state/{{workflow_id}}.json` - 工作流快照（按日期）
+- `context/review-notes/*.md` - 评审记录
+- `context/project-plan/*.md` - 项目计划
+- `context/release-plan/*.md` - 发布计划
+- `context/impact-analysis/*.json` - 效果分析
+- `context/feedback-synthesis/*.json` - 反馈综合
+- `context/iteration-plan.json` - 迭代计划
+
+---
+
+## 示例：工作流执行轨迹
+
+```json
+{
+  "workflow_id": "wf-20260317-001",
+  "workflow_name": "quick-prd",
+  "status": "completed",
+  "completed_stages": ["S0", "S1", "S2", "S3", "S4", "S5"],
+  "execution_trace": [
+    {
+      "stage": "S1",
+      "skill": "competitive-analysis",
+      "started_at": "2026-03-17T10:00:00Z",
+      "completed_at": "2026-03-17T10:02:00Z",
+      "outputs": ["competitor-list.json"]
+    },
+    {
+      "stage": "S2",
+      "skill": "prioritization",
+      "started_at": "2026-03-17T10:03:00Z",
+      "completed_at": "2026-03-17T10:05:00Z",
+      "outputs": ["prioritization.json"]
+    },
+    {
+      "stage": "S3",
+      "skill": "prd-gen",
+      "started_at": "2026-03-17T10:06:00Z",
+      "completed_at": "2026-03-17T10:08:00Z",
+      "outputs": ["prd-final.md", "prototype.html"]
+    },
+    {
+      "stage": "S4",
+      "skill": "requirement-review",
+      "started_at": "2026-03-17T10:10:00Z",
+      "completed_at": "2026-03-17T10:15:00Z",
+      "outputs": ["review-notes.md", "project-plan.md"]
+    },
+    {
+      "stage": "S5",
+      "skill": "iteration-planning",
+      "started_at": "2026-03-17T10:18:00Z",
+      "completed_at": "2026-03-17T10:20:00Z",
+      "outputs": ["iteration-plan.json"]
+    }
+  ],
+  "mode": "copilot",
+  "started_at": "2026-03-17T10:00:00Z",
+  "updated_at": "2026-03-17T10:20:00Z"
+}
+```

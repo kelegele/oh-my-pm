@@ -161,3 +161,79 @@ context/
 [0.3.0]: https://github.com/kelegele/oh-my-pm/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/kelegele/oh-my-pm/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/kelegele/oh-my-pm/releases/tag/v0.1.0
+## [0.6.0] - 2026-03-17
+
+### Added
+- **HTML 原型生成系统** - Three fidelity templates (wireframe/mockup/interactive) with CSS variables
+  - `templates/prototype/` directory with template files for different fidelity levels
+  - **Enhanced prototype-design skill** (v0.6.0) with HTML generation workflow
+  - Format selection and fidelity level support integrated
+  - Style configuration system with extracted colors and typography
+
+### Changed
+- `prototype-design` (v0.5.0) - Removed Figma references, enhanced with HTML prototype generation
+- `quick-prd` (v0.2.0) - Updated to call prototype-design for HTML generation
+- `prd-gen` (v0.3.0) - HTML format selection added after PRD generation
+
+### Design Philosophy
+- **No external dependencies** - HTML prototypes generated with embedded CSS, no external tool dependencies
+- **Template-based generation** - Reusable template system for different fidelity levels
+- **Style system** - CSS variable system supports extracted or user-selected styles
+- **Progressive fidelity** - Support for wireframe, mockup, and interactive prototypes
+
+
+## [0.7.0] - 2026-03-17
+
+### Added
+- **Pencil MCP 集成** - 专业设计稿生成能力
+  - `pencil-design` skill (新增) - 使用 Pencil MCP 生成 .pen 设计文件
+  - **关键词更新** - "pencil" 和 "pen" 已添加到 keywords
+
+### Changed
+- `prototype-design` (v0.6.0) - 移除 Figma 引用，增强 HTML 生成能力
+- `skills.yaml` - 新增 pencil-design skill 注册
+- `plugin.json` - 新增 pencil-design skill 到 skills 数组
+- `plugin.json` - version 更新到 0.7.0
+- `plugin.json` - keywords 添加 pencil/pen
+
+### Design Philosophy
+- **专业设计优先** - Pencil 作为可选的高级功能，提供专业级设计能力
+- **渐进式集成** - 先实现 HTML 原型（无依赖），再集成 Pencil（需配置）
+- **环境检查优先** - Pencil 环境配置作为必需前置，确保可用性
+
+## [0.8.0] - 2026-03-17
+
+### Added
+- **Plan-and-Execute 工作流架构** - 统一的工作流架构文档
+  - `docs/workflow-architecture.md` - 新增工作流架构规范
+  - 定义统一的阶段标识（S0-S5）、状态机和质量门控
+  - 五层架构与阶段映射关系
+  - 工作流状态追踪字段定义
+
+### Changed
+- `quick-prd` (v0.8.0) - 更新为 Plan-and-Execute 模式
+  - 添加 5 个阶段定义（S0-S5）
+  - 添加阶段门控（Quality Gates）
+  - 添加状态追踪字段定义
+  - 完善协作模式文档
+- `feature-launch` (v0.8.0) - 更新为 Plan-and-Execute 模式
+  - 添加 4 个阶段定义（S0-S3）
+  - 添加阶段门控和质量标准
+  - 添加工作流执行轨迹示例
+- `full-pm-cycle` (v0.8.0) - 更新为 Plan-and-Execute 模式
+  - 添加 5 个阶段定义（S0-S5）
+  - 统一阶段和质量门控格式
+  - 添加工作流执行轨迹示例
+  - 完善自定义选项（Fast Track/Deep Dive/Parallel）
+- `plugin.json` - version 更新到 0.8.0
+- `skills.yaml` - 修复文件格式，version 更新到 0.8.0
+
+### Fixed
+- `skills.yaml` - 修复损坏的文件格式，重建完整的技能清单
+
+### Design Philosophy
+- **统一架构** - 所有工作流采用一致的 Plan-and-Execute 模式
+- **阶段化管理** - 每个工作流明确定义阶段、状态和质量门控
+- **状态追踪** - 统一的工作流状态字段和执行轨迹记录
+- **可扩展性** - 架构支持自定义选项和并行执行
+
