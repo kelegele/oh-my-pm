@@ -16,6 +16,47 @@ version: 0.7.0
 
 生成交互式设计稿（.pen 文件），用于专业设计场景、设计资产管理和开发对接。
 
+## .pen 文件格式规范（CRITICAL）
+
+### 必需结构
+
+有效的 .pen 文件必须包含：
+
+```json
+{
+  "version": "1.0.0",
+  "children": [...]
+}
+```
+
+**关键字段：**
+- `version`: 字符串，必需。表示 .pen 格式版本（如 "1.0.0"）
+- `children`: 数组，必需。包含所有顶层节点
+
+**如果缺少 `version` 或 `children` 字段，文件无法在 Pencil 应用中打开！**
+
+### 初始化新文档
+
+使用 MCP 工具创建新文档时：
+
+```python
+# 1. 确认使用 MCP batch_design 工具（不是手动写 JSON）
+# MCP 工具会自动处理 version 和结构
+
+# 2. 创建文档后，立即验证内容
+mcp__pencil__snapshot_layout(maxDepth=1)
+
+# 3. 如果文档为空，重新执行 batch_design 操作
+```
+
+### 常见问题排查
+
+| 错误现象 | 可能原因 | 解决方法 |
+|:---------|:---------|:---------|
+| "Unsupported file format" | 缺少 version 字段 | 重新使用 batch_design 创建 |
+| 文档打开但为空 | children 为空数组 | 添加至少一个顶层 Frame |
+| 无法编辑节点 | 节点结构无效 | 检查 JSON 语法 |
+
 ## When to Use
 
 激活此 skill 当：
@@ -220,6 +261,29 @@ mcp__pencil__snapshot_layout(maxDepth=3, problemsOnly=False)
 ### Step P7: 输出设计稿
 
 ```markdown
+### 生成后验证（CRITICAL）
+
+```python
+# 验证 1: 检查文档状态
+state = mcp__pencil__get_editor_state(include_schema=False)
+# 确认有顶层节点，不是 "No nodes are selected."
+
+# 验证 2: 生成截图预览
+mcp__pencil__get_screenshot(nodeId="top-level-frame-id")
+# 保存为 {feature-name}-preview.png
+
+# 验证 3: 布局检查
+mcp__pencil__snapshot_layout(maxDepth=2, problemsOnly=False)
+
+# 如果验证失败，重新执行 batch_design
+```
+```
+
+保存到 `context/prototypes/{feature-name}.pen`
+生成预览截图 `context/prototypes/{feature-name}-preview.png`
+更新 PRD 中的原型链接
+
+```markdown
 - 保存到 `context/prototypes/{feature-name}.pen`
 - 生成预览截图 `context/prototypes/{feature-name}-preview.png`
 - 更新 PRD 中的原型链接
@@ -251,9 +315,11 @@ context/prototypes/
 - [ ] Pencil MCP 连接测试通过
 - [ ] 获取了设计指南和风格指南
 - [ ] 设计结构基于 PRD 内容
-- [ ] 生成文件可在 Pencil 应用中打开
+- [ ] **生成文件可在 Pencil 应用中打开（版本验证）**
+- [ ] **包含非空的 children 数组（至少一个顶层节点）**
 - [ ] 包含必要的组件和交互
 - [ ] 设计原则符合 web-app 规范
+- [ ] **生成后执行验证步骤（检查文档状态、生成截图）**
 
 ## 上下文集成
 

@@ -85,8 +85,10 @@ Orchestrates end-to-end feature launch process spanning:
 - `context/prototypes/{feature-name}.pen`（如选择）
 
 **质量门控**：
-- ✅ PRD 完整（9 章节）
+- ✅ PRD 完整（9 章）
 - ✅ 原型已验证
+- ✅ **Pencil 格式：.pen 文件格式正确（包含 version）**
+- ✅ **Pencil 格式：可在 Pencil 应用中打开**
 - **质量门控通过** - 进入 Delivery 阶段
 
 **状态更新**：
@@ -234,6 +236,8 @@ design_gates:
         - 原型已创建
         - 交互功能验证
         - 设计一致性检查
+        - Pencil 格式：.pen 文件包含 version 和 children
+        - Pencil 格式：可在 Pencil 应用中打开
 ```
 
 ### Delivery 层质量门控

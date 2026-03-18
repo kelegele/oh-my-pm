@@ -56,8 +56,8 @@ oh-my-pm/
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
 | **prd-gen** | `skills/design/prd-gen/SKILL.md` | 写 PRD, 需求文档, 产品需求 | 需求描述 | `context/prd/*.md` |
-| **prototype-design** | `skills/design/prototype-design/SKILL.md` | 设计原型, 原型, 交互设计, wireframe, HTML 原型 | PRD | `context/prototypes/*.html` |
-| **pencil-design** | `skills/design/pencil-design/SKILL.md` | Pencil, 设计稿, .pen, Pencil design | PRD | `context/prototypes/*.pen` |
+| **prototype-design** | `skills/design/prototype-design/SKILL.md` | 设计原型, 原型, 交互设计, wireframe, HTML/Pencil 原型 | PRD | `context/prototypes/*.html`, `context/prototypes/*.pen` |
+| **pencil-design** | `skills/design/pencil-design/SKILL.md` | Pencil, 设计稿, .pen, Pencil design, MCP 工具集成 | PRD | `context/prototypes/*.pen`, `context/prototypes/*-preview.png` |
 | **process-optimization** | `skills/design/process-optimization/SKILL.md` | 流程优化, 提效, 流程改进 | 现有流程 | 优化建议 |
 
 ### Delivery Layer (交付协调层)
@@ -237,5 +237,12 @@ oh-my-pm/
 ## 版本信息
 
 - **当前版本**: v0.8.0
-- **最后更新**: 2026-03-17
+- **最后更新**: 2026-03-18
 - **组件总数**: 20 Skills + 8 Subagents + 4 Commands
+
+### 最近变更 (v0.8.0)
+
+- 新增 `pencil-design` Skill（独立 Pencil MCP 设计）
+- `prototype-design` Skill 更新：支持 Pencil 设计稿格式
+- 所有工作流 Skills 更新：Design 层质量门控添加 Pencil 格式验证
+- 新增 `context/prototypes/README.md`：Pencil 格式规范和使用说明

@@ -5,7 +5,7 @@ layer: design
 input-from: prd-gen,user-research
 output-to: project-coordination,requirement-review
 mode-support: [autopilot, copilot, manual]
-version: 0.6.0
+version: 0.6.1
 ---
 
 # Prototype Design
@@ -31,9 +31,9 @@ version: 0.6.0
 - 需要验证用户流程或交互模式
 - 需要向干系人演示设计概念
 
-## HTML 原型生成工作流 (v0.6.0 新增)
+---
 
-### Step 0: 格式选择 (CRITICAL)
+## Step 0: 格式选择 (CRITICAL)
 
 **生成任何原型前，必须先选择输出格式。**
 
@@ -52,11 +52,13 @@ version: 0.6.0
 **格式对比：**
 
 | 格式 | 优势 | 适用场景 | 输出位置 |
-|:-----|:-----|:---------|:-----------|
+|:-----|:-----|:-----------|
 | **HTML 原型** | 可在浏览器直接预览、快速演示交互 | 快速验证、演示给干系人 | `context/prototypes/{name}.html` |
 | **Pencil 设计稿** | 结构化设计数据、可导出代码、支持设计系统、专业工具集成 | 专业设计、开发对接、设计资产管理 | `context/prototypes/{name}.pen` |
 
-### Step 1: 模式检测 (CRITICAL - 第二步)
+---
+
+## Step 1: 模式检测 (CRITICAL - 第二步)
 
 在输出格式选择后，必须检测场景模式：
 
@@ -71,7 +73,70 @@ version: 0.6.0
 | **新产品** | 创建全新设计（需要确认设计规范） |
 ```
 
-### Step 2: 迭代模式工作流
+---
+
+## .pen 文件格式规范（CRITICAL）
+
+有效的 .pen 文件必须包含以下必需字段：
+
+```json
+{
+  "version": "1.0.0",
+  "children": [...]
+}
+```
+
+**必需字段说明：**
+- `version`: 字符串，表示 .pen 格式版本（如 "1.0.0"）
+- `children`: 数组，包含所有顶层节点
+
+**如果缺少 version 或 children 字段，文件无法在 Pencil 应用中打开！**
+
+### .pen 文件完整性检查（CRITICAL）
+
+生成完成后，必须执行验证步骤：
+
+```python
+# 验证 1: 检查文档状态
+state = mcp__pencil__get_editor_state(include_schema=False)
+# 确认有顶层节点，不是 "No nodes are selected."
+
+# 验证 2: 生成截图预览
+mcp__pencil__get_screenshot(nodeId="top-level-frame-id")
+# 保存为 {feature-name}-preview.png
+
+# 验证 3: 尝试在 Pencil 应用中打开
+# 用户手动打开 .pen 文件验证
+
+# 如果验证失败：
+# 1. 重新执行 batch_design 操作
+# 2. 确保 operations 中至少创建一个 Frame 节点
+# 3. 确保 Frame 添加到 "document" 根节点
+```
+
+### .pen 文件基本结构示例
+
+```javascript
+// 使用 batch_design 工具时：
+// 1. 首先创建顶层 Frame（必需）
+mainScreen = I("document", {
+  type: "frame",
+  name: "Main Screen",
+  layout: "vertical",
+  gap: 24,
+  padding: 32
+})
+
+// 2. 在 Frame 内添加内容
+title = I(mainScreen, {type: "text", content: "Title", ...})
+
+// MCP 工具会自动处理 version 和完整结构
+```
+```
+
+---
+
+## Step 2: 迭代模式工作流
 
 当用户选择"迭代更新"时：
 
@@ -96,16 +161,6 @@ version: 0.6.0
 | 截图 | `mcp__zai-mcp-server__analyze_image` 或 `Read` | 颜色、字体、布局、组件 |
 | HTML | `Read` 工具解析 DOM | CSS 变量、class 样式、组件结构 |
 | 在线链接 | `mcp__web_reader__webReader` | 页面样式和布局 |
-
-#### Step 2.2: 分析并提取样式
-
-根据用户提供的方式：
-
-| 输入方式 | 处理方式 |
-|:---------|:---------|
-| 截图 | AI 图片分析工具提取颜色、字体、布局信息 |
-| HTML | Read 工具解析 DOM 结构，提取 CSS 规则 |
-| 在线链接 | Web Reader 获取页面样式 |
 
 从分析中提取并生成样式配置：
 
@@ -163,6 +218,10 @@ const EXTRACTED_STYLES = {
 };
 ```
 
+#### Step 2.2: 分析并提取样式
+
+（使用步骤 2.1 收集的样式）
+
 #### Step 2.3: 生成原型（根据格式选择）
 
 **HTML 格式：**
@@ -177,7 +236,7 @@ const EXTRACTED_STYLES = {
 
 生成到 `context/prototypes/{feature-name}.html`
 
-**HTML 原型输出格式**：
+**HTML 原型输出格式：**
 
 生成的文件结构：
 
@@ -224,11 +283,11 @@ const EXTRACTED_STYLES = {
             --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
             --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-
-            /* 基础重置 */
-            * { margin: 0; padding: 0; box-sizing: border-box; }
         }
 
+        /* 基础重置 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        }
         body {
             font-family: var(--font-family);
             font-size: var(--font-size-base);
@@ -277,7 +336,7 @@ const EXTRACTED_STYLES = {
         .input:focus {
             outline: none;
             border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         /* 按钮样式 */
@@ -351,7 +410,9 @@ const EXTRACTED_STYLES = {
 </html>
 ```
 
-### Step 3: 新产品模式工作流
+---
+
+## Step 3: 新产品模式工作流
 
 当用户选择"新产品"时：
 
@@ -370,6 +431,9 @@ const EXTRACTED_STYLES = {
 | **暗色主题** | 深色背景、高对比度、科技感 |
 ```
 
+#### Step 3.2: 确认主色调
+
+```markdown
 ### Q: 主色调偏好？
 
 | Option | Color |
@@ -380,33 +444,39 @@ const EXTRACTED_STYLES = {
 | **橙色** | 活力、热情 |
 | **红色** | 紧迫、重要 |
 | **自定义** | 输入色值 |
+```
 
-#### Step 3.2: 生成样式配置
+#### Step 3.3: 生成样式配置
 
-基于用户选择生成样式配置（同上 `styles.config.js` 格式）
+基于用户选择生成样式配置（同上 `styles.config.js` 格式）。
 
-#### Step 3.3: 生成原型（根据格式选择）
+#### Step 3.4: 生成原型（根据格式选择）
 
-**HTML 格式：** 使用默认样式配置生成到 `context/prototypes/{feature-name}.html`
+**HTML 格式：**
+
+使用默认样式配置生成到 `context/prototypes/{feature-name}.html`
 
 选择合适的保真度级别：
-- **wireframe** - 线框图，使用基础样式
-- **mockup** - 完整视觉设计
-- **interactive** - 交互式原型
 
-### Pencil MCP 环境配置（CRITICAL - 选择 Pencil 时必需）
+| 保真度级别 | 说明 | 模板 |
+|:---------|:-----|:-------|
+| `wireframe` | 线框图，使用基础样式 |
+| `mockup` | 完整视觉设计 |
+| `interactive` | 交互式原型 |
 
-当用户选择 **Pencil 设计稿**或**两者都生成**时，必须先完成 Pencil MCP 环境检查：
+---
+
+## Pencil MCP 环境配置（CRITICAL - 选择 Pencil 时必需）
 
 [保留原有 Pencil MCP 环境配置流程]
 
 ### 保真度级别
 
 | 级别 | 说明 | 输出 |
-|:-----|:-----|:-----|
-| `wireframe` | 线框图，灰度布局，无视觉样式 | 基础布局，结构清晰 |
-| `mockup` | 模型，完整视觉设计，静态页面 | 完整设计，视觉专业 |
-| `interactive` | 交互式，可点击、状态切换、表单演示 | 可交互，演示流程 |
+|:-----|:-----|
+| `basic` | 线框图，结构清晰 | 基础布局，组件对齐 |
+| `mockup` | 完整设计，视觉专业 | 完整设计，视觉专业 |
+| `interactive` | 交互式，可点击 | 可交互，演示流程 |
 
 ### 输出位置
 
@@ -414,35 +484,27 @@ const EXTRACTED_STYLES = {
 context/prototypes/
 ├── {feature-name}.html          # HTML 原型（可选）
 ├── {feature-name}.pen           # Pencil 设计稿（可选）
-├── {feature-name}-preview.png    # Pencil 设计稿预览截图
+├── {feature-name}-preview.png    # 预览截图（Pencil）
 └── README.md                   # 使用说明
 ```
+
+---
 
 ## Quality Standards
 
 生成原型前确保：
 - [ ] 格式已选择（HTML/Pencil/两者）
-- [ ] Pencil 格式：环境配置检查通过
+- [ ] **Pencil 格式：环境配置检查通过**
+- [ ] **Pencil 格式：.pen 文件包含 version 和 children 字段**
 - [ ] 迭代模式：已收集并分析现有 UI
 - [ ] 新产品模式：已确认设计风格和颜色
 - [ ] PRD 内容已读取并理解
 - [ ] 用户流程已映射
-- [ ] 生成文件可在对应工具中打开
+- [ ] **生成文件可在对应工具中打开**
 - [ ] 包含必要的交互演示（交互式）
 - [ ] HTML 使用提取的样式或用户选择的配色
 
-## 上下文集成
-
-**读取:**
-- `context/prd/*.md` - 需求文档
-- 用户提供的截图/HTML（迭代模式）
-- `templates/prototype/*.html` - HTML 原型模板
-
-**写入:**
-- `context/prototypes/{feature-name}.html` - HTML 原型（如选择）
-- `context/prototypes/{feature-name}.pen` - Pencil 设计稿（如选择）
-- `context/prototypes/{feature-name}-preview.png` - 设计稿预览截图（Pencil）
-- 更新 PRD 中的原型链接
+---
 
 ## 使用示例
 
@@ -463,8 +525,6 @@ User: "为新产品创建原型"
 
 ## 预览说明
 
-生成后向用户提供：
-
 ### HTML 原型预览
 
 ```markdown
@@ -481,11 +541,9 @@ User: "为新产品创建原型"
 - 基于 [提取样式/用户选择] 的设计
 - 可交互的页面切换
 - 表单演示
-
-📝 下一步:
-- 查看原型并提供反馈
-- 确认后可进入开发阶段
 ```
+
+---
 
 ### Pencil 设计稿预览
 
@@ -524,8 +582,6 @@ User: "为新产品创建原型"
 📖 预览方式:
 - HTML: 双击文件在浏览器中打开
 - Pencil: 在 Pencil 应用中打开
-
-📝 下一步:
-- 查看原型并提供反馈
-- 确认后可进入开发阶段
+```
+```
 ```
