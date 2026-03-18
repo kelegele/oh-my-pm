@@ -5,7 +5,7 @@ layer: design
 input-from: product-positioning,prioritization,competitive-analysis
 output-to: requirement-review,prototype-design
 mode-support: [autopilot, copilot, manual]
-version: 0.3.0
+version: 0.4.0
 context-requirements:
   - scenario: iteration
     required: [current_feature_desc, ui_state, iteration_goal]
@@ -22,7 +22,7 @@ Generate structured Product Requirements Documents from feature ideas.
 
 ## What This Skill Does
 
-Transforms informal feature requests into complete PRDs with user stories, acceptance criteria, functional requirements, success metrics, and delivery timelines. The output is ready for engineering teams to implement and stakeholders to review.
+Transforms informal feature requests into complete PRDs with user stories, acceptance criteria, functional requirements, success metrics, and compliance guidance. The output is ready for engineering teams to implement and stakeholders to review.
 
 ## When to Use
 
@@ -311,26 +311,39 @@ The PRD follows this structure (aligned with standard PRD template):
 - 页面A → 页面B → 页面C
 
 ## 6. 项目风险与应对
+> 注：本节仅包含产品/业务风险，不包含技术实现风险（技术风险由开发团队在技术方案中评估）
 | 风险ID | 风险描述 | 概率 | 影响 | 应对措施 |
 |:-------|:---------|:-----|:-----|:---------|
 | R-001 | XXX | 高/中/低 | 高/中/低 | XXX |
 | R-002 | XXX | 高/中/低 | 高/中/低 | XXX |
 
-## 7. 原型设计
-### 7.1 原型链接
+## 7. 合规建议
+
+### 7.1 合规要点概述
+[合规专家审查的关键要点摘要]
+
+### 7.2 风险提示
+| 风险类别 | 说明 | 建议 |
+|:---------|:-----|:-----|
+| 隐私合规 | [涉及用户数据的处理方式] | [合规建议] |
+| 内容合规 | [涉及的内容审核要点] | [合规建议] |
+| 数据安全 | [数据存储和传输要求] | [合规建议] |
+| 第三方合规 | [依赖的第三方服务合规性] | [合规建议] |
+
+### 7.3 合规报告附件
+- [ ] 合规分析报告已附 (如果有，提供路径)
+- [ ] 等待合规审查 (如需要，安排合规专家评审)
+
+**备注**: 本节内容由合规专家提供或参考 `release-management` skill 的 Legal/Compliance 检查清单。
+
+## 8. 原型设计
+### 8.1 原型链接
 - **HTML**: [本地路径]
 - 待生成...
 
-### 7.2 设计说明
+### 8.2 设计说明
 - **设计参考**: [来源]
 - **设计风格**: [描述]
-
-## 8. 项目计划
-| 阶段 | 交付物 | 时间 | 负责人 |
-|:-----|:-------|:-----|:-------|
-| 设计 | 原型图 | Week 1 | XXX |
-| 开发 | 功能上线 | Week 3 | XXX |
-| 测试 | 测试报告 | Week 4 | XXX |
 
 ## 9. 成功指标
 ### 9.1 北极星指标
@@ -379,13 +392,15 @@ Before delivering, the PRD should include:
 - **Scenario identified** (iteration/new-feature/new-product)
 - **Required context collected** for the identified scenario
 - **3+ industry benchmarks** referenced with rationale (第0章)
-- All 9 required sections complete (第1-9章)
+- All 8 required sections complete (第1-9章，不含项目计划)
 - **文档基本信息** with version and revision history
 - **用户痛点** identified and documented (第2.2节)
 - User stories in "作为...我希望...以便..." format (第3.2节)
 - **非功能性需求** as standalone section (第4章)
 - **用户体验流程** with user journey (第5章)
-- **原型设计** section (第7章)
+- **项目风险** documented (product/business risks only, no technical risks)
+- **合规建议** section with risk categories and attachment reference
+- **原型设计** section (第8章)
 - **成功指标** split into North Star, process, and outcome metrics (第9章)
 - 3+ quantifiable success metrics
 - Dependencies and constraints clearly identified
@@ -401,9 +416,9 @@ Before delivering, the PRD should include:
 - [ ] 功能需求 complete (feature list, user stories, details)
 - [ ] 非功能性需求 complete (performance, security, availability, compatibility)
 - [ ] 用户体验流程 complete (user journey, page flow)
-- [ ] 项目风险 documented with mitigation
+- [ ] 项目风险 documented with mitigation (product/business risks only, no technical risks)
+- [ ] 合规建议 complete with risk categories and attachment reference
 - [ ] 原型设计 section present
-- [ ] 项目计划 with timeline
 - [ ] 成功指标 quantified (North Star + process + outcome)
 - [ ] Dependencies documented
 

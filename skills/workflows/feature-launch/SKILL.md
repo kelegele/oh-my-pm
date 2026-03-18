@@ -85,7 +85,7 @@ Orchestrates end-to-end feature launch process spanning:
 - `context/prototypes/{feature-name}.pen`（如选择）
 
 **质量门控**：
-- ✅ PRD 完整（9 章）
+- ✅ PRD 完整（8 章，不含项目计划）
 - ✅ 原型已验证
 - ✅ **Pencil 格式：.pen 文件格式正确（包含 version）**
 - ✅ **Pencil 格式：可在 Pencil 应用中打开**
@@ -229,7 +229,7 @@ Orchestrates end-to-end feature launch process spanning:
 design_gates:
   S1_to_S2:
     - prd_complete:
-        - PRD 完整（9 章）
+        - PRD 完整（8 章，不含项目计划）
         - 用户故事映射
         - 验收标准定义
     - prototype_validated:

@@ -179,7 +179,7 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 | **两者都生成** | 同时生成 HTML 和 Pencil 两种格式 | 两者 |
 
 **质量门控**：
-- ✅ PRD 完整（9 章节 + 行业基准）
+- ✅ PRD 完整（8 章节 + 行业基准，不含项目计划）
 - ✅ 原型已创建（HTML 或 Pencil）
 - ✅ **Pencil 格式：文件包含 version 和 children 字段**
 - ✅ **Pencil 格式：生成预览截图**
@@ -358,7 +358,7 @@ strategy_gates:
 design_gates:
   S3_to_S4:
     - prd_complete:
-        - PRD 完整（9 章）
+        - PRD 完整（8 章，不含项目计划）
         - 用户故事映射
         - 验收标准定义
     - prototype_validated:

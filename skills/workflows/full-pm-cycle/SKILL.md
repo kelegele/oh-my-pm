@@ -187,7 +187,7 @@ Orchestrates complete product management lifecycle across all five layers:
 - `context/prototypes/{feature-name}-preview.png`（Pencil 预览图）
 
 **质量门控**：
-- ✅ PRD 完整（9 章节）
+- ✅ PRD 完整（8 章节，不含项目计划）
 - ✅ 原型已创建（HTML 或 Pencil）
 - ✅ **Pencil 格式：.pen 文件包含 version 和 children 字段**
 - ✅ **Pencil 格式：生成预览截图**
@@ -385,7 +385,7 @@ strategy_gates:
 design_gates:
   S3_to_S4:
     - prd_complete:
-        - PRD 完整（9 章）
+        - PRD 完整（8 章，不含项目计划）
         - 用户故事映射
         - 验收标准定义
     - prototype_validated:

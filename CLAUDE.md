@@ -180,7 +180,7 @@ output-to: requirement-review,prototype-design
 | `product-positioning` | 0.1.0 | ✅ |
 | `roadmap-planning` | 0.1.0 | ✅ |
 | `prioritization` | 0.1.0 | ✅ |
-| `prd-gen` | 0.2.1 | ✅ |
+| `prd-gen` | 0.4.0 | ✅ |
 | `prototype-design` | 0.2.0 | ✅ |
 | `process-optimization` | 0.1.0 | ✅ |
 | `requirement-review` | 0.1.0 | ✅ |

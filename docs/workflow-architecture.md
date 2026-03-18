@@ -116,7 +116,7 @@ gate_criteria:
   design:
     prd_complete:
       name: "PRD 完整"
-      description: "包含全部 9 章节的 PRD 文档"
+      description: "包含全部 8 章节的 PRD 文档（不含项目计划）"
       metrics: ["all_sections_complete", "user_stories_mapped", "acceptance_criteria"]
     prototype_validated:
       name: "原型验证完成"
