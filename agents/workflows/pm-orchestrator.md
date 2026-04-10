@@ -97,7 +97,7 @@ memory: project
 - `context/prioritization.json`
 
 ### 阶段 3: 设计 (定义方案)
-**使用 Skills**: `prd-gen` → `prototype-design`
+**使用 Skills**: `prd-gen` → `HTML 原型生成`
 
 **输出**：
 - `context/prd/[feature]-v1.md`

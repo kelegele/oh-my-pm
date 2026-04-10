@@ -4,21 +4,17 @@
 
 ### v0.8.0 - Plan-and-Execute 架构 (当前)
 
-**目标**: 统一工作流架构，引入 Pencil MCP 集成
 
 **已完成**:
 - ✅ Plan-and-Execute 工作流架构文档 (`docs/workflow-architecture.md`)
-- ✅ Pencil MCP 集成 (`skills/design/pencil-design/SKILL.md`)
 - ✅ 统一阶段标识 (S0-S5)
 - ✅ 统一质量门控定义
 - ✅ 工作流状态追踪字段
 
 ---
 
-### v0.7.0 - Pencil MCP 集成
 
 **已完成**:
-- ✅ `pencil-design` skill - 使用 Pencil MCP 生成 .pen 设计文件
 - ✅ 关键词更新 (pencil, pen)
 - ✅ 专业设计能力集成
 
@@ -30,7 +26,6 @@
 - ✅ HTML 原型生成系统
 - ✅ `templates/prototype/` 目录
 - ✅ 三种保真度模板 (wireframe/mockup/interactive)
-- ✅ `prototype-design` skill 增强
 - ✅ 移除 Figma 依赖
 
 ---
@@ -100,7 +95,6 @@
 | 五层工作流架构 | ✅ | v0.2.0 |
 | 场景驱动 PRD | ✅ | v0.3.0 |
 | HTML 原型生成 | ✅ | v0.6.0 |
-| Pencil MCP 集成 | ✅ | v0.7.0 |
 | Subagent 记忆系统 | ✅ | v0.3.0 |
 | Commands 集成 | ✅ | v0.5.1 |
 | Plan-and-Execute 架构 | ✅ | v0.8.0 |
@@ -132,7 +126,6 @@
 | M3 | Subagent 混合架构 | ✅ 2026-03 |
 | M4 | Commands 集成 | ✅ 2026-03 |
 | M5 | HTML 原型生成 | ✅ 2026-03 |
-| M6 | Pencil MCP 集成 | ✅ 2026-03 |
 | M7 | Plan-and-Execute 架构 | ✅ 2026-03 |
 | M8 | 企业版功能 (v1.0) | ⏳ 待规划 |
 
@@ -162,8 +155,6 @@
 | Skill | 版本 | 文件 |
 |:-----|:-----|:-----|
 | prd-gen | 0.3.0 | skills/design/prd-gen/SKILL.md |
-| prototype-design | 0.6.0 | skills/design/prototype-design/SKILL.md |
-| pencil-design | 0.1.0 | skills/design/pencil-design/SKILL.md |
 | process-optimization | 0.1.0 | skills/design/process-optimization/SKILL.md |
 
 ### Delivery Layer (交付协调层)
@@ -231,5 +222,4 @@
 ## 依赖项目
 
 - [Claude Code](https://claude.ai/code) - 宿主环境
-- [Pencil MCP](https://github.com/anysphere/mcp-server-pencilmcp) - 专业设计稿生成
 - [anthropics/skills](https://github.com/anthropics/skills) - Skill 参考实现

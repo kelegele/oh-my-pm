@@ -457,7 +457,6 @@ After PRD generation, ask user if they need HTML prototype:
 - ⏭️ 跳过
 ```
 
-If user approves, activate `prototype-design` skill to:
 1. Generate interactive HTML prototype based on PRD content
 2. Output to `context/prototypes/{feature-name}.html`
 3. Include basic styling and interaction for demonstration

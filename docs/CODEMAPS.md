@@ -11,7 +11,7 @@ oh-my-pm/
 ├── skills/                    # 核心 Skills (20个)
 │   ├── perception/           # 需求感知层 (4)
 │   ├── strategy/             # 策略规划层 (3)
-│   ├── design/               # 方案设计层 (4)
+│   ├── design/               # 方案设计层 (2)
 │   ├── delivery/             # 交付协调层 (3)
 │   ├── validation/           # 价值验证层 (3)
 │   └── workflows/            # 工作流编排器 (3)
@@ -56,8 +56,6 @@ oh-my-pm/
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
 | **prd-gen** | `skills/design/prd-gen/SKILL.md` | 写 PRD, 需求文档, 产品需求 | 需求描述 | `context/prd/*.md` |
-| **prototype-design** | `skills/design/prototype-design/SKILL.md` | 设计原型, 原型, 交互设计, wireframe, HTML/Pencil 原型 | PRD | `context/prototypes/*.html`, `context/prototypes/*.pen` |
-| **pencil-design** | `skills/design/pencil-design/SKILL.md` | Pencil, 设计稿, .pen, Pencil design, MCP 工具集成 | PRD | `context/prototypes/*.pen`, `context/prototypes/*-preview.png` |
 | **process-optimization** | `skills/design/process-optimization/SKILL.md` | 流程优化, 提效, 流程改进 | 现有流程 | 优化建议 |
 
 ### Delivery Layer (交付协调层)
@@ -80,8 +78,7 @@ oh-my-pm/
 
 | Workflow | 文件路径 | 触发关键词 | 调用的 Skills |
 |:--------|:----------|:----------|:-------------|
-| **quick-prd** | `skills/workflows/quick-prd/SKILL.md` | 快速 PRD, 带竞品分析的需求 | competitive-analysis → prd-gen → prototype-design |
-| **full-pm-cycle** | `skills/workflows/full-pm-cycle/SKILL.md` | 完整产品规划, 0-1 产品, 产品全周期 | 全部 16 个 Skills |
+| **full-pm-cycle** | `skills/workflows/full-pm-cycle/SKILL.md` | 完整产品规划, 0-1 产品, 产品全周期 | 全部 15 个 Skills |
 | **feature-launch** | `skills/workflows/feature-launch/SKILL.md` | 功能发布, 发布协调, 发布工作流 | prd-gen → requirement-review → release-management → impact-analysis |
 
 ---
@@ -121,8 +118,7 @@ oh-my-pm/
 | `context/roadmap.md` | Markdown | 产品路线图 | roadmap-planning |
 | `context/prd-draft.md` | Markdown | PRD 文档草稿 | prd-gen |
 | `context/prd/<日期>-<名称>.md` | Markdown | 版本化 PRD 文档 | prd-gen |
-| `context/prototypes/*.html` | HTML | HTML 原型文件 | prototype-design |
-| `context/prototypes/*.pen` | .pen | Pencil 设计文件 | pencil-design |
+| `context/prototypes/*.html` | HTML | HTML 原型文件 | 推荐使用 HTML 直接生成原型 |
 | `context/current-workflow.json` | JSON | 工作流状态追踪 | 全部 workflows |
 | `context/impact.json` | JSON | 效果分析数据 | impact-analysis |
 | `context/iteration-plan.json` | JSON | 迭代计划 | iteration-planning |
@@ -186,10 +182,10 @@ oh-my-pm/
                        ↓ context/
 ┌─────────────────────────────────────────────────┐
 │  Design Layer (方案设计)                        │
-│  skills/design/ (4 Skills)                      │
+│  skills/design/ (3 Skills)                      │
 │  agents/design/ (1 Subagent)                    │
 │  输入: priorities from Strategy               │
-│  输出: prd, prototypes (html/pen)            │
+│  输出: prd, prd            │
 └─────────────────────────────────────────────────┘
                        ↓ context/
 ┌─────────────────────────────────────────────────┐
@@ -219,7 +215,7 @@ oh-my-pm/
 - ...写 PRD → `skills/design/prd-gen/SKILL.md` 或使用 `/quick-prd`
 - ...分析竞品 → `skills/perception/competitive-analysis/SKILL.md`
 - ...规划路线图 → `skills/strategy/roadmap-planning/SKILL.md`
-- ...生成原型 → `skills/design/prototype-design/SKILL.md` (HTML) 或 `skills/design/pencil-design/SKILL.md` (Pencil)
+- ...生成原型 → 直接使用 HTML 生成，无需特殊技能
 - ...做完整产品规划 → `/full-pm-cycle` 或 `skills/workflows/full-pm-cycle/SKILL.md`
 - ...发布功能 → `/feature-launch` 或 `skills/workflows/feature-launch/SKILL.md`
 - ...查看 Subagent 记忆 → `.claude/agent-memory/<name>/MEMORY.md`
@@ -236,13 +232,11 @@ oh-my-pm/
 
 ## 版本信息
 
-- **当前版本**: v0.8.0
-- **最后更新**: 2026-03-18
-- **组件总数**: 20 Skills + 8 Subagents + 4 Commands
+- **当前版本**: v0.9.1
+- **最后更新**: 2026-03-27
+- **组件总数**: 19 Skills + 8 Subagents + 4 Commands
 
-### 最近变更 (v0.8.0)
+### 最近变更 (v0.9.1)
 
-- 新增 `pencil-design` Skill（独立 Pencil MCP 设计）
-- `prototype-design` Skill 更新：支持 Pencil 设计稿格式
-- 所有工作流 Skills 更新：Design 层质量门控添加 Pencil 格式验证
-- 新增 `context/prototypes/README.md`：Pencil 格式规范和使用说明
+- 恢复 `prototype-design` Skill（HTML-only，移除 Pencil 集成）
+- Design 层恢复为 3 个 Skills: prd-gen + prototype-design + process-optimization

@@ -7,10 +7,10 @@
 [![Claude Code](https://img.shields.io/badge/Claude-Code-forest?logo=anthropic)](https://claude.ai/code)
 [![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
 [![Version](https://img.shields.io/github/v/release/kelegele/oh-my-pm)](https://github.com/kelegele/oh-my-pm/releases)
-[![Skills](https://img.shields.io/badge/Skills-20-blue)](skills/)
+[![Skills](https://img.shields.io/badge/Skills-19-blue)](skills/)
 [![Agents](https://img.shields.io/badge/Agents-8-purple)](agents/)
 
-**5-Layer Architecture · 8 Subagents · 20 Professional Skills · Complete Product Lifecycle**
+**5-Layer Architecture · 8 Subagents · 19 Professional Skills · Complete Product Lifecycle**
 
 [Quick Start](#quick-start) • [Skills](#all-skills) • [Subagents](#subagents-architecture) • [Contributing](#contributing)
 
@@ -79,7 +79,7 @@ cd oh-my-pm
 
 #### Skills (Natural Language Triggering)
 
-20 Skills trigger automatically through natural language:
+19 Skills trigger automatically through natural language:
 
 ```bash
 # Direct conversation—system identifies and calls the relevant Skill
@@ -108,7 +108,7 @@ cd oh-my-pm
 └─────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────┐
-│  Layer 3: Design             3 Skills      │
+│  Layer 3: Design              3 Skills                            │
 │  PRD Generation · Prototype Design · Process Optimization│
 └─────────────────────────────────────────────────────────┘
                               ↓
@@ -320,10 +320,10 @@ oh-my-pm/
 | v0.1.0 | MVP (4 Skills) | ✅ |
 | v0.2.0 | Complete 5-layer architecture (19 Skills) | ✅ |
 | v0.3.0 | Subagent hybrid architecture (8 Subagents + memory system) | ✅ |
-| v0.4.0 | Commands integration (20 Skills + 4 Commands) | ✅ |
+| v0.4.0 | Commands integration (19 Skills + 4 Commands) | ✅ |
 | v0.5.1 | Remove Figma dependency, switch to HTML prototypes (19 Skills) | ✅ |
 | v0.6.0 | HTML prototype generation (iteration + new product modes) | ✅ |
-| v0.8.0 | Plan-and-Execute workflow, Pencil integration | ✅ |
+| v0.9.0 | Restore prototype-design skill (HTML-only) | ✅ |
 | v1.0.0 | Enterprise edition & integrations | ⏳ |
 
 See [Project Board](https://github.com/users/kelegele/projects/4) for full planning.

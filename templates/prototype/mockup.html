@@ -3,214 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{FEATURE_NAME}} - 高保真模型</title>
+    <title>{{FEATURE_NAME}} - 高保真原型</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        },
+                        secondary: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            300: '#fca5a5',
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07)',
+                        'glow': '0 0 20px rgba(139, 92, 246, 0.3)',
+                    }
+                }
+            }
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px 40px;
-            border-radius: 16px 16px 0 0;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .header p {
-            opacity: 0.9;
-            margin-top: 8px;
-        }
-
-        .nav {
-            display: flex;
-            background: #f8fafc;
-            padding: 16px 24px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .nav-item {
-            padding: 12px 20px;
-            color: #4b5563;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .nav-item:hover {
-            background: #ede9fe;
-            color: #7c3aed;
-        }
-
-        .content {
-            padding: 32px;
-        }
-
-        .card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
-
-        .card h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #1f2937;
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-top: 16px;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .btn {
-            width: 100%;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #5b21b6;
-        }
-
-        .btn-secondary {
-            background: #f3f4f6;
-            color: #1f2937;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-top: 32px;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-            border-radius: 8px;
-            color: white;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: #1f2937;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #6b7280;
-            margin-top: 4px;
-        }
-    </style>
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>{{FEATURE_NAME}}</h1>
-            <p>{{FEATURE_DESCRIPTION}}</p>
-        </div>
+<body class="bg-gradient-to-br from-slate-50 to-slate-100 min-h-screen font-sans">
+    <div class="min-h-screen p-4 md:p-8">
+        <!-- 主容器 -->
+        <div class="max-w-6xl mx-auto">
+            <!-- 头部卡片 -->
+            <header class="bg-white rounded-2xl shadow-soft overflow-hidden mb-6">
+                <div class="bg-gradient-to-r from-primary-600 to-primary-800 px-8 py-10">
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">{{FEATURE_NAME}}</h1>
+                    <p class="text-primary-100 text-lg">{{FEATURE_DESCRIPTION}}</p>
+                </div>
 
-        <div class="nav">
-            <div class="nav-item">首页</div>
-            <div class="nav-item">功能页面</div>
-            <div class="nav-item">设置页面</div>
-        </div>
+                <!-- 导航栏 -->
+                <nav class="flex items-center gap-2 px-6 py-4 bg-slate-50 border-b border-slate-100">
+                    <a href="#" class="px-4 py-2.5 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors">首页</a>
+                    <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-600 bg-white rounded-lg hover:bg-slate-100 hover:text-slate-900 transition-colors border border-slate-200">功能</a>
+                    <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-600 bg-white rounded-lg hover:bg-slate-100 hover:text-slate-900 transition-colors border border-slate-200">数据</a>
+                    <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-600 bg-white rounded-lg hover:bg-slate-100 hover:text-slate-900 transition-colors border border-slate-200">设置</a>
+                </nav>
+            </header>
 
-        <div class="content">
-            <div class="card">
-                <h3>功能列表</h3>
-                <div class="card-grid">
-                    <div class="form-group">
-                        <label>功能名称</label>
-                        <input type="text" class="form-input" placeholder="输入功能名称">
+            <!-- 主要内容区 -->
+            <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- 统计卡片 -->
+                <div class="bg-white rounded-xl shadow-soft p-6 border border-slate-100 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-medium text-slate-500">总用户</h3>
+                        <span class="p-2 bg-primary-50 rounded-lg">
+                            <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </span>
                     </div>
-                    <div class="form-group">
-                        <label>描述</label>
-                        <textarea class="form-input" rows="3" placeholder="输入功能描述"></textarea>
-                    </div>
-                    <button class="btn btn-primary">提交</button>
-                    <button class="btn btn-secondary">取消</button>
+                    <p class="text-4xl font-bold text-slate-900 mb-1">12,846</p>
+                    <p class="text-sm text-emerald-600 font-medium">↑ 18.2% <span class="text-slate-400 font-normal">较上月</span></p>
                 </div>
-            </div>
 
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value">128</div>
-                    <div class="stat-label">活跃用户</div>
+                <div class="bg-white rounded-xl shadow-soft p-6 border border-slate-100 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-medium text-slate-500">活跃度</h3>
+                        <span class="p-2 bg-emerald-50 rounded-lg">
+                            <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <p class="text-4xl font-bold text-slate-900 mb-1">89%</p>
+                    <p class="text-sm text-emerald-600 font-medium">↑ 4.3% <span class="text-slate-400 font-normal">较上月</span></p>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">89%</div>
-                    <div class="stat-label">完成率</div>
+
+                <div class="bg-white rounded-xl shadow-soft p-6 border border-slate-100 hover:shadow-lg transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-sm font-medium text-slate-500">转化率</h3>
+                        <span class="p-2 bg-amber-50 rounded-lg">
+                            <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </span>
+                    </div>
+                    <p class="text-4xl font-bold text-slate-900 mb-1">4.8%</p>
+                    <p class="text-sm text-amber-600 font-medium">→ 0.0% <span class="text-slate-400 font-normal">较上月</span></p>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value">4.8</div>
-                    <div class="stat-label">平均评分</div>
+
+                <!-- 表单卡片 -->
+                <div class="md:col-span-2 lg:col-span-3 bg-white rounded-xl shadow-soft border border-slate-100 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50">
+                        <h2 class="text-lg font-semibold text-slate-900">新建项目</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">项目名称</label>
+                                <input type="text" placeholder="输入项目名称" class="w-full px-4 py-2.5 text-slate-900 placeholder-slate-400 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">负责人</label>
+                                <select class="w-full px-4 py-2.5 text-slate-900 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                                    <option>张三</option>
+                                    <option>李四</option>
+                                    <option>王五</option>
+                                </select>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-2">项目描述</label>
+                                <textarea rows="4" placeholder="描述项目目标和范围" class="w-full px-4 py-2.5 text-slate-900 placeholder-slate-400 bg-white border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all resize-none"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- 操作按钮组 -->
+                        <div class="flex items-center gap-3 mt-6 pt-6 border-t border-slate-100">
+                            <button class="px-6 py-2.5 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-colors shadow-sm">
+                                创建项目
+                            </button>
+                            <button class="px-6 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-200 transition-colors">
+                                取消
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <!-- 数据表格 -->
+                <div class="md:col-span-2 lg:col-span-3 bg-white rounded-xl shadow-soft border border-slate-100 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-slate-900">最近项目</h2>
+                        <button class="px-4 py-2 text-sm font-medium text-primary-600 bg-primary-50 rounded-lg hover:bg-primary-100 transition-colors">查看全部</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">项目名称</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">负责人</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">状态</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">进度</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr class="hover:bg-slate-50/50 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-primary-100 flex items-center justify-center mr-3">
+                                                <span class="text-primary-600 font-semibold">P</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-slate-900">产品设计系统</p>
+                                                <p class="text-sm text-slate-500">更新于 2 小时前</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-sm font-medium mr-2">张</div>
+                                            <span class="text-slate-700">张三</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex px-3 py-1 text-xs font-medium rounded-full bg-emerald-50 text-emerald-700">进行中</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden max-w-24">
+                                                <div class="h-full bg-primary-500 rounded-full" style="width: 75%"></div>
+                                            </div>
+                                            <span class="text-sm text-slate-600">75%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="p-2 text-slate-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                </svg>
+                                            </button>
+                                            <button class="p-2 text-slate-400 hover:text-secondary-600 hover:bg-secondary-50 rounded-lg transition-colors">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50/50 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center mr-3">
+                                                <span class="text-amber-600 font-semibold">M</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-medium text-slate-900">移动端重构</p>
+                                                <p class="text-sm text-slate-500">更新于 1 天前</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center">
+                                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-sm font-medium mr-2">李</div>
+                                            <span class="text-slate-700">李四</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span class="inline-flex px-3 py-1 text-xs font-medium rounded-full bg-amber-50 text-amber-700">待审核</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden max-w-24">
+                                                <div class="h-full bg-amber-500 rounded-full" style="width: 90%"></div>
+                                            </div>
+                                            <span class="text-sm text-slate-600">90%</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <button class="p-2 text-slate-400 hover:text-primary-600 hover:bg-primary-50 rounded-lg transition-colors">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                                </svg>
+                                            </button>
+                                            <button class="p-2 text-slate-400 hover:text-secondary-600 hover:bg-secondary-50 rounded-lg transition-colors">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
 </body>

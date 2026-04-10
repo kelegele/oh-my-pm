@@ -219,7 +219,6 @@ Subagents 由 Claude Code 自动识别并调用，无需显式触发：
 | Skill | 功能 | 触发示例 |
 |:-----|:-----|:---------|
 | `prd-gen` | 结构化 PRD 生成 (场景驱动) | "写 PRD"、"需求文档" |
-| `prototype-design` | HTML 原型生成（迭代模式+新产品模式） | "设计原型"、"HTML 原型"、"UI 流程" |
 | `process-optimization` | 业务流程优化 | "流程优化"、"提效方案" |
 
 ### 🚢 交付协调层 (Delivery)
@@ -311,8 +310,7 @@ oh-my-pm/
 | v0.1.0 | MVP (4 Skills) | ✅ |
 | v0.2.0 | 完整五层架构 (19 Skills) | ✅ |
 | v0.3.0 | Subagent 混合架构 (8 Subagents + 记忆系统) | ✅ |
-| v0.4.0 | Commands 集成 (20 Skills + 4 Commands) | ✅ |
-| v0.5.1 | 移除 Figma 依赖，转向 HTML 原型 (19 Skills) | ✅ |
+| v0.4.0 | Commands 集成 (18 Skills + 4 Commands) | ✅ |
 | v0.6.0 | HTML 原型生成能力（迭代+新产品模式） | ✅ |
 | v1.0.0 | 企业版与集成能力 | ⏳ |
 

@@ -91,7 +91,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `prioritization` - RICE/MoSCoW prioritization frameworks
 
 #### Design Layer (2 new skills)
-- `prototype-design` - Interactive prototypes and UI flow design
 - `process-optimization` - Business process analysis and optimization
 
 #### Delivery Layer (3 skills)
@@ -117,7 +116,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 skills/
 ├── perception/ (4)      # market-intelligence, user-research, competitive-analysis, data-monitoring
 ├── strategy/ (3)        # product-positioning, roadmap-planning, prioritization
-├── design/ (3)          # prd-gen, prototype-design, process-optimization
 ├── delivery/ (3)        # requirement-review, project-coordination, release-management
 ├── validation/ (3)      # impact-analysis, feedback-synthesis, iteration-planning
 └── workflows/ (3)       # full-pm-cycle, feature-launch, quick-prd
@@ -166,13 +164,10 @@ context/
 ### Added
 - **HTML 原型生成系统** - Three fidelity templates (wireframe/mockup/interactive) with CSS variables
   - `templates/prototype/` directory with template files for different fidelity levels
-  - **Enhanced prototype-design skill** (v0.6.0) with HTML generation workflow
   - Format selection and fidelity level support integrated
   - Style configuration system with extracted colors and typography
 
 ### Changed
-- `prototype-design` (v0.5.0) - Removed Figma references, enhanced with HTML prototype generation
-- `quick-prd` (v0.2.0) - Updated to call prototype-design for HTML generation
 - `prd-gen` (v0.3.0) - HTML format selection added after PRD generation
 
 ### Design Philosophy
@@ -185,21 +180,13 @@ context/
 ## [0.7.0] - 2026-03-17
 
 ### Added
-- **Pencil MCP 集成** - 专业设计稿生成能力
-  - `pencil-design` skill (新增) - 使用 Pencil MCP 生成 .pen 设计文件
   - **关键词更新** - "pencil" 和 "pen" 已添加到 keywords
 
 ### Changed
-- `prototype-design` (v0.6.0) - 移除 Figma 引用，增强 HTML 生成能力
-- `skills.yaml` - 新增 pencil-design skill 注册
-- `plugin.json` - 新增 pencil-design skill 到 skills 数组
 - `plugin.json` - version 更新到 0.7.0
 - `plugin.json` - keywords 添加 pencil/pen
 
 ### Design Philosophy
-- **专业设计优先** - Pencil 作为可选的高级功能，提供专业级设计能力
-- **渐进式集成** - 先实现 HTML 原型（无依赖），再集成 Pencil（需配置）
-- **环境检查优先** - Pencil 环境配置作为必需前置，确保可用性
 
 ## [0.8.0] - 2026-03-17
 
@@ -263,4 +250,11 @@ context/
 - **职责分离** - 产品经理负责产品需求，开发团队负责技术实现和工期评估
 - **合规先行** - 将合规检查前置到 PRD 阶段，降低后期风险
 - **风险聚焦** - PRD 专注于产品/业务风险，技术风险由技术团队评估
+
+
+## v0.9.1 - prototype-design skill 恢复 (HTML-only)
+
+- 恢复 `prototype-design` skill（HTML-only，移除 Pencil 集成）
+- Design 层恢复为 3 个 Skills: prd-gen + prototype-design + process-optimization
+- 更新所有相关工作流文件
 

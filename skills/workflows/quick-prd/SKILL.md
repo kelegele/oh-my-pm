@@ -1,20 +1,19 @@
 ---
 name: quick-prd
-description: 在一个工作流中生成包含竞品分析的完整 PRD。当用户需要带竞品上下文的 PRD、想要快速记录功能、说"写一个带竞品对比的 PRD"、或需要综合的产品需求文档时使用。当用户提到创建 PRD 并附带竞品研究，或说"分析竞品并写需求"、"快速为 X 写 PRD"时激活。支持 HTML 原型和 Pencil 设计稿两种输出格式。
+description: 在一个工作流中生成包含竞品分析的完整 PRD。当用户需要带竞品上下文的 PRD、想要快速记录功能、说"写一个带竞品对比的 PRD"、或需要综合的产品需求文档时使用。当用户提到创建 PRD 并附带竞品研究，或说"分析竞品并写需求"、"快速为 X 写 PRD"时激活。支持 HTML 原型输出格式。
 layer: workflow
 input-from: user
-output-to: requirement-review,prototype-design
+output-to: requirement-review
 mode-support: [autopilot, copilot, manual]
 version: 0.8.0
 ---
 
 # Quick PRD Workflow
 
-Generate a complete PRD with competitive analysis in one workflow. Supports **HTML 原型**和 **Pencil 设计稿**两种输出格式。
 
 ## What This Workflow Does
 
-Orchestrates multiple skills to produce a complete PRD with competitive context. First analyzes competitors (if provided), then generates PRD incorporating those insights. Finally, creates prototype in user-selected format (HTML/Pencil/Both).
+Orchestrates multiple skills to produce a complete PRD with competitive context. First analyzes competitors (if provided), then generates PRD incorporating those insights. Finally, creates prototype in user-selected format (HTML).
 
 ## Workflow Architecture
 
@@ -156,17 +155,15 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 
 **活动**：
 1. PRD 生成 - `prd-gen` skill
-2. 原型设计 - `prototype-design` skill（HTML/Pencil/Both）
+2. 原型设计 - `prototype-design` skill（HTML）
 
 **技能调用**：
 - Step 3.1: 调用 `/prd-gen`
-- Step 3.2: 调用 `/prototype-design`
+- 
 
 **输出**：
 - `context/prd/{feature-name}-{date}-v{version}.md`
 - `context/prototypes/{feature-name}.html`（如选择）
-- `context/prototypes/{feature-name}.pen`（如选择）
-- `context/prototypes/{feature-name}-preview.png`（Pencil 预览图）
 
 **原型格式选择**：
 
@@ -175,15 +172,12 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 | Option | Description | 输出位置 |
 |:-------|-------------|:-----------|
 | **HTML 原型** | 可在浏览器直接预览、演示交互 | `context/prototypes/{name}.html` |
-| **Pencil 设计稿** | 结构化设计数据、专业设计工具、可导出代码 | `context/prototypes/{name}.pen` |
-| **两者都生成** | 同时生成 HTML 和 Pencil 两种格式 | 两者 |
 
 **质量门控**：
-- ✅ PRD 完整（8 章节 + 行业基准，不含项目计划）
-- ✅ 原型已创建（HTML 或 Pencil）
-- ✅ **Pencil 格式：文件包含 version 和 children 字段**
-- ✅ **Pencil 格式：生成预览截图**
-- ✅ **Pencil 格式：可在 Pencil 应用中打开**
+- ✅ PRD 完整（9 章节 + 行业基准）
+
+
+
 - **质量门控通过** - 进入 Delivery 阶段
 
 **状态更新**：
@@ -358,15 +352,13 @@ strategy_gates:
 design_gates:
   S3_to_S4:
     - prd_complete:
-        - PRD 完整（8 章，不含项目计划）
+        - PRD 完整（9 章）
         - 用户故事映射
         - 验收标准定义
     - prototype_validated:
         - 原型已创建
         - 交互功能验证
         - 设计一致性检查
-        - Pencil 格式：文件包含 version 和 children
-        - Pencil 格式：可在 Pencil 应用中打开
 ```
 
 ### Delivery 层质量门控
@@ -410,7 +402,6 @@ validation_gates:
 - `context/prd/*.md` - PRD 文档
 - `context/competitive-analysis/*.json` - 竞品分析数据
 - `context/prototypes/*.html` - HTML 原型
-- `context/prototypes/*.pen` - Pencil 设计稿
 
 **写入**：
 - `context/workflow-state/{{workflow_id}}.json` - 工作流快照（按日期）

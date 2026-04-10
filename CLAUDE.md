@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Oh-My-PM is an AI Agent workflow system for Product Managers, implemented as a **Claude Code Skill plugin**.
 
-The system features a **5-layer architecture** with **20 Skills** (16 domain + 3 workflows + 1 Pencil design) and **8 Subagents**, covering the complete product management lifecycle from requirement sensing to value validation.
+The system features a **5-layer architecture** with **19 Skills** (16 domain + 3 workflows) and **8 Subagents**, covering the complete product management lifecycle from requirement sensing to value validation.
 
 ## Commands
 
@@ -41,9 +41,8 @@ bash tests/test-skills.sh
                        ↓ context/
 ┌─────────────────────────────────────────────────┐
 │  Design Layer (方案设计)                         │
-│  prd-gen · prototype-design · pencil-design ·   │
-│  process-optimization                            │
-│  → Output: prd/*.md, prototypes/*.html, *.pen   │
+│  prd-gen · prototype-design · process-optimization                  │
+│  → Output: prd/*.md, prototypes/*.html          │
 └─────────────────────────────────────────────────┘
                        ↓ context/
 ┌─────────────────────────────────────────────────┐
@@ -83,7 +82,6 @@ All intermediate outputs are stored in `context/` directory:
 | `personas.json` | User persona data | → positioning |
 | `prd/*.md` | PRD documents | → prototype-design |
 | `prototypes/*.html` | HTML prototypes | → validation |
-| `prototypes/*.pen` | Pencil design files | → validation |
 | `current-workflow.json` | Workflow state tracking | All workflows |
 
 ## Workflows

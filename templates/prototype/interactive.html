@@ -5,332 +5,894 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{FEATURE_NAME}} - 交互原型</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'slide-in': 'slideIn 0.3s ease-out',
+                        'scale-in': 'scaleIn 0.2s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateY(-10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #f3f4f6;
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .sidebar {
-            width: 240px;
-            background: #1f2937;
-            padding: 24px;
-            border-radius: 12px 0 0;
-            color: white;
-        }
-
-        .sidebar h2 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: #1f2937;
-        }
-
-        .nav-item {
-            padding: 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 8px;
-            color: #6b7280;
-        }
-
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-item.active {
-            background: #667eea;
-            color: white;
-        }
-
-        .main {
-            flex: 1;
-            background: #fafafa;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 24px 32px;
-            color: white;
-            border-radius: 12px 12px 0 0;
-        }
-
-        .header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .tab-bar {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 24px;
-        }
-
-        .tab {
-            padding: 10px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            color: #6b7280;
-            font-weight: 500;
-        }
-
-        .tab.active {
-            background: #667eea;
-            color: white;
-            font-weight: 600;
-        }
-
-        .content-area {
-            padding: 24px;
-            min-height: 400px;
-        }
-
-        .card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 16px;
-        }
-
-        .card h3 {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #1f2937;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #e5e7eb;
-            color: #374151;
-        }
-
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 50;
-            display: none;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 32px;
-            border-radius: 12px;
-            max-width: 480px;
-            width: 90%;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-        }
-
-        .modal-header h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #6b7280;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 12px;
-        }
-
-        .hidden {
-            display: none;
-        }
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.3s ease-out; }
+        .modal { transition: opacity 0.2s ease; }
+        .modal-content { transition: transform 0.2s ease; }
+        .sidebar-open { transform: translateX(0); }
+        .sidebar-closed { transform: translateX(-100%); }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="sidebar">
-            <h2>功能导航</h2>
-            <div class="nav-item active">列表页</div>
-            <div class="nav-item">详情页</div>
-            <div class="nav-item">设置页</div>
+<body class="bg-slate-50 min-h-screen">
+    <!-- 顶部导航栏 -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+        <div class="flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-3">
+                <button id="menuBtn" class="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors lg:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-lg font-semibold text-slate-900">{{FEATURE_NAME}}</h1>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button class="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors relative">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                    </svg>
+                    <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-sm font-medium cursor-pointer">
+                    U
+                </div>
+            </div>
         </div>
+    </header>
 
-        <div class="main">
-            <div class="header">
-                <h1>{{FEATURE_NAME}}</h1>
+    <!-- 侧边栏导航 -->
+    <aside id="sidebar" class="fixed top-0 left-0 bottom-0 z-40 w-64 bg-white border-r border-slate-200 transform sidebar-closed lg:translate-x-0 transition-transform duration-300 ease">
+        <div class="flex flex-col h-full">
+            <div class="h-16 flex items-center lg:hidden">
+                <button id="closeSidebar" class="p-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors ml-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
             </div>
-
-            <div class="tab-bar">
-                <div class="tab active">选项卡</div>
-                <div class="tab">列表</div>
-                <div class="tab">设置</div>
-            </div>
-
-            <div class="content-area" id="content-list">
-                <div class="card">
-                    <h3>功能示例 1</h3>
-                    <div class="form-group">
-                        <label>名称</label>
-                        <input type="text" class="form-input" value="示例功能">
+            <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+                <a href="#" onclick="showPage('dashboard')" class="nav-item active flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    仪表盘
+                </a>
+                <a href="#" onclick="showPage('projects')" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+                    </svg>
+                    项目管理
+                </a>
+                <a href="#" onclick="showPage('team')" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    团队成员
+                </a>
+                <a href="#" onclick="showPage('analytics')" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    数据分析
+                </a>
+                <a href="#" onclick="showPage('settings')" class="nav-item flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    设置
+                </a>
+            </nav>
+            <div class="p-4 border-t border-slate-200">
+                <div class="flex items-center gap-3 px-3 py-2">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white text-sm font-medium">
+                        U
                     </div>
-                    <div class="form-group">
-                        <label>状态</label>
-                        <select class="form-input">
-                            <option>启用</option>
-                            <option>禁用</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-secondary" onclick="showModal('详情')">查看详情</button>
-                </div>
-
-                <div class="card">
-                    <h3>功能示例 2</h3>
-                    <div class="form-group">
-                        <label>名称</label>
-                        <input type="text" class="form-input" value="另一个功能">
-                    </div>
-                    <div class="form-group">
-                        <label>状态</label>
-                        <select class="form-input">
-                            <option>启用</option>
-                            <option>禁用</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-secondary" onclick="showModal('详情')">查看详情</button>
-                </div>
-
-                <button class="btn btn-primary" style="width: 100%; margin-top: 24px;">+ 添加功能</button>
-            </div>
-
-            <div class="content-area hidden" id="content-settings">
-                <div class="card">
-                    <h3>全局设置</h3>
-                    <div class="form-group">
-                        <label>主题</label>
-                        <select class="form-input">
-                            <option>浅色</option>
-                            <option>深色</option>
-                        </select>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-slate-900 truncate">演示用户</p>
+                        <p class="text-xs text-slate-500 truncate">demo@example.com</p>
                     </div>
                 </div>
-                <button class="btn btn-primary" style="width: 100%;">保存设置</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="pt-16 lg:pl-64 min-h-screen">
+        <div class="p-4 md:p-6 lg:p-8">
+            <!-- 仪表盘页面 -->
+            <div id="dashboard" class="page active">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900">欢迎回来！</h2>
+                    <p class="text-slate-500 mt-1">这里是您的项目仪表盘概览</p>
+                </div>
+
+                <!-- 统计卡片 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow animate-fade-in">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-medium text-slate-500">总项目</h3>
+                            <span class="p-2 bg-primary-50 rounded-lg">
+                                <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <p class="text-3xl font-bold text-slate-900 mb-1">24</p>
+                        <p class="text-sm text-emerald-600 font-medium">↑ 12% <span class="text-slate-400 font-normal">较上月</span></p>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow animate-fade-in" style="animation-delay: 0.05s">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-medium text-slate-500">进行中</h3>
+                            <span class="p-2 bg-blue-50 rounded-lg">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <p class="text-3xl font-bold text-slate-900 mb-1">8</p>
+                        <p class="text-sm text-slate-500 font-medium">正常推进</p>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow animate-fade-in" style="animation-delay: 0.1s">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-medium text-slate-500">已完成</h3>
+                            <span class="p-2 bg-emerald-50 rounded-lg">
+                                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <p class="text-3xl font-bold text-slate-900 mb-1">16</p>
+                        <p class="text-sm text-emerald-600 font-medium">↑ 3 <span class="text-slate-400 font-normal">本月</span></p>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow animate-fade-in" style="animation-delay: 0.15s">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-sm font-medium text-slate-500">团队成员</h3>
+                            <span class="p-2 bg-purple-50 rounded-lg">
+                                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                </svg>
+                            </span>
+                        </div>
+                        <p class="text-3xl font-bold text-slate-900 mb-1">12</p>
+                        <p class="text-sm text-slate-500 font-medium">8 人在线</p>
+                    </div>
+                </div>
+
+                <!-- 项目列表和快捷操作 -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- 最近项目 -->
+                    <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-slate-900">最近项目</h3>
+                            <button onclick="showPage('projects')" class="text-sm font-medium text-primary-600 hover:text-primary-700 transition-colors">查看全部 →</button>
+                        </div>
+                        <div class="divide-y divide-slate-100">
+                            <div class="px-6 py-4 hover:bg-slate-50 transition-colors cursor-pointer" onclick="openModal('projectModal')">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-semibold">P</div>
+                                        <div>
+                                            <p class="font-medium text-slate-900">产品设计系统重构</p>
+                                            <p class="text-sm text-slate-500">更新于 2 小时前</p>
+                                        </div>
+                                    </div>
+                                    <span class="inline-flex px-3 py-1 text-xs font-medium rounded-full bg-blue-50 text-blue-700">进行中</span>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-primary-500 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                        <span class="text-sm text-slate-600">75%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-6 py-4 hover:bg-slate-50 transition-colors cursor-pointer">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white font-semibold">M</div>
+                                        <div>
+                                            <p class="font-medium text-slate-900">移动端应用优化</p>
+                                            <p class="text-sm text-slate-500">更新于 1 天前</p>
+                                        </div>
+                                    </div>
+                                    <span class="inline-flex px-3 py-1 text-xs font-medium rounded-full bg-emerald-50 text-emerald-700">已完成</span>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-emerald-500 rounded-full" style="width: 100%"></div>
+                                        </div>
+                                        <span class="text-sm text-slate-600">100%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-6 py-4 hover:bg-slate-50 transition-colors cursor-pointer">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-white font-semibold">A</div>
+                                        <div>
+                                            <p class="font-medium text-slate-900">数据分析仪表盘</p>
+                                            <p class="text-sm text-slate-500">更新于 3 天前</p>
+                                        </div>
+                                    </div>
+                                    <span class="inline-flex px-3 py-1 text-xs font-medium rounded-full bg-amber-50 text-amber-700">待审核</span>
+                                </div>
+                                <div class="mt-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-amber-500 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                        <span class="text-sm text-slate-600">90%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 快捷操作 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                        <h3 class="text-lg font-semibold text-slate-900 mb-4">快捷操作</h3>
+                        <div class="space-y-3">
+                            <button onclick="openModal('newProjectModal')" class="w-full flex items-center gap-3 px-4 py-3 text-left text-slate-700 hover:bg-slate-50 rounded-lg transition-colors border border-slate-200">
+                                <span class="p-2 bg-primary-50 rounded-lg">
+                                    <svg class="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                    </svg>
+                                </span>
+                                <span class="font-medium">新建项目</span>
+                            </button>
+                            <button class="w-full flex items-center gap-3 px-4 py-3 text-left text-slate-700 hover:bg-slate-50 rounded-lg transition-colors border border-slate-200">
+                                <span class="p-2 bg-emerald-50 rounded-lg">
+                                    <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                                    </svg>
+                                </span>
+                                <span class="font-medium">邀请成员</span>
+                            </button>
+                            <button class="w-full flex items-center gap-3 px-4 py-3 text-left text-slate-700 hover:bg-slate-50 rounded-lg transition-colors border border-slate-200">
+                                <span class="p-2 bg-purple-50 rounded-lg">
+                                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                    </svg>
+                                </span>
+                                <span class="font-medium">生成报告</span>
+                            </button>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-slate-200">
+                            <h4 class="text-sm font-medium text-slate-500 mb-3">团队成员在线</h4>
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium" title="张三">张</div>
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium" title="李四">李</div>
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium" title="王五">王</div>
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium" title="赵六">赵</div>
+                                <div class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white flex items-center justify-center text-slate-500 text-xs font-medium">+4</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目页面 -->
+            <div id="projects" class="page">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">项目管理</h2>
+                        <p class="text-slate-500 mt-1">管理和跟踪所有项目进度</p>
+                    </div>
+                    <button onclick="openModal('newProjectModal')" class="px-4 py-2.5 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-colors shadow-sm flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        新建项目
+                    </button>
+                </div>
+
+                <!-- 筛选栏 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-6">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="flex-1 min-w-64">
+                            <div class="relative">
+                                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                                <input type="text" placeholder="搜索项目..." class="w-full pl-10 pr-4 py-2.5 text-slate-900 placeholder-slate-400 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                            </div>
+                        </div>
+                        <select class="px-4 py-2.5 text-slate-700 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                            <option>所有状态</option>
+                            <option>进行中</option>
+                            <option>已完成</option>
+                            <option>待审核</option>
+                        </select>
+                        <select class="px-4 py-2.5 text-slate-700 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                            <option>所有成员</option>
+                            <option>张三</option>
+                            <option>李四</option>
+                            <option>王五</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 项目网格 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 项目卡片 1 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow cursor-pointer" onclick="openModal('projectModal')">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-lg font-bold">P</div>
+                            <button class="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-900 mb-1">产品设计系统重构</h3>
+                        <p class="text-sm text-slate-500 mb-4">建立统一的设计语言和组件库</p>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="inline-flex px-2.5 py-1 text-xs font-medium rounded-md bg-blue-50 text-blue-700">进行中</span>
+                            <span class="text-xs text-slate-500">截止 12 月 20 日</span>
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-slate-500">进度</span>
+                                <span class="font-medium text-slate-700">75%</span>
+                            </div>
+                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-primary-500 rounded-full" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                            <div class="flex -space-x-2">
+                                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium">张</div>
+                                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium">李</div>
+                                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium">王</div>
+                            </div>
+                            <span class="text-sm text-slate-500">更新于 2 小时前</span>
+                        </div>
+                    </div>
+
+                    <!-- 项目卡片 2 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow cursor-pointer">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white text-lg font-bold">M</div>
+                            <button class="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-900 mb-1">移动端应用优化</h3>
+                        <p class="text-sm text-slate-500 mb-4">提升移动端用户体验和性能</p>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="inline-flex px-2.5 py-1 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700">已完成</span>
+                            <span class="text-xs text-slate-500">截止 11 月 30 日</span>
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-slate-500">进度</span>
+                                <span class="font-medium text-slate-700">100%</span>
+                            </div>
+                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-500 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                            <div class="flex -space-x-2">
+                                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium">李</div>
+                                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium">赵</div>
+                            </div>
+                            <span class="text-sm text-slate-500">更新于 1 天前</span>
+                        </div>
+                    </div>
+
+                    <!-- 项目卡片 3 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow cursor-pointer">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-white text-lg font-bold">A</div>
+                            <button class="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <h3 class="text-lg font-semibold text-slate-900 mb-1">数据分析仪表盘</h3>
+                        <p class="text-sm text-slate-500 mb-4">构建实时数据分析平台</p>
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="inline-flex px-2.5 py-1 text-xs font-medium rounded-md bg-amber-50 text-amber-700">待审核</span>
+                            <span class="text-xs text-slate-500">截止 12 月 15 日</span>
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between text-sm mb-1">
+                                <span class="text-slate-500">进度</span>
+                                <span class="font-medium text-slate-700">90%</span>
+                            </div>
+                            <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-amber-500 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                            <div class="flex -space-x-2">
+                                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium">王</div>
+                                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium">钱</div>
+                            </div>
+                            <span class="text-sm text-slate-500">更新于 3 天前</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 团队页面 -->
+            <div id="team" class="page">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">团队成员</h2>
+                        <p class="text-slate-500 mt-1">管理团队成员、角色和权限</p>
+                    </div>
+                    <button class="px-4 py-2.5 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-colors shadow-sm flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                        </svg>
+                        邀请成员
+                    </button>
+                </div>
+
+                <!-- 团队成员网格 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 成员卡片 1 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-lg font-bold">张</div>
+                            <div>
+                                <h3 class="font-semibold text-slate-900">张三</h3>
+                                <p class="text-sm text-slate-500">产品经理</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-500">负责项目</span>
+                                <span class="font-medium text-slate-700">5 个</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-500">完成率</span>
+                                <span class="font-medium text-emerald-600">92%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="inline-flex px-2.5 py-1 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700">在线</span>
+                        </div>
+                    </div>
+
+                    <!-- 成员卡片 2 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center text-white text-lg font-bold">李</div>
+                            <div>
+                                <h3 class="font-semibold text-slate-900">李四</h3>
+                                <p class="text-sm text-slate-500">UI 设计师</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-500">负责项目</span>
+                                <span class="font-medium text-slate-700">3 个</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-500">完成率</span>
+                                <span class="font-medium text-emerald-600">88%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="inline-flex px-2.5 py-1 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700">在线</span>
+                        </div>
+                    </div>
+
+                    <!-- 成员卡片 3 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center text-white text-lg font-bold">王</div>
+                            <div>
+                                <h3 class="font-semibold text-slate-900">王五</h3>
+                                <p class="text-sm text-slate-500">前端开发</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-500">负责项目</span>
+                                <span class="font-medium text-slate-700">4 个</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-slate-500">完成率</span>
+                                <span class="font-medium text-emerald-600">95%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="inline-flex px-2.5 py-1 text-xs font-medium rounded-md bg-slate-100 text-slate-500">离线</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 数据分析页面 -->
+            <div id="analytics" class="page">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900">数据分析</h2>
+                    <p class="text-slate-500 mt-1">关键指标和趋势分析</p>
+                </div>
+
+                <!-- 指标卡片 -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                        <h3 class="text-sm font-medium text-slate-500 mb-2">活跃用户</h3>
+                        <p class="text-3xl font-bold text-slate-900 mb-1">2,847</p>
+                        <p class="text-sm text-emerald-600 font-medium">↑ 18% <span class="text-slate-400 font-normal">较上周</span></p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                        <h3 class="text-sm font-medium text-slate-500 mb-2">平均停留时长</h3>
+                        <p class="text-3xl font-bold text-slate-900 mb-1">12:34</p>
+                        <p class="text-sm text-emerald-600 font-medium">↑ 5% <span class="text-slate-400 font-normal">较上周</span></p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                        <h3 class="text-sm font-medium text-slate-500 mb-2">转化率</h3>
+                        <p class="text-3xl font-bold text-slate-900 mb-1">3.2%</p>
+                        <p class="text-sm text-red-600 font-medium">↓ 0.5% <span class="text-slate-400 font-normal">较上周</span></p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+                        <h3 class="text-sm font-medium text-slate-500 mb-2">页面浏览量</h3>
+                        <p class="text-3xl font-bold text-slate-900 mb-1">18.5K</p>
+                        <p class="text-sm text-emerald-600 font-medium">↑ 22% <span class="text-slate-400 font-normal">较上周</span></p>
+                    </div>
+                </div>
+
+                <!-- 趋势图表占位 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                        <h3 class="text-lg font-semibold text-slate-900 mb-4">用户增长趋势</h3>
+                        <div class="h-64 bg-slate-50 rounded-lg border-2 border-dashed border-slate-200 flex items-center justify-center">
+                            <div class="text-center">
+                                <svg class="w-12 h-12 text-slate-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                                </svg>
+                                <p class="text-slate-400 text-sm">折线图：近 30 天用户增长</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                        <h3 class="text-lg font-semibold text-slate-900 mb-4">功能使用分布</h3>
+                        <div class="h-64 bg-slate-50 rounded-lg border-2 border-dashed border-slate-200 flex items-center justify-center">
+                            <div class="text-center">
+                                <svg class="w-12 h-12 text-slate-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>
+                                </svg>
+                                <p class="text-slate-400 text-sm">饼图：功能使用占比</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 设置页面 -->
+            <div id="settings" class="page">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900">设置</h2>
+                    <p class="text-slate-500 mt-1">管理个人偏好和系统配置</p>
+                </div>
+
+                <div class="space-y-6 max-w-2xl">
+                    <!-- 个人信息 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-200">
+                            <h3 class="text-lg font-semibold text-slate-900">个人信息</h3>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-xl font-bold">U</div>
+                                <button class="px-4 py-2 text-sm font-medium text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-lg transition-colors">更换头像</button>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">姓名</label>
+                                <input type="text" value="演示用户" class="w-full px-4 py-2.5 text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">邮箱</label>
+                                <input type="email" value="demo@example.com" class="w-full px-4 py-2.5 text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 通知设置 -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                        <div class="px-6 py-4 border-b border-slate-200">
+                            <h3 class="text-lg font-semibold text-slate-900">通知设置</h3>
+                        </div>
+                        <div class="divide-y divide-slate-100">
+                            <div class="px-6 py-4 flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium text-slate-900">邮件通知</p>
+                                    <p class="text-sm text-slate-500">接收项目更新和重要通知</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                                </label>
+                            </div>
+                            <div class="px-6 py-4 flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium text-slate-900">浏览器推送</p>
+                                    <p class="text-sm text-slate-500">实时推送消息通知</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer">
+                                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                                </label>
+                            </div>
+                            <div class="px-6 py-4 flex items-center justify-between">
+                                <div>
+                                    <p class="font-medium text-slate-900">周报汇总</p>
+                                    <p class="text-sm text-slate-500">每周发送项目进展汇总</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" checked class="sr-only peer">
+                                    <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 保存按钮 -->
+                    <div class="flex justify-end gap-3">
+                        <button class="px-6 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">取消</button>
+                        <button class="px-6 py-2.5 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500/20 transition-colors shadow-sm">保存更改</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 项目详情弹窗 -->
+    <div id="projectModal" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal('projectModal')"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="relative bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[80vh] overflow-y-auto animate-scale-in">
+                <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-slate-900">项目详情</h3>
+                    <button onclick="closeModal('projectModal')" class="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white text-xl font-bold">P</div>
+                        <div>
+                            <h4 class="text-xl font-bold text-slate-900">产品设计系统重构</h4>
+                            <p class="text-sm text-slate-500">截止 12 月 20 日</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="text-sm font-medium text-slate-700 mb-1">项目描述</p>
+                            <p class="text-sm text-slate-500">建立统一的设计语言和组件库，提升产品一致性和开发效率。</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-slate-700 mb-1">当前进度</p>
+                            <div class="h-3 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-primary-500 rounded-full transition-all duration-500" style="width: 75%"></div>
+                            </div>
+                            <p class="text-sm text-slate-500 mt-1">75% 已完成</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-slate-700 mb-2">团队成员</p>
+                            <div class="flex -space-x-2">
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium">张</div>
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium">李</div>
+                                <div class="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white flex items-center justify-center text-white text-xs font-medium">王</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-6 py-4 border-t border-slate-200 flex justify-end gap-3">
+                    <button onclick="closeModal('projectModal')" class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">关闭</button>
+                    <button class="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors">编辑项目</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- 弹窗 -->
-    <div class="modal" id="detail-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title">功能详情</h3>
-                <button class="close-btn" onclick="closeModal()">&times;</button>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="closeModal()">确定</button>
-                <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+    <!-- 新建项目弹窗 -->
+    <div id="newProjectModal" class="fixed inset-0 z-50 hidden">
+        <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal('newProjectModal')"></div>
+        <div class="fixed inset-0 flex items-center justify-center p-4">
+            <div class="relative bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[80vh] overflow-y-auto animate-scale-in">
+                <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-slate-900">新建项目</h3>
+                    <button onclick="closeModal('newProjectModal')" class="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <form class="p-6 space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">项目名称</label>
+                        <input type="text" placeholder="输入项目名称" class="w-full px-4 py-2.5 text-slate-900 placeholder-slate-400 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">项目描述</label>
+                        <textarea rows="3" placeholder="简要描述项目目标和范围" class="w-full px-4 py-2.5 text-slate-900 placeholder-slate-400 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all resize-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">截止日期</label>
+                        <input type="date" class="w-full px-4 py-2.5 text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">优先级</label>
+                        <select class="w-full px-4 py-2.5 text-slate-700 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all">
+                            <option>高</option>
+                            <option selected>中</option>
+                            <option>低</option>
+                        </select>
+                    </div>
+                </form>
+                <div class="px-6 py-4 border-t border-slate-200 flex justify-end gap-3">
+                    <button onclick="closeModal('newProjectModal')" class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">取消</button>
+                    <button class="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors">创建项目</button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- JavaScript 交互逻辑 -->
     <script>
-        function showModal(title) {
-            document.getElementById('modal-title').textContent = title + ' - 详情';
-            document.getElementById('detail-modal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('detail-modal').classList.remove('active');
-        }
-
-        // Tab 切换
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-
-                const contentId = this.textContent === '选项卡' ? 'content-list' : 'content-settings';
-                document.querySelectorAll('.content-area').forEach(c => c.classList.add('hidden'));
-                document.getElementById(contentId).classList.remove('hidden');
+        // 页面切换
+        function showPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
             });
+            // 显示目标页面
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active');
+            }
+            // 更新导航高亮
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('bg-primary-600', 'text-white');
+                item.classList.add('text-slate-600', 'hover:bg-slate-50');
+            });
+            const activeNav = document.querySelector(`.nav-item[onclick="showPage('${pageId}')"]`);
+            if (activeNav) {
+                activeNav.classList.add('bg-primary-600', 'text-white');
+                activeNav.classList.remove('text-slate-600', 'hover:bg-slate-50');
+            }
+            // 移动端自动关闭侧边栏
+            if (window.innerWidth < 1024) {
+                closeSidebar();
+            }
+        }
+
+        // 弹窗控制
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // 侧边栏控制
+        const sidebar = document.getElementById('sidebar');
+        const menuBtn = document.getElementById('menuBtn');
+        const closeSidebarBtn = document.getElementById('closeSidebar');
+
+        function openSidebar() {
+            sidebar.classList.remove('sidebar-closed');
+            sidebar.classList.add('sidebar-open');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('sidebar-open');
+            sidebar.classList.add('sidebar-closed');
+        }
+
+        if (menuBtn) {
+            menuBtn.addEventListener('click', openSidebar);
+        }
+
+        if (closeSidebarBtn) {
+            closeSidebarBtn.addEventListener('click', closeSidebar);
+        }
+
+        // 点击侧边栏外部关闭
+        if (sidebar) {
+            sidebar.addEventListener('click', (e) => {
+                if (window.innerWidth < 1024 && e.target === sidebar) {
+                    closeSidebar();
+                }
+            });
+        }
+
+        // 键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('[id$="Modal"]').forEach(modal => {
+                    if (!modal.classList.contains('hidden')) {
+                        closeModal(modal.id);
+                    }
+                });
+            }
         });
 
-        // 侧边栏导航
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-            });
+        // 响应式处理
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                sidebar.classList.remove('sidebar-open', 'sidebar-closed');
+                sidebar.style.transform = '';
+            } else {
+                sidebar.classList.add('sidebar-closed');
+            }
         });
     </script>
 </body>

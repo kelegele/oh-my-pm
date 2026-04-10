@@ -4,7 +4,7 @@
 
 ## 插件概述
 
-Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系统。通过 **20 个专业 Skills** + **8 个 Subagents** + **4 个 Commands**，实现从需求感知到价值验证的完整产品管理闭环。
+Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系统。通过 **18 个专业 Skills** + **8 个 Subagents** + **4 个 Commands**，实现从需求感知到价值验证的完整产品管理闭环。
 
 ### 核心特性
 
@@ -12,7 +12,6 @@ Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系
 |:-----|:-----|
 | **五层工作流架构** | 需求感知 → 策略规划 → 方案设计 → 交付协调 → 价值验证 |
 | **场景驱动 PRD** | 迭代更新/新功能/0-1 产品，基于行业最佳实践 |
-| **Figma 原型集成** | PRD 后自动生成 Figma 原型图 |
 | **Subagent 记忆系统** | 8 个独立 Subagent，支持跨会话知识积累 |
 | **人机协作模式** | Autopilot / Copilot / Manual 灵活切换 |
 
@@ -55,7 +54,6 @@ Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系
 
 **流程说明**：
 ```
-需求描述 → 场景识别 → 竞品分析(可选) → PRD 生成 → Figma 原型(可选)
 ```
 
 **调用的 Skills 和 Subagents**：
@@ -65,7 +63,6 @@ Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系
 | 1. 场景识别 | `quick-prd` | - | 自动识别迭代/新功能/0-1产品场景 |
 | 2. 竞品分析 | `competitive-analysis` | `competitive-analyst` | 对比竞品功能（可选） |
 | 3. PRD 生成 | `prd-gen` | - | 生成结构化 PRD 文档 |
-| 4. 原型设计 | `figma-prototype` | - | 生成 Figma 原型图（可选） |
 
 **使用示例**：
 ```bash
@@ -103,7 +100,6 @@ PRD 生成 → 原型设计
 |:-----|:-----------|:--------------|
 | **感知层** | `competitive-analysis`, `user-research`, `market-intelligence` | `competitive-analyst`, `user-interviewer`, `market-researcher` |
 | **策略层** | `product-positioning`, `roadmap-planning`, `prioritization` | - |
-| **设计层** | `prd-gen`, `prototype-design` | - |
 | **交付层** | `requirement-review`, `project-coordination`, `release-management` | - |
 | **验证层** | `impact-analysis`, `feedback-synthesis`, `iteration-planning` | `impact-analyst`, `feedback-collector` |
 
@@ -133,7 +129,6 @@ PRD 完善 → 需求评审 → 项目规划
 
 | 阶段 | 调用 Skills | 调用 Subagents |
 |:-----|:-----------|:--------------|
-| **设计完善** | `prd-gen`, `prototype-design` | - |
 | **准备阶段** | `requirement-review`, `project-coordination` | - |
 | **发布阶段** | `release-management` | - |
 | **验证阶段** | `impact-analysis`, `feedback-synthesis` | `impact-analyst`, `feedback-collector` |
@@ -188,13 +183,10 @@ PRD 完善 → 需求评审 → 项目规划
 | Skill | 可独立使用 | 功能描述 | 适用场景 |
 |:-----|:----------:|:---------|:---------|
 | **prd-gen** | ✅ | 结构化 PRD 生成，支持三种场景识别 | 快速生成 PRD 文档 |
-| **figma-prototype** | ✅ | Figma 原型图生成，支持迭代/新产品两种模式 | 生成 UI 原型图 |
-| **prototype-design** | ✅ | 原型设计与交互流程规划 | 设计交互流程、线框图 |
 | **process-optimization** | ✅ | 业务流程分析与优化建议 | 优化业务流程、提升效率 |
 
 **触发示例**：
 - "写一个用户改版的 PRD"
-- "生成 Figma 原型图"
 - "设计这个功能的交互流程"
 - "优化我们的代码审查流程"
 
@@ -236,7 +228,6 @@ PRD 完善 → 需求评审 → 项目规划
 
 | Workflow | 编排内容 | 调用的 Subagents | 适用场景 |
 |:---------|:---------|:----------------|:---------|
-| **quick-prd** | 场景识别 + 竞品分析 + PRD 生成 + Figma 原型 | `competitive-analyst` | 快速生成带竞品对比的 PRD |
 | **full-pm-cycle** | 完整五层：感知→策略→设计→交付→验证 | 全部 8 个 Subagents | 新产品从 0 到 1 规划 |
 | **feature-launch** | PRD 完善 + 评审 + 发布 + 效果分析 | `impact-analyst`, `feedback-collector` | 功能发布端到端协调 |
 
@@ -364,9 +355,7 @@ claude --plugin-dir /path/to/oh-my-pm
 
 ---
 
-# Figma 原型生成
 
-PRD 生成后可自动生成 Figma 原型图：
 
 ### 两种模式
 
@@ -381,9 +370,7 @@ PRD 生成后可自动生成 Figma 原型图：
 - 🟡 黄色 = 修改
 - 🔴 红色 = 删除
 
-### Figma MCP 配置
 
-使用 `figma-prototype` Skill 需要先启用 Figma MCP Server。**如果 MCP 不可用，Skill 会询问是否生成 HTML 原型作为替代方案。**
 
 **方式一：Remote MCP Server（推荐）**
 
@@ -405,21 +392,17 @@ PRD 生成后可自动生成 Figma 原型图：
 
 **方式二：Desktop MCP Server**
 
-如果已安装 Figma 桌面版，编辑 `~/.claude/settings.json`，添加：
 
 ```json
 {
   "mcpServers": {
     "figma-desktop": {
-      "command": "/Applications/Figma.app/Contents/MacOS/Figma",
       "args": ["--mcp"]
     }
   }
 }
 ```
 
-**获取 Figma Token：**
-1. 登录 [Figma](https://www.figma.com)
 2. 点击头像 → Settings → Security
 3. Personal access tokens → Generate new token
 4. 复制 token 并粘贴到配置中
@@ -444,14 +427,11 @@ PRD 生成后可自动生成 Figma 原型图：
 
 ### v0.4.2 (2026-03-13)
 - `figma-prototype` 新增 HTML 原型 fallback 模式
-- 当 Figma MCP 不可用时，询问用户是否生成 HTML 原型
 
 ### v0.4.1 (2026-03-13)
-- 添加 Figma MCP 配置说明
 - `figma-prototype` Skill 新增前置条件指引
 
 ### v0.4.0 (2026-03-13)
-- Figma MCP 集成
 - 20 个 Skills (新增 figma-prototype)
 - Commands 支持 (4 个命令)
 - 双调用模式 (直接 + 命名空间)

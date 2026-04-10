@@ -1,181 +1,144 @@
-# Oh-My-PM Skills Manifest
-# 用于 Claude Code 自动发现和加载 Skills
-
 manifest:
-  version: "0.8.0"
-  plugin: "oh-my-pm"
-
+  plugin: oh-my-pm
+  version: 0.8.0
 skills:
-  # Perception Layer (需求感知层)
-  - name: competitive-analysis
-    file: skills/perception/competitive-analysis/SKILL.md
-    layer: perception
-    triggers:
-      - 分析竞品
-      - 对比
-      - 竞品分析
-
-  - name: market-intelligence
-    file: skills/perception/market-intelligence/SKILL.md
-    layer: perception
-    triggers:
-      - 市场分析
-      - 行业趋势
-      - 市场研究
-
-  - name: user-research
-    file: skills/perception/user-research/SKILL.md
-    layer: perception
-    triggers:
-      - 用户访谈
-      - 用户画像
-      - 用户研究
-
-  - name: data-monitoring
-    file: skills/perception/data-monitoring/SKILL.md
-    layer: perception
-    triggers:
-      - 监控指标
-      - 数据看板
-      - 指标分析
-
-  # Strategy Layer (策略规划层)
-  - name: product-positioning
-    file: skills/strategy/product-positioning/SKILL.md
-    layer: strategy
-    triggers:
-      - 产品定位
-      - 差异化
-      - 价值主张
-
-  - name: roadmap-planning
-    file: skills/strategy/roadmap-planning/SKILL.md
-    layer: strategy
-    triggers:
-      - 产品路线图
-      - 版本规划
-      - 路线图
-
-  - name: prioritization
-    file: skills/strategy/prioritization/SKILL.md
-    layer: strategy
-    triggers:
-      - 优先级排序
-      - 需求优先级
-      - RICE
-      - MoSCoW
-
-  # Design Layer (方案设计层)
-  - name: prd-gen
-    file: skills/design/prd-gen/SKILL.md
-    layer: design
-    triggers:
-      - 写 PRD
-      - 需求文档
-      - PRD
-      - 产品需求
-
-  - name: prototype-design
-    file: skills/design/prototype-design/SKILL.md
-    layer: design
-    triggers:
-      - 设计原型
-      - 原型
-      - 交互设计
-      - wireframe
-      - HTML 原型
-
-  - name: pencil-design
-    file: skills/design/pencil-design/SKILL.md
-    layer: design
-    triggers:
-      - Pencil
-      - 设计稿
-      - .pen
-      - Pencil design
-
-  - name: process-optimization
-    file: skills/design/process-optimization/SKILL.md
-    layer: design
-    triggers:
-      - 流程优化
-      - 提效
-      - 流程改进
-
-  # Delivery Layer (交付协调层)
-  - name: requirement-review
-    file: skills/delivery/requirement-review/SKILL.md
-    layer: delivery
-    triggers:
-      - 需求评审
-      - 评审会议
-      - 需求对齐
-
-  - name: project-coordination
-    file: skills/delivery/project-coordination/SKILL.md
-    layer: delivery
-    triggers:
-      - 项目状态
-      - 进度跟踪
-      - 项目管理
-
-  - name: release-management
-    file: skills/delivery/release-management/SKILL.md
-    layer: delivery
-    triggers:
-      - 发布计划
-      - 上线检查
-      - 发布管理
-      - 上线
-
-  # Validation Layer (价值验证层)
-  - name: impact-analysis
-    file: skills/validation/impact-analysis/SKILL.md
-    layer: validation
-    triggers:
-      - 效果分析
-      - 上线复盘
-      - 效果评估
-
-  - name: feedback-synthesis
-    file: skills/validation/feedback-synthesis/SKILL.md
-    layer: validation
-    triggers:
-      - 反馈分析
-      - 用户反馈
-      - 反馈汇总
-
-  - name: iteration-planning
-    file: skills/validation/iteration-planning/SKILL.md
-    layer: validation
-    triggers:
-      - 迭代规划
-      - 版本排期
-      - sprint planning
-
-  # Workflows Layer (工作流编排层)
-  - name: quick-prd
-    file: skills/workflows/quick-prd/SKILL.md
-    layer: workflows
-    type: workflow
-    triggers:
-      - 快速 PRD
-      - 带竞品分析的需求
-
-  - name: full-pm-cycle
-    file: skills/workflows/full-pm-cycle/SKILL.md
-    layer: workflows
-    type: workflow
-    triggers:
-      - 完整产品规划
-      - 0-1 产品
-      - 产品全周期
-
-  - name: feature-launch
-    file: skills/workflows/feature-launch/SKILL.md
-    layer: workflows
-    type: workflow
-    triggers:
-      - 功能发布
-      - 发布协调
-      - 发布工作流
+- file: skills/perception/competitive-analysis/SKILL.md
+  layer: perception
+  name: competitive-analysis
+  triggers:
+  - 分析竞品
+  - 对比
+  - 竞品分析
+- file: skills/perception/market-intelligence/SKILL.md
+  layer: perception
+  name: market-intelligence
+  triggers:
+  - 市场分析
+  - 行业趋势
+  - 市场研究
+- file: skills/perception/user-research/SKILL.md
+  layer: perception
+  name: user-research
+  triggers:
+  - 用户访谈
+  - 用户画像
+  - 用户研究
+- file: skills/perception/data-monitoring/SKILL.md
+  layer: perception
+  name: data-monitoring
+  triggers:
+  - 监控指标
+  - 数据看板
+  - 指标分析
+- file: skills/strategy/product-positioning/SKILL.md
+  layer: strategy
+  name: product-positioning
+  triggers:
+  - 产品定位
+  - 差异化
+  - 价值主张
+- file: skills/strategy/roadmap-planning/SKILL.md
+  layer: strategy
+  name: roadmap-planning
+  triggers:
+  - 产品路线图
+  - 版本规划
+  - 路线图
+- file: skills/strategy/prioritization/SKILL.md
+  layer: strategy
+  name: prioritization
+  triggers:
+  - 优先级排序
+  - 需求优先级
+  - RICE
+  - MoSCoW
+- file: skills/design/prd-gen/SKILL.md
+  layer: design
+  name: prd-gen
+  triggers:
+  - 写 PRD
+  - 需求文档
+  - PRD
+  - 产品需求
+- file: skills/design/prototype-design/SKILL.md
+  layer: design
+  name: prototype-design
+  triggers:
+  - 设计原型
+  - 原型
+  - 交互设计
+  - wireframe
+  - HTML 原型
+- file: skills/design/process-optimization/SKILL.md
+  layer: design
+  name: process-optimization
+  triggers:
+  - 流程优化
+  - 提效
+  - 流程改进
+- file: skills/delivery/requirement-review/SKILL.md
+  layer: delivery
+  name: requirement-review
+  triggers:
+  - 需求评审
+  - 评审会议
+  - 需求对齐
+- file: skills/delivery/project-coordination/SKILL.md
+  layer: delivery
+  name: project-coordination
+  triggers:
+  - 项目状态
+  - 进度跟踪
+  - 项目管理
+- file: skills/delivery/release-management/SKILL.md
+  layer: delivery
+  name: release-management
+  triggers:
+  - 发布计划
+  - 上线检查
+  - 发布管理
+  - 上线
+- file: skills/validation/impact-analysis/SKILL.md
+  layer: validation
+  name: impact-analysis
+  triggers:
+  - 效果分析
+  - 上线复盘
+  - 效果评估
+- file: skills/validation/feedback-synthesis/SKILL.md
+  layer: validation
+  name: feedback-synthesis
+  triggers:
+  - 反馈分析
+  - 用户反馈
+  - 反馈汇总
+- file: skills/validation/iteration-planning/SKILL.md
+  layer: validation
+  name: iteration-planning
+  triggers:
+  - 迭代规划
+  - 版本排期
+  - sprint planning
+- file: skills/workflows/quick-prd/SKILL.md
+  layer: workflows
+  name: quick-prd
+  triggers:
+  - 快速 PRD
+  - 带竞品分析的需求
+  type: workflow
+- file: skills/workflows/full-pm-cycle/SKILL.md
+  layer: workflows
+  name: full-pm-cycle
+  triggers:
+  - 完整产品规划
+  - 0-1 产品
+  - 产品全周期
+  type: workflow
+- file: skills/workflows/feature-launch/SKILL.md
+  layer: workflows
+  name: feature-launch
+  triggers:
+  - 功能发布
+  - 发布协调
+  - 发布工作流
+  type: workflow

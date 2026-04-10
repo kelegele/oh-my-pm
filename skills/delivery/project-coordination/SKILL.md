@@ -2,7 +2,6 @@
 name: project-coordination
 description: 协调项目执行、跟踪进度并管理风险。当用户需要管理项目、跟踪进度、协调团队间工作，或说"项目状态"、"跟踪这个项目"、"进度如何"时使用。即使没有明确说"项目协调"，当用户正在管理执行、依赖关系或跨团队工作时也应激活。
 layer: delivery
-input-from: requirement-review,prototype-design
 output-to: release-management
 mode-support: [autopilot, copilot, manual]
 version: 0.1.0

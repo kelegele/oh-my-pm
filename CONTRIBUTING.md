@@ -161,7 +161,6 @@ Context 文件存放在 `context/` 目录：
 |:-----|:-----|:------------|
 | Perception | 需求感知 | market-intelligence, user-research |
 | Strategy | 策略规划 | product-positioning, roadmap-planning |
-| Design | 方案设计 | prd-gen, prototype-design |
 | Delivery | 交付协调 | requirement-review, release-management |
 | Validation | 价值验证 | impact-analysis, iteration-planning |
 

@@ -1,6 +1,6 @@
 ---
 name: prototype-design
-description: 创建交互式原型以验证设计方案。支持 HTML 原型和 Pencil 设计稿两种输出格式。当用户需要设计 UI/UX、创建原型、设计用户流程，或说"创建原型"、"设计这个功能"、"UI 原型"、"Pencil 设计稿"时使用。支持迭代模式（基于现有样式）和新产品模式（自定义设计规范）。
+description: 创建交互式原型以验证设计方案。支持 HTML 原型输出格式。当用户需要设计 UI/UX、创建原型、设计用户流程，或说"创建原型"、"设计这个功能"、"UI 原型"时使用。支持迭代模式（基于现有样式）和新产品模式（自定义设计规范）。
 layer: design
 input-from: prd-gen,user-research
 output-to: project-coordination,requirement-review
@@ -10,14 +10,13 @@ version: 0.6.1
 
 # Prototype Design
 
-生成交互式原型，可视化设计方案并进行早期验证。支持 **HTML 原型**和 **Pencil 设计稿**两种输出格式。
+生成交互式原型，可视化设计方案并进行早期验证。支持 **HTML 原型**输出格式。
 
 ## What This Skill Does
 
 生成原型文件，用于可视化设计方案并进行早期验证。支持两种输出格式：
 
 1. **HTML 原型**：独立 HTML 文件，可在浏览器中直接打开预览
-2. **Pencil 设计稿**：.pen 设计文件，结构化设计数据，支持专业设计工具和代码导出
 
 支持两种模式：
 - **迭代模式**：基于用户提供的截图或 HTML 文件，提取现有样式后生成匹配的新原型
@@ -27,40 +26,15 @@ version: 0.6.1
 
 激活此 skill 当：
 - PRD 生成后需要创建可视化原型
-- 用户说"创建原型"、"设计这个功能"、"UI 原型"、"Pencil 设计稿"
+- 用户说"创建原型"、"设计这个功能"、"UI 原型"
 - 需要验证用户流程或交互模式
 - 需要向干系人演示设计概念
 
 ---
 
-## Step 0: 格式选择 (CRITICAL)
+## Step 0: 模式检测 (CRITICAL)
 
-**生成任何原型前，必须先选择输出格式。**
-
-在「模式检测」之后、样式配置之前，增加格式选择：
-
-```markdown
-### Q: 选择原型输出格式
-
-| Option | Description |
-|:-------|-------------|
-| **HTML 原型** | 可在浏览器直接预览、演示交互 |
-| **Pencil 设计稿** | 结构化设计数据、专业设计工具、可导出代码 |
-| **两者都生成** | 同时生成 HTML 和 Pencil 两种格式 |
-```
-
-**格式对比：**
-
-| 格式 | 优势 | 适用场景 | 输出位置 |
-|:-----|:-----|:-----------|
-| **HTML 原型** | 可在浏览器直接预览、快速演示交互 | 快速验证、演示给干系人 | `context/prototypes/{name}.html` |
-| **Pencil 设计稿** | 结构化设计数据、可导出代码、支持设计系统、专业工具集成 | 专业设计、开发对接、设计资产管理 | `context/prototypes/{name}.pen` |
-
----
-
-## Step 1: 模式检测 (CRITICAL - 第二步)
-
-在输出格式选择后，必须检测场景模式：
+生成任何原型前，必须先检测场景模式：
 
 使用 `AskUserQuestion` 确定模式：
 
@@ -75,66 +49,7 @@ version: 0.6.1
 
 ---
 
-## .pen 文件格式规范（CRITICAL）
 
-有效的 .pen 文件必须包含以下必需字段：
-
-```json
-{
-  "version": "1.0.0",
-  "children": [...]
-}
-```
-
-**必需字段说明：**
-- `version`: 字符串，表示 .pen 格式版本（如 "1.0.0"）
-- `children`: 数组，包含所有顶层节点
-
-**如果缺少 version 或 children 字段，文件无法在 Pencil 应用中打开！**
-
-### .pen 文件完整性检查（CRITICAL）
-
-生成完成后，必须执行验证步骤：
-
-```python
-# 验证 1: 检查文档状态
-state = mcp__pencil__get_editor_state(include_schema=False)
-# 确认有顶层节点，不是 "No nodes are selected."
-
-# 验证 2: 生成截图预览
-mcp__pencil__get_screenshot(nodeId="top-level-frame-id")
-# 保存为 {feature-name}-preview.png
-
-# 验证 3: 尝试在 Pencil 应用中打开
-# 用户手动打开 .pen 文件验证
-
-# 如果验证失败：
-# 1. 重新执行 batch_design 操作
-# 2. 确保 operations 中至少创建一个 Frame 节点
-# 3. 确保 Frame 添加到 "document" 根节点
-```
-
-### .pen 文件基本结构示例
-
-```javascript
-// 使用 batch_design 工具时：
-// 1. 首先创建顶层 Frame（必需）
-mainScreen = I("document", {
-  type: "frame",
-  name: "Main Screen",
-  layout: "vertical",
-  gap: 24,
-  padding: 32
-})
-
-// 2. 在 Frame 内添加内容
-title = I(mainScreen, {type: "text", content: "Title", ...})
-
-// MCP 工具会自动处理 version 和完整结构
-```
-```
-
----
 
 ## Step 2: 迭代模式工作流
 
@@ -162,61 +77,41 @@ title = I(mainScreen, {type: "text", content: "Title", ...})
 | HTML | `Read` 工具解析 DOM | CSS 变量、class 样式、组件结构 |
 | 在线链接 | `mcp__web_reader__webReader` | 页面样式和布局 |
 
-从分析中提取并生成样式配置：
+从分析中提取并生成 Tailwind 颜色配置：
 
 ```javascript
-// styles.config.js
-const EXTRACTED_STYLES = {
-  colors: {
-    primary: "{{PRIMARY_COLOR}}",      // 主色调（迭代模式从截图提取）
-    secondary: "{{SECONDARY_COLOR}}",  // 次要色
-    background: "#ffffff",   // 背景色
-    surface: "#f9fafb",      // 表面色
-    text: "#1f2937",         // 主文本
-    textSecondary: "#6b7280", // 次要文本
-    border: "#e5e7eb",       // 边框色
-    success: "#10b981",      // 成功色
-    error: "#ef4444",        // 错误色
-  },
-  typography: {
-    fontFamily: "{{FONT_FAMILY}}",
-    fontSize: {
-      base: "{{FONT_SIZE_BASE}}",
-      headings: {
-        h1: "{{FONT_SIZE_H1}}",
-        h2: "{{FONT_SIZE_H2}}",
-        h3: "{{FONT_SIZE_H3}}",
-      }
-    },
-    fontWeight: {
-      normal: "400",
-      medium: "500",
-      semibold: "600",
-      bold: "700",
+// tailwind.config - 迭代模式从现有页面提取
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                primary: {
+                    50: '{{PRIMARY_50}}',
+                    500: '{{PRIMARY_500}}',
+                    600: '{{PRIMARY_600}}',
+                    700: '{{PRIMARY_700}}',
+                },
+                secondary: {
+                    500: '{{SECONDARY_500}}',
+                    600: '{{SECONDARY_600}}',
+                }
+            }
+        }
     }
-  },
-  spacing: {
-    xs: "0.25rem",
-    sm: "0.5rem",
-    md: "1rem",
-    lg: "1.5rem",
-    xl: "2rem",
-    "2xl": "3rem",
-  },
-  borderRadius: {
-    sm: "0.25rem",
-    md: "0.375rem",
-    lg: "0.5rem",
-    xl: "0.75rem",
-    full: "9999px",
-  },
-  shadows: {
-    sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-    md: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-    lg: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-  }
 };
 ```
+
+提取映射参考：
+| 现有页面元素 | Tailwind 配置 |
+|:-------------|:-------------|
+| 主按钮背景色 | `colors.primary.600` |
+| 主文字色 | 使用 `slate-900` / `slate-700` |
+| 次要文字色 | 使用 `slate-500` / `slate-400` |
+| 边框/分割线 | 使用 `slate-200` / `slate-100` |
+| 背景色 | 使用 `slate-50` / `white` |
+| 成功状态色 | 使用 `emerald-500` / `emerald-50` |
+| 警告状态色 | 使用 `amber-500` / `amber-50` |
+| 错误状态色 | 使用 `red-500` / `red-50` |
 
 #### Step 2.2: 分析并提取样式
 
@@ -238,7 +133,7 @@ const EXTRACTED_STYLES = {
 
 **HTML 原型输出格式：**
 
-生成的文件结构：
+所有模板默认使用 **TailwindCSS** 实用优先框架，通过 CDN 引入：
 
 ```html
 <!DOCTYPE html>
@@ -247,168 +142,72 @@ const EXTRACTED_STYLES = {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{FEATURE_NAME}} - 原型</title>
-    <style>
-        /* CSS 变量定义 - 基于提取或用户选择的样式 */
-        :root {
-            /* 颜色系统 */
-            --color-primary: {{PRIMARY_COLOR}};
-            --color-secondary: {{SECONDARY_COLOR}};
-            --color-background: {{BACKGROUND_COLOR}};
-            --color-surface: {{SURFACE_COLOR}};
-            --color-text: {{TEXT_COLOR}};
-            --color-text-secondary: {{TEXT_SECONDARY_COLOR}};
-            --color-border: {{BORDER_COLOR}};
-            --color-success: {{SUCCESS_COLOR}};
-            --color-error: {{ERROR_COLOR}};
-
-            /* 字体系统 */
-            --font-family: {{FONT_FAMILY}};
-            --font-size-base: {{FONT_SIZE_BASE}};
-
-            /* 间距系统 */
-            --spacing-sm: 0.5rem;
-            --spacing-md: 1rem;
-            --spacing-lg: 1.5rem;
-            --spacing-xl: 2rem;
-            --spacing-2xl: 3rem;
-
-            /* 圆角 */
-            --radius-sm: 0.25rem;
-            --radius-md: 0.375rem;
-            --radius-lg: 0.5rem;
-            --radius-xl: 0.75rem;
-            --radius-full: 9999px;
-
-            /* 阴影 */
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-        }
-
-        /* 基础重置 */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        }
-        body {
-            font-family: var(--font-family);
-            font-size: var(--font-size-base);
-            color: var(--color-text);
-            background: var(--color-background);
-            line-height: 1.6;
-        }
-
-        /* 通用组件样式 */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-md);
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
-            color: white;
-            padding: 32px;
-            border-radius: var(--radius-xl);
-            margin-bottom: 24px;
-        }
-
-        .header h1 {
-            font-size: var(--font-size-h1);
-            font-weight: 700;
-            margin: 0;
-        }
-
-        /* 页面布局样式 */
-        .layout {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: var(--spacing-md);
-        }
-
-        /* 表单元素 */
-        .input {
-            width: 100%;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-md);
-            font-size: var(--font-size-base);
-        }
-
-        .input:focus {
-            outline: none;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        /* 按钮样式 */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: var(--spacing-sm) var(--spacing-md);
-            border-radius: var(--radius-md);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: none;
-        }
-
-        .btn-primary {
-            background: var(--color-primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-        }
-
-        /* 卡片样式 */
-        .card {
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            padding: var(--spacing-lg);
-        }
-
-        /* 交互演示 */
-        .page { display: none; }
-        .page.active { display: block; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- 页面头部 -->
-        <div class="header">
-            <h1>{{FEATURE_NAME}}</h1>
-            <p>{{FEATURE_DESCRIPTION}}</p>
-        </div>
-
-        <!-- 功能页面 -->
-        <div id="page-list" class="page active">
-            <h2>功能列表</h2>
-            <!-- 功能卡片列表 -->
-        </div>
-
-        <!-- 详情页面 -->
-        <div id="page-detail" class="page">
-            <h2>功能详情</h2>
-            <!-- 表单 -->
-        </div>
-
-        <!-- 操作按钮 -->
-        <button class="btn btn-primary" onclick="showPage('list')">返回列表</button>
-    </div>
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // 简单的页面切换
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '{{PRIMARY_50}}', 100: '{{PRIMARY_100}}',
+                            500: '{{PRIMARY_500}}', 600: '{{PRIMARY_600}}',
+                            700: '{{PRIMARY_700}}',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'slide-in': 'slideIn 0.3s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideIn: { '0%': { transform: 'translateY(-10px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } },
+                    }
+                }
+            }
         }
     </script>
+</head>
+<body class="bg-slate-50 min-h-screen">
+    <!-- 顶部导航 -->
+    <header class="bg-white border-b border-slate-200 shadow-sm px-6 py-4">
+        <h1 class="text-2xl font-bold text-slate-900">{{FEATURE_NAME}}</h1>
+        <p class="text-slate-500 mt-1">{{FEATURE_DESCRIPTION}}</p>
+    </header>
+
+    <!-- 主内容 -->
+    <main class="p-6">
+        <div class="max-w-6xl mx-auto space-y-6">
+            <!-- 统计卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow">
+                    <h3 class="text-sm font-medium text-slate-500 mb-2">指标名称</h3>
+                    <p class="text-3xl font-bold text-slate-900">1,234</p>
+                    <p class="text-sm text-emerald-600">↑ 12% <span class="text-slate-400 font-normal">较上周</span></p>
+                </div>
+            </div>
+
+            <!-- 内容卡片 -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-200">
+                    <h3 class="text-lg font-semibold text-slate-900">模块标题</h3>
+                </div>
+                <div class="p-6">模块内容</div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
 ```
+
+**TailwindCSS 组件类名参考** `templates/prototype/COMPONENTS.md`。
+
+**常用类名速查**：
+- 布局：`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`
+- 卡片：`bg-white rounded-xl shadow-sm border border-slate-200 p-5 hover:shadow-md transition-shadow`
+- 按钮：`px-4 py-2.5 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors`
+- 输入框：`w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500/20`
+- 徽章：`inline-flex px-2.5 py-1 text-xs font-medium rounded-md bg-emerald-50 text-emerald-700`
+- 响应式：`p-4 md:p-6 lg:p-8`、`hidden md:block`
 
 ---
 
@@ -446,9 +245,39 @@ const EXTRACTED_STYLES = {
 | **自定义** | 输入色值 |
 ```
 
-#### Step 3.3: 生成样式配置
+#### Step 3.3: 生成 Tailwind 配置
 
-基于用户选择生成样式配置（同上 `styles.config.js` 格式）。
+基于用户选择生成 Tailwind 配置：
+
+```javascript
+tailwind.config = {
+    theme: {
+        extend: {
+            colors: {
+                primary: {
+                    50: '#f0f9ff', 100: '#e0f2fe', 200: '#bae6fd',
+                    300: '#7dd3fc', 400: '#38bdf8', 500: '#0ea5e9',
+                    600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e',
+                }
+            },
+            animation: {
+                'fade-in': 'fadeIn 0.3s ease-out',
+            },
+            keyframes: {
+                fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+            }
+        }
+    }
+};
+```
+
+**设计风格与主色映射**：
+| 风格 | 主色 | Tailwind 色板 |
+|:-----|:-----|:-------------|
+| 简约现代 | 蓝色 | `sky` / `blue` |
+| 商务专业 | 深蓝 | `slate` / `blue` |
+| 活泼创意 | 紫色 | `violet` / `fuchsia` |
+| 暗色主题 | 青蓝 | `cyan` / 深色 `slate` |
 
 #### Step 3.4: 生成原型（根据格式选择）
 
@@ -466,9 +295,7 @@ const EXTRACTED_STYLES = {
 
 ---
 
-## Pencil MCP 环境配置（CRITICAL - 选择 Pencil 时必需）
 
-[保留原有 Pencil MCP 环境配置流程]
 
 ### 保真度级别
 
@@ -483,8 +310,6 @@ const EXTRACTED_STYLES = {
 ```
 context/prototypes/
 ├── {feature-name}.html          # HTML 原型（可选）
-├── {feature-name}.pen           # Pencil 设计稿（可选）
-├── {feature-name}-preview.png    # 预览截图（Pencil）
 └── README.md                   # 使用说明
 ```
 
@@ -492,17 +317,39 @@ context/prototypes/
 
 ## Quality Standards
 
+### 质量检查清单
+
 生成原型前确保：
-- [ ] 格式已选择（HTML/Pencil/两者）
-- [ ] **Pencil 格式：环境配置检查通过**
-- [ ] **Pencil 格式：.pen 文件包含 version 和 children 字段**
 - [ ] 迭代模式：已收集并分析现有 UI
 - [ ] 新产品模式：已确认设计风格和颜色
 - [ ] PRD 内容已读取并理解
-- [ ] 用户流程已映射
-- [ ] **生成文件可在对应工具中打开**
-- [ ] 包含必要的交互演示（交互式）
+- [ ] 用户流程已映射（页面列表 + 跳转关系）
+- [ ] 保真度级别已选择（wireframe/mockup/interactive）
+- [ ] 使用正确的模板文件
+- [ ] 组件来自标准组件库
+- [ ] **生成文件可在浏览器中正常打开**
+- [ ] 包含必要的交互演示
 - [ ] HTML 使用提取的样式或用户选择的配色
+
+### 质量标准参考
+
+详细的质量标准请参考：
+- **组件规范**: `templates/prototype/COMPONENTS.md`
+- **质量标准**: `templates/prototype/QUALITY-STANDARDS.md`
+
+### 质量评分
+
+生成完成后进行自评：
+- **视觉质量** (0-10 分): 设计一致性、层级清晰、对齐精确、留白适当、配色和谐
+- **交互质量** (0-10 分): 反馈即时、状态清晰、过渡流畅、导航直观、操作可撤销
+- **代码质量** (0-10 分): 语义化 HTML、结构清晰、无语法错误、性能优化、可访问性
+
+**综合评分** = 视觉×0.4 + 交互×0.4 + 代码×0.2
+
+- 9-10 分：优秀原型，可直接使用
+- 7-8 分：  良好原型，建议优化
+- 5-6 分：  可用原型，需要改进
+- 0-4 分：  不可用，需要重做
 
 ---
 
@@ -545,43 +392,3 @@ User: "为新产品创建原型"
 
 ---
 
-### Pencil 设计稿预览
-
-```markdown
-## 🎨 Pencil 设计稿已生成！
-
-📁 文件位置: `context/prototypes/{feature-name}.pen`
-🖼️ 预览截图: `context/prototypes/{feature-name}-preview.png`
-
-📖 预览方式:
-1. 在 Pencil 应用中打开 .pen 文件
-2. 查看预览截图了解设计概览
-
-✨ 特性:
-- 结构化设计数据
-- 支持设计系统组件
-- 可导出代码
-- 符合 web-app 设计原则
-
-📝 下一步:
-- 在 Pencil 中查看完整设计
-- 导出代码进行开发
-- 确认后可进入开发阶段
-```
-
-### 两者都生成
-
-```markdown
-## 🎨 原型已生成！（双格式）
-
-📁 文件位置:
-- HTML: `context/prototypes/{feature-name}.html`
-- Pencil: `context/prototypes/{feature-name}.pen`
-- 预览: `context/prototypes/{feature-name}-preview.png`
-
-📖 预览方式:
-- HTML: 双击文件在浏览器中打开
-- Pencil: 在 Pencil 应用中打开
-```
-```
-```

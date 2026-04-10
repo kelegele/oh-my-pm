@@ -1,7 +1,7 @@
 {
   "name": "oh-my-pm",
   "version": "0.8.0",
-  "description": "面向产品经理的 AI Agent 工作流系统。提供 3 种核心流程：快速 PRD（/quick-prd）、完整产品规划（/full-pm-cycle）、功能发布（/feature-launch）。包含 20 个 Skills（16 个可独立使用 + 3 个工作流编排 + 1 个 HTML 原型设计）+ 8 个 Subagents + 4 个 Commands，支持迭代模式（基于截图/HTML）和新产品模式（自定义设计规范），覆盖需求感知→策略规划→方案设计→交付协调→价值验证完整闭环。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。",
+  "description": "面向产品经理的 AI Agent 工作流系统。提供 3 种核心流程：快速 PRD（/quick-prd）、完整产品规划（/full-pm-cycle）、功能发布（/feature-launch）。包含 18 个 Skills（16 个可独立使用 + 3 个工作流编排）+ 8 个 Subagents + 4 个 Commands，原型设计推荐使用 HTML 直接生成。覆盖需求感知→策略规划→方案设计→交付协调→价值验证完整闭环。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。",
   "author": {
     "name": "kelegele"
   },
@@ -17,10 +17,7 @@
     "roadmap",
     "competitive-analysis",
     "product-strategy",
-    "prototype",
-    "html-prototype",
-    "pencil",
-    "pen"
+    "html-prototype"
   ],
   "skills": [
     {
@@ -238,19 +235,6 @@
         "发布协调",
         "发布工作流"
       ]
-    },
-    {
-      "name": "pencil-design",
-      "file": "skills/design/pencil-design/SKILL.md",
-      "description": "使用 Pencil MCP 生成专业设计稿（.pen 文件）。支持结构化设计数据、设计系统组件和代码导出。当用户选择 Pencil 格式时使用，或明确需要专业设计工具集成时激活。",
-      "layer": "design",
-      "triggers": [
-        "Pencil",
-        "设计稿",
-        ".pen",
-        "Pencil design"
-      ],
-      "type": "object"
     }
   ],
   "agents": [

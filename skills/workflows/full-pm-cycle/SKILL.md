@@ -1,6 +1,6 @@
 ---
 name: full-pm-cycle
-description: 编排从市场研究到上线后分析的完整产品管理周期。用于综合产品规划、0-1 产品开发，或当用户说"完整产品计划"、"完整 PM 周期"、"从研究到上线"时使用。支持 HTML 原型和 Pencil 设计稿两种输出格式。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。
+description: 编排从市场研究到上线后分析的完整产品管理周期。用于综合产品规划、0-1 产品开发，或当用户说"完整产品计划"、"完整 PM 周期"、"从研究到上线"时使用。支持 HTML 原型输出格式。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。
 layer: workflow
 input-from: user
 output-to: iteration-planning
@@ -10,14 +10,13 @@ version: 0.8.0
 
 # Full PM Cycle Workflow
 
-完整的从市场研究到上线后分析的产品管理周期，采用 **Plan-and-Execute 模式**。支持 **HTML 原型**和 **Pencil 设计稿**两种输出格式。
 
 ## What This Workflow Does
 
 Orchestrates complete product management lifecycle across all five layers:
 - **Perception**: Market research, user research, competitive analysis
 - **Strategy**: Positioning, roadmap, prioritization
-- **Design**: PRD generation, prototype design (HTML/Pencil/Both)
+- **Design**: PRD generation, prototype design (HTML)
 - **Delivery**: Requirement review, project coordination, release management
 - **Validation**: Impact analysis, feedback synthesis
 
@@ -164,7 +163,7 @@ Orchestrates complete product management lifecycle across all five layers:
 
 **活动**：
 1. PRD 生成 - `prd-gen` skill
-2. 原型设计 - `prototype-design` skill（HTML/Pencil/Both）
+2. 原型设计 - `prototype-design` skill（HTML）
 
 **技能调用**：
 - Step 3.1: 调用 `/prd-gen`
@@ -177,21 +176,16 @@ Orchestrates complete product management lifecycle across all five layers:
 | Option | Description | 输出位置 |
 |:-------|-------------|:-----------|
 | **HTML 原型** | 可在浏览器直接预览、演示交互 | `context/prototypes/{name}.html` |
-| **Pencil 设计稿** | 结构化设计数据、专业设计工具、可导出代码 | `context/prototypes/{name}.pen` |
-| **两者都生成** | 同时生成 HTML 和 Pencil 两种格式 | 两者 |
 
 **输出**：
 - `context/prd/{feature-name}-{date}-v{version}.md`
 - `context/prototypes/{feature-name}.html`（如选择）
-- `context/prototypes/{feature-name}.pen`（如选择）
-- `context/prototypes/{feature-name}-preview.png`（Pencil 预览图）
 
 **质量门控**：
-- ✅ PRD 完整（8 章节，不含项目计划）
-- ✅ 原型已创建（HTML 或 Pencil）
-- ✅ **Pencil 格式：.pen 文件包含 version 和 children 字段**
-- ✅ **Pencil 格式：生成预览截图**
-- ✅ **Pencil 格式：可在 Pencil 应用中打开**
+- ✅ PRD 完整（9 章节）
+
+
+
 - **质量门控通过** - 进入 Delivery 阶段
 
 **状态更新**：
@@ -385,15 +379,13 @@ strategy_gates:
 design_gates:
   S3_to_S4:
     - prd_complete:
-        - PRD 完整（8 章，不含项目计划）
+        - PRD 完整（9 章）
         - 用户故事映射
         - 验收标准定义
     - prototype_validated:
         - 原型已创建
         - 交互功能验证
         - 设计一致性检查
-        - Pencil 格式：.pen 文件包含 version 和 children
-        - Pencil 格式：可在 Pencil 应用中打开
 ```
 
 ### Delivery 层质量门控
@@ -581,7 +573,7 @@ validation_gates:
 
 5. **设计包**
    - 包含用户故事的完整 PRD
-   - 交互式原型（HTML/Pencil/Both）
+   - 交互式原型（HTML）
    - 设计规格说明
 
 6. **交付计划**
