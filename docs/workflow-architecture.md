@@ -1,271 +1,376 @@
 # Oh-My-PM 工作流架构 (v0.8.0)
 
-## 核心概念
+Oh-My-PM 采用 **5 层架构** + **Plan-and-Execute 模式**，覆盖需求感知→策略规划→方案设计→交付协调→价值验证完整闭环。
 
-Oh-My-PM 采用 **Plan-and-Execute 模式**组织工作流，确保每个工作流都具有完整的阶段定义、状态追踪和质量门控。
+## 5 层架构总览
 
-### Plan-and-Execute 模式架构
+```mermaid
+graph TB
+    subgraph L1["1. Perception 需求感知层"]
+        A1["market-intelligence\n市场情报"]
+        A2["user-research\n用户研究"]
+        A3["competitive-analysis\n竞品分析"]
+        A4["data-monitoring\n指标监控"]
+    end
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                    PLANNER (规划器)                  │
-│                      │  Think → Plan → Execute                  │
-├──────────────────┤  ↓                 │
-│                      │            Verify (验证器)              │
-└──────────────────┴         │
+    subgraph L2["2. Strategy 策略规划层"]
+        B1["product-positioning\n产品定位"]
+        B2["roadmap-planning\n路线图规划"]
+        B3["prioritization\n优先级排序"]
+    end
 
-核心原则：
-1. 先思考再行动 - 明确规划再执行
-2. 阶段化分解 - 将复杂任务分解为可控的步骤
-3. 质量门控 - 每个阶段完成前必须满足质量标准
-4. 反馈调整 - 根据执行结果动态调整计划
-```
+    subgraph L3["3. Design 方案设计层"]
+        C1["prd-gen\nPRD 生成"]
+        C2["prototype-design\n原型设计"]
+        C3["process-optimization\n流程优化"]
+    end
 
----
+    subgraph L4["4. Delivery 交付协调层"]
+        D1["requirement-review\n需求评审"]
+        D2["project-coordination\n项目协调"]
+        D3["release-management\n发布管理"]
+    end
 
-## 工作流阶段 (Stages)
+    subgraph L5["5. Validation 价值验证层"]
+        E1["impact-analysis\n效果分析"]
+        E2["feedback-synthesis\n反馈汇总"]
+        E3["iteration-planning\n迭代规划"]
+    end
 
-每个工作流由以下阶段组成：
-
-| Stage ID | 名称 | 描述 | 关键输出 |
-|:---------|:-----|:---------|:----------|
-| S0 | Setup | 初始化工作流，创建追踪文件 | workflow_tracking.json |
-| S1 | Perception | 需求感知层执行 | market_data.json, personas.json |
-| S2 | Strategy | 策略规划层执行 | positioning.md, roadmap.md |
-| S4 | Delivery | 交付协调层执行 | project_plan.md, release_notes.md |
-| S5 | Validation | 价值验证层执行 | impact.json, feedback.json |
-
----
-
-## 状态机 (State Machine)
-
-### 状态字段定义
-
-```json
-{
-  "workflow_id": "唯一的工作流ID",
-  "workflow_name": "工作流名称",
-  "status": "执行状态 (in_progress | completed | blocked)",
-  "current_layer": "当前所在层 (perception | strategy | design | delivery | validation)",
-  "current_skill": "当前执行的 Skill",
-  "current_stage": "当前阶段 (S0 | S1 | S2 | S3 | S4 | S5)",
-  "completed_stages": "已完成的阶段列表",
-  "mode": "协作模式 (autopilot | copilot | manual)",
-  "started_at": "开始时间 (ISO 8601)",
-  "updated_at": "最后更新时间 (ISO 8601)"
-}
+    L1 -->|"context/"| L2
+    L2 -->|"context/"| L3
+    L3 -->|"context/"| L4
+    L4 -->|"context/"| L5
+    L5 -.->|"反馈循环"| L1
 ```
 
-### 状态转换规则
+## 用户对话流
 
-| 当前状态 | 可转换到 |
-|:---------|:---------|
-| `in_progress` | `completed` (当前阶段完成) |
-| `in_progress` | `blocked` (遇到阻塞) |
-| `in_progress` | 任何阶段 | 可进入下一阶段 |
+用户通过 **自然语言** 或 **Command** 触发，系统自动识别并路由到对应 Skill。
 
----
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant CC as Claude Code
+    participant SK as Skill Router
+    participant CTX as context/ 目录
+    participant SA as Subagent
 
-## 质量门控 (Quality Gates)
+    U->>CC: "分析 Notion vs 飞书的差异"
+    CC->>SK: 识别触发词 → competitive-analysis
+    SK->>SA: 委托 competitive-analyst (Sonnet)
+    SA->>SA: GitHub 代码分析 + 功能对比
+    SA->>CTX: 写入 context/competitive-analysis.json
+    SA-->>CC: 返回对比矩阵
+    CC-->>U: 展示竞品分析结果
 
-每个阶段必须有质量门控标准，完成后才能进入下一阶段。
+    U->>CC: "基于这个分析写 PRD"
+    CC->>SK: 识别触发词 → prd-gen
+    SK->>CTX: 读取 competitive-analysis.json
+    SK->>SK: 识别场景：迭代/新功能/0-1
+    SK-->>CC: 生成 PRD 文档
+    CC->>CTX: 写入 context/prd/feature-name.md
+    CC-->>U: 展示 PRD 内容
 
-### Perception 层质量标准
-
-```yaml
-gate_criteria:
-  perception:
-    market_research_complete:
-      name: "市场研究完成"
-      description: "完成 3+ 竞品的市场规模和趋势分析"
-      metrics: ["market_size", "growth_rate", "key_players"]
-    user_research_complete:
-      name: "用户研究完成"
-      description: "完成 3+ 用户访谈，创建 2+ 个用户画像"
-      metrics: ["personas_created", "interviews_conducted", "pain_points_identified"]
-    competitive_analysis_complete:
-      name: "竞品分析完成"
-      description: "完成 2+ 个竞品的功能对比分析"
-      metrics: ["competitors_analyzed", "matrix_complete", "differentiation_identified"]
+    U->>CC: "帮我设计原型"
+    CC->>SK: 识别触发词 → prototype-design
+    SK->>CTX: 读取 prd/*.md
+    SK-->>CC: 生成 HTML 原型
+    CC->>CTX: 写入 context/prototypes/*.html
+    CC-->>U: 返回 HTML 原型链接
 ```
 
-### Strategy 层质量标准
+## Command 工作流详解
 
-```yaml
-gate_criteria:
-  strategy:
-    positioning_complete:
-      name: "产品定位完成"
-      description: "完成产品定位声明、价值主张和差异化策略"
-      metrics: ["positioning_created", "value_proposition_clarity"]
-    roadmap_complete:
-      name: "路线图完成"
-      description: "完成 12 个月的产品路线图规划"
-      metrics: ["roadmap_created", "milestones_defined", "timeline_set"]
-    prioritization_complete:
-      name: "优先级排序完成"
-      description: "使用 RICE 或 MoSCoW 框架完成需求优先级排序"
-      metrics: ["priorities_assigned", "rice_scores_calculated", "moscow_decisions"]
+### /quick-prd — 竞品分析 + PRD
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant CC as Claude Code
+    participant CA as competitive-analysis
+    participant PG as prd-gen
+    participant CTX as context/
+
+    U->>CC: /quick-prd "用户中心改版" 淘宝 京东
+    CC->>CA: 启动竞品分析流程
+    CA->>CA: 分析淘宝/京东用户中心功能
+    CA->>CTX: 写入 competitive-analysis.json
+    CA-->>CC: 输出对比矩阵
+    CC->>PG: 传入竞品分析结果 + 需求描述
+    PG->>CTX: 读取 competitive-analysis.json
+    PG->>PG: 生成 8 章节 PRD
+    PG->>CTX: 写入 prd/user-center-redesign.md
+    PG-->>CC: 返回 PRD 文档
+    CC-->>U: 展示 PRD 结果
 ```
 
-### Design 层质量标准
+### /full-pm-cycle — 完整产品管理周期
 
-```yaml
-gate_criteria:
-  design:
-    prd_complete:
-      name: "PRD 完整"
-      description: "包含全部 8 章节的 PRD 文档（不含项目计划）"
-      metrics: ["all_sections_complete", "user_stories_mapped", "acceptance_criteria"]
-    prototype_validated:
-      name: "原型验证完成"
-      metrics: ["prototype_created", "usability_tested", "design_consistent"]
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant CC as Claude Code
+    participant PM as pm-orchestrator (Sonnet)
+    participant MR as market-researcher (Haiku)
+    participant CA as competitive-analyst (Sonnet)
+    participant UI as user-interviewer (Sonnet)
+    participant PP as product-positioning
+    participant RM as roadmap-planning
+    participant PR as prioritization
+    participant PG as prd-gen
+    participant PD as prototype-design
+    participant CTX as context/
+
+    U->>CC: /full-pm-cycle "项目管理工具"
+    CC->>PM: 启动完整 PM 周期编排
+
+    Note over PM,CTX: 阶段 1: 需求感知 (并行执行)
+    PM->>MR: market-researcher 分析市场
+    PM->>CA: competitive-analyst 分析竞品
+    PM->>UI: user-interviewer 创建画像
+    MR->>CTX: 写入 market-data.json
+    CA->>CTX: 写入 competitive-analysis.json
+    UI->>CTX: 写入 personas.json
+
+    Note over PM,CTX: 阶段 2: 策略规划
+    PM->>PP: 基于感知层输出写定位
+    PP->>CTX: 读取 market-data + competitive + personas
+    PP->>CTX: 写入 positioning.md
+    PM->>RM: 基于定位写路线图
+    RM->>CTX: 读取 positioning.md → roadmap.md
+    PM->>PR: 基于路线图排优先级
+    PR->>CTX: 读取 roadmap.md → prioritization.json
+
+    Note over PM,CTX: 阶段 3: 方案设计
+    PM->>PG: 基于策略层输出写 PRD
+    PG->>CTX: 读取 positioning + roadmap + priorities
+    PG->>CTX: 写入 prd/project-mgmt.md
+    PM->>PD: 基于 PRD 生成原型
+    PD->>CTX: 读取 prd/*.md → prototypes/*.html
+
+    PM-->>CC: 完整周期完成，更新 workflow_tracking.json
+    CC-->>U: 展示完整产物清单
 ```
 
-### Delivery 层质量标准
+### /feature-launch — 功能发布工作流
 
-```yaml
-gate_criteria:
-  delivery:
-    requirement_review_complete:
-      name: "需求评审完成"
-      description: "完成干系人需求评审会议并签字"
-      metrics: ["review_held", "stakeholders_aligned", "signoff_obtained"]
-    project_plan_complete:
-      name: "项目计划完成"
-      description: "完成详细的项目计划和任务分配"
-      metrics: ["tasks_assigned", "timeline_confirmed", "resources_allocated"]
-    release_ready:
-      name: "发布准备完成"
-      description: "代码已冻结，发布包已准备，上线检查清单完成"
-      metrics: ["code_freeze", "release_package_ready", "checklist_complete"]
+```mermaid
+sequenceDiagram
+    autonumber
+    participant U as 用户
+    participant CC as Claude Code
+    participant RR as requirement-review
+    participant PC as project-coordination
+    participant RM as release-management
+    participant IA as impact-analysis
+    participant FB as feedback-synthesis
+    participant IP as iteration-planning
+    participant CTX as context/
+
+    U->>CC: /feature-launch "用户注册流程"
+    CC->>RR: 启动需求评审
+    RR->>RR: 生成评审清单 + 干系人确认
+    RR->>CTX: 写入 requirement-review.json
+
+    CC->>PC: 启动项目协调
+    PC->>PC: 制定任务分配 + 时间线
+    PC->>CTX: 写入 project-plan.md
+
+    CC->>RM: 启动发布管理
+    RM->>RM: 生成发布包 + 上线检查清单
+    RM->>CTX: 写入 release-checklist.md
+
+    Note over CC,CTX: 功能上线后 7-14 天
+    CC->>IA: 启动效果分析
+    IA->>CTX: 读取目标指标
+    IA->>CTX: 写入 impact-analysis.json
+
+    CC->>FB: 启动反馈汇总
+    FB->>CTX: 读取用户反馈
+    FB->>CTX: 写入 feedback-themes.json
+
+    CC->>IP: 启动迭代规划
+    IP->>CTX: 读取 impact + feedback
+    IP->>CTX: 写入 iteration-plan.md
+
+    CC-->>U: 展示发布复盘报告
 ```
 
-### Validation 层质量标准
+## 独立 Skill 使用流程
 
-```yaml
-gate_criteria:
-  validation:
-    impact_analysis_complete:
-      name: "效果分析完成"
-      description: "上线后 7-14 天分析目标达成度"
-      metrics: ["goals_achieved", "metrics_collected", "variance_analyzed"]
-    feedback_synthesis_complete:
-      name: "反馈综合完成"
-      description: "收集并分析用户反馈，识别改进机会"
-      metrics: ["feedback_collected", "themes_identified", "improvements_mapped"]
-    iteration_planning_complete:
-      name: "迭代规划完成"
-      description: "基于效果分析和反馈，制定下一轮迭代计划"
-      metrics: ["next_iteration_planned", "success_metrics_defined", "lessons_learned"]
+每个 Skill 可独立使用，不依赖工作流。
+
+```mermaid
+graph LR
+    subgraph "触发方式"
+        NL["自然语言\n\"帮我分析下市场趋势\""]
+        CMD["Command\n/quick-prd \"需求\""]
+    end
+
+    subgraph "识别与路由"
+        TRIGGER["触发词匹配"]
+        ROUTER["Skill Router"]
+    end
+
+    subgraph "执行层"
+        SKILL["Skill 执行"]
+        SUBAGENT["Subagent 委托 (可选)"]
+    end
+
+    subgraph "输出"
+        CTX["context/ 文件写入"]
+        RESP["对话响应"]
+    end
+
+    NL --> TRIGGER
+    CMD --> TRIGGER
+    TRIGGER --> ROUTER
+    ROUTER -->|"需要深度分析"| SUBAGENT
+    ROUTER -->|"直接执行"| SKILL
+    SUBAGENT --> SKILL
+    SKILL --> CTX
+    SKILL --> RESP
 ```
 
----
+## Subagent 委托架构
 
-## 工作流状态文件
+```mermaid
+graph TB
+    subgraph "Main Context (Claude Code)"
+        MC["主对话上下文"]
+    end
 
-### 文件位置
+    subgraph "Subagent 委托"
+        MR["market-researcher\nHaiku + worktree"]
+        CA["competitive-analyst\nSonnet + GitHub"]
+        UI["user-interviewer\nSonnet + memory"]
+        DM["data-monitor\nHaiku + daemon"]
+        PO["process-optimizer\nSonnet + readonly"]
+        IA["impact-analyst\nSonnet"]
+        FC["feedback-collector\nHaiku"]
+        PM["pm-orchestrator\nSonnet + parallel"]
+    end
 
-```
-context/current-workflow.json  # 当前工作流状态
-context/workflow-state/          # 工作流快照目录
-```
+    subgraph "独立记忆"
+        MEM1["market-researcher/MEMORY.md"]
+        MEM2["competitive-analyst/MEMORY.md"]
+        MEM3["user-interviewer/MEMORY.md"]
+        MEM4["pm-orchestrator/MEMORY.md"]
+    end
 
-### workflow_tracking.json 结构
+    MC -.->|"触发词匹配"| MR
+    MC -.->|"触发词匹配"| CA
+    MC -.->|"触发词匹配"| UI
+    MC -.->|"触发词匹配"| DM
+    MC -.->|"触发词匹配"| PO
+    MC -.->|"触发词匹配"| IA
+    MC -.->|"触发词匹配"| FC
+    MC -.->|"触发词匹配"| PM
 
-```json
-{
-  "workflow_id": "当前工作流 ID",
-  "workflow_name": "工作流名称",
-  "status": "执行状态",
-  "current_layer": "当前层",
-  "current_skill": "当前 Skill",
-  "current_stage": "当前阶段",
-  "completed_stages": ["S0", "S1", ...],
-  "mode": "协作模式",
-  "started_at": "开始时间",
-  "updated_at": "更新时间",
-
-  "layer_outputs": {
-    "perception": {
-      "market_research": "文件路径",
-      "user_research": "文件路径",
-      "competitive_analysis": "文件路径"
-    },
-    "strategy": {
-      "positioning": "文件路径",
-      "roadmap": "文件路径",
-      "prioritization": "文件路径"
-    },
-    "design": {
-      "prd": "文件路径",
-      "prototype": "文件路径"
-    },
-    "delivery": {
-      "requirement_review": "文件路径",
-      "project_plan": "文件路径",
-      "release_ready": "文件路径"
-    },
-    "validation": {
-      "impact_analysis": "文件路径",
-      "feedback_synthesis": "文件路径"
-      "iteration_planning": "文件路径"
-    }
-  }
-}
+    MR --> MEM1
+    CA --> MEM2
+    UI --> MEM3
+    PM --> MEM4
 ```
 
----
+## Plan-and-Execute 模式
 
-## 质量标准应用
+```mermaid
+stateDiagram-v2
+    [*] --> S0_Setup: 用户触发工作流
+    S0_Setup --> S1_Perception: 创建 workflow_tracking.json
+    S1_Perception --> S1_Quality: 执行感知层 Skills
+    S1_Quality --> S2_Strategy: 质量门控通过
+    S1_Quality --> S1_Perception: 需要补充数据
 
-### quick-prd 工作流改造
+    S2_Strategy --> S2_Quality: 执行策略层 Skills
+    S2_Quality --> S3_Design: 质量门控通过
+    S2_Quality --> S2_Strategy: 需要调整策略
 
-需要将 quick-prd 改造为符合此架构：
-- 添加 5 个阶段定义（Stage S0-S4）
-- 添加阶段门控（Gate）
-- 更新状态追踪字段
-- 完善协作模式文档
+    S3_Design --> S3_Quality: 执行设计层 Skills
+    S3_Quality --> S4_Delivery: 质量门控通过
+    S3_Quality --> S3_Design: PRD 需要修改
 
-### feature-launch 工作流改造
+    S4_Delivery --> S4_Quality: 执行交付层 Skills
+    S4_Quality --> S5_Validation: 质量门控通过
+    S4_Quality --> S4_Delivery: 风险未解决
 
-需要将 feature-launch 改造为符合此架构：
-- 添加 5 个阶段定义
-- 添加阶段门控
-- 完善风险管理系统
-- 完善发布策略
+    S5_Validation --> S5_Quality: 执行验证层 Skills
+    S5_Quality --> [*]: 完整周期完成
+    S5_Quality --> S1_Perception: 反馈循环重启
 
----
-
-## 使用指南
-
-### 在新工作流中引用阶段定义
-
-使用统一的阶段标识：
-- Stage S0: "setup" - 工作流初始化
-- Stage S1: "perception" - 需求感知
-- Stage S2: "strategy" - 策略规划
-- Stage S3: "design" - 方案设计
-- Stage S4: "delivery" - 交付协调
-- Stage S5: "validation" - 价值验证
-
-### 质量门控使用
-
-每个阶段完成后必须调用对应的质量门控：
-```yaml
-stage_gates:
-  S1_perception: ["market_research_complete", "user_research_complete", "competitive_analysis_complete"]
-  S2_strategy: ["positioning_complete", "roadmap_complete", "prioritization_complete"]
-  S3_design: ["prd_complete", "prototype_validated"]
-  S4_delivery: ["requirement_review_complete", "project_plan_complete", "release_ready"]
-  S5_validation: ["impact_analysis_complete", "feedback_synthesis_complete", "iteration_planning_complete"]
+    state S1_Quality <<choice>>
+    state S2_Quality <<choice>>
+    state S3_Quality <<choice>>
+    state S4_Quality <<choice>>
+    state S5_Quality <<choice>>
 ```
 
----
+## 质量门控标准
+
+### Perception 层
+
+| 门控 | 标准 | 指标 |
+|:-----|:-----|:-----|
+| 市场研究完成 | 3+ 竞品市场规模和趋势分析 | `market_size`, `growth_rate`, `key_players` |
+| 用户研究完成 | 3+ 用户访谈，2+ 用户画像 | `personas_created`, `interviews_conducted` |
+| 竞品分析完成 | 2+ 竞品功能对比 | `competitors_analyzed`, `matrix_complete` |
+
+### Strategy 层
+
+| 门控 | 标准 | 指标 |
+|:-----|:-----|:-----|
+| 产品定位完成 | 定位声明 + 价值主张 + 差异化策略 | `positioning_created`, `value_proposition_clarity` |
+| 路线图完成 | 12 个月产品路线图 | `milestones_defined`, `timeline_set` |
+| 优先级完成 | RICE/MoSCoW 框架排序 | `rice_scores_calculated`, `moscow_decisions` |
+
+### Design 层
+
+| 门控 | 标准 | 指标 |
+|:-----|:-----|:-----|
+| PRD 完整 | 8 章节 PRD 文档 | `all_sections_complete`, `user_stories_mapped` |
+| 原型验证 | 原型生成 + 可用性确认 | `prototype_created`, `design_consistent` |
+
+### Delivery 层
+
+| 门控 | 标准 | 指标 |
+|:-----|:-----|:-----|
+| 需求评审完成 | 干系人评审会议 + 签字 | `review_held`, `stakeholders_aligned` |
+| 项目计划完成 | 任务分配 + 时间线确认 | `tasks_assigned`, `timeline_confirmed` |
+| 发布准备完成 | 代码冻结 + 上线检查清单 | `code_freeze`, `checklist_complete` |
+
+### Validation 层
+
+| 门控 | 标准 | 指标 |
+|:-----|:-----|:-----|
+| 效果分析完成 | 上线 7-14 天目标达成分析 | `goals_achieved`, `variance_analyzed` |
+| 反馈综合完成 | 用户反馈主题分析 | `themes_identified`, `improvements_mapped` |
+| 迭代规划完成 | 下一轮迭代计划 | `next_iteration_planned`, `success_metrics_defined` |
+
+## 状态机
+
+```mermaid
+stateDiagram-v2
+    [*] --> idle
+    idle --> in_progress: 触发工作流/ Skill
+    in_progress --> in_progress: 执行中 (切换层/Skill)
+    in_progress --> blocked: 遇到阻塞
+    blocked --> in_progress: 阻塞解除
+    in_progress --> completed: 所有阶段完成
+    completed --> idle: 等待下一次触发
+```
 
 ## 版本历史
 
 ### v0.8.0
-- 统一工作流架构文档
-- 新增 `docs/workflow-architecture.md`
+- 新增 Mermaid 可视化工作流架构
+- 新增完整对话流 sequence diagram
+- 定义 5 层架构 + Plan-and-Execute 模式状态机
+- 补充 Subagent 委托架构图
+
+### v0.7.0 (之前)
 - 定义工作流阶段、状态机和统一质量门控
