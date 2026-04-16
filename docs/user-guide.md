@@ -111,6 +111,145 @@ graph TB
 
 ---
 
+## 五层处理流程
+
+Oh-My-PM 的核心是 **5 层闭环架构**，每一层负责一个环节，层与层之间通过 `context/` 目录传递数据。
+
+### 整体数据流
+
+```mermaid
+graph TB
+    subgraph L1["第一层：需求感知 Perception"]
+        A1["market-intelligence\n市场情报收集"]
+        A2["user-research\n用户研究画像"]
+        A3["competitive-analysis\n竞品功能对比"]
+        A4["data-monitoring\n指标监控告警"]
+    end
+
+    subgraph L2["第二层：策略规划 Strategy"]
+        B1["product-positioning\n产品定位声明"]
+        B2["roadmap-planning\n路线图规划"]
+        B3["prioritization\n需求优先级排序"]
+    end
+
+    subgraph L3["第三层：方案设计 Design"]
+        C1["prd-gen\nPRD 文档生成"]
+        C2["prototype-design\nHTML 原型"]
+        C3["process-optimization\n流程优化"]
+    end
+
+    subgraph L4["第四层：交付协调 Delivery"]
+        D1["requirement-review\n需求评审"]
+        D2["project-coordination\n项目协调"]
+        D3["release-management\n发布管理"]
+    end
+
+    subgraph L5["第五层：价值验证 Validation"]
+        E1["impact-analysis\n效果分析"]
+        E2["feedback-synthesis\n反馈汇总"]
+        E3["iteration-planning\n迭代规划"]
+    end
+
+    L1 -->|"context/\nmarket_data.json\npersonas.json\ncompetitive-analysis.json"| L2
+    L2 -->|"context/\npositioning.md\nroadmap.md\nprioritization.json"| L3
+    L3 -->|"context/\nprd/*.md\nprototypes/*.html"| L4
+    L4 -->|"context/\nproject-plan.md\nrelease-notes.md"| L5
+    L5 -.->|"反馈循环\n下一轮需求"| L1
+```
+
+### 各层处理详解
+
+#### 第一层：需求感知 — "搞清楚现状"
+
+**输入**：你的问题描述（"分析一下 XX 市场"）
+**处理**：
+- `market-intelligence` → 分析行业规模、增长趋势、关键玩家
+- `user-research` → 创建用户画像、识别痛点
+- `competitive-analysis` → 功能对比矩阵、差异化分析
+- `data-monitoring` → 指标基线、异常告警
+
+**输出**：`context/competitive-analysis.json`、`context/personas.json` 等
+
+**你该怎么用**：
+> "这个市场有多大？趋势怎样？" → market-intelligence
+> "帮我分析 Notion vs 飞书" → competitive-analysis
+> "我的用户是什么样的人？" → user-research
+
+#### 第二层：策略规划 — "定方向排优先级"
+
+**输入**：感知层输出的市场数据、用户画像、竞品分析
+**处理**：
+- `product-positioning` → 产品定位声明、价值主张、差异化策略
+- `roadmap-planning` → 12 个月路线图、里程碑、时间表
+- `prioritization` → RICE/MoSCoW 框架优先级排序
+
+**输出**：`context/positioning.md`、`context/roadmap.md`、`context/prioritization.json`
+
+**你该怎么用**：
+> "我们的产品定位是什么？" → product-positioning
+> "接下来几个版本怎么排？" → roadmap-planning
+> "先做哪个功能？" → prioritization
+
+#### 第三层：方案设计 — "把想法落地成文档和原型"
+
+**输入**：策略层输出的定位、路线图、优先级
+**处理**：
+- `prd-gen` → 生成 8 章节 PRD（自动识别迭代/新功能/0-1 场景）
+- `prototype-design` → 生成可交互的 HTML 原型
+- `process-optimization` → 分析现有流程，给出优化建议
+
+**输出**：`context/prd/*.md`、`context/prototypes/*.html`
+
+**你该怎么用**：
+> "帮我写 PRD" → prd-gen
+> "帮我画个原型" → prototype-design
+> "这个流程怎么优化？" → process-optimization
+
+#### 第四层：交付协调 — "推动团队落地"
+
+**输入**：设计层输出的 PRD、原型
+**处理**：
+- `requirement-review` → 生成评审清单、组织干系人确认
+- `project-coordination` → 任务分配、时间线制定、风险跟踪
+- `release-management` → 发布计划、上线检查清单
+
+**输出**：项目计划、发布计划、上线检查清单
+
+**你该怎么用**：
+> "组织一下需求评审" → requirement-review
+> "项目进度怎么样？" → project-coordination
+> "准备上线" → release-management
+
+#### 第五层：价值验证 — "上线后复盘"
+
+**输入**：交付层输出的发布产物 + 实际运行数据
+**处理**：
+- `impact-analysis` → 上线 7-14 天分析目标达成度
+- `feedback-synthesis` → 用户反馈主题分析
+- `iteration-planning` → 基于效果 + 反馈制定下一轮迭代计划
+
+**输出**：`context/impact.json`、`context/iteration-plan.json`
+
+**你该怎么用**：
+> "上线效果怎么样？" → impact-analysis
+> "用户反馈了什么？" → feedback-synthesis
+> "下一版怎么排？" → iteration-planning
+
+### 反馈循环
+
+第五层完成后，迭代会重新启动第一层的感知流程，形成持续改进的闭环：
+
+```mermaid
+graph LR
+    A["需求感知"] --> B["策略规划"]
+    B --> C["方案设计"]
+    C --> D["交付协调"]
+    D --> E["价值验证"]
+    E -->|"数据反馈"| A
+```
+
+---
+
 ## 全部触发词速查表
 
 ### 需求感知层
