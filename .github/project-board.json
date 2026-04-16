@@ -42,7 +42,6 @@
     ],
     "initial_items": [
       {
-        "title": "Add prototype-design skill",
         "column": "backlog",
         "labels": ["design"],
         "description": "Create skill for assisting with prototype design and Figma integration"
