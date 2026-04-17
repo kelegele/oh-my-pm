@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "skill-creator": {
+      "source": "kelegele/oh-my-pm",
+      "sourceType": "github",
+      "computedHash": "54c2d384954a016b7f6aec90b185a67f4780cf48d8021b925e40cebb5b746d4e"
+    }
+  }
+}
