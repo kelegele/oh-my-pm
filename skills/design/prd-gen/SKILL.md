@@ -82,25 +82,13 @@ After scenario detection and context collection:
 
 3. **Handle Missing Assets**: If user says "I'll provide screenshots later" or "先跳过", record which items are pending and note them in the PRD plan as `[待补充]`.
 
-4. **Generate PRD Plan**: Create a summary of what the PRD will contain:
+4. **Generate PRD Plan**: Prepare (but do not yet display) the PRD Plan structure. The table below shows the template with default selections:
 
    ```markdown
-   ## PRD 内容方案
-
-   ### 场景确认
-   - **场景类型**: 迭代更新 / 新功能 / 0-1 新产品
-   - **核心需求**: [一句话概括]
-
-   ### 已收集信息
-   - [列出用户已提供的所有信息]
-
-   ### 待补充项
-   - [列出 pending 项，标注 [待补充]]
-
    ### 预计生成的 PRD 章节
    | 章节 | 内容概要 | 选中 | 依赖状态 |
    |:-----|:---------|:-----|:---------|
-   | 第0章 行业对标 | 将研究 X 个标杆产品 | ✅ | 已完成 / [待补充] |
+   | 第0章 行业对标分析 | 将研究 X 个标杆产品 | ✅ | 已完成 / [待补充] |
    | 第1章 项目概述 | 基于用户描述展开 | ✅ | 已完成 |
    | 第2章 业务分析 | 目标用户 X，痛点 Y | ✅ | 已完成 / [待补充] |
    | 第3章 功能需求 | [关键功能列表] | ✅ | 已完成 |
@@ -115,10 +103,9 @@ After scenario detection and context collection:
    - 技术方案 / 架构设计 — PRD 为产品需求文档，不包含技术实现细节
    - API 接口定义 / 端点规格 — 由开发团队在技术方案中另写
    - 数据库表结构设计 — 不在产品需求范围内
-
-   ### 关键决策点
-   - [列出需要用户确认的关键决策]
    ```
+
+   **Note:** The table above uses default selections. The actual「选中」values will be filled in Step 4.5 based on user's chapter selection responses. Do NOT present this table to the user yet.
 
 4.5. **Chapter Selection** (HARD GATE — Before presenting PRD Plan):
 
@@ -306,7 +293,7 @@ Before generating PRD content, note:
 
 ## Output Structure
 
-The PRD follows this structure (aligned with standard PRD template):
+The PRD follows this structure (aligned with standard PRD template). **IMPORTANT: This template shows all possible chapters. Generate ONLY the chapters selected by the user. Skip unselected chapters entirely. Do NOT generate technical architecture, API specifications, or database designs under any circumstances.**
 
 ```markdown
 # [Feature Name] PRD
@@ -573,17 +560,7 @@ This skill reads from and writes to the shared context:
 
 **Only trigger this step if the user selected 第8章 原型设计 in the chapter selection.**
 
-After PRD generation, if 原型设计 was selected:
-
-```markdown
-## 🎨 PRD 已生成完成！
-
-📄 文档位置: `context/prd/{feature-name}-{date}-v{version}.md`
-
-是否需要生成 HTML 原型图？
-- ✅ 是，生成 HTML 原型
-- ⏭️ 跳过
-```
+If 原型设计 was selected, generate the HTML prototype directly (no additional confirmation needed — the user already opted in during chapter selection):
 
 1. Generate interactive HTML prototype based on PRD content
 2. Output to `context/prototypes/{feature-name}.html`
