@@ -5,7 +5,7 @@ layer: design
 input-from: product-positioning,prioritization,competitive-analysis
 output-to: requirement-review,prototype-design
 mode-support: [autopilot, copilot, manual]
-version: 0.4.0
+version: 0.5.0
 context-requirements:
   - scenario: iteration
     required: [current_feature_desc, ui_state, iteration_goal]
