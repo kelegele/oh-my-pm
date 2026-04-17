@@ -55,6 +55,15 @@ The research process ensures comprehensive user understanding:
 | `personas` | User archetype creation | Persona profiles |
 | `journey-mapping` | Experience optimization | User journey maps |
 
+## Anti-Hallucination Rules
+
+本 Skill 必须遵守 `skills/shared/anti-hallucination-rules.md` 中的约束：
+- **搜索先行**: 引用行业报告、统计数据前必须先搜索验证
+- **来源必注**: 每个行业数据、统计趋势、用户引用必须有来源
+- **未知可接受**: 无法确认的数据标注 "Unknown"，禁止编造用户画像数据
+- **置信度**: 关键数据点标注 confidence (high/medium/low)
+- **事实与推断分离**: 区分真实用户反馈和推断的用户需求
+
 ## Output Structure
 
 The skill generates two outputs:
@@ -78,21 +87,25 @@ The skill generates two outputs:
         "role": "PM at B2B SaaS",
         "goals": ["Ship features faster", "Align team"],
         "pain_points": ["Too many tools", "Unclear priorities"],
-        "behaviors": ["Checks Jira first thing", "Prefers async comms"]
+        "behaviors": ["Checks Jira first thing", "Prefers async comms"],
+        "confidence": "medium",
+        "source": { "type": "interview", "url_or_reference": "interview-2026-03-12-01", "fetched_at": "2026-03-12T..." }
       }
     ],
     "key_insights": [
-      "Users spend 40% of time context-switching between tools",
-      "Onboarding drop-off occurs at step 3 (team invitation)"
+      { "insight": "Users spend 40% of time context-switching between tools", "confidence": "high", "evidence_count": 6, "total_participants": 8 }
     ],
     "quotes": [
-      {"user": "PM Alice", "quote": "I just wish everything was in one place"},
-      {"user": "Eng Bob", "quote": "Setting up a new project takes too long"}
+      {"user": "PM Alice", "quote": "I just wish everything was in one place", "source": "interview-2026-03-12-01"}
     ],
     "recommendations": [
       "Add integrations with popular tools",
       "Simplify onboarding flow"
     ]
+  },
+  "search_record": {
+    "search_queries_used": ["B2B SaaS PM user pain points study 2025"],
+    "sources_accessed": [{ "url": "https://...", "title": "...", "used_for": "industry benchmark data" }]
   },
   "last_updated": "2026-03-12T..."
 }
@@ -228,9 +241,13 @@ The skill generates two outputs:
 ## Quality Standards
 
 Before delivering, the research should:
-- Include 3+ personas (if applicable)
-- Provide 5+ key insights
-- Include direct user quotes
+- Include 3+ personas (if applicable) — base on real data, do NOT fabricate
+- Provide real insights with evidence counts from actual research
+- Include direct user quotes with source references
+- **ALL** industry benchmarks and statistics have source URLs
+- **ALL** quantitative claims have confidence rating
+- Facts (real interview data) and inferences (assumed needs) are clearly distinguished
+- Search record is included proving searches were executed for industry data
 - Link insights to actionable recommendations
 - Be valid JSON for downstream skills
 

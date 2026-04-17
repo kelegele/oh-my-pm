@@ -78,9 +78,7 @@ The skill generates monitoring outputs:
     "change": "-15%",
     "message": "DAU dropped below threshold",
     "suggested_actions": [
-      "Check if deployment caused issues",
-      "Review recent feature changes",
-      "Analyze user feedback channels"
+      { "action": "Check if deployment caused issues", "confidence": "low", "basis": "Correlation with recent deployment" }
     ]
   }
 }
@@ -99,7 +97,9 @@ The skill generates monitoring outputs:
         "previous": 1000,
         "change": "+5%",
         "trend": "up",
-        "status": "healthy"
+        "status": "healthy",
+        "data_source": "internal analytics",
+        "benchmark": { "value": "N/A", "confidence": "unknown", "note": "No industry benchmark found for this metric" }
       },
       {
         "name": "conversion_rate",
@@ -134,11 +134,23 @@ The skill generates monitoring outputs:
 | **Trend** | Gradual change | Linear regression slope |
 | **Pattern** | Repeating pattern | Time series analysis |
 
+## Anti-Hallucination Rules
+
+本 Skill 必须遵守 `skills/shared/anti-hallucination-rules.md` 中的约束：
+- **搜索先行**: 引用行业基准数据前必须先搜索验证
+- **来源必注**: 每个指标基准值、行业对比数据必须有来源
+- **未知可接受**: 无法获取的真实指标标注 "Unknown"，禁止编造基线数据
+- **置信度**: 关键基准数据标注 confidence (high/medium/low)
+- **事实与推断分离**: 区分实际监控数据和推断的异常原因
+
 ## Quality Standards
 
 Before delivering, the monitoring setup should:
 - Define clear metrics with business relevance
-- Set appropriate thresholds based on historical data
+- Set appropriate thresholds based on real historical data or industry benchmarks
+- **ALL** industry benchmarks cited have source URLs
+- **ALL** suggested root causes have confidence rating
+- Facts (actual metric values) and inferences (suspected causes) are clearly distinguished
 - Include actionable alert messages
 - Provide context for metric interpretation
 - Specify data sources and collection methods

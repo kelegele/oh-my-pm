@@ -36,6 +36,15 @@ The intelligence gathering follows a systematic approach:
 5. **Identify opportunities** - Find gaps and growth areas
 6. **Generate insights** - Synthesize findings into actionable intelligence
 
+## Anti-Hallucination Rules
+
+本 Skill 必须遵守 `skills/shared/anti-hallucination-rules.md` 中的约束：
+- **搜索先行**: 输出任何市场数据前必须先使用 WebSearch/WebReader
+- **来源必注**: 每个数字、趋势、参与者必须有 URL 来源
+- **未知可接受**: 找不到数据时标注 "Unknown"，禁止编造
+- **置信度**: 每个关键数据点标注 confidence (high/medium/low)
+- **事实与推断分离**: 明确区分已验证事实和推断
+
 ## Input Parameters
 
 | Parameter | Type | Required | Description |
@@ -61,25 +70,27 @@ The skill generates two outputs:
     "timestamp": "2026-03-12T...",
     "market": "SaaS project management",
     "market_size": {
-      "tam": "$10B",
-      "sam": "$3B",
-      "som": "$300M"
+      "tam": { "value": "$10B", "confidence": "high", "source": { "url": "https://...", "source_name": "Gartner", "fetched_at": "2026-03-12T..." } },
+      "sam": { "value": "$3B", "confidence": "high", "source": { "url": "https://...", "source_name": "IDC", "fetched_at": "2026-03-12T..." } },
+      "som": { "value": "$300M", "confidence": "medium", "source": { "url": "https://...", "source_name": "Internal estimate", "fetched_at": "2026-03-12T..." } }
     },
-    "growth_rate": "15% CAGR",
+    "growth_rate": { "value": "15% CAGR", "confidence": "high", "source": { "url": "https://...", "source_name": "Forrester", "fetched_at": "2026-03-12T..." } },
     "key_trends": [
-      "AI-powered automation",
-      "Remote work collaboration",
-      "Industry-specific solutions"
+      { "trend": "AI-powered automation", "confidence": "high", "source": { "url": "https://...", "source_name": "TechCrunch", "fetched_at": "2026-03-12T..." } }
     ],
-    "key_players": ["Asana", "Monday.com", "ClickUp", "Linear"],
+    "key_players": [
+      { "name": "Asana", "market_share": "20%", "confidence": "high", "source": { "url": "https://...", "source_name": "Statista", "fetched_at": "2026-03-12T..." } }
+    ],
     "opportunities": [
-      "Small business segment underserved",
-      "Integration ecosystem gaps"
+      { "opportunity": "Small business segment underserved", "confidence": "medium", "basis": "Based on competitor focus analysis" }
     ],
     "threats": [
-      "Market saturation in mid-market",
-      "Platform vendor consolidation"
+      { "threat": "Market saturation in mid-market", "confidence": "high", "source": { "url": "https://...", "source_name": "Gartner", "fetched_at": "2026-03-12T..." } }
     ]
+  },
+  "search_record": {
+    "search_queries_used": ["SaaS project management market size 2025 2026"],
+    "sources_accessed": [{ "url": "https://...", "title": "Market Report 2025", "used_for": "market size data" }]
   },
   "last_updated": "2026-03-12T..."
 }
@@ -96,11 +107,11 @@ The skill generates two outputs:
 - **Geography**: Global
 
 ## Market Size
-| Segment | Size | Growth |
-|:--------|-----:|:-------|
-| TAM (Total Addressable Market) | $10B | 15% CAGR |
-| SAM (Serviceable Addressable Market) | $3B | 18% CAGR |
-| SOM (Serviceable Obtainable Market) | $300M | 25% CAGR |
+| Segment | Size | Confidence | Source |
+|:--------|-----:|:-----------|:-------|
+| TAM | $10B | high | Gartner, 2025 |
+| SAM | $3B | high | IDC, 2025 |
+| SOM | $300M | medium | Internal estimate |
 
 ## Key Trends
 1. **AI-Powered Automation** - Teams are demanding AI assistance for task management...
@@ -138,11 +149,15 @@ The skill generates two outputs:
 ## Quality Standards
 
 Before delivering, the intelligence should:
-- Cover market size (TAM/SAM/SOM)
-- Identify 5+ key trends
-- List 5+ major players
-- Provide 3+ actionable opportunities
-- Note 2+ significant threats
+- Cover market size (TAM/SAM/SOM) — use "Unknown" if not found, do NOT fabricate
+- Identify real trends found through search (no minimum count required)
+- List major players found in search results
+- Provide actionable opportunities based on real data
+- Note significant threats
+- **ALL** numeric claims, market sizes, growth rates have source URLs
+- **ALL** data points have confidence rating (high/medium/low)
+- Facts and inferences are clearly distinguished
+- Search record is included proving searches were executed
 - Be valid JSON for downstream skills
 
 ## Collaboration Modes

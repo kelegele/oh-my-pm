@@ -35,6 +35,15 @@ The analysis follows a systematic approach:
 4. **Analyze gaps** - Identify missing features, unique advantages, opportunities
 5. **Generate recommendations** - Provide actionable strategic insights
 
+## Anti-Hallucination Rules
+
+本 Skill 必须遵守 `skills/shared/anti-hallucination-rules.md` 中的约束：
+- **搜索先行**: 输出任何竞品数据前必须先使用 WebSearch/WebReader 访问竞品官网或文档
+- **来源必注**: 每个功能声明、定价、用户评价必须有 URL 来源
+- **未知可接受**: 无法确认的功能标注 "Unknown"，禁止编造
+- **置信度**: 每个功能声明标注 confidence (high/medium/low)
+- **事实与推断分离**: 明确区分已验证功能和推断
+
 ## Input Parameters
 
 | Parameter | Type | Required | Description |
@@ -61,17 +70,25 @@ The skill generates two outputs:
     "feature_matrix": {
       "Feature 1": {
         "our_product": "supported",
-        "competitor_a": "supported",
-        "competitor_b": "partial"
+        "competitor_a": { "status": "supported", "confidence": "high", "source": { "url": "https://competitor-a.com/features", "fetched_at": "2026-03-11T..." } },
+        "competitor_b": { "status": "partial", "confidence": "high", "source": { "url": "https://competitor-b.com/pricing", "fetched_at": "2026-03-11T..." } }
       }
     },
     "gaps": {
-      "missing_features": ["Feature X", "Feature Y"],
-      "unique_advantages": ["Feature Z"]
+      "missing_features": [
+        { "feature": "Feature X", "supported_by": ["Competitor A", "Competitor B"], "confidence": "high" }
+      ],
+      "unique_advantages": [
+        { "feature": "Feature Z", "confidence": "medium", "basis": "No competitor found offering this" }
+      ]
     },
-    "opportunities": ["Opportunity 1", "Opportunity 2"],
-    "recommendations": ["Recommendation 1", "Recommendation 2"]
+    "opportunities": [{ "opportunity": "Opportunity 1", "confidence": "medium", "basis": "..." }],
+    "recommendations": [{ "recommendation": "Recommendation 1", "priority": "high" }]
   }],
+  "search_record": {
+    "search_queries_used": ["Competitor A features 2026", "Competitor B pricing page"],
+    "sources_accessed": [{ "url": "https://...", "title": "Competitor A Features", "used_for": "feature verification" }]
+  },
   "last_updated": "2026-03-11T..."
 }
 ```
@@ -126,8 +143,13 @@ Choose the appropriate depth based on your needs:
 
 Before delivering, the analysis should:
 - Cover at least 2 competitors
-- Compare 5+ core features
-- Provide 3+ actionable recommendations
+- Compare 5+ core feature areas
+- **ALL** feature claims have source URLs (competitor official page, docs, or verified third-party)
+- **ALL** data points have confidence rating (high/medium/low)
+- Features that cannot be verified are marked "Unknown" — do NOT fabricate
+- Facts and inferences are clearly distinguished
+- Search record is included proving searches were executed
+- Provide 3+ actionable recommendations based on real data
 - Distinguish between "missing features" and "strategic omissions"
 - Be valid JSON for downstream skills to consume
 
