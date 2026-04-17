@@ -174,7 +174,7 @@ gh auth refresh -h github.com -s project,read:project
 
 ### 手动测试
 
-**docs/testing-guide.md** 定义测试用例:
+**docs/guides/testing-guide.md** 定义测试用例:
 - 触发测试
 - 输出质量测试
 - 工作流集成测试

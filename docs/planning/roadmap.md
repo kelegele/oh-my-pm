@@ -6,7 +6,7 @@
 
 
 **已完成**:
-- ✅ Plan-and-Execute 工作流架构文档 (`docs/workflow-architecture.md`)
+- ✅ Plan-and-Execute 工作流架构文档 (`docs/architecture/workflow-architecture.md`)
 - ✅ 统一阶段标识 (S0-S5)
 - ✅ 统一质量门控定义
 - ✅ 工作流状态追踪字段
@@ -45,7 +45,7 @@
 - ✅ 8 个专业化 Subagents
 - ✅ 独立记忆系统 (`.claude/agent-memory/`)
 - ✅ Skills + Subagents 混合架构
-- ✅ Subagent 配置文档 (`docs/subagent-architecture.md`)
+- ✅ Subagent 配置文档 (`docs/architecture/subagent-architecture.md`)
 
 ---
 

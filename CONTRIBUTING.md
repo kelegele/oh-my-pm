@@ -166,7 +166,7 @@ Context 文件存放在 `context/` 目录：
 
 ## 测试指南
 
-详见 `docs/testing-guide.md`
+详见 `docs/guides/testing-guide.md`
 
 ### 快速测试
 

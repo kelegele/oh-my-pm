@@ -8,11 +8,16 @@ Oh-My-PM is an AI Agent workflow system for Product Managers, implemented as a *
 
 The system features a **5-layer architecture** with **20 Skills** (17 domain + 3 workflows) and **8 Subagents**, covering the complete product management lifecycle from requirement sensing to value validation.
 
+Current plugin version: **0.8.1** (see `.claude-plugin/plugin.json`). See `docs/planning/roadmap.md` for full version history.
+
 ## Commands
 
 ```bash
 # Run skill structure tests
 bash tests/test-skills.sh
+
+# Install plugin locally
+npx skills add kelegele/oh-my-pm -a claude-code
 
 # Usage examples (via Claude Code natural language)
 # "Analyze the competitive differences between Notion and Feishu docs"  → competitive-analysis
@@ -67,24 +72,46 @@ bash tests/test-skills.sh
 
 | Component | Count | Purpose |
 |:----------|:------|:--------|
-| **Skills** | 21 | Prompt injection for workflow triggering |
+| **Skills** | 20 | Prompt injection for workflow triggering |
 | **Subagents** | 8 | Isolated execution with optimized models |
 | **Commands** | 4 | Direct CLI invocation |
 
 **Key Difference**: Skills share main conversation context; Subagents run in isolation with custom model selection (haiku/sonnet/opus) and persistent memory.
 
+### Skills Breakdown
+
+| Layer | Skills | Examples |
+|:------|:-------|:---------|
+| **Perception** (5) | competitive-analysis, market-intelligence, user-research, data-monitoring, clarify-requirements | Market data, personas |
+| **Strategy** (3) | product-positioning, roadmap-planning, prioritization | Positioning, roadmap |
+| **Design** (3) | prd-gen, prototype-design, process-optimization | PRD, HTML prototypes |
+| **Delivery** (3) | requirement-review, project-coordination, release-management | Review reports, release plans |
+| **Validation** (3) | impact-analysis, feedback-synthesis, iteration-planning | Impact metrics, iteration plans |
+| **Workflows** (3) | quick-prd, full-pm-cycle, feature-launch | Multi-skill orchestration |
+
 ### Context Passing
 
 All intermediate outputs are stored in `context/` directory:
 
-| File | Purpose | Flow |
-|:-----|:--------|:-----|
-| `competitive-analysis.json` | Competitor analysis results | → prd-gen |
-| `personas.json` | User persona data | → positioning |
-| `clarification-result.json` | Requirement clarification result | → prd-gen |
-| `prd/*.md` | PRD documents | → prototype-design |
-| `prototypes/*.html` | HTML prototypes | → validation |
-| `current-workflow.json` | Workflow state tracking | All workflows |
+| File | Layer | Flow |
+|:-----|:------|:-----|
+| `competitive-analysis.json` | Perception | → prd-gen, positioning |
+| `personas.json` | Perception | → positioning, prd-gen |
+| `market-analysis.json` | Perception | → positioning |
+| `user-research.json` | Perception | → positioning |
+| `clarification-result.json` | Perception | → prd-gen |
+| `prd/*.md` | Design | → prototype-design, requirement-review |
+| `prototypes/*.html` | Design | → validation |
+| `prd-draft.md` | Design | Draft PRD |
+| `impact-analysis.json` | Validation | → iteration-planning |
+| `feedback-synthesis.json` | Validation | → iteration-planning |
+| `iteration-plan.json` | Validation | → next cycle |
+| `current-workflow.json` | All | Workflow state tracking |
+
+### Shared Rules & Templates
+
+- **`skills/shared/anti-hallucination-rules.md`**: Cross-skill constraints to prevent hallucination — all Skills should reference this.
+- **`templates/prototype/`**: HTML prototype templates (wireframe, mockup, interactive) with component library and quality standards.
 
 ## Workflows
 
@@ -106,12 +133,15 @@ All workflows follow the **Plan-and-Execute pattern** with:
 | Path | Purpose |
 |:-----|:--------|
 | `skills/*/SKILL.md` | Skill definitions with triggers and workflows |
+| `skills/shared/anti-hallucination-rules.md` | Cross-skill hallucination prevention rules |
 | `agents/*/*.md` | Subagent specifications |
 | `commands/*.md` | CLI command definitions |
 | `.claude-plugin/plugin.json` | Plugin manifest (Skills + Agents + Commands) |
-| `docs/workflow-architecture.md` | Plan-and-Execute architecture spec |
-| `docs/subagent-architecture.md` | Subagent design patterns |
-| `docs/CODEMAPS.md` | Comprehensive component navigation |
+| `templates/prototype/` | HTML prototype templates + component library |
+| `context/` | Workflow intermediate outputs |
+| `docs/architecture/workflow-architecture.md` | Plan-and-Execute architecture spec |
+| `docs/architecture/subagent-architecture.md` | Subagent design patterns |
+| `docs/architecture/CODEMAPS.md` | Comprehensive component navigation |
 
 ## Subagent Memory System
 
@@ -120,12 +150,37 @@ Each subagent maintains independent memory in `.claude/agent-memory/<name>/MEMOR
 - **market-researcher**: Market data & trends
 - **competitive-analyst**: Competitor knowledge base
 - **user-interviewer**: User research patterns
+- **data-monitor**: Metrics baseline
 - **process-optimizer**: Process optimization frameworks
 - **impact-analyst**: Impact analysis frameworks
 - **feedback-collector**: Feedback theme patterns
 - **pm-orchestrator**: Workflow best practices
 
 Memory enables cross-session learning without polluting main conversation context.
+
+## Development
+
+### Adding a New Skill
+
+1. Create directory under appropriate layer: `skills/{perception,strategy,design,delivery,validation}/skill-name/`
+2. Create `SKILL.md` with YAML frontmatter (`name`, `description`, `layer`, `version`)
+3. Run `bash tests/test-skills.sh` to validate structure
+4. No need to update `plugin.json` — skills are auto-discovered via directory paths
+
+### Adding a New Subagent
+
+1. Create `agents/{layer}/name.md` with agent spec
+2. Add entry to `.claude-plugin/plugin.json` → `agents` array
+3. Create memory directory: `.claude/agent-memory/name/MEMORY.md`
+
+### Testing
+
+```bash
+# Skill structure validation (checks frontmatter + required fields)
+bash tests/test-skills.sh
+```
+
+Skills are triggered by natural language in Claude Code — test by simulating user prompts.
 
 ## Versioning & Commits
 

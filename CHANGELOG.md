@@ -131,7 +131,7 @@ skills/
   - `quick-prd` - Workflow combining competitive analysis + PRD generation
 - Context file system for skill data sharing
 - Test framework (tests/test-skills.sh)
-- Testing guide (docs/testing-guide.md)
+- Testing guide (docs/guides/testing-guide.md)
 - Initial CLAUDE.md with project guidance
 
 ### Project Structure
@@ -192,7 +192,7 @@ context/
 
 ### Added
 - **Plan-and-Execute 工作流架构** - 统一的工作流架构文档
-  - `docs/workflow-architecture.md` - 新增工作流架构规范
+  - `docs/architecture/workflow-architecture.md` - 新增工作流架构规范
   - 定义统一的阶段标识（S0-S5）、状态机和质量门控
   - 五层架构与阶段映射关系
   - 工作流状态追踪字段定义
@@ -243,7 +243,7 @@ context/
     - 为"项目风险"添加"(仅产品/业务风险，不含技术风险)"标注
     - 添加"合规建议完整（包含风险类别和附件引用）"
 - `quick-prd`, `full-pm-cycle`, `feature-launch` ( workflows ) - 更新质量门控引用，从"9 章"改为"8 章，不含项目计划"
-- `docs/workflow-architecture.md` - 更新 Design 层质量标准，PRD 完成条件从"包含全部 9 章节"改为"包含全部 8 章节（不含项目计划）"
+- `docs/architecture/workflow-architecture.md` - 更新 Design 层质量标准，PRD 完成条件从"包含全部 9 章节"改为"包含全部 8 章节（不含项目计划）"
 - `CLAUDE.md` - 更新 prd-gen 版本从 0.2.1 到 0.4.0
 
 ### Design Philosophy

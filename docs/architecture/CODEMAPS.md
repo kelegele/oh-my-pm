@@ -155,11 +155,11 @@ oh-my-pm/
 | `README.md` | 项目说明、快速开始、组件清单 |
 | `CONTRIBUTING.md` | 贡献指南、Skill 编写规范 |
 | `CHANGELOG.md` | 版本变更记录 |
-| `docs/workflow-architecture.md` | Plan-and-Execute 工作流架构规范 |
-| `docs/subagent-architecture.md` | Subagent 架构说明 |
-| `docs/project-memory.md` | 项目记忆、技术决策、教训 |
-| `docs/roadmap.md` | 项目路线图、里程碑 |
-| `docs/testing-guide.md` | 测试指南、测试用例 |
+| `docs/architecture/workflow-architecture.md` | Plan-and-Execute 工作流架构规范 |
+| `docs/architecture/subagent-architecture.md` | Subagent 架构说明 |
+| `docs/memory/project-memory.md` | 项目记忆、技术决策、教训 |
+| `docs/planning/roadmap.md` | 项目路线图、里程碑 |
+| `docs/guides/testing-guide.md` | 测试指南、测试用例 |
 
 ---
 
