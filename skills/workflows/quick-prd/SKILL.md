@@ -69,10 +69,24 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 
 **目标**：完成需求感知层的数据收集和分析
 
-**活动**：
-1. 竞品分析 - `competitive-analysis` skill
-2. 市场研究 - `market-intelligence` skill
-3. 用户研究 - `user-research` skill
+**Step 1.0: Perception Brainstorming** (BEFORE any skill invocation)
+
+1. Analyze user's initial input for the product/feature domain
+2. Identify what perception data already exists in `context/`
+3. **Gap Analysis**: What's missing for a complete perception picture?
+   - Market intelligence: market scope, trends, TAM/SAM/SOM
+   - Competitive analysis: which competitors, feature focus
+   - User research: target users, pain points, personas
+4. For each gap, ask user ONE question at a time using `AskUserQuestion`:
+   - "需要分析哪些竞品？" → multi-select
+   - "目标用户是谁？" → multiple choice options
+   - "有用户研究数据吗？" → yes/no/need to conduct
+5. Present a **Perception Summary** to the user:
+   - What we know
+   - What we've analyzed (market, competitors, users)
+   - What's still unclear
+   - Recommended next steps
+6. **User must approve** the Perception Summary before entering skill invocation.
 
 **技能调用**：
 - Step 1.1: 调用 `/competitive-analysis`
@@ -132,6 +146,30 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 - ✅ 产品定位完成 - 价值主张清晰、差异化策略明确
 - ✅ 路线图完成 - 12 个月里程碑规划
 - ✅ 优先级排序完成 - RICE/MoSCoW 框架应用
+
+### Stage 2.5: Strategy Confirmation Gate (HARD GATE)
+
+**在阶段 2 完成后、进入阶段 3 前，必须执行此门控。**
+
+1. **向用户展示完整的策略层产出**：
+   - Positioning Statement（来自 `context/positioning.md`）
+   - Key messages 和 value proposition
+   - Prioritization 结果（来自 `context/prioritization.json`）— 前 N 项及 RICE 分数
+   - Roadmap 亮点（来自 `context/roadmap.md`）— 关键里程碑
+
+2. **使用 AskUserQuestion 让用户确认**：
+
+   | Option | Description |
+   |:-------|:------------|
+   | **✅ 确认，进入 Design 阶段** | 进入 Stage 3 |
+   | **✏️ 需要调整定位/优先级** | 留在 Stage 2，修订相关 skill |
+   | **⏸️ 回到 Perception 补充信息** | 回到 Stage 1 |
+   | **📋 查看完整策略文档** | 先读全文档再决定 |
+
+3. **仅当用户明确选择"✅ 确认，进入 Design 阶段"时**，才能进入 Stage 3。
+4. 如果用户选择修订，回到相关 skill 进行 refinement。
+5. 将确认记录到 `context/current-workflow.json`。
+
 - **质量门控通过** - 进入 Design 阶段
 
 **状态更新**：

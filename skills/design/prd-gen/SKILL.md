@@ -63,6 +63,69 @@ When user selects "迭代更新", ask how they want to provide current UI state:
 - **HTML 文件** - User provides local HTML path, use `Read` tool to parse DOM structure
 - **在线链接** - User provides URL, use `mcp__web_reader__webReader` (no login required)
 
+### Step 0.5: Information Gap Analysis & PRD Plan (CRITICAL — HARD GATE)
+
+**HARD GATE**: Do NOT proceed to Industry Benchmark Check or PRD generation until this step is complete and user has approved the plan.
+
+After scenario detection and context collection:
+
+1. **Gap Analysis**: Compare user-provided information against `context-requirements` for this scenario. List every missing required field. Also check `context/` for existing perception data (market-analysis.json, competitive-analysis, user-research.json, positioning.md).
+
+2. **One Question At A Time**: For each missing item, ask the user using `AskUserQuestion` with multiple choice options. Do NOT bundle multiple questions into one message.
+
+   | Missing Item | Example Question |
+   |:-------------|:-----------------|
+   | UI 截图 | "当前功能的界面状态，你如何提供？" → A. 已有截图 B. 有 HTML 文件 C. 有在线链接 D. 暂无，先跳过 |
+   | 竞品列表 | "需要分析哪些竞品？" → multi-select + "其他" |
+   | 目标用户 | "目标用户是？" → A. 已定义画像 B. 我口述你来整理 C. 需要先做用户研究 |
+   | 参考产品 | "有参考产品吗？" → A. 有，我来说 B. 你帮我搜索行业标杆 C. 不需要参考 |
+
+3. **Handle Missing Assets**: If user says "I'll provide screenshots later" or "先跳过", record which items are pending and note them in the PRD plan as `[待补充]`.
+
+4. **Generate PRD Plan**: Create a summary of what the PRD will contain:
+
+   ```markdown
+   ## PRD 内容方案
+
+   ### 场景确认
+   - **场景类型**: 迭代更新 / 新功能 / 0-1 新产品
+   - **核心需求**: [一句话概括]
+
+   ### 已收集信息
+   - [列出用户已提供的所有信息]
+
+   ### 待补充项
+   - [列出 pending 项，标注 [待补充]]
+
+   ### 预计生成的 PRD 章节
+   | 章节 | 内容概要 | 依赖状态 |
+   |:-----|:---------|:---------|
+   | 第0章 行业对标 | 将研究 X 个标杆产品 | 已完成 / [待补充] |
+   | 第1章 项目概述 | 基于用户描述展开 | 已完成 |
+   | 第2章 业务分析 | 目标用户 X，痛点 Y | 已完成 / [待补充] |
+   | 第3章 功能需求 | [关键功能列表] | 已完成 |
+   | 第4章 非功能性需求 | 行业标准要求 | 自动生成 |
+   | 第5章 用户体验流程 | 基于功能推导 | 需 UI 补充 |
+   | 第6章 项目风险 | 基于功能复杂度 | 自动生成 |
+   | 第7章 合规建议 | 基于数据类型 | 自动生成 |
+   | 第8章 原型设计 | [待确认是否生成] | - |
+   | 第9章 成功指标 | 基于目标推导 | 自动生成 |
+
+   ### 关键决策点
+   - [列出需要用户确认的关键决策]
+   ```
+
+5. **User Approval**: Use `AskUserQuestion` to present the PRD Plan and get explicit approval:
+
+   | Option | Description |
+   |:-------|:------------|
+   | **确认，按此方案生成 PRD** | 进入 Step 1 行业基准和 Step 2 PRD 生成 |
+   | **需要调整方案** | 修改 PRD Plan 后重新确认 |
+   | **我有更多信息要补充** | 回到 Step 0.5 补充信息，重新生成方案 |
+   | **先补充感知数据** | 调用 competitive-analysis / user-research / market-intelligence |
+
+**Anti-Pattern**: "I have enough info, let me just generate" — forbidden. Even with minimal gaps, present the plan and get approval.
+
 ### TUI 环境下的图片处理指南
 
 在终端 (TUI) 环境下，用户可以通过以下方式提供图片：
@@ -151,7 +214,7 @@ pngpaste ~/screenshot.png
 
 ### Industry Benchmark Check
 
-After scenario detection and context collection:
+After scenario detection, context collection, and information clarification:
 
 1. **User-provided benchmarks** (priority): User-specified reference products
 2. **Agent supplemental search**: Auto-search industry best practices based on scenario keywords
@@ -171,12 +234,13 @@ The generation process ensures complete, actionable PRDs:
 
 1. **Scenario Detection** - Use AskUserQuestion to identify iteration/new-feature/new-product
 2. **Context Collection** - Gather required information based on scenario type
-3. **Industry Benchmark Research** - Search and extract best practices (user-specified + agent search)
-4. **Parse requirements** - Structure the user's feature request into key components
-5. **Gather context** - Read market analysis, competitive insights, user research
-6. **Assemble sections** - Build each PRD section with appropriate detail
-7. **Verify completeness** - Check against quality standards
-8. **Generate output** - Write to `context/prd/{feature-name}-{date}-v{version}.md`
+3. **Information Gap Analysis & PRD Plan** - Identify missing info, ask one question at a time, present PRD plan for user approval (HARD GATE)
+4. **Industry Benchmark Research** - Search and extract best practices (user-specified + agent search)
+5. **Parse requirements** - Structure the user's feature request into key components
+6. **Gather context** - Read market analysis, competitive insights, user research
+7. **Assemble sections** - Build each PRD section with appropriate detail
+8. **Verify completeness** - Check against quality standards
+9. **Generate output** - Write to `context/prd/{feature-name}-{date}-v{version}.md`
 
 ## Input Parameters
 

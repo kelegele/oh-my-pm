@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Oh-My-PM is an AI Agent workflow system for Product Managers, implemented as a **Claude Code Skill plugin**.
 
-The system features a **5-layer architecture** with **19 Skills** (16 domain + 3 workflows) and **8 Subagents**, covering the complete product management lifecycle from requirement sensing to value validation.
+The system features a **5-layer architecture** with **20 Skills** (17 domain + 3 workflows) and **8 Subagents**, covering the complete product management lifecycle from requirement sensing to value validation.
 
 ## Commands
 
@@ -28,7 +28,8 @@ bash tests/test-skills.sh
 ┌─────────────────────────────────────────────────┐
 │  Perception Layer (需求感知)                     │
 │  market-intelligence · user-research ·          │
-│  competitive-analysis · data-monitoring          │
+│  competitive-analysis · data-monitoring ·       │
+│  clarify-requirements                            │
 │  → Output: market_data, personas, competitive   │
 └─────────────────────────────────────────────────┘
                        ↓ context/
@@ -66,7 +67,7 @@ bash tests/test-skills.sh
 
 | Component | Count | Purpose |
 |:----------|:------|:--------|
-| **Skills** | 20 | Prompt injection for workflow triggering |
+| **Skills** | 21 | Prompt injection for workflow triggering |
 | **Subagents** | 8 | Isolated execution with optimized models |
 | **Commands** | 4 | Direct CLI invocation |
 
@@ -80,6 +81,7 @@ All intermediate outputs are stored in `context/` directory:
 |:-----|:--------|:-----|
 | `competitive-analysis.json` | Competitor analysis results | → prd-gen |
 | `personas.json` | User persona data | → positioning |
+| `clarification-result.json` | Requirement clarification result | → prd-gen |
 | `prd/*.md` | PRD documents | → prototype-design |
 | `prototypes/*.html` | HTML prototypes | → validation |
 | `current-workflow.json` | Workflow state tracking | All workflows |
@@ -124,3 +126,11 @@ Each subagent maintains independent memory in `.claude/agent-memory/<name>/MEMOR
 - **pm-orchestrator**: Workflow best practices
 
 Memory enables cross-session learning without polluting main conversation context.
+
+## Versioning & Commits
+
+**Semantic versioning**: `major.minor.patch`
+
+- **Every feature update commit must bump the patch version** in relevant files (plugin.json, SKILL.md headers, agent definitions)
+- Check `git diff` before committing — if any file has a `version` field, increment it
+- Breaking changes bump major, new features bump minor, bug fixes bump patch

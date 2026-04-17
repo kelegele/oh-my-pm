@@ -30,6 +30,15 @@ skills:
   - 监控指标
   - 数据看板
   - 指标分析
+- file: skills/perception/clarify-requirements/SKILL.md
+  layer: perception
+  name: clarify-requirements
+  triggers:
+  - 需求澄清
+  - 梳理需求
+  - 确认信息
+  - 补全信息
+  - 先确认需求
 - file: skills/strategy/product-positioning/SKILL.md
   layer: strategy
   name: product-positioning

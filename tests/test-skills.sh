@@ -90,6 +90,7 @@ echo "Testing MVP Skills..."
 echo ""
 
 test_skill_file "$SKILLS_DIR/perception/competitive-analysis/SKILL.md"
+test_skill_file "$SKILLS_DIR/perception/clarify-requirements/SKILL.md"
 test_skill_file "$SKILLS_DIR/design/prd-gen/SKILL.md"
 test_skill_file "$SKILLS_DIR/validation/iteration-planning/SKILL.md"
 test_skill_file "$SKILLS_DIR/workflows/quick-prd/SKILL.md"

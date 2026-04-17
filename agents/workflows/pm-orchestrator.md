@@ -88,6 +88,19 @@ memory: project
 
 **验收标准**：3+ 竞品洞察，2+ 用户画像
 
+### 阶段 1.5: 需求澄清 (Clarify Requirements)
+**使用 Skill**: `clarify-requirements`
+
+在感知数据收集完成后、进入策略层前，执行需求澄清流程：
+
+1. 检查已收集的感知数据完整性
+2. 识别缺失信息，逐一向用户确认（一次一个问题）
+3. 生成 PRD 内容方案供用户审阅
+4. **用户明确批准后**才能进入阶段 2
+
+**输出**：
+- `context/clarification-result.json`
+
 ### 阶段 2: 策略 (定义方向)
 **使用 Skills**: `product-positioning` → `roadmap-planning` → `prioritization`
 
@@ -95,6 +108,29 @@ memory: project
 - `context/positioning.md`
 - `context/roadmap.md`
 - `context/prioritization.json`
+
+### 阶段 2.5: 策略确认门控 (Strategy Confirmation Gate)
+
+**HARD GATE**: 在阶段 2 完成后、进入阶段 3 前，必须执行此门控。
+
+1. **向用户展示完整的策略层产出**：
+   - Positioning Statement（来自 `context/positioning.md`）
+   - Key messages 和 value proposition
+   - Prioritization 结果（来自 `context/prioritization.json`）— 前 N 项及 RICE 分数
+   - Roadmap 亮点（来自 `context/roadmap.md`）— 关键里程碑
+
+2. **使用 AskUserQuestion 让用户确认**：
+   - Header: "Strategy 阶段确认"
+   - Question: "请审阅策略层产出，确认是否进入 Design 阶段？"
+   - Options:
+     - "✅ 确认，进入 Design 阶段"
+     - "✏️ 需要调整定位/优先级" (留在阶段 2 修订)
+     - "⏸️ 回到 Perception 补充信息" (回到阶段 1)
+     - "📋 查看完整策略文档" (先读全文档再决定)
+
+3. **仅当用户明确选择"✅ 确认"时**，才能进入阶段 3。
+4. 如果用户选择修订，回到相关 skill 进行 refinement。
+5. 将确认记录到 `context/current-workflow.json`。
 
 ### 阶段 3: 设计 (定义方案)
 **使用 Skills**: `prd-gen` → `HTML 原型生成`
