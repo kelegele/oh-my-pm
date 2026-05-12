@@ -290,13 +290,27 @@ oh-my-pm/
 │   ├── design/          # Process optimization
 │   ├── validation/      # Impact analysis, feedback aggregation
 │   └── workflows/       # PM orchestrator
-├── skills/              # Skill plugin directory (20)
-│   ├── perception/      # Perception layer (4)
-│   ├── strategy/        # Strategy layer (3)
-│   ├── design/          # Design layer (3)
-│   ├── delivery/        # Delivery layer (3)
-│   ├── validation/      # Validation layer (3)
-│   └── workflows/       # Workflow orchestrators (3)
+├── skills/                        # Skill plugin directory (20)
+│   ├── competitive-analysis/      # layer: perception
+│   ├── clarify-requirements/      # layer: perception
+│   ├── market-intelligence/       # layer: perception
+│   ├── user-research/             # layer: perception
+│   ├── data-monitoring/           # layer: perception
+│   ├── product-positioning/       # layer: strategy
+│   ├── roadmap-planning/          # layer: strategy
+│   ├── prioritization/            # layer: strategy
+│   ├── prd-gen/                   # layer: design
+│   ├── prototype-design/          # layer: design
+│   ├── process-optimization/      # layer: design
+│   ├── requirement-review/        # layer: delivery
+│   ├── project-coordination/      # layer: delivery
+│   ├── release-management/        # layer: delivery
+│   ├── impact-analysis/           # layer: validation
+│   ├── feedback-synthesis/        # layer: validation
+│   ├── iteration-planning/        # layer: validation
+│   ├── quick-prd/                 # layer: workflow
+│   ├── full-pm-cycle/             # layer: workflow
+│   └── feature-launch/            # layer: workflow
 ├── .claude/
 │   ├── agent-memory/    # Subagent memory system
 │   └── settings.local.json

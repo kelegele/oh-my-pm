@@ -1,6 +1,6 @@
 {
   "name": "oh-my-pm",
-  "version": "0.8.2",
+  "version": "0.9.0",
   "description": "面向产品经理的 AI Agent 工作流系统。提供 3 种核心流程：快速 PRD（/quick-prd）、完整产品规划（/full-pm-cycle）、功能发布（/feature-launch）。包含 19 个 Skills（17 个可独立使用 + 3 个工作流编排）+ 8 个 Subagents + 4 个 Commands，原型设计推荐使用 HTML 直接生成。覆盖需求感知→策略规划→方案设计→交付协调→价值验证完整闭环。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。",
   "author": {
     "name": "kelegele"
@@ -20,12 +20,26 @@
     "html-prototype"
   ],
   "skills": [
-    "./skills/perception/",
-    "./skills/strategy/",
-    "./skills/design/",
-    "./skills/delivery/",
-    "./skills/validation/",
-    "./skills/workflows/"
+    "./skills/competitive-analysis/",
+    "./skills/market-intelligence/",
+    "./skills/user-research/",
+    "./skills/data-monitoring/",
+    "./skills/clarify-requirements/",
+    "./skills/product-positioning/",
+    "./skills/roadmap-planning/",
+    "./skills/prioritization/",
+    "./skills/prd-gen/",
+    "./skills/prototype-design/",
+    "./skills/process-optimization/",
+    "./skills/requirement-review/",
+    "./skills/project-coordination/",
+    "./skills/release-management/",
+    "./skills/impact-analysis/",
+    "./skills/feedback-synthesis/",
+    "./skills/iteration-planning/",
+    "./skills/quick-prd/",
+    "./skills/full-pm-cycle/",
+    "./skills/feature-launch/"
   ],
   "agents": [
     "./agents/perception/market-researcher.md",

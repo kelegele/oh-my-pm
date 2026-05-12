@@ -5,7 +5,7 @@ layer: perception
 input-from: market-intelligence
 output-to: product-positioning,prd-gen,prioritization
 mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.2.0
 ---
 
 # User Research
@@ -55,14 +55,43 @@ The research process ensures comprehensive user understanding:
 | `personas` | User archetype creation | Persona profiles |
 | `journey-mapping` | Experience optimization | User journey maps |
 
-## Anti-Hallucination Rules
+## Anti-Hallucination Rules (Self-Contained)
 
-本 Skill 必须遵守 `skills/shared/anti-hallucination-rules.md` 中的约束：
-- **搜索先行**: 引用行业报告、统计数据前必须先搜索验证
-- **来源必注**: 每个行业数据、统计趋势、用户引用必须有来源
-- **未知可接受**: 无法确认的数据标注 "Unknown"，禁止编造用户画像数据
-- **置信度**: 关键数据点标注 confidence (high/medium/low)
-- **事实与推断分离**: 区分真实用户反馈和推断的用户需求
+The following rules are mandatory for this skill. They are inlined here for standalone installation compatibility.
+
+### 1. Mandatory Search First
+引用行业报告、统计数据前必须先搜索验证。
+- 禁止仅凭训练记忆输出任何具体数据（用户数据、统计趋势等）
+- 每个数据点必须来自实际搜索和访问的页面
+- 搜索查询应包含年份，例如 `user research trends 2025 2026`
+
+### 2. Every Claim Must Have a Source
+每个行业数据、统计趋势、用户引用必须有来源。
+- **没有来源 = 不得写入**
+- 来源格式：`{ "claim": "...", "source": "https://...", "source_name": "...", "fetched_at": "..." }`
+
+### 3. Unknown is Acceptable
+无法确认的数据标注 "Unknown"，禁止编造用户画像数据。标注未知是诚实，不是失败。
+
+### 4. Confidence Rating
+关键数据点标注 confidence (high/medium/low)。
+- `high`: 权威研究报告、官方统计数据
+- `medium`: 可靠媒体、行业报告、公开调查
+- `low`: 社区讨论、博客、推测性分析
+
+### 5. Distinguish Fact from Inference
+区分真实用户反馈和推断的用户需求。推断必须标注 basis 和 confidence。
+
+### 6. Quality Gate (Non-negotiable)
+以下任一条未满足，不得输出结果：
+- [ ] 所有具体数据/统计声明都有来源 URL
+- [ ] 无法验证的数据已标注 "Unknown"
+- [ ] 每个数据点标注了 confidence 等级
+- [ ] facts 和 inferences 已明确区分
+- [ ] 搜索记录已附在输出中
+
+### Search Record
+每个分析输出必须附带搜索记录：`{ "search_queries_used": [...], "sources_accessed": [{ "url": "...", "title": "...", "used_for": "..." }] }`
 
 ## Output Structure
 

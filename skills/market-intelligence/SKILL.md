@@ -5,7 +5,7 @@ layer: perception
 input-from: user
 output-to: product-positioning,competitive-analysis,roadmap-planning
 mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.2.0
 ---
 
 # Market Intelligence
@@ -36,14 +36,43 @@ The intelligence gathering follows a systematic approach:
 5. **Identify opportunities** - Find gaps and growth areas
 6. **Generate insights** - Synthesize findings into actionable intelligence
 
-## Anti-Hallucination Rules
+## Anti-Hallucination Rules (Self-Contained)
 
-本 Skill 必须遵守 `skills/shared/anti-hallucination-rules.md` 中的约束：
-- **搜索先行**: 输出任何市场数据前必须先使用 WebSearch/WebReader
-- **来源必注**: 每个数字、趋势、参与者必须有 URL 来源
-- **未知可接受**: 找不到数据时标注 "Unknown"，禁止编造
-- **置信度**: 每个关键数据点标注 confidence (high/medium/low)
-- **事实与推断分离**: 明确区分已验证事实和推断
+The following rules are mandatory for this skill. They are inlined here for standalone installation compatibility.
+
+### 1. Mandatory Search First
+输出任何市场数据前必须先使用 WebSearch/WebReader。
+- 禁止仅凭训练记忆输出任何具体数据（市场规模、增长率、参与者等）
+- 每个数据点必须来自实际搜索和访问的页面
+- 搜索查询应包含年份，例如 `SaaS project management market size 2025 2026`
+
+### 2. Every Claim Must Have a Source
+每个数字、趋势、参与者必须有 URL 来源。
+- **没有来源 = 不得写入**
+- 来源格式：`{ "claim": "...", "source": "https://...", "source_name": "...", "fetched_at": "..." }`
+
+### 3. Unknown is Acceptable
+找不到数据时标注 "Unknown"，禁止编造。标注未知是诚实，不是失败。
+
+### 4. Confidence Rating
+每个关键数据点标注 confidence (high/medium/low)。
+- `high`: 权威来源（Gartner, Forrester, IDC, 官方财报）
+- `medium`: 可靠来源（TechCrunch, Statista, 行业报告）
+- `low`: 社区讨论、博客、推测性分析
+
+### 5. Distinguish Fact from Inference
+明确区分已验证事实和推断。推断必须标注 basis 和 confidence。
+
+### 6. Quality Gate (Non-negotiable)
+以下任一条未满足，不得输出结果：
+- [ ] 所有具体数字/趋势声明都有来源 URL
+- [ ] 无法验证的数据已标注 "Unknown"
+- [ ] 每个数据点标注了 confidence 等级
+- [ ] facts 和 inferences 已明确区分
+- [ ] 搜索记录已附在输出中
+
+### Search Record
+每个分析输出必须附带搜索记录：`{ "search_queries_used": [...], "sources_accessed": [{ "url": "...", "title": "...", "used_for": "..." }] }`
 
 ## Input Parameters
 

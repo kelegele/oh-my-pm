@@ -390,5 +390,7 @@ User: "为新产品创建原型"
 - 表单演示
 ```
 
+> **Standalone install note**: Template files (`templates/prototype/`) are available with the full oh-my-pm plugin install. If installed standalone, the component and quality standards defined above serve as the reference.
+
 ---
 

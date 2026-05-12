@@ -13,7 +13,7 @@
 ### Task 1: 新增 Step 0.6 章节选择环节
 
 **Files:**
-- Modify: `skills/design/prd-gen/SKILL.md` (在 "Information Gap Analysis & PRD Plan" 的 User Approval 之前插入新步骤)
+- Modify: `skills/prd-gen/SKILL.md` (在 "Information Gap Analysis & PRD Plan" 的 User Approval 之前插入新步骤)
 
 - [ ] **Step 1: 在 SKILL.md 中 Step 0.5 的 "5. User Approval" 之前插入章节选择步骤**
 
@@ -118,7 +118,7 @@ After collecting selections, build the `selected_chapters` list and `excluded_ch
 ### Task 2: 在 PRD 生成指令中加入排除约束
 
 **Files:**
-- Modify: `skills/design/prd-gen/SKILL.md` (在 "How It Works" 和 PRD 生成指令部分)
+- Modify: `skills/prd-gen/SKILL.md` (在 "How It Works" 和 PRD 生成指令部分)
 
 - [ ] **Step 1: 在 "## How It Works" 的步骤描述中加入章节选择**
 
@@ -201,7 +201,7 @@ Before delivering, the PRD should include:
 ### Task 3: 验证改动的一致性并提交
 
 **Files:**
-- Modify: `skills/design/prd-gen/SKILL.md`
+- Modify: `skills/prd-gen/SKILL.md`
 
 - [ ] **Step 1: 验证文件内所有引用的一致性**
 
@@ -232,7 +232,7 @@ If 原型设计 was NOT selected, skip this step and notify the user that PRD ge
 - [ ] **Step 2: 提交改动**
 
 ```bash
-git add skills/design/prd-gen/SKILL.md
+git add skills/prd-gen/SKILL.md
 git commit -m "feat: add chapter selection gate to prd-gen skill
 
 Add multi-select chapter selection before PRD generation. Users can now
@@ -246,7 +246,7 @@ API definitions permanently excluded."
 
 | 文件 | 变更类型 | 说明 |
 |:-----|:---------|:-----|
-| `skills/design/prd-gen/SKILL.md` | Modify | 新增 Step 0.5.5 章节选择、更新 PRD Plan 表格、添加排除约束、更新 Quality Gate |
+| `skills/prd-gen/SKILL.md` | Modify | 新增 Step 0.5.5 章节选择、更新 PRD Plan 表格、添加排除约束、更新 Quality Gate |
 
 ## 命令
 

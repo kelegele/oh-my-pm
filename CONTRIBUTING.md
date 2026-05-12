@@ -34,16 +34,30 @@ git checkout -b fix/issue-description
 
 #### 3. 新增 Skill
 
-在 `skills/` 下对应层级创建 SKILL.md：
+在 `skills/` 下创建 SKILL.md，layer 信息在 frontmatter 中声明：
 
 ```
-skills/
-├── perception/           # 需求感知层
-├── strategy/             # 策略规划层
-├── design/               # 方案设计层
-├── delivery/             # 交付协调层
-├── validation/           # 价值验证层
-└── workflows/            # 工作流编排
+skills/                        # Flat structure, layer info in SKILL.md frontmatter
+├── competitive-analysis/      # layer: perception
+├── market-intelligence/       # layer: perception
+├── user-research/             # layer: perception
+├── data-monitoring/           # layer: perception
+├── clarify-requirements/      # layer: perception
+├── product-positioning/       # layer: strategy
+├── roadmap-planning/          # layer: strategy
+├── prioritization/            # layer: strategy
+├── prd-gen/                   # layer: design
+├── prototype-design/          # layer: design
+├── process-optimization/      # layer: design
+├── requirement-review/        # layer: delivery
+├── project-coordination/      # layer: delivery
+├── release-management/        # layer: delivery
+├── impact-analysis/           # layer: validation
+├── feedback-synthesis/        # layer: validation
+├── iteration-planning/        # layer: validation
+├── quick-prd/                 # layer: workflow
+├── full-pm-cycle/             # layer: workflow
+└── feature-launch/            # layer: workflow
 ```
 
 #### 4. SKILL.md 模板

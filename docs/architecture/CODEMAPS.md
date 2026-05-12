@@ -8,13 +8,27 @@
 
 ```
 oh-my-pm/
-├── skills/                    # 核心 Skills (20个)
-│   ├── perception/           # 需求感知层 (4)
-│   ├── strategy/             # 策略规划层 (3)
-│   ├── design/               # 方案设计层 (2)
-│   ├── delivery/             # 交付协调层 (3)
-│   ├── validation/           # 价值验证层 (3)
-│   └── workflows/            # 工作流编排器 (3)
+├── skills/                    # 核心 Skills (20个，扁平结构)
+│   ├── competitive-analysis/
+│   ├── market-intelligence/
+│   ├── user-research/
+│   ├── data-monitoring/
+│   ├── product-positioning/
+│   ├── roadmap-planning/
+│   ├── prioritization/
+│   ├── prd-gen/
+│   ├── prototype-design/
+│   ├── process-optimization/
+│   ├── clarify-requirements/
+│   ├── requirement-review/
+│   ├── project-coordination/
+│   ├── release-management/
+│   ├── impact-analysis/
+│   ├── feedback-synthesis/
+│   ├── iteration-planning/
+│   ├── quick-prd/
+│   ├── full-pm-cycle/
+│   └── feature-launch/
 ├── agents/                    # Subagents 定义 (8个)
 │   ├── perception/           # 感知层 Subagents (4)
 │   ├── design/               # 设计层 Subagents (1)
@@ -38,48 +52,48 @@ oh-my-pm/
 
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
-| **competitive-analysis** | `skills/perception/competitive-analysis/SKILL.md` | 分析竞品, 对比, 竞品分析 | 竞品列表 | `context/competitive-analysis.json` |
-| **market-intelligence** | `skills/perception/market-intelligence/SKILL.md` | 市场分析, 行业趋势, 市场研究 | 行业信息 | 市场洞察报告 |
-| **user-research** | `skills/perception/user-research/SKILL.md` | 用户访谈, 用户画像, 用户研究 | 访谈数据 | `context/personas.json` |
-| **data-monitoring** | `skills/perception/data-monitoring/SKILL.md` | 监控指标, 数据看板, 指标分析 | 指标数据 | 异常告警 |
+| **competitive-analysis** | `skills/competitive-analysis/SKILL.md` | 分析竞品, 对比, 竞品分析 | 竞品列表 | `context/competitive-analysis.json` |
+| **market-intelligence** | `skills/market-intelligence/SKILL.md` | 市场分析, 行业趋势, 市场研究 | 行业信息 | 市场洞察报告 |
+| **user-research** | `skills/user-research/SKILL.md` | 用户访谈, 用户画像, 用户研究 | 访谈数据 | `context/personas.json` |
+| **data-monitoring** | `skills/data-monitoring/SKILL.md` | 监控指标, 数据看板, 指标分析 | 指标数据 | 异常告警 |
 
 ### Strategy Layer (策略规划层)
 
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
-| **product-positioning** | `skills/strategy/product-positioning/SKILL.md` | 产品定位, 差异化, 价值主张 | 市场数据 | 定位声明 |
-| **roadmap-planning** | `skills/strategy/roadmap-planning/SKILL.md` | 产品路线图, 版本规划, 路线图 | 需求池 | `context/roadmap.md` |
-| **prioritization** | `skills/strategy/prioritization/SKILL.md` | 优先级排序, 需求优先级, RICE, MoSCoW | 需求列表 | 优先级矩阵 |
+| **product-positioning** | `skills/product-positioning/SKILL.md` | 产品定位, 差异化, 价值主张 | 市场数据 | 定位声明 |
+| **roadmap-planning** | `skills/roadmap-planning/SKILL.md` | 产品路线图, 版本规划, 路线图 | 需求池 | `context/roadmap.md` |
+| **prioritization** | `skills/prioritization/SKILL.md` | 优先级排序, 需求优先级, RICE, MoSCoW | 需求列表 | 优先级矩阵 |
 
 ### Design Layer (方案设计层)
 
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
-| **prd-gen** | `skills/design/prd-gen/SKILL.md` | 写 PRD, 需求文档, 产品需求 | 需求描述 | `context/prd/*.md` |
-| **process-optimization** | `skills/design/process-optimization/SKILL.md` | 流程优化, 提效, 流程改进 | 现有流程 | 优化建议 |
+| **prd-gen** | `skills/prd-gen/SKILL.md` | 写 PRD, 需求文档, 产品需求 | 需求描述 | `context/prd/*.md` |
+| **process-optimization** | `skills/process-optimization/SKILL.md` | 流程优化, 提效, 流程改进 | 现有流程 | 优化建议 |
 
 ### Delivery Layer (交付协调层)
 
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
-| **requirement-review** | `skills/delivery/requirement-review/SKILL.md` | 需求评审, 评审会议, 需求对齐 | PRD 文档 | 评审报告 |
-| **project-coordination** | `skills/delivery/project-coordination/SKILL.md` | 项目状态, 进度跟踪, 项目管理 | 项目计划 | 进度报告 |
-| **release-management** | `skills/delivery/release-management/SKILL.md` | 发布计划, 上线检查, 发布管理, 上线 | 版本内容 | 发布计划 |
+| **requirement-review** | `skills/requirement-review/SKILL.md` | 需求评审, 评审会议, 需求对齐 | PRD 文档 | 评审报告 |
+| **project-coordination** | `skills/project-coordination/SKILL.md` | 项目状态, 进度跟踪, 项目管理 | 项目计划 | 进度报告 |
+| **release-management** | `skills/release-management/SKILL.md` | 发布计划, 上线检查, 发布管理, 上线 | 版本内容 | 发布计划 |
 
 ### Validation Layer (价值验证层)
 
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
-| **impact-analysis** | `skills/validation/impact-analysis/SKILL.md` | 效果分析, 上线复盘, 效果评估 | 埋点数据 | `context/impact.json` |
-| **feedback-synthesis** | `skills/validation/feedback-synthesis/SKILL.md` | 反馈分析, 用户反馈, 反馈汇总 | 反馈数据 | 反馈分类 |
-| **iteration-planning** | `skills/validation/iteration-planning/SKILL.md` | 迭代规划, 版本排期, sprint planning | 效果+反馈 | `context/iteration-plan.json` |
+| **impact-analysis** | `skills/impact-analysis/SKILL.md` | 效果分析, 上线复盘, 效果评估 | 埋点数据 | `context/impact.json` |
+| **feedback-synthesis** | `skills/feedback-synthesis/SKILL.md` | 反馈分析, 用户反馈, 反馈汇总 | 反馈数据 | 反馈分类 |
+| **iteration-planning** | `skills/iteration-planning/SKILL.md` | 迭代规划, 版本排期, sprint planning | 效果+反馈 | `context/iteration-plan.json` |
 
 ### Workflows Layer (工作流编排层)
 
 | Workflow | 文件路径 | 触发关键词 | 调用的 Skills |
 |:--------|:----------|:----------|:-------------|
-| **full-pm-cycle** | `skills/workflows/full-pm-cycle/SKILL.md` | 完整产品规划, 0-1 产品, 产品全周期 | 全部 15 个 Skills |
-| **feature-launch** | `skills/workflows/feature-launch/SKILL.md` | 功能发布, 发布协调, 发布工作流 | prd-gen → requirement-review → release-management → impact-analysis |
+| **full-pm-cycle** | `skills/full-pm-cycle/SKILL.md` | 完整产品规划, 0-1 产品, 产品全周期 | 全部 15 个 Skills |
+| **feature-launch** | `skills/feature-launch/SKILL.md` | 功能发布, 发布协调, 发布工作流 | prd-gen → requirement-review → release-management → impact-analysis |
 
 ---
 
@@ -102,9 +116,9 @@ oh-my-pm/
 
 | Command | 文件路径 | 参数格式 | 调用的 Workflow |
 |:--------|:----------|:---------|:----------------|
-| **/quick-prd** | `commands/quick-prd.md` | `<功能描述> [竞品...]` | skills/workflows/quick-prd/SKILL.md |
-| **/full-pm-cycle** | `commands/full-pm-cycle.md` | `<产品名称> [type]` | skills/workflows/full-pm-cycle/SKILL.md |
-| **/feature-launch** | `commands/feature-launch.md` | `<功能名称> [日期]` | skills/workflows/feature-launch/SKILL.md |
+| **/quick-prd** | `commands/quick-prd.md` | `<功能描述> [竞品...]` | skills/quick-prd/SKILL.md |
+| **/full-pm-cycle** | `commands/full-pm-cycle.md` | `<产品名称> [type]` | skills/full-pm-cycle/SKILL.md |
+| **/feature-launch** | `commands/feature-launch.md` | `<功能名称> [日期]` | skills/feature-launch/SKILL.md |
 | **/ompm** | `commands/ompm.md` | `<命令> [参数...]` 或 `help` / `?` | 分发到以上 3 个 workflow |
 
 ---
@@ -168,21 +182,21 @@ oh-my-pm/
 ```
 ┌─────────────────────────────────────────────────┐
 │  Perception Layer (需求感知)                    │
-│  skills/perception/ (4 Skills)                 │
+│  skills/ (4 Skills)                            │
 │  agents/perception/ (4 Subagents)               │
 │  输出: market_data, personas, competitive       │
 └─────────────────────────────────────────────────┘
                        ↓ context/
 ┌─────────────────────────────────────────────────┐
 │  Strategy Layer (策略规划)                      │
-│  skills/strategy/ (3 Skills)                    │
+│  skills/ (3 Skills)                            │
 │  输入: market_data from Perception            │
 │  输出: positioning, roadmap, priorities        │
 └─────────────────────────────────────────────────┘
                        ↓ context/
 ┌─────────────────────────────────────────────────┐
 │  Design Layer (方案设计)                        │
-│  skills/design/ (3 Skills)                      │
+│  skills/ (3 Skills)                            │
 │  agents/design/ (1 Subagent)                    │
 │  输入: priorities from Strategy               │
 │  输出: prd, prd            │
@@ -190,14 +204,14 @@ oh-my-pm/
                        ↓ context/
 ┌─────────────────────────────────────────────────┐
 │  Delivery Layer (交付协调)                      │
-│  skills/delivery/ (3 Skills)                    │
+│  skills/ (3 Skills)                            │
 │  输入: prd from Design                       │
 │  输出: project_plan, release_notes           │
 └─────────────────────────────────────────────────┘
                        ↓ context/
 ┌─────────────────────────────────────────────────┐
 │  Validation Layer (价值验证)                    │
-│  skills/validation/ (3 Skills)                  │
+│  skills/ (3 Skills)                            │
 │  agents/validation/ (2 Subagents)                │
 │  输入: project_plan from Delivery               │
 │  输出: impact, feedback, iteration_plan     │
@@ -212,12 +226,12 @@ oh-my-pm/
 
 ### 我想...
 
-- ...写 PRD → `skills/design/prd-gen/SKILL.md` 或使用 `/quick-prd`
-- ...分析竞品 → `skills/perception/competitive-analysis/SKILL.md`
-- ...规划路线图 → `skills/strategy/roadmap-planning/SKILL.md`
+- ...写 PRD → `skills/prd-gen/SKILL.md` 或使用 `/quick-prd`
+- ...分析竞品 → `skills/competitive-analysis/SKILL.md`
+- ...规划路线图 → `skills/roadmap-planning/SKILL.md`
 - ...生成原型 → 直接使用 HTML 生成，无需特殊技能
-- ...做完整产品规划 → `/full-pm-cycle` 或 `skills/workflows/full-pm-cycle/SKILL.md`
-- ...发布功能 → `/feature-launch` 或 `skills/workflows/feature-launch/SKILL.md`
+- ...做完整产品规划 → `/full-pm-cycle` 或 `skills/full-pm-cycle/SKILL.md`
+- ...发布功能 → `/feature-launch` 或 `skills/feature-launch/SKILL.md`
 - ...查看 Subagent 记忆 → `.claude/agent-memory/<name>/MEMORY.md`
 
 ### 查找...

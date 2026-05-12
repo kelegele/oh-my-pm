@@ -47,7 +47,7 @@ Oh-My-PM 是 Claude Code Skill 插件项目，测试主要验证：
 npm install -g ajv-cli
 
 # 验证 context 文件
-ajv validate -s skills/perception/competitive-analysis/schema.json -d context/competitive-analysis.json
+ajv validate -s skills/competitive-analysis/schema.json -d context/competitive-analysis.json
 ```
 
 ### 方式四：集成测试工作流
@@ -161,7 +161,7 @@ rm -f context/*.json context/*.md
 npm install -g yaml-validator
 
 # 验证
-yaml-validator skills/perception/competitive-analysis/SKILL.md
+yaml-validator skills/competitive-analysis/SKILL.md
 ```
 
 ## 已知限制

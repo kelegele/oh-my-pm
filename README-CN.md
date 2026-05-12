@@ -280,13 +280,27 @@ oh-my-pm/
 │   ├── design/          # 流程优化
 │   ├── validation/      # 效果分析、反馈汇总
 │   └── workflows/       # PM 编排器
-├── skills/              # Skill 插件目录 (19 个)
-│   ├── perception/      # 需求感知层 (4)
-│   ├── strategy/        # 策略规划层 (3)
-│   ├── design/          # 方案设计层 (3)
-│   ├── delivery/        # 交付协调层 (3)
-│   ├── validation/      # 价值验证层 (3)
-│   └── workflows/       # 工作流编排器 (3)
+├── skills/                        # Skill 插件目录 (20)
+│   ├── competitive-analysis/      # layer: perception
+│   ├── clarify-requirements/      # layer: perception
+│   ├── market-intelligence/       # layer: perception
+│   ├── user-research/             # layer: perception
+│   ├── data-monitoring/           # layer: perception
+│   ├── product-positioning/       # layer: strategy
+│   ├── roadmap-planning/          # layer: strategy
+│   ├── prioritization/            # layer: strategy
+│   ├── prd-gen/                   # layer: design
+│   ├── prototype-design/          # layer: design
+│   ├── process-optimization/      # layer: design
+│   ├── requirement-review/        # layer: delivery
+│   ├── project-coordination/      # layer: delivery
+│   ├── release-management/        # layer: delivery
+│   ├── impact-analysis/           # layer: validation
+│   ├── feedback-synthesis/        # layer: validation
+│   ├── iteration-planning/        # layer: validation
+│   ├── quick-prd/                 # layer: workflow
+│   ├── full-pm-cycle/             # layer: workflow
+│   └── feature-launch/            # layer: workflow
 ├── .claude/
 │   ├── agent-memory/    # Subagent 记忆系统
 │   └── settings.local.json

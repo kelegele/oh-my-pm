@@ -8,7 +8,7 @@ Oh-My-PM is an AI Agent workflow system for Product Managers, implemented as a *
 
 The system features a **5-layer architecture** with **20 Skills** (17 domain + 3 workflows) and **8 Subagents**, covering the complete product management lifecycle from requirement sensing to value validation.
 
-Current plugin version: **0.8.1** (see `.claude-plugin/plugin.json`). See `docs/planning/roadmap.md` for full version history.
+Current plugin version: **0.9.0** (see `.claude-plugin/plugin.json`). See `docs/planning/roadmap.md` for full version history.
 
 ## Commands
 
@@ -110,7 +110,7 @@ All intermediate outputs are stored in `context/` directory:
 
 ### Shared Rules & Templates
 
-- **`skills/shared/anti-hallucination-rules.md`**: Cross-skill constraints to prevent hallucination — all Skills should reference this.
+- **Anti-Hallucination Rules**: Inlined into each Perception-layer Skill (competitive-analysis, market-intelligence, user-research, data-monitoring) for standalone installability.
 - **`templates/prototype/`**: HTML prototype templates (wireframe, mockup, interactive) with component library and quality standards.
 
 ## Workflows
@@ -132,8 +132,7 @@ All workflows follow the **Plan-and-Execute pattern** with:
 
 | Path | Purpose |
 |:-----|:--------|
-| `skills/*/SKILL.md` | Skill definitions with triggers and workflows |
-| `skills/shared/anti-hallucination-rules.md` | Cross-skill hallucination prevention rules |
+| `skills/*/SKILL.md` | Skill definitions (20 skills, flat directory structure) |
 | `agents/*/*.md` | Subagent specifications |
 | `commands/*.md` | CLI command definitions |
 | `.claude-plugin/plugin.json` | Plugin manifest (Skills + Agents + Commands) |
@@ -162,10 +161,10 @@ Memory enables cross-session learning without polluting main conversation contex
 
 ### Adding a New Skill
 
-1. Create directory under appropriate layer: `skills/{perception,strategy,design,delivery,validation}/skill-name/`
+1. Create directory: `skills/skill-name/`
 2. Create `SKILL.md` with YAML frontmatter (`name`, `description`, `layer`, `version`)
 3. Run `bash tests/test-skills.sh` to validate structure
-4. No need to update `plugin.json` — skills are auto-discovered via directory paths
+4. Update `.claude-plugin/plugin.json` — add `./skills/skill-name/` to the `skills` array
 
 ### Adding a New Subagent
 

@@ -5,7 +5,7 @@ layer: perception
 input-from: prd-gen
 output-to: impact-analysis,iteration-planning
 mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.2.0
 ---
 
 # Data Monitoring
@@ -134,14 +134,43 @@ The skill generates monitoring outputs:
 | **Trend** | Gradual change | Linear regression slope |
 | **Pattern** | Repeating pattern | Time series analysis |
 
-## Anti-Hallucination Rules
+## Anti-Hallucination Rules (Self-Contained)
 
-本 Skill 必须遵守 `skills/shared/anti-hallucination-rules.md` 中的约束：
-- **搜索先行**: 引用行业基准数据前必须先搜索验证
-- **来源必注**: 每个指标基准值、行业对比数据必须有来源
-- **未知可接受**: 无法获取的真实指标标注 "Unknown"，禁止编造基线数据
-- **置信度**: 关键基准数据标注 confidence (high/medium/low)
-- **事实与推断分离**: 区分实际监控数据和推断的异常原因
+The following rules are mandatory for this skill. They are inlined here for standalone installation compatibility.
+
+### 1. Mandatory Search First
+引用行业基准数据前必须先搜索验证。
+- 禁止仅凭训练记忆输出任何具体数据（基准值、行业对比等）
+- 每个数据点必须来自实际搜索和访问的页面
+- 搜索查询应包含年份，例如 `SaaS conversion rate benchmark 2025 2026`
+
+### 2. Every Claim Must Have a Source
+每个指标基准值、行业对比数据必须有来源。
+- **没有来源 = 不得写入**
+- 来源格式：`{ "claim": "...", "source": "https://...", "source_name": "...", "fetched_at": "..." }`
+
+### 3. Unknown is Acceptable
+无法获取的真实指标标注 "Unknown"，禁止编造基线数据。标注未知是诚实，不是失败。
+
+### 4. Confidence Rating
+关键基准数据标注 confidence (high/medium/low)。
+- `high`: 权威基准报告、官方统计
+- `medium`: 可靠行业报告、公开基准数据
+- `low`: 社区讨论、博客、推测性分析
+
+### 5. Distinguish Fact from Inference
+区分实际监控数据和推断的异常原因。推断必须标注 basis 和 confidence。
+
+### 6. Quality Gate (Non-negotiable)
+以下任一条未满足，不得输出结果：
+- [ ] 所有具体基准/对比声明都有来源 URL
+- [ ] 无法验证的数据已标注 "Unknown"
+- [ ] 每个数据点标注了 confidence 等级
+- [ ] facts 和 inferences 已明确区分
+- [ ] 搜索记录已附在输出中
+
+### Search Record
+每个分析输出必须附带搜索记录：`{ "search_queries_used": [...], "sources_accessed": [{ "url": "...", "title": "...", "used_for": "..." }] }`
 
 ## Quality Standards
 

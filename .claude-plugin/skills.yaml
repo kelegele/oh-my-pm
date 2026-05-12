@@ -1,36 +1,36 @@
 manifest:
   plugin: oh-my-pm
-  version: 0.8.1
+  version: 0.9.0
 skills:
-- file: skills/perception/competitive-analysis/SKILL.md
+- file: skills/competitive-analysis/SKILL.md
   layer: perception
   name: competitive-analysis
   triggers:
   - 分析竞品
   - 对比
   - 竞品分析
-- file: skills/perception/market-intelligence/SKILL.md
+- file: skills/market-intelligence/SKILL.md
   layer: perception
   name: market-intelligence
   triggers:
   - 市场分析
   - 行业趋势
   - 市场研究
-- file: skills/perception/user-research/SKILL.md
+- file: skills/user-research/SKILL.md
   layer: perception
   name: user-research
   triggers:
   - 用户访谈
   - 用户画像
   - 用户研究
-- file: skills/perception/data-monitoring/SKILL.md
+- file: skills/data-monitoring/SKILL.md
   layer: perception
   name: data-monitoring
   triggers:
   - 监控指标
   - 数据看板
   - 指标分析
-- file: skills/perception/clarify-requirements/SKILL.md
+- file: skills/clarify-requirements/SKILL.md
   layer: perception
   name: clarify-requirements
   triggers:
@@ -39,21 +39,21 @@ skills:
   - 确认信息
   - 补全信息
   - 先确认需求
-- file: skills/strategy/product-positioning/SKILL.md
+- file: skills/product-positioning/SKILL.md
   layer: strategy
   name: product-positioning
   triggers:
   - 产品定位
   - 差异化
   - 价值主张
-- file: skills/strategy/roadmap-planning/SKILL.md
+- file: skills/roadmap-planning/SKILL.md
   layer: strategy
   name: roadmap-planning
   triggers:
   - 产品路线图
   - 版本规划
   - 路线图
-- file: skills/strategy/prioritization/SKILL.md
+- file: skills/prioritization/SKILL.md
   layer: strategy
   name: prioritization
   triggers:
@@ -61,7 +61,7 @@ skills:
   - 需求优先级
   - RICE
   - MoSCoW
-- file: skills/design/prd-gen/SKILL.md
+- file: skills/prd-gen/SKILL.md
   layer: design
   name: prd-gen
   triggers:
@@ -69,7 +69,7 @@ skills:
   - 需求文档
   - PRD
   - 产品需求
-- file: skills/design/prototype-design/SKILL.md
+- file: skills/prototype-design/SKILL.md
   layer: design
   name: prototype-design
   triggers:
@@ -78,28 +78,28 @@ skills:
   - 交互设计
   - wireframe
   - HTML 原型
-- file: skills/design/process-optimization/SKILL.md
+- file: skills/process-optimization/SKILL.md
   layer: design
   name: process-optimization
   triggers:
   - 流程优化
   - 提效
   - 流程改进
-- file: skills/delivery/requirement-review/SKILL.md
+- file: skills/requirement-review/SKILL.md
   layer: delivery
   name: requirement-review
   triggers:
   - 需求评审
   - 评审会议
   - 需求对齐
-- file: skills/delivery/project-coordination/SKILL.md
+- file: skills/project-coordination/SKILL.md
   layer: delivery
   name: project-coordination
   triggers:
   - 项目状态
   - 进度跟踪
   - 项目管理
-- file: skills/delivery/release-management/SKILL.md
+- file: skills/release-management/SKILL.md
   layer: delivery
   name: release-management
   triggers:
@@ -107,35 +107,35 @@ skills:
   - 上线检查
   - 发布管理
   - 上线
-- file: skills/validation/impact-analysis/SKILL.md
+- file: skills/impact-analysis/SKILL.md
   layer: validation
   name: impact-analysis
   triggers:
   - 效果分析
   - 上线复盘
   - 效果评估
-- file: skills/validation/feedback-synthesis/SKILL.md
+- file: skills/feedback-synthesis/SKILL.md
   layer: validation
   name: feedback-synthesis
   triggers:
   - 反馈分析
   - 用户反馈
   - 反馈汇总
-- file: skills/validation/iteration-planning/SKILL.md
+- file: skills/iteration-planning/SKILL.md
   layer: validation
   name: iteration-planning
   triggers:
   - 迭代规划
   - 版本排期
   - sprint planning
-- file: skills/workflows/quick-prd/SKILL.md
+- file: skills/quick-prd/SKILL.md
   layer: workflows
   name: quick-prd
   triggers:
   - 快速 PRD
   - 带竞品分析的需求
   type: workflow
-- file: skills/workflows/full-pm-cycle/SKILL.md
+- file: skills/full-pm-cycle/SKILL.md
   layer: workflows
   name: full-pm-cycle
   triggers:
@@ -143,7 +143,7 @@ skills:
   - 0-1 产品
   - 产品全周期
   type: workflow
-- file: skills/workflows/feature-launch/SKILL.md
+- file: skills/feature-launch/SKILL.md
   layer: workflows
   name: feature-launch
   triggers:

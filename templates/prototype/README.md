@@ -45,7 +45,7 @@
 
 ### 3. 更新 Skill 文档
 
-**文件**: `skills/design/prototype-design/SKILL.md`
+**文件**: `skills/prototype-design/SKILL.md`
 
 更新内容：
 - 修复 Step 编号（Step 0 → Step 1 → Step 2 → Step 3）
@@ -123,7 +123,7 @@
 
 ```
 oh-my-pm/
-├── skills/design/prototype-design/
+├── skills/prototype-design/
 │   └── SKILL.md                      # 更新后的技能文档
 ├── templates/prototype/
 │   ├── wireframe.html                # 线框图模板

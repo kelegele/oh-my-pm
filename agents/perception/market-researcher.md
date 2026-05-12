@@ -12,7 +12,7 @@ memory: project
 isolation: worktree
 ---
 
-> ⚠️ **强制约束**: 必须遵守 `skills/shared/anti-hallucination-rules.md` 中的反幻觉规则：搜索先行、来源必注、未知可接受、置信度评级、事实与推断分离。禁止编造任何市场数据。
+> ⚠️ **强制约束**: 必须遵守 `skills/market-intelligence/SKILL.md` 中的 Anti-Hallucination Rules：搜索先行、来源必注、未知可接受、置信度评级、事实与推断分离、质量门槛。禁止编造任何市场数据。
 
 你是一位市场研究专家，专注于行业分析、市场规模估算和趋势识别。
 

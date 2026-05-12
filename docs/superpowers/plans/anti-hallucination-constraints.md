@@ -16,7 +16,7 @@ Perception layer skills (market-intelligence, competitive-analysis, user-researc
 
 ### Layer 1: Shared Rules File (NEW)
 
-Create `skills/shared/anti-hallucination-rules.md` with 6 core rules:
+Create `skills/anti-hallucination-rules.md` with 6 core rules:
 
 1. **Mandatory search first**: Must use WebSearch/WebReader before outputting any specific data point
 2. **Source required for every claim**: Every number, feature, quote, trend must have a URL source
@@ -27,10 +27,10 @@ Create `skills/shared/anti-hallucination-rules.md` with 6 core rules:
 
 ### Layer 2: Update 4 SKILL.md files
 
-Files: `skills/perception/market-intelligence/SKILL.md`, `skills/perception/competitive-analysis/SKILL.md`, `skills/perception/user-research/SKILL.md`, `skills/perception/data-monitoring/SKILL.md`
+Files: `skills/market-intelligence/SKILL.md`, `skills/competitive-analysis/SKILL.md`, `skills/user-research/SKILL.md`, `skills/data-monitoring/SKILL.md`
 
 Changes per file:
-- Add reference to `skills/shared/anti-hallucination-rules.md`
+- Add reference to `skills/anti-hallucination-rules.md`
 - Add `sources` array to JSON output format
 - Add "factuality" to Quality Standards section
 - Add confidence + timestamp fields to data structures
@@ -41,7 +41,7 @@ Changes per file:
 Files: `agents/perception/market-researcher.md`, `agents/perception/competitive-analyst.md`
 
 Changes per file:
-- Add reference to `skills/shared/anti-hallucination-rules.md`
+- Add reference to `skills/anti-hallucination-rules.md`
 - Insert mandatory search step at top of research/analysis process
 - Update output format to include sources, confidence, timestamps
 - Update Quality Standards with factuality requirement
@@ -50,11 +50,11 @@ Changes per file:
 
 | File | Action |
 |:---|:---|
-| `skills/shared/anti-hallucination-rules.md` | CREATE |
-| `skills/perception/market-intelligence/SKILL.md` | EDIT |
-| `skills/perception/competitive-analysis/SKILL.md` | EDIT |
-| `skills/perception/user-research/SKILL.md` | EDIT |
-| `skills/perception/data-monitoring/SKILL.md` | EDIT |
+| `skills/anti-hallucination-rules.md` | CREATE |
+| `skills/market-intelligence/SKILL.md` | EDIT |
+| `skills/competitive-analysis/SKILL.md` | EDIT |
+| `skills/user-research/SKILL.md` | EDIT |
+| `skills/data-monitoring/SKILL.md` | EDIT |
 | `agents/perception/market-researcher.md` | EDIT |
 | `agents/perception/competitive-analyst.md` | EDIT |
 

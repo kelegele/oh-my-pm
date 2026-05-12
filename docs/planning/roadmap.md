@@ -137,49 +137,49 @@
 
 | Skill | 版本 | 文件 |
 |:-----|:-----|:-----|
-| competitive-analysis | 0.1.0 | skills/perception/competitive-analysis/SKILL.md |
-| market-intelligence | 0.1.0 | skills/perception/market-intelligence/SKILL.md |
-| user-research | 0.1.0 | skills/perception/user-research/SKILL.md |
-| data-monitoring | 0.1.0 | skills/perception/data-monitoring/SKILL.md |
+| competitive-analysis | 0.1.0 | skills/competitive-analysis/SKILL.md |
+| market-intelligence | 0.1.0 | skills/market-intelligence/SKILL.md |
+| user-research | 0.1.0 | skills/user-research/SKILL.md |
+| data-monitoring | 0.1.0 | skills/data-monitoring/SKILL.md |
 
 ### Strategy Layer (策略规划层)
 
 | Skill | 版本 | 文件 |
 |:-----|:-----|:-----|
-| product-positioning | 0.1.0 | skills/strategy/product-positioning/SKILL.md |
-| roadmap-planning | 0.1.0 | skills/strategy/roadmap-planning/SKILL.md |
-| prioritization | 0.1.0 | skills/strategy/prioritization/SKILL.md |
+| product-positioning | 0.1.0 | skills/product-positioning/SKILL.md |
+| roadmap-planning | 0.1.0 | skills/roadmap-planning/SKILL.md |
+| prioritization | 0.1.0 | skills/prioritization/SKILL.md |
 
 ### Design Layer (方案设计层)
 
 | Skill | 版本 | 文件 |
 |:-----|:-----|:-----|
-| prd-gen | 0.3.0 | skills/design/prd-gen/SKILL.md |
-| process-optimization | 0.1.0 | skills/design/process-optimization/SKILL.md |
+| prd-gen | 0.3.0 | skills/prd-gen/SKILL.md |
+| process-optimization | 0.1.0 | skills/process-optimization/SKILL.md |
 
 ### Delivery Layer (交付协调层)
 
 | Skill | 版本 | 文件 |
 |:-----|:-----|:-----|
-| requirement-review | 0.1.0 | skills/delivery/requirement-review/SKILL.md |
-| project-coordination | 0.1.0 | skills/delivery/project-coordination/SKILL.md |
-| release-management | 0.1.0 | skills/delivery/release-management/SKILL.md |
+| requirement-review | 0.1.0 | skills/requirement-review/SKILL.md |
+| project-coordination | 0.1.0 | skills/project-coordination/SKILL.md |
+| release-management | 0.1.0 | skills/release-management/SKILL.md |
 
 ### Validation Layer (价值验证层)
 
 | Skill | 版本 | 文件 |
 |:-----|:-----|:-----|
-| impact-analysis | 0.1.0 | skills/validation/impact-analysis/SKILL.md |
-| feedback-synthesis | 0.1.0 | skills/validation/feedback-synthesis/SKILL.md |
-| iteration-planning | 0.1.0 | skills/validation/iteration-planning/SKILL.md |
+| impact-analysis | 0.1.0 | skills/impact-analysis/SKILL.md |
+| feedback-synthesis | 0.1.0 | skills/feedback-synthesis/SKILL.md |
+| iteration-planning | 0.1.0 | skills/iteration-planning/SKILL.md |
 
 ### Workflows Layer (工作流编排层)
 
 | Workflow | 版本 | 文件 |
 |:--------|:-----|:-----|
-| quick-prd | 0.2.0 | skills/workflows/quick-prd/SKILL.md |
-| full-pm-cycle | 0.1.0 | skills/workflows/full-pm-cycle/SKILL.md |
-| feature-launch | 0.1.0 | skills/workflows/feature-launch/SKILL.md |
+| quick-prd | 0.2.0 | skills/quick-prd/SKILL.md |
+| full-pm-cycle | 0.1.0 | skills/full-pm-cycle/SKILL.md |
+| feature-launch | 0.1.0 | skills/feature-launch/SKILL.md |
 
 ---
 
