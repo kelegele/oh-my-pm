@@ -4,7 +4,6 @@
 
 > AI Agent Workflow System for Product Managers — Powered by Claude Code Skills
 
-[![Claude Code](https://img.shields.io/badge/Claude-Code-forest?logo=anthropic)](https://claude.ai/code)
 [![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
 [![Version](https://img.shields.io/github/v/release/kelegele/oh-my-pm)](https://github.com/kelegele/oh-my-pm/releases)
 [![Skills](https://img.shields.io/badge/Skills-20-blue)](skills/)
