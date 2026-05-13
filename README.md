@@ -12,7 +12,7 @@
 
 **5-Layer Architecture · 8 Subagents · 20 Professional Skills · Complete Product Lifecycle**
 
-[Quick Start](#quick-start) • [Skills](#all-skills) • [Subagents](#subagents-architecture) • [Contributing](#contributing)
+[Quick Start](#quick-start) • [Skills](#all-skills) • [Subagents](#subagents-architecture)
 
 </div>
 
@@ -40,13 +40,6 @@ Oh-My-PM is a comprehensive AI Agent workflow system for Product Managers, built
 
 - [Claude Code](https://claude.ai/code) CLI tool
 - Clone this repository to your local project directory
-
-### Installation via skills.sh
-
-```bash
-# Install directly via skills.sh
-npx skills add kelegele/oh-my-pm -a claude-code
-```
 
 ### Installation
 
@@ -95,7 +88,7 @@ cd oh-my-pm
 
 #### Skills (Natural Language Triggering)
 
-19 Skills trigger automatically through natural language:
+20 Skills trigger automatically through natural language:
 
 ```bash
 # Direct conversation—system identifies and calls the relevant Skill
@@ -354,7 +347,6 @@ oh-my-pm/
 | v0.4.0 | Commands integration (19 Skills + 4 Commands) | ✅ |
 | v0.5.1 | Remove Figma dependency, switch to HTML prototypes (19 Skills) | ✅ |
 | v0.6.0 | HTML prototype generation (iteration + new product modes) | ✅ |
-| v0.9.0 | Restore prototype-design skill (HTML-only) | ✅ |
 | v0.9.0 | Flat skill directory, standalone install per skill | ✅ |
 | v1.0.0 | Enterprise edition & integrations | ⏳ |
 
@@ -362,18 +354,6 @@ See [Project Board](https://github.com/users/kelegele/projects/4) for full plann
 
 ---
 
-## Contributing
-
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
 ## License
 
 [MIT License](LICENSE)
-
----
-
-<div align="center">
-
-**Made with** [Claude Code](https://claude.ai/code) **by** [@kelegele](https://github.com/kelegele)
-
-</div>
