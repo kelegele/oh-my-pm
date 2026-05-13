@@ -12,7 +12,7 @@
 
 **5-Layer Architecture · 8 Subagents · 20 Professional Skills · Complete Product Lifecycle**
 
-[Quick Start](#quick-start) • [Skills](#all-skills) • [Subagents](#subagents-architecture)
+[Quick Start](#quick-start) • [Skills](#all-skills) • [Subagents](#subagents-architecture) • [中文文档](README-CN.md)
 
 </div>
 

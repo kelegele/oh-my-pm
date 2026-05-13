@@ -11,7 +11,7 @@
 
 **五层架构 · 8 个 Subagents · 20 个专业 Skills · 完整产品闭环**
 
-[快速开始](#快速开始) • [全部 Skills](#全部-skills) • [Subagents](#subagents-架构)
+[快速开始](#快速开始) • [全部 Skills](#全部-skills) • [Subagents](#subagents-架构) • [English](README.md)
 
 </div>
 
