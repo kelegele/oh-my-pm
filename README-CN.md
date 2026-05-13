@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
 [![Version](https://img.shields.io/github/v/release/kelegele/oh-my-pm)](https://github.com/kelegele/oh-my-pm/releases)
 
-**五层架构 · 8 个 Subagents · 19 个专业 Skills · 完整产品闭环**
+**五层架构 · 8 个 Subagents · 20 个专业 Skills · 完整产品闭环**
 
 [快速开始](#快速开始) • [Subagents](#subagents-架构) • [Skills](#全部-skills) • [使用指南](#使用指南) • [贡献](#贡献指南)
 
@@ -42,12 +42,20 @@ Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系
 ### 安装
 
 ```bash
-# 克隆仓库
-git clone https://github.com/kelegele/oh-my-pm.git
-cd oh-my-pm
+# 安装全部 skills
+npx skills add kelegele/oh-my-pm -a claude-code
+
+# 安装单个 skill
+npx skills add kelegele/oh-my-pm --skill prd-gen -a claude-code
+
+# 安装多个 skills
+npx skills add kelegele/oh-my-pm --skill prd-gen --skill competitive-analysis -a claude-code
+
+# 查看可安装的 skills
+npx skills add kelegele/oh-my-pm --list
 ```
 
-> **注意**：本插件通过 `--plugin-dir` 或插件市场安装。Skills 通过自然语言自动触发，无需手动配置。
+### 手动安装
 
 ### 使用
 
@@ -199,51 +207,53 @@ Subagents 由 Claude Code 自动识别并调用，无需显式触发：
 
 ### 📊 需求感知层 (Perception)
 
-| Skill | 功能 | 触发示例 |
-|:-----|:-----|:---------|
-| `competitive-analysis` | 竞品功能对比分析 | "分析竞品"、"对比 XX 和 YY" |
-| `market-intelligence` | 市场情报收集与分析 | "市场分析"、"行业趋势" |
-| `user-research` | 用户研究与人设创建 | "用户访谈"、"创建用户画像" |
-| `data-monitoring` | 产品指标监控与异常检测 | "监控指标"、"数据看板" |
+| Skill | 安装 | 功能 | 触发示例 |
+|:-----|:-----|:-----|:---------|
+| `competitive-analysis` | `--skill competitive-analysis` | 竞品功能对比分析，识别战略机会 | "分析竞品"、"对比 XX 和 YY" |
+| `market-intelligence` | `--skill market-intelligence` | 市场情报收集、行业趋势分析 | "市场分析"、"行业趋势" |
+| `user-research` | `--skill user-research` | 用户研究、访谈与画像创建 | "用户访谈"、"创建用户画像" |
+| `data-monitoring` | `--skill data-monitoring` | 产品指标监控与异常检测 | "监控指标"、"数据看板" |
+| `clarify-requirements` | `--skill clarify-requirements` | 需求澄清与信息缺口分析 | "梳理需求"、"还缺什么信息" |
 
 ### 🎯 策略规划层 (Strategy)
 
-| Skill | 功能 | 触发示例 |
-|:-----|:-----|:---------|
-| `product-positioning` | 产品定位与差异化策略 | "产品定位"、"差异化策略" |
-| `roadmap-planning` | 产品路线图规划 | "产品路线图"、"版本规划" |
-| `prioritization` | 优先级排序 (RICE/MoSCoW) | "优先级排序"、"需求优先级" |
+| Skill | 安装 | 功能 | 触发示例 |
+|:-----|:-----|:-----|:---------|
+| `product-positioning` | `--skill product-positioning` | 产品定位与差异化策略 | "产品定位"、"差异化策略" |
+| `roadmap-planning` | `--skill roadmap-planning` | 产品路线图规划（里程碑+时间线） | "产品路线图"、"版本规划" |
+| `prioritization` | `--skill prioritization` | 优先级排序 (RICE/MoSCoW) | "优先级排序"、"需求优先级" |
 
 ### 🎨 方案设计层 (Design)
 
-| Skill | 功能 | 触发示例 |
-|:-----|:-----|:---------|
-| `prd-gen` | 结构化 PRD 生成 (场景驱动) | "写 PRD"、"需求文档" |
-| `process-optimization` | 业务流程优化 | "流程优化"、"提效方案" |
+| Skill | 安装 | 功能 | 触发示例 |
+|:-----|:-----|:-----|:---------|
+| `prd-gen` | `--skill prd-gen` | 结构化 PRD 生成（场景驱动） | "写 PRD"、"需求文档" |
+| `prototype-design` | `--skill prototype-design` | HTML 原型生成（迭代+新产品模式） | "设计原型"、"HTML 原型" |
+| `process-optimization` | `--skill process-optimization` | 业务流程优化与工作流改进 | "流程优化"、"提效方案" |
 
 ### 🚢 交付协调层 (Delivery)
 
-| Skill | 功能 | 触发示例 |
-|:-----|:-----|:---------|
-| `requirement-review` | 需求评审与干系人对齐 | "需求评审"、"评审会议" |
-| `project-coordination` | 项目进度与风险管理 | "项目状态"、"进度跟踪" |
-| `release-management` | 发布管理与上线检查 | "发布计划"、"上线检查" |
+| Skill | 安装 | 功能 | 触发示例 |
+|:-----|:-----|:-----|:---------|
+| `requirement-review` | `--skill requirement-review` | 需求评审与干系人对齐 | "需求评审"、"评审会议" |
+| `project-coordination` | `--skill project-coordination` | 项目进度跟踪与风险管理 | "项目状态"、"进度跟踪" |
+| `release-management` | `--skill release-management` | 发布规划与上线检查清单 | "发布计划"、"上线检查" |
 
 ### 📈 价值验证层 (Validation)
 
-| Skill | 功能 | 触发示例 |
-|:-----|:-----|:---------|
-| `impact-analysis` | 上线效果分析与目标对比 | "效果分析"、"上线复盘" |
-| `feedback-synthesis` | 用户反馈汇总与分析 | "反馈分析"、"用户反馈" |
-| `iteration-planning` | 基于数据的迭代规划 | "迭代规划"、"版本排期" |
+| Skill | 安装 | 功能 | 触发示例 |
+|:-----|:-----|:-----|:---------|
+| `impact-analysis` | `--skill impact-analysis` | 上线效果分析与目标对比 | "效果分析"、"上线复盘" |
+| `feedback-synthesis` | `--skill feedback-synthesis` | 用户反馈汇总与分析 | "反馈分析"、"用户反馈" |
+| `iteration-planning` | `--skill iteration-planning` | 基于数据的迭代规划 | "迭代规划"、"版本排期" |
 
 ### 🔄 工作流编排器 (Workflows)
 
-| Workflow | 功能 | 触发示例 |
-|:---------|:-----|:---------|
-| `quick-prd` | 竞品分析 + PRD 一体化 | "快速 PRD"、"带竞品分析的需求" |
-| `full-pm-cycle` | 完整产品周期 (0-1) | "完整产品规划"、"0-1 产品" |
-| `feature-launch` | 功能发布工作流 | "功能发布"、"发布协调" |
+| Workflow | 安装 | 功能 | 触发示例 |
+|:---------|:-----|:-----|:---------|
+| `quick-prd` | `--skill quick-prd` | 竞品分析 + PRD 一体化 | "快速 PRD"、"带竞品分析的需求" |
+| `full-pm-cycle` | `--skill full-pm-cycle` | 完整产品周期 (0-1) | "完整产品规划"、"0-1 产品" |
+| `feature-launch` | `--skill feature-launch` | 功能发布工作流 | "功能发布"、"发布协调" |
 
 ---
 
@@ -326,6 +336,7 @@ oh-my-pm/
 | v0.3.0 | Subagent 混合架构 (8 Subagents + 记忆系统) | ✅ |
 | v0.4.0 | Commands 集成 (18 Skills + 4 Commands) | ✅ |
 | v0.6.0 | HTML 原型生成能力（迭代+新产品模式） | ✅ |
+| v0.9.0 | 扁平化 Skill 目录，支持按需安装单个 Skill | ✅ |
 | v1.0.0 | 企业版与集成能力 | ⏳ |
 
 查看 [Project Board](https://github.com/users/kelegele/projects/4) 了解完整规划。

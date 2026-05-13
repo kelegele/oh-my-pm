@@ -7,10 +7,10 @@
 [![Claude Code](https://img.shields.io/badge/Claude-Code-forest?logo=anthropic)](https://claude.ai/code)
 [![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
 [![Version](https://img.shields.io/github/v/release/kelegele/oh-my-pm)](https://github.com/kelegele/oh-my-pm/releases)
-[![Skills](https://img.shields.io/badge/Skills-19-blue)](skills/)
+[![Skills](https://img.shields.io/badge/Skills-20-blue)](skills/)
 [![Agents](https://img.shields.io/badge/Agents-8-purple)](agents/)
 
-**5-Layer Architecture · 8 Subagents · 19 Professional Skills · Complete Product Lifecycle**
+**5-Layer Architecture · 8 Subagents · 20 Professional Skills · Complete Product Lifecycle**
 
 [Quick Start](#quick-start) • [Skills](#all-skills) • [Subagents](#subagents-architecture) • [Contributing](#contributing)
 
@@ -46,6 +46,22 @@ Oh-My-PM is a comprehensive AI Agent workflow system for Product Managers, built
 ```bash
 # Install directly via skills.sh
 npx skills add kelegele/oh-my-pm -a claude-code
+```
+
+### Installation
+
+```bash
+# Install all skills
+npx skills add kelegele/oh-my-pm -a claude-code
+
+# Install a single skill
+npx skills add kelegele/oh-my-pm --skill prd-gen -a claude-code
+
+# Install multiple skills
+npx skills add kelegele/oh-my-pm --skill prd-gen --skill competitive-analysis -a claude-code
+
+# List available skills
+npx skills add kelegele/oh-my-pm --list
 ```
 
 ### Manual Installation
@@ -208,52 +224,53 @@ Subagents are automatically recognized and called by Claude Code—no explicit t
 
 ### 📊 Perception Layer
 
-| Skill | Function | Trigger Examples |
-|:-------|:---------|:-----------------|
-| `competitive-analysis` | Competitive feature comparison | "Analyze competitors", "Compare XX and YY" |
-| `market-intelligence` | Market intelligence collection & analysis | "Market analysis", "Industry trends" |
-| `user-research` | User research & persona creation | "User interviews", "Create user persona" |
-| `data-monitoring` | Product metrics monitoring & anomaly detection | "Monitor metrics", "Data dashboard" |
+| Skill | Install | Function | Trigger Examples |
+|:-------|:--------|:---------|:-----------------|
+| `competitive-analysis` | `--skill competitive-analysis` | Competitive feature comparison & strategic opportunity identification | "Analyze competitors", "Compare XX and YY" |
+| `market-intelligence` | `--skill market-intelligence` | Market trend collection & industry analysis | "Market analysis", "Industry trends" |
+| `user-research` | `--skill user-research` | User research, interviews & persona creation | "User interviews", "Create user persona" |
+| `data-monitoring` | `--skill data-monitoring` | Product metrics monitoring & anomaly detection | "Monitor metrics", "Data dashboard" |
+| `clarify-requirements` | `--skill clarify-requirements` | Requirement clarification & information gap analysis | "Clarify requirements", "What info is missing" |
 
 ### 🎯 Strategy Layer
 
-| Skill | Function | Trigger Examples |
-|:-------|:---------|:-----------------|
-| `product-positioning` | Product positioning & differentiation strategy | "Product positioning", "Differentiation strategy" |
-| `roadmap-planning` | Product roadmap planning | "Product roadmap", "Version planning" |
-| `prioritization` | Prioritization (RICE/MoSCoW frameworks) | "Prioritization", "Feature priority" |
+| Skill | Install | Function | Trigger Examples |
+|:-------|:--------|:---------|:-----------------|
+| `product-positioning` | `--skill product-positioning` | Product positioning & differentiation strategy | "Product positioning", "Differentiation strategy" |
+| `roadmap-planning` | `--skill roadmap-planning` | Product roadmap with milestones & timeline | "Product roadmap", "Version planning" |
+| `prioritization` | `--skill prioritization` | Prioritization (RICE/MoSCoW frameworks) | "Prioritization", "Feature priority" |
 
 ### 🎨 Design Layer
 
-| Skill | Function | Trigger Examples |
-|:-------|:---------|:-----------------|
-| `prd-gen` | Structured PRD generation (scenario-driven) | "Write PRD", "Requirements document" |
-| `prototype-design` | HTML prototype generation (iteration mode + new product mode) | "Design prototype", "HTML prototype", "UI flow" |
-| `process-optimization` | Business process optimization | "Process optimization", "Efficiency solutions" |
+| Skill | Install | Function | Trigger Examples |
+|:-------|:--------|:---------|:-----------------|
+| `prd-gen` | `--skill prd-gen` | Structured PRD generation (scenario-driven) | "Write PRD", "Requirements document" |
+| `prototype-design` | `--skill prototype-design` | HTML prototype generation (iteration + new product modes) | "Design prototype", "HTML prototype", "UI flow" |
+| `process-optimization` | `--skill process-optimization` | Business process optimization & workflow improvement | "Process optimization", "Efficiency solutions" |
 
 ### 🚢 Delivery Layer
 
-| Skill | Function | Trigger Examples |
-|:-------|:---------|:-----------------|
-| `requirement-review` | Requirement review & stakeholder alignment | "Requirement review", "Review meeting" |
-| `project-coordination` | Project progress & risk management | "Project status", "Progress tracking" |
-| `release-management` | Release management & launch checklist | "Release plan", "Launch checklist" |
+| Skill | Install | Function | Trigger Examples |
+|:-------|:--------|:---------|:-----------------|
+| `requirement-review` | `--skill requirement-review` | Requirement review & stakeholder alignment | "Requirement review", "Review meeting" |
+| `project-coordination` | `--skill project-coordination` | Project progress tracking & risk management | "Project status", "Progress tracking" |
+| `release-management` | `--skill release-management` | Release planning & launch checklist | "Release plan", "Launch checklist" |
 
 ### 📈 Validation Layer
 
-| Skill | Function | Trigger Examples |
-|:-------|:---------|:-----------------|
-| `impact-analysis` | Post-launch impact analysis & goal comparison | "Impact analysis", "Post-launch review" |
-| `feedback-synthesis` | User feedback aggregation & analysis | "Feedback analysis", "User feedback" |
-| `iteration-planning` | Data-driven iteration planning | "Iteration planning", "Version scheduling" |
+| Skill | Install | Function | Trigger Examples |
+|:-------|:--------|:---------|:-----------------|
+| `impact-analysis` | `--skill impact-analysis` | Post-launch impact analysis & goal comparison | "Impact analysis", "Post-launch review" |
+| `feedback-synthesis` | `--skill feedback-synthesis` | User feedback aggregation & analysis | "Feedback analysis", "User feedback" |
+| `iteration-planning` | `--skill iteration-planning` | Data-driven iteration planning | "Iteration planning", "Version scheduling" |
 
 ### 🔄 Workflow Orchestrators
 
-| Workflow | Function | Trigger Examples |
-|:----------|:---------|:-----------------|
-| `quick-prd` | Competitive analysis + PRD integration | "Quick PRD", "Requirements with competitive analysis" |
-| `full-pm-cycle` | Complete product lifecycle (0-1) | "Complete product planning", "0-1 product" |
-| `feature-launch` | Feature launch workflow | "Feature launch", "Launch coordination" |
+| Workflow | Install | Function | Trigger Examples |
+|:----------|:--------|:---------|:-----------------|
+| `quick-prd` | `--skill quick-prd` | Competitive analysis + PRD integration | "Quick PRD", "Requirements with competitive analysis" |
+| `full-pm-cycle` | `--skill full-pm-cycle` | Complete product lifecycle (0-1) | "Complete product planning", "0-1 product" |
+| `feature-launch` | `--skill feature-launch` | Feature launch workflow | "Feature launch", "Launch coordination" |
 
 ---
 
@@ -338,6 +355,7 @@ oh-my-pm/
 | v0.5.1 | Remove Figma dependency, switch to HTML prototypes (19 Skills) | ✅ |
 | v0.6.0 | HTML prototype generation (iteration + new product modes) | ✅ |
 | v0.9.0 | Restore prototype-design skill (HTML-only) | ✅ |
+| v0.9.0 | Flat skill directory, standalone install per skill | ✅ |
 | v1.0.0 | Enterprise edition & integrations | ⏳ |
 
 See [Project Board](https://github.com/users/kelegele/projects/4) for full planning.
