@@ -38,10 +38,10 @@ Oh-My-PM is a comprehensive AI Agent workflow system for Product Managers, built
 
 ### Prerequisites
 
-- [Claude Code](https://claude.ai/code) CLI tool
+- [Claude Code](https://claude.ai/code) or [OpenAI Codex](https://github.com/openai/codex) CLI tool
 - Clone this repository to your local project directory
 
-### Installation
+### Installation (Claude Code)
 
 ```bash
 # Install all skills
@@ -52,6 +52,19 @@ npx skills add kelegele/oh-my-pm --skill prd-gen -a claude-code
 
 # Install multiple skills
 npx skills add kelegele/oh-my-pm --skill prd-gen --skill competitive-analysis -a claude-code
+
+# List available skills
+npx skills add kelegele/oh-my-pm --list
+```
+
+### Installation (Codex)
+
+```bash
+# Install all skills
+npx skills add kelegele/oh-my-pm -a codex
+
+# Install a single skill
+npx skills add kelegele/oh-my-pm --skill prd-gen -a codex
 
 # List available skills
 npx skills add kelegele/oh-my-pm --list

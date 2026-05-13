@@ -36,7 +36,11 @@ Oh-My-PM 是一套面向产品经理的 AI Agent 工作流系统，以 **Claude 
 
 ## 快速开始
 
-### 安装
+### 前置要求
+
+- [Claude Code](https://claude.ai/code) 或 [OpenAI Codex](https://github.com/openai/codex) CLI 工具
+
+### 安装 (Claude Code)
 
 ```bash
 # 安装全部 20 个 skills
@@ -47,6 +51,19 @@ npx skills add kelegele/oh-my-pm --skill prd-gen -a claude-code
 
 # 安装多个 skills
 npx skills add kelegele/oh-my-pm --skill prd-gen --skill competitive-analysis -a claude-code
+
+# 查看可安装的 skills
+npx skills add kelegele/oh-my-pm --list
+```
+
+### 安装 (Codex)
+
+```bash
+# 安装全部 skills
+npx skills add kelegele/oh-my-pm -a codex
+
+# 安装单个 skill
+npx skills add kelegele/oh-my-pm --skill prd-gen -a codex
 
 # 查看可安装的 skills
 npx skills add kelegele/oh-my-pm --list
