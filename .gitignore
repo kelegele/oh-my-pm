@@ -1,8 +1,11 @@
-# Agent memory (local scope - don't commit)
-.claude/agent-memory-local/
+# Agent tooling caches (generated; duplicates skills/)
+.agents/
 
-# Agent memory (project scope - commit for team sharing)
-# .claude/agent-memory/  <- Uncomment to exclude project memory too
+# Claude Code local state (personal; not shared)
+.claude/settings.local.json
+.claude/agent-memory-local/
+.claude/.DS_Store
+# Shared (committed): .claude/setting.json, .claude/agent-memory/
 
 # OS
 .DS_Store
