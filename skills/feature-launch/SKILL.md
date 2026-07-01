@@ -54,12 +54,12 @@ Orchestrates end-to-end feature launch process spanning:
 **目标**：初始化工作流状态和上下文目录
 
 **活动**：
-- 创建 `context/launch-{feature-name}/` 目录用于发布产物
-- 初始化 `context/current-workflow.json` 当前状态文件
+- 创建 `docs/product/launch-{feature-name}/` 目录用于发布产物
+- 初始化 `docs/product/.ompm/current-workflow.json` 当前状态文件
 
 **输出**：
-- `context/launch-{feature-name}/` 目录
-- `context/current-workflow.json` 空模板
+- `docs/product/launch-{feature-name}/` 目录
+- `docs/product/.ompm/current-workflow.json` 空模板
 
 **质量门控**：
 - ✅ 目录结构创建完成
@@ -80,8 +80,8 @@ Orchestrates end-to-end feature launch process spanning:
 - Step 1.2: 调用 `/prototype-design` 验证或创建原型
 
 **输出**：
-- `context/prd/{feature-name}-final-v{version}.md`
-- `context/prototypes/{feature-name}.html`（如选择）
+- `docs/product/prd/{feature-name}-final-v{version}.md`
+- `docs/product/prototypes/{feature-name}.html`（如选择）
 
 **质量门控**：
 - ✅ PRD 完整（9 章）
@@ -123,9 +123,9 @@ Orchestrates end-to-end feature launch process spanning:
 - Step 2.3: 调用 `/release-management`
 
 **输出**：
-- `context/review-notes/[feature]-review.md`
-- `context/project-plan-[feature].md`
-- `context/release-plan-[feature].md`
+- `docs/product/review-notes/[feature]-review.md`
+- `docs/product/project-plan-[feature].md`
+- `docs/product/release-plan-[feature].md`
 
 **质量门控**：
 - ✅ 需求评审完成 - 干系人对齐、签字确认
@@ -161,9 +161,9 @@ Orchestrates end-to-end feature launch process spanning:
 - Step 3.2: 调用 `/feedback-synthesis`
 
 **输出**：
-- `context/impact-analysis/{feature-name}-{date}.json`
-- `context/feedback-synthesis/{feature-name}-{date}.json`
-- `context/post-launch-report.md`
+- `docs/product/.ompm/impact-analysis/{feature-name}-{date}.json`
+- `docs/product/.ompm/feedback-synthesis/{feature-name}-{date}.json`
+- `docs/product/post-launch-report.md`
 
 **质量门控**：
 - ✅ 效果分析完成 - 目标达成度分析、关键指标收集
@@ -284,18 +284,18 @@ validation_gates:
 ## 上下文集成
 
 **读取**：
-- `context/prd/*.md` - 待发布的 PRD
-- `context/design/` - 原型和规范
-- `context/current-workflow.json` - 当前工作流状态
+- `docs/product/prd/*.md` - 待发布的 PRD
+- `docs/product/design/` - 原型和规范
+- `docs/product/.ompm/current-workflow.json` - 当前工作流状态
 
 **写入**：
-- `context/launch-{feature}/` - 所有发布产物
-- `context/workflow-state/{{workflow_id}}.json` - 工作流快照
-- `context/review-notes/*.md` - 评审记录
-- `context/project-plan/*.md` - 项目计划
-- `context/release-plan/*.md` - 发布计划
-- `context/impact-analysis/*.json` - 效果分析
-- `context/feedback-synthesis/*.json` - 反馈综合
+- `docs/product/launch-{feature}/` - 所有发布产物
+- `docs/product/.ompm/workflow-state/{{workflow_id}}.json` - 工作流快照
+- `docs/product/review-notes/*.md` - 评审记录
+- `docs/product/project-plan/*.md` - 项目计划
+- `docs/product/release-plan/*.md` - 发布计划
+- `docs/product/.ompm/impact-analysis/*.json` - 效果分析
+- `docs/product/.ompm/feedback-synthesis/*.json` - 反馈综合
 
 ---
 

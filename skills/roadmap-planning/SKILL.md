@@ -48,7 +48,7 @@ The roadmap planning process ensures strategic alignment:
 
 The skill generates roadmap outputs:
 
-1. **Roadmap document** (`context/roadmap.md`) - Visual and detailed roadmap
+1. **Roadmap document** (`docs/product/roadmap.md`) - Visual and detailed roadmap
 2. **Milestone definitions** - Key delivery points with success criteria
 
 ### Roadmap Document Format
@@ -189,12 +189,12 @@ Before delivering, the roadmap should:
 ## Context Integration
 
 **Reads:**
-- `context/prioritization.json` - Prioritized backlog
-- `context/positioning.md` - Strategic direction
+- `docs/product/.ompm/prioritization.json` - Prioritized backlog
+- `docs/product/positioning.md` - Strategic direction
 
 **Writes:**
-- `context/roadmap.md` - Complete roadmap document
-- `context/roadmap.json` - Machine-readable roadmap data
+- `docs/product/roadmap.md` - Complete roadmap document
+- `docs/product/.ompm/roadmap.json` - Machine-readable roadmap data
 
 **Read By:**
 - `prd-gen` - References roadmap for feature planning

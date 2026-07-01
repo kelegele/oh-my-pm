@@ -195,10 +195,10 @@ Before delivering, the monitoring setup should:
 ## Context Integration
 
 **Reads:**
-- `context/prd/*.md` - Success metrics defined in PRDs
+- `docs/product/prd/*.md` - Success metrics defined in PRDs
 
 **Writes:**
-- `context/metrics.json` - Current metric values and trends
+- `docs/product/.ompm/metrics.json` - Current metric values and trends
 
 **Read By:**
 - `impact-analysis` - Uses metric data for post-release analysis

@@ -259,12 +259,12 @@ Before delivering, ensure synthesis:
 ## Context Integration
 
 **Reads:**
-- `context/release-plan.md` - Release scope to categorize feedback
-- `context/impact-analysis.json` - Combine quantitative and qualitative
+- `docs/product/release-plan.md` - Release scope to categorize feedback
+- `docs/product/.ompm/impact-analysis.json` - Combine quantitative and qualitative
 
 **Writes:**
-- `context/feedback-synthesis.json` - Structured synthesis data
-- `context/feedback-reports/[period].md` - Full synthesis report
+- `docs/product/.ompm/feedback-synthesis.json` - Structured synthesis data
+- `docs/product/feedback-reports/[period].md` - Full synthesis report
 
 **Read By:**
 - `iteration-planning` - Uses feedback for planning

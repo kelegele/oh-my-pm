@@ -52,12 +52,12 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 **目标**：初始化工作流状态和上下文目录
 
 **活动**：
-- 创建 `context/workflow-state/` 目录用于工作流快照
-- 初始化 `context/current-workflow.json` 当前状态文件
+- 创建 `docs/product/.ompm/workflow-state/` 目录用于工作流快照
+- 初始化 `docs/product/.ompm/current-workflow.json` 当前状态文件
 
 **输出**：
-- `context/workflow-state/` 目录
-- `context/current-workflow.json` 空模板
+- `docs/product/.ompm/workflow-state/` 目录
+- `docs/product/.ompm/current-workflow.json` 空模板
 
 **质量门控**：
 - ✅ 目录结构创建完成
@@ -72,7 +72,7 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 **Step 1.0: Perception Brainstorming** (BEFORE any skill invocation)
 
 1. Analyze user's initial input for the product/feature domain
-2. Identify what perception data already exists in `context/`
+2. Identify what perception data already exists in `docs/product/`
 3. **Gap Analysis**: What's missing for a complete perception picture?
    - Market intelligence: market scope, trends, TAM/SAM/SOM
    - Competitive analysis: which competitors, feature focus
@@ -94,10 +94,10 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 - Step 1.3: 调用 `/user-research`
 
 **输出**：
-- `context/competitive-analysis/{feature-name}-{date}.json` + `.md`
-- `context/market-analysis.json`
-- `context/user-research.json`
-- `context/user-personas.json`
+- `docs/product/.ompm/competitive-analysis/{feature-name}-{date}.json` + `.md`
+- `docs/product/.ompm/market-analysis.json`
+- `docs/product/.ompm/user-research.json`
+- `docs/product/.ompm/user-personas.json`
 
 **质量门控**：
 - ✅ 竞品分析完成 - 2+ 个竞品功能对比
@@ -138,9 +138,9 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 - Step 2.3: 调用 `/prioritization`
 
 **输出**：
-- `context/positioning.md`
-- `context/roadmap.md`
-- `context/prioritization.json`
+- `docs/product/positioning.md`
+- `docs/product/roadmap.md`
+- `docs/product/.ompm/prioritization.json`
 
 **质量门控**：
 - ✅ 产品定位完成 - 价值主张清晰、差异化策略明确
@@ -152,10 +152,10 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 **在阶段 2 完成后、进入阶段 3 前，必须执行此门控。**
 
 1. **向用户展示完整的策略层产出**：
-   - Positioning Statement（来自 `context/positioning.md`）
+   - Positioning Statement（来自 `docs/product/positioning.md`）
    - Key messages 和 value proposition
-   - Prioritization 结果（来自 `context/prioritization.json`）— 前 N 项及 RICE 分数
-   - Roadmap 亮点（来自 `context/roadmap.md`）— 关键里程碑
+   - Prioritization 结果（来自 `docs/product/.ompm/prioritization.json`）— 前 N 项及 RICE 分数
+   - Roadmap 亮点（来自 `docs/product/roadmap.md`）— 关键里程碑
 
 2. **使用 AskUserQuestion 让用户确认**：
 
@@ -168,7 +168,7 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 
 3. **仅当用户明确选择"✅ 确认，进入 Design 阶段"时**，才能进入 Stage 3。
 4. 如果用户选择修订，回到相关 skill 进行 refinement。
-5. 将确认记录到 `context/current-workflow.json`。
+5. 将确认记录到 `docs/product/.ompm/current-workflow.json`。
 
 - **质量门控通过** - 进入 Design 阶段
 
@@ -200,8 +200,8 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 - 
 
 **输出**：
-- `context/prd/{feature-name}-{date}-v{version}.md`
-- `context/prototypes/{feature-name}.html`（如选择）
+- `docs/product/prd/{feature-name}-{date}-v{version}.md`
+- `docs/product/prototypes/{feature-name}.html`（如选择）
 
 **原型格式选择**：
 
@@ -209,7 +209,7 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 
 | Option | Description | 输出位置 |
 |:-------|-------------|:-----------|
-| **HTML 原型** | 可在浏览器直接预览、演示交互 | `context/prototypes/{name}.html` |
+| **HTML 原型** | 可在浏览器直接预览、演示交互 | `docs/product/prototypes/{name}.html` |
 
 **质量门控**：
 - ✅ PRD 完整（9 章节 + 行业基准）
@@ -248,9 +248,9 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 - Step 4.3: 调用 `/release-management`
 
 **输出**：
-- `context/review-notes/[feature]-review.md`
-- `context/project-plan.md`
-- `context/release-plan.md`
+- `docs/product/review-notes/[feature]-review.md`
+- `docs/product/project-plan.md`
+- `docs/product/release-plan.md`
 
 **质量门控**：
 - ✅ 需求评审完成 - 干系人对齐、签字确认
@@ -288,9 +288,9 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 - Step 5.3: 调用 `/iteration-planning`
 
 **输出**：
-- `context/impact-analysis/{feature-name}-{date}.json`
-- `context/feedback-synthesis/{feature-name}-{date}.json`
-- `context/iteration-plan.json`
+- `docs/product/.ompm/impact-analysis/{feature-name}-{date}.json`
+- `docs/product/.ompm/feedback-synthesis/{feature-name}-{date}.json`
+- `docs/product/.ompm/iteration-plan.json`
 
 **质量门控**：
 - ✅ 效果分析完成 - 目标达成度分析、关键指标收集
@@ -436,19 +436,19 @@ validation_gates:
 ## 上下文集成
 
 **读取**：
-- `context/current-workflow.json` - 当前工作流状态
-- `context/prd/*.md` - PRD 文档
-- `context/competitive-analysis/*.json` - 竞品分析数据
-- `context/prototypes/*.html` - HTML 原型
+- `docs/product/.ompm/current-workflow.json` - 当前工作流状态
+- `docs/product/prd/*.md` - PRD 文档
+- `docs/product/.ompm/competitive-analysis/*.json` - 竞品分析数据
+- `docs/product/prototypes/*.html` - HTML 原型
 
 **写入**：
-- `context/workflow-state/{{workflow_id}}.json` - 工作流快照（按日期）
-- `context/review-notes/*.md` - 评审记录
-- `context/project-plan/*.md` - 项目计划
-- `context/release-plan/*.md` - 发布计划
-- `context/impact-analysis/*.json` - 效果分析
-- `context/feedback-synthesis/*.json` - 反馈综合
-- `context/iteration-plan.json` - 迭代计划
+- `docs/product/.ompm/workflow-state/{{workflow_id}}.json` - 工作流快照（按日期）
+- `docs/product/review-notes/*.md` - 评审记录
+- `docs/product/project-plan/*.md` - 项目计划
+- `docs/product/release-plan/*.md` - 发布计划
+- `docs/product/.ompm/impact-analysis/*.json` - 效果分析
+- `docs/product/.ompm/feedback-synthesis/*.json` - 反馈综合
+- `docs/product/.ompm/iteration-plan.json` - 迭代计划
 
 ---
 

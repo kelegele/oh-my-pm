@@ -248,12 +248,12 @@ Before releasing, ensure:
 ## Context Integration
 
 **Reads:**
-- `context/project-plan.md` - Project status and scope
-- `context/metrics.json` - Baseline metrics for comparison
+- `docs/product/project-plan.md` - Project status and scope
+- `docs/product/.ompm/metrics.json` - Baseline metrics for comparison
 
 **Writes:**
-- `context/release-plan.md` - Release plan and checklist
-- `context/release-notes/[version].md` - Release notes
+- `docs/product/release-plan.md` - Release plan and checklist
+- `docs/product/release-notes/[version].md` - Release notes
 
 **Read By:**
 - `impact-analysis` - Uses release data for post-release analysis

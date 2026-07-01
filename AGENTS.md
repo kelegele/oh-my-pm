@@ -42,27 +42,27 @@ npx skills add . -a codex
 │  clarify-requirements                            │
 │  → Output: market_data, personas, competitive   │
 └─────────────────────────────────────────────────┘
-                       ↓ context/
+                       ↓ docs/product/
 ┌─────────────────────────────────────────────────┐
 │  Strategy Layer (策略规划)                       │
 │  product-positioning · roadmap-planning ·       │
 │  prioritization                                  │
 │  → Output: positioning, roadmap, priorities     │
 └─────────────────────────────────────────────────┘
-                       ↓ context/
+                       ↓ docs/product/
 ┌─────────────────────────────────────────────────┐
 │  Design Layer (方案设计)                         │
 │  prd-gen · prototype-design · process-optimization                  │
 │  → Output: prd/*.md, prototypes/*.html          │
 └─────────────────────────────────────────────────┘
-                       ↓ context/
+                       ↓ docs/product/
 ┌─────────────────────────────────────────────────┐
 │  Delivery Layer (交付协调)                       │
 │  requirement-review · project-coordination ·    │
 │  release-management                              │
 │  → Output: project_plan, release_notes          │
 └─────────────────────────────────────────────────┘
-                       ↓ context/
+                       ↓ docs/product/
 ┌─────────────────────────────────────────────────┐
 │  Validation Layer (价值验证)                     │
 │  impact-analysis · feedback-synthesis ·         │
@@ -96,7 +96,7 @@ npx skills add . -a codex
 
 ### Context Passing
 
-All intermediate outputs are stored in `context/` directory:
+All intermediate outputs are stored in `docs/product/` directory:
 
 | File | Layer | Flow |
 |:-----|:------|:-----|
@@ -124,7 +124,7 @@ All intermediate outputs are stored in `context/` directory:
 
 All workflows follow the **Plan-and-Execute pattern** with:
 - **Stage gates**: Quality criteria before moving to next stage
-- **State tracking**: `context/current-workflow.json`
+- **State tracking**: `docs/product/.ompm/current-workflow.json`
 - **Collaboration modes**: autopilot / copilot / manual
 
 | Workflow | Command | Description |
@@ -144,7 +144,7 @@ The 4th command, **`ompm`**, is a **workflow dispatcher** (`/ompm <workflow> [ar
 | `commands/*.md` | CLI command definitions |
 | `.claude-plugin/plugin.json` | Plugin manifest (Skills + Agents + Commands) |
 | `templates/prototype/` | HTML prototype templates + component library |
-| `context/` | Workflow intermediate outputs |
+| `docs/product/` | Workflow intermediate outputs |
 | `docs/architecture/workflow-architecture.md` | Plan-and-Execute architecture spec |
 | `docs/architecture/subagent-architecture.md` | Subagent design patterns |
 | `docs/architecture/CODEMAPS.md` | Comprehensive component navigation |
@@ -186,7 +186,7 @@ Memory enables cross-session learning without polluting main conversation contex
 bash tests/test-skills.sh
 ```
 
-Note: `tests/test-skills.sh` only **hardcodes 5 MVP skills** (competitive-analysis, clarify-requirements, prd-gen, iteration-planning, quick-prd) plus the `context/` directory — it does **not** auto-discover all 20 skills. A newly added skill is not exercised by this script; verify its frontmatter manually or extend the script's `test_skill_file` list.
+Note: `tests/test-skills.sh` only **hardcodes 5 MVP skills** (competitive-analysis, clarify-requirements, prd-gen, iteration-planning, quick-prd) plus the `docs/product/` directory — it does **not** auto-discover all 20 skills. A newly added skill is not exercised by this script; verify its frontmatter manually or extend the script's `test_skill_file` list.
 
 Skills are triggered by natural language in Claude Code or Codex — test by simulating user prompts.
 

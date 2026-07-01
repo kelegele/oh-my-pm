@@ -82,9 +82,9 @@ memory: project
 **并行执行**：可以同时运行前三个研究任务
 
 **输出**：
-- `context/market-analysis.json`
-- `context/competitive-analysis/`
-- `context/user-research.json`
+- `docs/product/.ompm/market-analysis.json`
+- `docs/product/.ompm/competitive-analysis/`
+- `docs/product/.ompm/user-research.json`
 
 **验收标准**：3+ 竞品洞察，2+ 用户画像
 
@@ -99,25 +99,25 @@ memory: project
 4. **用户明确批准后**才能进入阶段 2
 
 **输出**：
-- `context/clarification-result.json`
+- `docs/product/.ompm/clarification-result.json`
 
 ### 阶段 2: 策略 (定义方向)
 **使用 Skills**: `product-positioning` → `roadmap-planning` → `prioritization`
 
 **输出**：
-- `context/positioning.md`
-- `context/roadmap.md`
-- `context/prioritization.json`
+- `docs/product/positioning.md`
+- `docs/product/roadmap.md`
+- `docs/product/.ompm/prioritization.json`
 
 ### 阶段 2.5: 策略确认门控 (Strategy Confirmation Gate)
 
 **HARD GATE**: 在阶段 2 完成后、进入阶段 3 前，必须执行此门控。
 
 1. **向用户展示完整的策略层产出**：
-   - Positioning Statement（来自 `context/positioning.md`）
+   - Positioning Statement（来自 `docs/product/positioning.md`）
    - Key messages 和 value proposition
-   - Prioritization 结果（来自 `context/prioritization.json`）— 前 N 项及 RICE 分数
-   - Roadmap 亮点（来自 `context/roadmap.md`）— 关键里程碑
+   - Prioritization 结果（来自 `docs/product/.ompm/prioritization.json`）— 前 N 项及 RICE 分数
+   - Roadmap 亮点（来自 `docs/product/roadmap.md`）— 关键里程碑
 
 2. **使用 AskUserQuestion 让用户确认**：
    - Header: "Strategy 阶段确认"
@@ -130,33 +130,33 @@ memory: project
 
 3. **仅当用户明确选择"✅ 确认"时**，才能进入阶段 3。
 4. 如果用户选择修订，回到相关 skill 进行 refinement。
-5. 将确认记录到 `context/current-workflow.json`。
+5. 将确认记录到 `docs/product/.ompm/current-workflow.json`。
 
 ### 阶段 3: 设计 (定义方案)
 **使用 Skills**: `prd-gen` → `HTML 原型生成`
 
 **输出**：
-- `context/prd/[feature]-v1.md`
-- `context/design/`
+- `docs/product/prd/[feature]-v1.md`
+- `docs/product/design/`
 
 ### 阶段 4: 交付 (构建发布)
 **使用 Skills**: `requirement-review` → `project-coordination` → `release-management`
 
 **输出**：
-- `context/review-notes/`
-- `context/project-plan.md`
-- `context/release-plan.md`
+- `docs/product/review-notes/`
+- `docs/product/project-plan.md`
+- `docs/product/release-plan.md`
 
 ### 阶段 5: 验证 (测量学习)
 **启动 Subagent**: `impact-analyst` → `feedback-collector`
 
 **输出**：
-- `context/impact-analysis.json`
-- `context/feedback-synthesis.json`
+- `docs/product/.ompm/impact-analysis.json`
+- `docs/product/.ompm/feedback-synthesis.json`
 
 ## 工作流跟踪
 
-在 `context/current-workflow.json` 中维护状态：
+在 `docs/product/.ompm/current-workflow.json` 中维护状态：
 
 ```json
 {

@@ -37,10 +37,10 @@ graph TB
         E3["iteration-planning\n迭代规划"]
     end
 
-    L1 -->|"context/"| L2
-    L2 -->|"context/"| L3
-    L3 -->|"context/"| L4
-    L4 -->|"context/"| L5
+    L1 -->|"docs/product/"| L2
+    L2 -->|"docs/product/"| L3
+    L3 -->|"docs/product/"| L4
+    L4 -->|"docs/product/"| L5
     L5 -.->|"反馈循环"| L1
 ```
 
@@ -54,14 +54,14 @@ sequenceDiagram
     participant U as 用户
     participant CC as Claude Code
     participant SK as Skill Router
-    participant CTX as context/ 目录
+    participant CTX as docs/product/ 目录
     participant SA as Subagent
 
     U->>CC: "分析 Notion vs 飞书的差异"
     CC->>SK: 识别触发词 → competitive-analysis
     SK->>SA: 委托 competitive-analyst (Sonnet)
     SA->>SA: GitHub 代码分析 + 功能对比
-    SA->>CTX: 写入 context/competitive-analysis.json
+    SA->>CTX: 写入 docs/product/.ompm/competitive-analysis.json
     SA-->>CC: 返回对比矩阵
     CC-->>U: 展示竞品分析结果
 
@@ -70,14 +70,14 @@ sequenceDiagram
     SK->>CTX: 读取 competitive-analysis.json
     SK->>SK: 识别场景：迭代/新功能/0-1
     SK-->>CC: 生成 PRD 文档
-    CC->>CTX: 写入 context/prd/feature-name.md
+    CC->>CTX: 写入 docs/product/prd/feature-name.md
     CC-->>U: 展示 PRD 内容
 
     U->>CC: "帮我设计原型"
     CC->>SK: 识别触发词 → prototype-design
     SK->>CTX: 读取 prd/*.md
     SK-->>CC: 生成 HTML 原型
-    CC->>CTX: 写入 context/prototypes/*.html
+    CC->>CTX: 写入 docs/product/prototypes/*.html
     CC-->>U: 返回 HTML 原型链接
 ```
 
@@ -92,7 +92,7 @@ sequenceDiagram
     participant CC as Claude Code
     participant CA as competitive-analysis
     participant PG as prd-gen
-    participant CTX as context/
+    participant CTX as docs/product/
 
     U->>CC: /quick-prd "用户中心改版" 淘宝 京东
     CC->>CA: 启动竞品分析流程
@@ -123,7 +123,7 @@ sequenceDiagram
     participant PR as prioritization
     participant PG as prd-gen
     participant PD as prototype-design
-    participant CTX as context/
+    participant CTX as docs/product/
 
     U->>CC: /full-pm-cycle "项目管理工具"
     CC->>PM: 启动完整 PM 周期编排
@@ -169,7 +169,7 @@ sequenceDiagram
     participant IA as impact-analysis
     participant FB as feedback-synthesis
     participant IP as iteration-planning
-    participant CTX as context/
+    participant CTX as docs/product/
 
     U->>CC: /feature-launch "用户注册流程"
     CC->>RR: 启动需求评审
@@ -222,7 +222,7 @@ graph LR
     end
 
     subgraph "输出"
-        CTX["context/ 文件写入"]
+        CTX["docs/product/ 文件写入"]
         RESP["对话响应"]
     end
 

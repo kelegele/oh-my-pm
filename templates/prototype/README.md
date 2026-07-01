@@ -131,7 +131,7 @@ oh-my-pm/
 │   ├── interactive.html              # 交互式原型模板
 │   ├── COMPONENTS.md                 # 新增：组件规范
 │   └── QUALITY-STANDARDS.md          # 新增：质量标准
-└── context/prototypes/
+└── docs/product/prototypes/
     └── README.md                     # 原型文件说明
 ```
 
@@ -151,7 +151,7 @@ User: "基于现有首页生成新功能原型"
 4. 选择合适的模板（wireframe/mockup/interactive）
 5. 应用提取的样式生成原型
 6. 质量检查
-7. 输出到 context/prototypes/{feature-name}.html
+7. 输出到 docs/product/prototypes/{feature-name}.html
 ```
 
 ### 新产品模式
@@ -166,7 +166,7 @@ User: "为新产品创建原型"
 4. 选择合适的模板
 5. 应用样式生成原型
 6. 质量检查
-7. 输出到 context/prototypes/{feature-name}.html
+7. 输出到 docs/product/prototypes/{feature-name}.html
 ```
 
 ---

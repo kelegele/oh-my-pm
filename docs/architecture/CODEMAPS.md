@@ -37,7 +37,7 @@ oh-my-pm/
 ├── commands/                  # CLI 命令定义 (4个)
 ├── .claude-plugin/             # 插件配置
 ├── .claude/agent-memory/       # Subagent 记忆存储
-├── context/                   # 工作流上下文文件
+├── docs/product/                   # 工作流上下文文件
 ├── templates/                 # HTML 原型模板
 ├── docs/                      # 项目文档
 ├── tests/                      # 测试脚本
@@ -52,9 +52,9 @@ oh-my-pm/
 
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
-| **competitive-analysis** | `skills/competitive-analysis/SKILL.md` | 分析竞品, 对比, 竞品分析 | 竞品列表 | `context/competitive-analysis.json` |
+| **competitive-analysis** | `skills/competitive-analysis/SKILL.md` | 分析竞品, 对比, 竞品分析 | 竞品列表 | `docs/product/.ompm/competitive-analysis.json` |
 | **market-intelligence** | `skills/market-intelligence/SKILL.md` | 市场分析, 行业趋势, 市场研究 | 行业信息 | 市场洞察报告 |
-| **user-research** | `skills/user-research/SKILL.md` | 用户访谈, 用户画像, 用户研究 | 访谈数据 | `context/personas.json` |
+| **user-research** | `skills/user-research/SKILL.md` | 用户访谈, 用户画像, 用户研究 | 访谈数据 | `docs/product/.ompm/personas.json` |
 | **data-monitoring** | `skills/data-monitoring/SKILL.md` | 监控指标, 数据看板, 指标分析 | 指标数据 | 异常告警 |
 
 ### Strategy Layer (策略规划层)
@@ -62,14 +62,14 @@ oh-my-pm/
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
 | **product-positioning** | `skills/product-positioning/SKILL.md` | 产品定位, 差异化, 价值主张 | 市场数据 | 定位声明 |
-| **roadmap-planning** | `skills/roadmap-planning/SKILL.md` | 产品路线图, 版本规划, 路线图 | 需求池 | `context/roadmap.md` |
+| **roadmap-planning** | `skills/roadmap-planning/SKILL.md` | 产品路线图, 版本规划, 路线图 | 需求池 | `docs/product/roadmap.md` |
 | **prioritization** | `skills/prioritization/SKILL.md` | 优先级排序, 需求优先级, RICE, MoSCoW | 需求列表 | 优先级矩阵 |
 
 ### Design Layer (方案设计层)
 
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
-| **prd-gen** | `skills/prd-gen/SKILL.md` | 写 PRD, 需求文档, 产品需求 | 需求描述 | `context/prd/*.md` |
+| **prd-gen** | `skills/prd-gen/SKILL.md` | 写 PRD, 需求文档, 产品需求 | 需求描述 | `docs/product/prd/*.md` |
 | **process-optimization** | `skills/process-optimization/SKILL.md` | 流程优化, 提效, 流程改进 | 现有流程 | 优化建议 |
 
 ### Delivery Layer (交付协调层)
@@ -84,9 +84,9 @@ oh-my-pm/
 
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
-| **impact-analysis** | `skills/impact-analysis/SKILL.md` | 效果分析, 上线复盘, 效果评估 | 埋点数据 | `context/impact.json` |
+| **impact-analysis** | `skills/impact-analysis/SKILL.md` | 效果分析, 上线复盘, 效果评估 | 埋点数据 | `docs/product/.ompm/impact.json` |
 | **feedback-synthesis** | `skills/feedback-synthesis/SKILL.md` | 反馈分析, 用户反馈, 反馈汇总 | 反馈数据 | 反馈分类 |
-| **iteration-planning** | `skills/iteration-planning/SKILL.md` | 迭代规划, 版本排期, sprint planning | 效果+反馈 | `context/iteration-plan.json` |
+| **iteration-planning** | `skills/iteration-planning/SKILL.md` | 迭代规划, 版本排期, sprint planning | 效果+反馈 | `docs/product/.ompm/iteration-plan.json` |
 
 ### Workflows Layer (工作流编排层)
 
@@ -127,16 +127,16 @@ oh-my-pm/
 
 | 文件 | 格式 | 用途 | 读写 Skills |
 |:-----|:-----|:-----|:-----------|
-| `context/competitive-analysis.json` | JSON | 竞品分析结果 | competitive-analysis → prd-gen |
-| `context/personas.json` | JSON | 用户画像数据 | user-research |
-| `context/roadmap.md` | Markdown | 产品路线图 | roadmap-planning |
-| `context/prd-draft.md` | Markdown | PRD 文档草稿 | prd-gen |
-| `context/prd/<日期>-<名称>.md` | Markdown | 版本化 PRD 文档 | prd-gen |
-| `context/prototypes/*.html` | HTML | HTML 原型文件 | 推荐使用 HTML 直接生成原型 |
-| `context/current-workflow.json` | JSON | 工作流状态追踪 | 全部 workflows |
-| `context/impact.json` | JSON | 效果分析数据 | impact-analysis |
-| `context/iteration-plan.json` | JSON | 迭代计划 | iteration-planning |
-| `context/market-analysis.json` | JSON | 市场分析数据 | market-intelligence |
+| `docs/product/.ompm/competitive-analysis.json` | JSON | 竞品分析结果 | competitive-analysis → prd-gen |
+| `docs/product/.ompm/personas.json` | JSON | 用户画像数据 | user-research |
+| `docs/product/roadmap.md` | Markdown | 产品路线图 | roadmap-planning |
+| `docs/product/.ompm/prd-draft.md` | Markdown | PRD 文档草稿 | prd-gen |
+| `docs/product/prd/<日期>-<名称>.md` | Markdown | 版本化 PRD 文档 | prd-gen |
+| `docs/product/prototypes/*.html` | HTML | HTML 原型文件 | 推荐使用 HTML 直接生成原型 |
+| `docs/product/.ompm/current-workflow.json` | JSON | 工作流状态追踪 | 全部 workflows |
+| `docs/product/.ompm/impact.json` | JSON | 效果分析数据 | impact-analysis |
+| `docs/product/.ompm/iteration-plan.json` | JSON | 迭代计划 | iteration-planning |
+| `docs/product/.ompm/market-analysis.json` | JSON | 市场分析数据 | market-intelligence |
 
 ---
 
@@ -186,14 +186,14 @@ oh-my-pm/
 │  agents/perception/ (4 Subagents)               │
 │  输出: market_data, personas, competitive       │
 └─────────────────────────────────────────────────┘
-                       ↓ context/
+                       ↓ docs/product/
 ┌─────────────────────────────────────────────────┐
 │  Strategy Layer (策略规划)                      │
 │  skills/ (3 Skills)                            │
 │  输入: market_data from Perception            │
 │  输出: positioning, roadmap, priorities        │
 └─────────────────────────────────────────────────┘
-                       ↓ context/
+                       ↓ docs/product/
 ┌─────────────────────────────────────────────────┐
 │  Design Layer (方案设计)                        │
 │  skills/ (3 Skills)                            │
@@ -201,14 +201,14 @@ oh-my-pm/
 │  输入: priorities from Strategy               │
 │  输出: prd, prd            │
 └─────────────────────────────────────────────────┘
-                       ↓ context/
+                       ↓ docs/product/
 ┌─────────────────────────────────────────────────┐
 │  Delivery Layer (交付协调)                      │
 │  skills/ (3 Skills)                            │
 │  输入: prd from Design                       │
 │  输出: project_plan, release_notes           │
 └─────────────────────────────────────────────────┘
-                       ↓ context/
+                       ↓ docs/product/
 ┌─────────────────────────────────────────────────┐
 │  Validation Layer (价值验证)                    │
 │  skills/ (3 Skills)                            │
@@ -216,7 +216,7 @@ oh-my-pm/
 │  输入: project_plan from Delivery               │
 │  输出: impact, feedback, iteration_plan     │
 └─────────────────────────────────────────────────┘
-                       ↓ context/
+                       ↓ docs/product/
                   (反馈回环到 Perception)
 ```
 
@@ -239,7 +239,7 @@ oh-my-pm/
 - **所有 Skills**: `skills.yaml` 或 `.claude-plugin/plugin.json`
 - **所有 Subagents**: `agents.yaml` 或 `.claude-plugin/plugin.json`
 - **所有 Commands**: `commands/` 目录
-- **Context 文件**: `context/` 目录
+- **Context 文件**: `docs/product/` 目录
 - **文档**: `docs/` 目录
 
 ---

@@ -57,13 +57,13 @@ digraph clarify {
 
 ### Step 1: Explore Context
 
-检查 `context/` 目录中已有的感知数据：
+检查 `docs/product/` 目录中已有的感知数据：
 
-- `context/market-analysis.json` — 市场情报
-- `context/competitive-analysis/*.json` — 竞品分析
-- `context/user-research.json` — 用户研究
-- `context/positioning.md` — 产品定位
-- `context/prioritization.json` — 优先级排序
+- `docs/product/.ompm/market-analysis.json` — 市场情报
+- `docs/product/.ompm/competitive-analysis/*.json` — 竞品分析
+- `docs/product/.ompm/user-research.json` — 用户研究
+- `docs/product/positioning.md` — 产品定位
+- `docs/product/.ompm/prioritization.json` — 优先级排序
 
 记录已有数据，避免重复收集。
 
@@ -161,7 +161,7 @@ digraph clarify {
 
 ### Step 7: Save Clarification Result
 
-将澄清结果保存到 `context/clarification-result.json`：
+将澄清结果保存到 `docs/product/.ompm/clarification-result.json`：
 
 ```json
 {
@@ -188,18 +188,18 @@ digraph clarify {
 - 至少一次 `AskUserQuestion` 用于场景确认
 - PRD 内容方案包含 9 章概要 + 关键决策点
 - 用户已明确批准方案
-- 澄清结果已保存到 `context/clarification-result.json`
+- 澄清结果已保存到 `docs/product/.ompm/clarification-result.json`
 
 ## Context Integration
 
 **Reads:**
-- `context/market-analysis.json` — 市场情报
-- `context/competitive-analysis/*.json` — 竞品分析
-- `context/user-research.json` — 用户研究
-- `context/positioning.md` — 产品定位
+- `docs/product/.ompm/market-analysis.json` — 市场情报
+- `docs/product/.ompm/competitive-analysis/*.json` — 竞品分析
+- `docs/product/.ompm/user-research.json` — 用户研究
+- `docs/product/positioning.md` — 产品定位
 
 **Writes:**
-- `context/clarification-result.json` — 需求澄清结果
+- `docs/product/.ompm/clarification-result.json` — 需求澄清结果
 
 **Output To:**
 - `prd-gen` — 需求澄清作为 PRD 生成输入

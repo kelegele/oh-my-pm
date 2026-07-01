@@ -87,7 +87,7 @@ The following rules are mandatory for this skill. They are inlined here for stan
 
 The skill generates two outputs:
 
-1. **JSON file** (`context/market-analysis.json`) - Structured data for other skills
+1. **JSON file** (`docs/product/.ompm/market-analysis.json`) - Structured data for other skills
 2. **Markdown report** - Human-readable market intelligence
 
 ### JSON Output Format
@@ -200,7 +200,7 @@ Before delivering, the intelligence should:
 ## Context Integration
 
 **Writes:**
-- `context/market-analysis.json` - Analysis results for other skills (product-positioning, competitive-analysis)
+- `docs/product/.ompm/market-analysis.json` - Analysis results for other skills (product-positioning, competitive-analysis)
 
 **Read By:**
 - `product-positioning` - Uses market data for positioning strategy

@@ -83,7 +83,7 @@ oh-my-pm/
 │   ├── impact-analyst/
 │   ├── feedback-collector/
 │   └── pm-orchestrator/
-├── context/                  # 上下文传递目录
+├── docs/product/                  # 上下文传递目录
 ├── docs/                    # 设计文档
 └── templates/prototype/      # HTML 原型模板
 ```
@@ -106,7 +106,7 @@ oh-my-pm/
 - 统一阶段标识: S0 (Setup) → S1-S5 (各层执行)
 - 状态机追踪: in_progress / completed / blocked
 - 质量门控: 每阶段完成前必须满足质量标准
-- 状态追踪文件: `context/current-workflow.json`
+- 状态追踪文件: `docs/product/.ompm/current-workflow.json`
 
 **阶段定义**:
 | Stage ID | 名称 | 关键输出 |

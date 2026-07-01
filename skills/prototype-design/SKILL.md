@@ -201,7 +201,7 @@ tailwind.config = {
 | `mockup` | 完整视觉设计，带颜色和样式 | `templates/prototype/mockup.html` |
 | `interactive` | 可交互的完整原型，带 JavaScript 交互 | `templates/prototype/interactive.html` |
 
-生成到 `context/prototypes/{feature-name}.html`
+生成到 `docs/product/prototypes/{feature-name}.html`
 
 **HTML 原型输出格式：**
 
@@ -357,7 +357,7 @@ tailwind.config = {
 
 **HTML 格式：**
 
-使用默认样式配置生成到 `context/prototypes/{feature-name}.html`
+使用默认样式配置生成到 `docs/product/prototypes/{feature-name}.html`
 
 选择合适的保真度级别：
 
@@ -382,7 +382,7 @@ tailwind.config = {
 ### 输出位置
 
 ```
-context/prototypes/
+docs/product/prototypes/
 ├── {feature-name}.html          # HTML 原型（可选）
 └── README.md                   # 使用说明
 ```
@@ -451,11 +451,11 @@ User: "为新产品创建原型"
 ```markdown
 ## 🎨 HTML 原型已生成！
 
-📁 文件位置: `context/prototypes/{feature-name}.html`
+📁 文件位置: `docs/product/prototypes/{feature-name}.html`
 
 📖 预览方式:
 1. 直接双击文件在浏览器中打开
-2. 或运行: open context/prototypes/{feature-name}.html
+2. 或运行: open docs/product/prototypes/{feature-name}.html
 
 ✨ 特性:
 - 响应式布局

@@ -135,7 +135,7 @@ After collecting selections, build the `selected_chapters` list and `excluded_ch
 8. **Gather context** - Read market analysis, competitive insights, user research
 9. **Assemble sections** - Build only the SELECTED PRD sections with appropriate detail
 10. **Verify completeness** - Check against quality standards (selected chapters only)
-11. **Generate output** - Write to `context/prd/{feature-name}-{date}-v{version}.md`
+11. **Generate output** - Write to `docs/product/prd/{feature-name}-{date}-v{version}.md`
 ```
 
 - [ ] **Step 2: 在 PRD 生成指令前追加排除约束块**
@@ -221,7 +221,7 @@ Before delivering, the PRD should include:
 After PRD generation, if 原型设计 was selected:
 
 1. Generate interactive HTML prototype based on PRD content
-2. Output to `context/prototypes/{feature-name}.html`
+2. Output to `docs/product/prototypes/{feature-name}.html`
 3. Include basic styling and interaction for demonstration
 4. Update PRD with HTML prototype link
 5. Notify user with preview instructions

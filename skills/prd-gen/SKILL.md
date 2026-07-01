@@ -54,7 +54,7 @@ Once scenario is identified, collect required context:
 | Scenario | Required Information | Collection Method |
 |:---------|:--------------------|:------------------|
 | **迭代更新** | 1. 当前功能描述<br>2. UI 状态（截图/HTML/链接）<br>3. 迭代目标 | User input + AskUserQuestion for UI state option |
-| **新功能** | 1. 产品整体架构<br>2. 设计规范（组件库/交互模式）<br>3. 入口位置 | Read from `context/` or user input |
+| **新功能** | 1. 产品整体架构<br>2. 设计规范（组件库/交互模式）<br>3. 入口位置 | Read from `docs/product/` or user input |
 | **0-1 新产品** | 1. 产品背景与目标用户<br>2. 资源约束<br>3. 参考产品 | User input + competitive analysis |
 
 **UI State Collection for Iteration Updates**:
@@ -69,7 +69,7 @@ When user selects "迭代更新", ask how they want to provide current UI state:
 
 After scenario detection and context collection:
 
-1. **Gap Analysis**: Compare user-provided information against `context-requirements` for this scenario. List every missing required field. Also check `context/` for existing perception data (market-analysis.json, competitive-analysis, user-research.json, positioning.md).
+1. **Gap Analysis**: Compare user-provided information against `context-requirements` for this scenario. List every missing required field. Also check `docs/product/` for existing perception data (market-analysis.json, competitive-analysis, user-research.json, positioning.md).
 
 2. **One Question At A Time**: For each missing item, ask the user using `AskUserQuestion` with multiple choice options. Do NOT bundle multiple questions into one message.
 
@@ -167,7 +167,7 @@ Present chapter selection to user via `AskUserQuestion` with multiSelect. Due to
 # 用户对话示例
 "分析这个 UI 截图: /Users/fh/Desktop/screenshot.png"
 "当前界面: ~/Screenshots/ui-2025-03-12.png"
-"参考图片: ./context/images/reference.png"
+"参考图片: ./docs/product/images/reference.png"
 ```
 
 **支持的路径格式：**
@@ -271,7 +271,7 @@ The generation process ensures complete, actionable PRDs:
 8. **Gather context** - Read market analysis, competitive insights, user research
 9. **Assemble sections** - Build only the SELECTED PRD sections with appropriate detail
 10. **Verify completeness** - Check against quality standards (selected chapters only)
-11. **Generate output** - Write to `context/prd/{feature-name}-{date}-v{version}.md`
+11. **Generate output** - Write to `docs/product/prd/{feature-name}-{date}-v{version}.md`
 
 **Content Constraints (HARD RULES):**
 
@@ -548,13 +548,13 @@ Before delivering, the PRD should include:
 This skill reads from and writes to the shared context:
 
 **Reads:**
-- `context/market-analysis.json` - Market background
-- `context/competitive-analysis.json` - Competitive comparison
-- `context/user-research.json` - User insights
+- `docs/product/.ompm/market-analysis.json` - Market background
+- `docs/product/.ompm/competitive-analysis.json` - Competitive comparison
+- `docs/product/.ompm/user-research.json` - User insights
 
 **Writes:**
-- `context/prd/{feature-name}-{date}-v{version}.md` - The generated PRD (versioned output)
-- Legacy: `context/prd-draft.md` for backward compatibility
+- `docs/product/prd/{feature-name}-{date}-v{version}.md` - The generated PRD (versioned output)
+- Legacy: `docs/product/.ompm/prd-draft.md` for backward compatibility
 
 ## HTML 原型生成
 
@@ -563,7 +563,7 @@ This skill reads from and writes to the shared context:
 If 原型设计 was selected, generate the HTML prototype directly (no additional confirmation needed — the user already opted in during chapter selection):
 
 1. Generate interactive HTML prototype based on PRD content
-2. Output to `context/prototypes/{feature-name}.html`
+2. Output to `docs/product/prototypes/{feature-name}.html`
 3. Include basic styling and interaction for demonstration
 4. Update PRD with HTML prototype link
 5. Notify user with preview instructions

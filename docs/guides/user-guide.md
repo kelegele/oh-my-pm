@@ -51,7 +51,7 @@ graph LR
 sequenceDiagram
     participant U as 你
     participant OH as Oh-My-PM
-    participant C as context/
+    participant C as docs/product/
 
     U->>OH: /quick-prd "用户中心改版" 淘宝 京东
     OH->>OH: 1. 分析淘宝/京东用户中心
@@ -113,7 +113,7 @@ graph TB
 
 ## 五层处理流程
 
-Oh-My-PM 的核心是 **5 层闭环架构**，每一层负责一个环节，层与层之间通过 `context/` 目录传递数据。
+Oh-My-PM 的核心是 **5 层闭环架构**，每一层负责一个环节，层与层之间通过 `docs/product/` 目录传递数据。
 
 ### 整体数据流
 
@@ -150,10 +150,10 @@ graph TB
         E3["iteration-planning\n迭代规划"]
     end
 
-    L1 -->|"context/\nmarket_data.json\npersonas.json\ncompetitive-analysis.json"| L2
-    L2 -->|"context/\npositioning.md\nroadmap.md\nprioritization.json"| L3
-    L3 -->|"context/\nprd/*.md\nprototypes/*.html"| L4
-    L4 -->|"context/\nproject-plan.md\nrelease-notes.md"| L5
+    L1 -->|"docs/product/\nmarket_data.json\npersonas.json\ncompetitive-analysis.json"| L2
+    L2 -->|"docs/product/\npositioning.md\nroadmap.md\nprioritization.json"| L3
+    L3 -->|"docs/product/\nprd/*.md\nprototypes/*.html"| L4
+    L4 -->|"docs/product/\nproject-plan.md\nrelease-notes.md"| L5
     L5 -.->|"反馈循环\n下一轮需求"| L1
 ```
 
@@ -168,7 +168,7 @@ graph TB
 - `competitive-analysis` → 功能对比矩阵、差异化分析
 - `data-monitoring` → 指标基线、异常告警
 
-**输出**：`context/competitive-analysis.json`、`context/personas.json` 等
+**输出**：`docs/product/.ompm/competitive-analysis.json`、`docs/product/.ompm/personas.json` 等
 
 **你该怎么用**：
 > "这个市场有多大？趋势怎样？" → market-intelligence
@@ -183,7 +183,7 @@ graph TB
 - `roadmap-planning` → 12 个月路线图、里程碑、时间表
 - `prioritization` → RICE/MoSCoW 框架优先级排序
 
-**输出**：`context/positioning.md`、`context/roadmap.md`、`context/prioritization.json`
+**输出**：`docs/product/positioning.md`、`docs/product/roadmap.md`、`docs/product/.ompm/prioritization.json`
 
 **你该怎么用**：
 > "我们的产品定位是什么？" → product-positioning
@@ -198,7 +198,7 @@ graph TB
 - `prototype-design` → 生成可交互的 HTML 原型
 - `process-optimization` → 分析现有流程，给出优化建议
 
-**输出**：`context/prd/*.md`、`context/prototypes/*.html`
+**输出**：`docs/product/prd/*.md`、`docs/product/prototypes/*.html`
 
 **你该怎么用**：
 > "帮我写 PRD" → prd-gen
@@ -228,7 +228,7 @@ graph TB
 - `feedback-synthesis` → 用户反馈主题分析
 - `iteration-planning` → 基于效果 + 反馈制定下一轮迭代计划
 
-**输出**：`context/impact.json`、`context/iteration-plan.json`
+**输出**：`docs/product/.ompm/impact.json`、`docs/product/.ompm/iteration-plan.json`
 
 **你该怎么用**：
 > "上线效果怎么样？" → impact-analysis
@@ -309,18 +309,18 @@ graph LR
 
 ## 产出物说明
 
-Oh-My-PM 执行后会在 `context/` 目录生成以下文件：
+Oh-My-PM 执行后会在 `docs/product/` 目录生成以下文件：
 
 | 文件 | 说明 | 何时产生 |
 |:-----|:-----|:---------|
-| `context/competitive-analysis.json` | 竞品对比矩阵 | competitive-analysis |
-| `context/personas.json` | 用户画像数据 | user-research |
-| `context/roadmap.md` | 产品路线图 | roadmap-planning |
-| `context/prd/*.md` | PRD 文档（带日期命名） | prd-gen |
-| `context/prototypes/*.html` | HTML 交互原型 | prototype-design |
-| `context/current-workflow.json` | 工作流状态（自动追踪） | 所有 workflows |
-| `context/impact.json` | 上线效果数据 | impact-analysis |
-| `context/iteration-plan.json` | 迭代计划 | iteration-planning |
+| `docs/product/.ompm/competitive-analysis.json` | 竞品对比矩阵 | competitive-analysis |
+| `docs/product/.ompm/personas.json` | 用户画像数据 | user-research |
+| `docs/product/roadmap.md` | 产品路线图 | roadmap-planning |
+| `docs/product/prd/*.md` | PRD 文档（带日期命名） | prd-gen |
+| `docs/product/prototypes/*.html` | HTML 交互原型 | prototype-design |
+| `docs/product/.ompm/current-workflow.json` | 工作流状态（自动追踪） | 所有 workflows |
+| `docs/product/.ompm/impact.json` | 上线效果数据 | impact-analysis |
+| `docs/product/.ompm/iteration-plan.json` | 迭代计划 | iteration-planning |
 
 ---
 
@@ -355,10 +355,10 @@ A: `prd-gen` 自动识别三种场景：
 - **0-1 产品**：描述产品背景 + 参考竞品
 
 **Q: 原型是怎么生成的？**
-A: 直接生成 HTML 文件，保存在 `context/prototypes/` 目录，可以用浏览器直接打开。
+A: 直接生成 HTML 文件，保存在 `docs/product/prototypes/` 目录，可以用浏览器直接打开。
 
 **Q: 上次分析的结果会被记住吗？**
-A: 会。所有中间产出都保存在 `context/` 目录，后续 Skill 会自动读取上下文。
+A: 会。所有中间产出都保存在 `docs/product/` 目录，后续 Skill 会自动读取上下文。
 
 **Q: 可以指定竞品吗？**
 A: `/quick-prd` 支持在命令后追加竞品名称，如 `/quick-prd "需求" 淘宝 京东`。自然语言触发时直接说 "分析一下 A 和 B 的差异" 即可。

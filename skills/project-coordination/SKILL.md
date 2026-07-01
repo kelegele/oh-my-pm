@@ -205,12 +205,12 @@ Before delivering, ensure:
 ## Context Integration
 
 **Reads:**
-- `context/review-notes/*.md` - Requirement review decisions
-- `context/design/*.md` - Design specifications
+- `docs/product/review-notes/*.md` - Requirement review decisions
+- `docs/product/design/*.md` - Design specifications
 
 **Writes:**
-- `context/project-plan.md` - Project plan and tracking
-- `context/status-reports/` - Weekly status reports
+- `docs/product/project-plan.md` - Project plan and tracking
+- `docs/product/status-reports/` - Weekly status reports
 
 **Read By:**
 - `release-management` - Uses status for release planning

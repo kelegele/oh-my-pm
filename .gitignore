@@ -26,3 +26,6 @@ Thumbs.db
 
 # Cache
 .plugins-cache.json
+
+# Oh-My-PM runtime intermediate state (local; not shared)
+docs/product/.ompm/

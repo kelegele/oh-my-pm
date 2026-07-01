@@ -286,7 +286,7 @@ Subagents are automatically recognized and called by Claude Code—no explicit t
 | Scenario | Required Info | UI Extraction Method |
 |:---------|:---------------|:---------------------|
 | **Iteration Update** | Feature description + UI state + iteration goals | Screenshot / HTML / Link |
-| **New Feature** | Product architecture + design spec + entry point | Read from context/ |
+| **New Feature** | Product architecture + design spec + entry point | Read from docs/product/ |
 | **0-1 New Product** | Product context + resource constraints + reference products | User input + competitive analysis |
 
 **Core Principle**: No random assumptions—output based on industry best practices.
@@ -341,7 +341,7 @@ oh-my-pm/
 │   ├── agents.yaml
 │   ├── skills.yaml
 │   └── marketplace.json
-├── context/             # Context passing directory
+├── docs/product/             # Context passing directory
 ├── docs/                # Design documents
 ├── tests/               # Test scripts
 └── CLAUDE.md            # Project configuration

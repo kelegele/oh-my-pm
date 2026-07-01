@@ -34,7 +34,7 @@ isolation: worktree
 
 生成两个输出：
 
-1. **JSON 文件** (`context/market-analysis.json`) - 供其他 subagent 使用的结构化数据
+1. **JSON 文件** (`docs/product/.ompm/market-analysis.json`) - 供其他 subagent 使用的结构化数据
 2. **Markdown 报告** - 人类可读的市场情报
 
 ### JSON 输出格式

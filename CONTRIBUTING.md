@@ -150,7 +150,7 @@ Type:
 
 ### Context 文件规范
 
-Context 文件存放在 `context/` 目录：
+Context 文件存放在 `docs/product/` 目录：
 
 | 文件 | 格式 | 用途 |
 |:-----|:-----|:-----|

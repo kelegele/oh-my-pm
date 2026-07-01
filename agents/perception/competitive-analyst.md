@@ -34,7 +34,7 @@ When invoked, analyze competitor products to identify what features they have, w
 
 Generate two outputs:
 
-1. **JSON file** (`context/competitive-analysis/{focus}-{date}.json`) - Structured data
+1. **JSON file** (`docs/product/.ompm/competitive-analysis/{focus}-{date}.json`) - Structured data
 2. **Markdown report** - Human-readable analysis with tables
 
 ### JSON Output Format

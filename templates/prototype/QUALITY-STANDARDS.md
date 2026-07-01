@@ -178,7 +178,7 @@
 交付原型时，应包含以下内容：
 
 ```
-context/prototypes/{feature-name}/
+docs/product/prototypes/{feature-name}/
 ├── index.html           # 主原型文件
 ├── styles.css           # 自定义样式（如有）
 ├── script.js            # 自定义脚本（如有）

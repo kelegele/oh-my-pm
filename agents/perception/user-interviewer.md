@@ -27,7 +27,7 @@ When invoked, conduct user research through interviews, surveys, and persona cre
 
 Generate two outputs:
 
-1. **JSON file** (`context/user-research.json`) - Structured research data
+1. **JSON file** (`docs/product/.ompm/user-research.json`) - Structured research data
 2. **Markdown report** - Human-readable research summary
 
 ### JSON Output Format

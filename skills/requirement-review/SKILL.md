@@ -193,12 +193,12 @@ Before concluding, ensure:
 ## Context Integration
 
 **Reads:**
-- `context/prd/*.md` - Requirements being reviewed
-- `context/user-research.json` - User insights to reference
+- `docs/product/prd/*.md` - Requirements being reviewed
+- `docs/product/.ompm/user-research.json` - User insights to reference
 
 **Writes:**
-- `context/review-notes/[feature]-[date].md` - Meeting documentation
-- `context/sign-off/[feature]-signoff.md` - Approval record
+- `docs/product/review-notes/[feature]-[date].md` - Meeting documentation
+- `docs/product/sign-off/[feature]-signoff.md` - Approval record
 
 **Read By:**
 - `project-coordination` - Uses decisions for implementation planning

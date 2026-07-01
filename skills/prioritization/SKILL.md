@@ -87,7 +87,7 @@ Low Value, High Effort → THANKLESS TASKS (Avoid or eliminate)
 
 The skill generates prioritization outputs:
 
-1. **Prioritized list** (`context/prioritization.json`) - Ranked items with scores
+1. **Prioritized list** (`docs/product/.ompm/prioritization.json`) - Ranked items with scores
 2. **Summary report** - Explanation of rankings and recommendations
 
 ### Prioritization Format
@@ -219,12 +219,12 @@ Before delivering, the prioritization should:
 ## Context Integration
 
 **Reads:**
-- `context/user-research.json` - User needs for impact assessment
-- `context/feedback-synthesis.json` - User feedback for validation
-- `context/market-analysis.json` - Market trends for strategic alignment
+- `docs/product/.ompm/user-research.json` - User needs for impact assessment
+- `docs/product/.ompm/feedback-synthesis.json` - User feedback for validation
+- `docs/product/.ompm/market-analysis.json` - Market trends for strategic alignment
 
 **Writes:**
-- `context/prioritization.json` - Prioritized item list
+- `docs/product/.ompm/prioritization.json` - Prioritized item list
 
 **Read By:**
 - `roadmap-planning` - Uses prioritization for roadmap sequencing

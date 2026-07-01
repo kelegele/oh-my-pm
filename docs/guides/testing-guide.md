@@ -47,7 +47,7 @@ Oh-My-PM 是 Claude Code Skill 插件项目，测试主要验证：
 npm install -g ajv-cli
 
 # 验证 context 文件
-ajv validate -s skills/competitive-analysis/schema.json -d context/competitive-analysis.json
+ajv validate -s skills/competitive-analysis/schema.json -d docs/product/.ompm/competitive-analysis.json
 ```
 
 ### 方式四：集成测试工作流
@@ -60,9 +60,9 @@ requirements = "用户中心页面改版"
 competitors = ["淘宝", "京东"]
 
 # 预期输出
-1. context/competitive-analysis.json - 包含功能对比矩阵
-2. context/prd-draft.md - 包含完整 PRD 文档
-3. context/current-workflow.json - 状态为 "completed"
+1. docs/product/.ompm/competitive-analysis.json - 包含功能对比矩阵
+2. docs/product/.ompm/prd-draft.md - 包含完整 PRD 文档
+3. docs/product/.ompm/current-workflow.json - 状态为 "completed"
 ```
 
 ## 测试用例模板
@@ -79,7 +79,7 @@ competitors = ["淘宝", "京东"]
 - [ ] Skill 被触发
 - [ ] 生成功能对比矩阵
 - [ ] 列出 3+ 条差异化建议
-- [ ] context/competitive-analysis.json 有效
+- [ ] docs/product/.ompm/competitive-analysis.json 有效
 
 ## Test Case 2: PRD Generation
 **Input**: "为暗色主题功能写一个 PRD，目标是夜间使用场景"
@@ -89,7 +89,7 @@ competitors = ["淘宝", "京东"]
 - [ ] PRD 包含 6 个必选章节
 - [ ] 包含 3+ 个用户故事
 - [ ] 包含 3+ 个成功指标
-- [ ] context/prd-draft.md 已生成
+- [ ] docs/product/.ompm/prd-draft.md 已生成
 
 ## Test Case 3: Quick PRD Workflow
 **Input**: "快速 PRD：批量导出功能，对比 Excel 和 Google Sheets"
@@ -139,9 +139,9 @@ ls -la .claude/skills/
 
 ```bash
 # 查看 context 目录
-cat context/competitive-analysis.json
-cat context/prd-draft.md
-cat context/current-workflow.json
+cat docs/product/.ompm/competitive-analysis.json
+cat docs/product/.ompm/prd-draft.md
+cat docs/product/.ompm/current-workflow.json
 ```
 
 ### 3. 手动清理 Context
@@ -149,7 +149,7 @@ cat context/current-workflow.json
 重新测试前清理状态：
 
 ```bash
-rm -f context/*.json context/*.md
+rm -f docs/product/.ompm/*.json docs/product/*.md
 ```
 
 ### 4. 验证 Skill 语法

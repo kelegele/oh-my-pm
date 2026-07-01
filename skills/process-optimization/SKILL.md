@@ -182,11 +182,11 @@ Before delivering, the optimization should:
 ## Context Integration
 
 **Reads:**
-- `context/feedback-synthesis.json` - User pain points and complaints
-- `context/impact-analysis.json` - Process performance data
+- `docs/product/.ompm/feedback-synthesis.json` - User pain points and complaints
+- `docs/product/.ompm/impact-analysis.json` - Process performance data
 
 **Writes:**
-- `context/process-optimization.md` - Analysis and recommendations
+- `docs/product/process-optimization.md` - Analysis and recommendations
 
 **Read By:**
 - `prd-gen` - Incorporates process improvements into requirements

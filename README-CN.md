@@ -186,7 +186,7 @@ npx skills add kelegele/oh-my-pm --list
 | 场景 | 必需信息 | UI 提取方式 |
 |:-----|:---------|:-----------|
 | **迭代更新** | 功能描述 + UI 状态 + 迭代目标 | 截图 / HTML / 链接 |
-| **新功能** | 产品架构 + 设计规范 + 入口位置 | 从 context/ 读取 |
+| **新功能** | 产品架构 + 设计规范 + 入口位置 | 从 docs/product/ 读取 |
 | **0-1 新产品** | 产品背景 + 资源约束 + 参考产品 | 用户输入 + 竞品分析 |
 
 **核心原则**：不随意 YY，基于行业最佳实践输出。
@@ -269,7 +269,7 @@ oh-my-pm/
 │   ├── full-pm-cycle/         # layer: workflow
 │   └── feature-launch/        # layer: workflow
 ├── commands/                  # CLI 命令定义 (4)
-├── context/                   # 上下文传递目录
+├── docs/product/                   # 上下文传递目录
 ├── templates/prototype/       # HTML 原型模板
 ├── .claude-plugin/            # 插件配置
 └── docs/                      # 设计文档

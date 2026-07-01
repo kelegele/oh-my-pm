@@ -48,7 +48,7 @@ The positioning process ensures clear, compelling market positioning:
 
 The skill generates positioning outputs:
 
-1. **Positioning document** (`context/positioning.md`) - Complete positioning strategy
+1. **Positioning document** (`docs/product/positioning.md`) - Complete positioning strategy
 2. **Messaging guide** - Key messages for different audiences
 
 ### Positioning Document Format
@@ -178,12 +178,12 @@ Before delivering, the positioning should:
 ## Context Integration
 
 **Reads:**
-- `context/market-analysis.json` - Market trends and size
-- `context/competitive-analysis.json` - Competitive landscape
-- `context/user-research.json` - User needs and personas
+- `docs/product/.ompm/market-analysis.json` - Market trends and size
+- `docs/product/.ompm/competitive-analysis.json` - Competitive landscape
+- `docs/product/.ompm/user-research.json` - User needs and personas
 
 **Writes:**
-- `context/positioning.md` - Complete positioning document
+- `docs/product/positioning.md` - Complete positioning document
 
 **Read By:**
 - `roadmap-planning` - Uses positioning for strategic alignment

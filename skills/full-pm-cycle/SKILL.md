@@ -58,14 +58,14 @@ Orchestrates complete product management lifecycle across all five layers:
 **目标**：初始化工作流状态和上下文目录
 
 **活动**：
-- 创建 `context/workflow-state/` 目录用于工作流快照
-- 创建 `context/product-package/` 目录用于完整产品包
-- 初始化 `context/current-workflow.json` 当前状态文件
+- 创建 `docs/product/.ompm/workflow-state/` 目录用于工作流快照
+- 创建 `docs/product/product-package/` 目录用于完整产品包
+- 初始化 `docs/product/.ompm/current-workflow.json` 当前状态文件
 
 **输出**：
-- `context/workflow-state/` 目录
-- `context/product-package/` 目录
-- `context/current-workflow.json` 空模板
+- `docs/product/.ompm/workflow-state/` 目录
+- `docs/product/product-package/` 目录
+- `docs/product/.ompm/current-workflow.json` 空模板
 
 **质量门控**：
 - ✅ 目录结构创建完成
@@ -88,10 +88,10 @@ Orchestrates complete product management lifecycle across all five layers:
 - Step 1.3: 调用 `/competitive-analysis`
 
 **输出**：
-- `context/market-analysis.json`
-- `context/user-research.json`
-- `context/user-personas.json`
-- `context/competitive-analysis/{feature-name}-{date}.json` + `.md`
+- `docs/product/.ompm/market-analysis.json`
+- `docs/product/.ompm/user-research.json`
+- `docs/product/.ompm/user-personas.json`
+- `docs/product/.ompm/competitive-analysis/{feature-name}-{date}.json` + `.md`
 
 **质量门控**：
 - ✅ 市场研究完成 - 市场规模、趋势、机会点
@@ -132,9 +132,9 @@ Orchestrates complete product management lifecycle across all five layers:
 - Step 2.3: 调用 `/prioritization`
 
 **输出**：
-- `context/positioning.md`
-- `context/roadmap.md`
-- `context/prioritization.json`
+- `docs/product/positioning.md`
+- `docs/product/roadmap.md`
+- `docs/product/.ompm/prioritization.json`
 
 **质量门控**：
 - ✅ 产品定位完成 - 价值主张清晰、差异化策略明确
@@ -175,11 +175,11 @@ Orchestrates complete product management lifecycle across all five layers:
 
 | Option | Description | 输出位置 |
 |:-------|-------------|:-----------|
-| **HTML 原型** | 可在浏览器直接预览、演示交互 | `context/prototypes/{name}.html` |
+| **HTML 原型** | 可在浏览器直接预览、演示交互 | `docs/product/prototypes/{name}.html` |
 
 **输出**：
-- `context/prd/{feature-name}-{date}-v{version}.md`
-- `context/prototypes/{feature-name}.html`（如选择）
+- `docs/product/prd/{feature-name}-{date}-v{version}.md`
+- `docs/product/prototypes/{feature-name}.html`（如选择）
 
 **质量门控**：
 - ✅ PRD 完整（9 章节）
@@ -218,9 +218,9 @@ Orchestrates complete product management lifecycle across all five layers:
 - Step 4.3: 调用 `/release-management`
 
 **输出**：
-- `context/review-notes/[feature]-review.md`
-- `context/project-plan-[feature].md`
-- `context/release-plan-[feature].md`
+- `docs/product/review-notes/[feature]-review.md`
+- `docs/product/project-plan-[feature].md`
+- `docs/product/release-plan-[feature].md`
 
 **质量门控**：
 - ✅ 需求评审完成 - 干系人对齐、签字确认
@@ -258,10 +258,10 @@ Orchestrates complete product management lifecycle across all five layers:
 - Step 5.3: 调用 `/iteration-planning`
 
 **输出**：
-- `context/impact-analysis/{feature-name}-{date}.json`
-- `context/feedback-synthesis/{feature-name}-{date}.json`
-- `context/iteration-plan.json`
-- `context/post-launch-report.md`
+- `docs/product/.ompm/impact-analysis/{feature-name}-{date}.json`
+- `docs/product/.ompm/feedback-synthesis/{feature-name}-{date}.json`
+- `docs/product/.ompm/iteration-plan.json`
+- `docs/product/post-launch-report.md`
 
 **质量门控**：
 - ✅ 效果分析完成 - 目标达成度分析、关键指标收集
@@ -437,13 +437,13 @@ validation_gates:
 ## 上下文集成
 
 **读取**：
-- `context/current-workflow.json` - 当前工作流状态
+- `docs/product/.ompm/current-workflow.json` - 当前工作流状态
 - 用户输入和现有上下文
 - 之前工作流的输出（如恢复）
 
 **写入**：
-- `context/workflow-state/{{workflow_id}}.json` - 工作流快照
-- `context/product-package/` - 完整产品包目录
+- `docs/product/.ompm/workflow-state/{{workflow_id}}.json` - 工作流快照
+- `docs/product/product-package/` - 完整产品包目录
   - `market-analysis.json`
   - `user-research.json`
   - `user-personas.json`

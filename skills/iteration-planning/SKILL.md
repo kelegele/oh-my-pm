@@ -51,7 +51,7 @@ The planning process ensures data-driven iteration plans:
 
 The skill generates two outputs:
 
-1. **JSON file** (`context/iteration-plan.json`) - Structured plan for tracking
+1. **JSON file** (`docs/product/.ompm/iteration-plan.json`) - Structured plan for tracking
 2. **Markdown report** - Human-readable iteration plan
 
 ### JSON Output Format
@@ -194,13 +194,13 @@ Before delivering, the plan should:
 This skill reads from and writes to the shared context:
 
 **Reads:**
-- `context/impact-analysis.json` - Post-release impact data
-- `context/feedback-synthesis.json` - User feedback summary
-- `context/current-workflow.json` - Workflow state
+- `docs/product/.ompm/impact-analysis.json` - Post-release impact data
+- `docs/product/.ompm/feedback-synthesis.json` - User feedback summary
+- `docs/product/.ompm/current-workflow.json` - Workflow state
 
 **Writes:**
-- `context/iteration-plan.json` - The iteration plan
-- Updates `context/current-workflow.json` - State transition
+- `docs/product/.ompm/iteration-plan.json` - The iteration plan
+- Updates `docs/product/.ompm/current-workflow.json` - State transition
 
 **Feedback Loop:**
 - New user problems discovered → Suggests `/user-research`

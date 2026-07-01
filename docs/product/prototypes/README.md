@@ -12,7 +12,7 @@
 
 ### HTML 原型预览
 ```bash
-open context/prototypes/{文件名}.html
+open docs/product/prototypes/{文件名}.html
 ```
 
 ## 命名规范

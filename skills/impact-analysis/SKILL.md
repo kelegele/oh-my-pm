@@ -235,13 +235,13 @@ Before delivering, ensure analysis:
 ## Context Integration
 
 **Reads:**
-- `context/prd/*.md` - Success metrics and goals
-- `context/metrics.json` - Pre and post-release data
-- `context/release-plan.md` - Release scope and timeline
+- `docs/product/prd/*.md` - Success metrics and goals
+- `docs/product/.ompm/metrics.json` - Pre and post-release data
+- `docs/product/release-plan.md` - Release scope and timeline
 
 **Writes:**
-- `context/impact-analysis.json` - Structured analysis data
-- `context/impact-reports/[release]-[date].md` - Full report
+- `docs/product/.ompm/impact-analysis.json` - Structured analysis data
+- `docs/product/impact-reports/[release]-[date].md` - Full report
 
 **Read By:**
 - `iteration-planning` - Uses impact data for planning

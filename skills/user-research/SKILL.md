@@ -97,7 +97,7 @@ The following rules are mandatory for this skill. They are inlined here for stan
 
 The skill generates two outputs:
 
-1. **JSON file** (`context/user-research.json`) - Structured research data
+1. **JSON file** (`docs/product/.ompm/user-research.json`) - Structured research data
 2. **Markdown report** - Human-readable research summary
 
 ### JSON Output Format
@@ -291,10 +291,10 @@ Before delivering, the research should:
 ## Context Integration
 
 **Reads:**
-- `context/market-analysis.json` - Market context for user segments
+- `docs/product/.ompm/market-analysis.json` - Market context for user segments
 
 **Writes:**
-- `context/user-research.json` - Research results for other skills
+- `docs/product/.ompm/user-research.json` - Research results for other skills
 
 **Read By:**
 - `product-positioning` - Uses personas for positioning strategy
