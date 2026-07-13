@@ -1,10 +1,110 @@
 {
   "version": 1,
   "skills": {
+    "clarify-requirements": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "9e1eef31822097280c994988adb27af3e44fe4f924c08391d9f1c2f850229a1d"
+    },
+    "competitive-analysis": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "02cb604a496cf37634cd93e646b2be19c2af54b2147245f4aaa214a9e474aa46"
+    },
+    "data-monitoring": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "d6768a983c751381afc5cd182e2046fbcb82895f284eca1d914883b64f3e7bbe"
+    },
+    "feature-launch": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "5eca5c201fcc4844a54e353d1ff09ad3b78d5c12a2b193d2591bf80e04a3f034"
+    },
+    "feedback-synthesis": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "0af4454325151bbbc933c7f0c32f6099f32a3cbb80edf178087f18e9f63f24d2"
+    },
+    "full-pm-cycle": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "ada19c4052eacba02a9d20a8a45fc6eaab4a86a532ed85dfcb3e1063b802704e"
+    },
+    "impact-analysis": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "a897497f3a2924d2559ee637c207f40517a6a37d3f42d0da8b5926fc0e0ab963"
+    },
+    "iteration-planning": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "a6efbfe5f45eff798d3b8e9e2bf8fe264de92708bb073c0e4f9436fcf97b2705"
+    },
+    "market-intelligence": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "500cc6bb884a4c6c7a1ad2b592f9797cc7961a302e4f64688c9f9d12693b806a"
+    },
+    "prd-gen": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "d18f8380260fa8bd59cf08e9508bd343184e82b7470212ad1e4f4117d82745e8"
+    },
+    "prioritization": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "1f3108ced62e3ae49d4dee9a52507495f460386c50f8fca5f333e514882b90b5"
+    },
+    "process-optimization": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "6555247683602591126d6e7069e809444e25b663f8208c896d0aeecac30bc51e"
+    },
+    "product-positioning": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "cbc3a5c00cbebef1ca9b856c1cccf7a6e05c66c707fad2c8d072b3ae34be48f9"
+    },
+    "project-coordination": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "dd9d2e0b5ca626e90d2eb8728db98f12181b76374e7d860e45e583ed7a8f177d"
+    },
+    "prototype-design": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "c577dedb0682149f78f649d0a846404b09b51302cdcbde5926b0ae6cb5fa8df9"
+    },
+    "quick-prd": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "27ff33a617cbb6b98ac2260fde88ccaf8d852319ef6fbe73825a8329893cf6f5"
+    },
+    "release-management": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "7dbd4cebe088380bb4a00e8b8b94317b30976766d20355b2d431c4444d92bd43"
+    },
+    "requirement-review": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "d16bbf6cca72777a316105ccc635f8ce8ef7ceb3665874ae9c17dfbf69207cda"
+    },
+    "roadmap-planning": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "363ed8075383b2dc0285cb5d05b6857919e2287d249437b1d4f16159511769ae"
+    },
     "skill-creator": {
       "source": "kelegele/oh-my-pm",
       "sourceType": "github",
       "computedHash": "54c2d384954a016b7f6aec90b185a67f4780cf48d8021b925e40cebb5b746d4e"
+    },
+    "user-research": {
+      "source": "/Users/fh/Projects/oh-my-pm",
+      "sourceType": "local",
+      "computedHash": "7c503640020e2d49a2b38bd2fa65e29e7a60df1f619614a14aa7436f373d9f45"
     }
   }
 }
