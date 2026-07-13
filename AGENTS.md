@@ -125,7 +125,6 @@ All intermediate outputs are stored in `docs/product/` directory:
 All workflows follow the **Plan-and-Execute pattern** with:
 - **Stage gates**: Quality criteria before moving to next stage
 - **State tracking**: `docs/product/.ompm/current-workflow.json`
-- **Collaboration modes**: autopilot / copilot / manual
 
 | Workflow | Command | Description |
 |:---------|:--------|:------------|

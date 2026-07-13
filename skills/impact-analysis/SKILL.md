@@ -4,8 +4,7 @@ description: 分析上线后影响并衡量目标达成情况。当用户需要�
 layer: validation
 input-from: release-management,data-monitoring
 output-to: iteration-planning,feedback-synthesis
-mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.1.1
 ---
 
 # Impact Analysis
@@ -223,14 +222,6 @@ Before delivering, ensure analysis:
 - Provides actionable recommendations
 - Connects to original PRD goals
 - Includes qualitative feedback
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Gathers metrics, generates full analysis |
-| `copilot` | Drafts analysis, validates insights with you |
-| `manual` | Provides templates, you complete analysis |
 
 ## Context Integration
 

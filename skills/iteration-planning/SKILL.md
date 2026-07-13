@@ -4,8 +4,7 @@ description: 基于效果分析和用户反馈规划下一个产品迭代。当�
 layer: validation
 input-from: impact-analysis,feedback-synthesis
 output-to: user-research,prd-gen
-mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.1.1
 ---
 
 # Iteration Planning
@@ -180,14 +179,6 @@ Before delivering, the plan should:
 - Have priority scores for all items
 - Specify metrics to track this iteration
 - Identify feedback loop destinations for new insights
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Completes analysis and prioritization, generates plan automatically |
-| `copilot` | Shows categorized items, waits for your confirmation on priorities |
-| `manual` | Collects and categorizes findings, you complete prioritization |
 
 ## Context Integration
 

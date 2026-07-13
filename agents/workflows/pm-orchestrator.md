@@ -169,8 +169,7 @@ memory: project
     "market-research",
     "competitive-analysis"
   ],
-  "started_at": "2026-03-12T10:00:00Z",
-  "mode": "copilot"
+  "started_at": "2026-03-12T10:00:00Z"
 }
 ```
 

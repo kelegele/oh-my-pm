@@ -4,8 +4,7 @@ description: 收集市场趋势、行业报告，并识别机会。当用户需�
 layer: perception
 input-from: user
 output-to: product-positioning,competitive-analysis,roadmap-planning
-mode-support: [autopilot, copilot, manual]
-version: 0.2.0
+version: 0.2.1
 ---
 
 # Market Intelligence
@@ -188,14 +187,6 @@ Before delivering, the intelligence should:
 - Facts and inferences are clearly distinguished
 - Search record is included proving searches were executed
 - Be valid JSON for downstream skills
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Completes full analysis automatically, generates report |
-| `copilot` | Shows findings, waits for your confirmation on insights |
-| `manual` | Provides market data sources, you complete the analysis |
 
 ## Context Integration
 

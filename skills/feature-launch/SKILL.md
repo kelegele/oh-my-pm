@@ -4,8 +4,7 @@ description: 编排从 PRD 到上线后分析的完整功能发布工作流。�
 layer: workflow
 input-from: prd-gen
 output-to: impact-analysis,iteration-planning
-mode-support: [autopilot, copilot, manual]
-version: 0.8.0
+version: 0.8.1
 ---
 
 # Feature Launch Workflow
@@ -100,7 +99,6 @@ Orchestrates end-to-end feature launch process spanning:
   "current_skill": "prototype-design",
   "current_stage": "S1",
   "completed_stages": ["S0"],
-  "mode": "copilot",
   "started_at": "{{ISO_8601}}",
   "updated_at": "{{ISO_8601}}"
 }
@@ -141,7 +139,6 @@ Orchestrates end-to-end feature launch process spanning:
   "current_skill": "release-management",
   "current_stage": "S2",
   "status": "in_progress",
-  "mode": "copilot",
   "updated_at": "{{ISO_8601}}"
 }
 ```
@@ -178,7 +175,6 @@ Orchestrates end-to-end feature launch process spanning:
   "current_skill": "feedback-synthesis",
   "current_stage": "S3",
   "status": "completed",
-  "mode": "copilot",
   "updated_at": "{{ISO_8601}}"
 }
 ```
@@ -198,23 +194,12 @@ Orchestrates end-to-end feature launch process spanning:
   "current_skill": "当前执行的 Skill",
   "current_stage": "当前阶段 (S0-S3)",
   "completed_stages": "已完成的阶段列表",
-  "mode": "协作模式 (autopilot | copilot | manual)",
   "feature_name": "功能名称",
   "launch_date": "目标发布日期",
   "started_at": "ISO 8601 时间戳",
   "updated_at": "最后更新时间 (ISO 8601)"
 }
 ```
-
----
-
-## 协作模式 (Collaboration Modes)
-
-| 模式 | 描述 | 适用场景 |
-|:-----|:-----|:---------|
-| `autopilot` | AI 自动执行 | 快速验证、演示、数据监控 |
-| `copilot` | AI 建议、人工确认 | PRD 生成、需求评审、项目计划 |
-| `manual` | 人工主导、AI 辅助 | 战略决策、创意发散、危机处理 |
 
 ---
 
@@ -485,7 +470,6 @@ validation_gates:
       "outputs": ["impact.json"]
     }
   ],
-  "mode": "copilot",
   "started_at": "2026-03-17T10:00:00Z",
   "updated_at": "2026-03-17T10:50:00Z"
 }

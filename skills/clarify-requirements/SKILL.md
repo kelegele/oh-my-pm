@@ -4,8 +4,7 @@ description: 感知阶段的信息收集与需求澄清。在进入 PRD 生成�
 layer: perception
 input-from: user
 output-to: competitive-analysis,market-intelligence,user-research,prd-gen
-mode-support: [copilot, manual]
-version: 0.1.0
+version: 0.1.1
 ---
 
 # Clarify Requirements

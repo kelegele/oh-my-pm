@@ -234,16 +234,6 @@ gh auth refresh -h github.com -s project,read:project
 
 ---
 
-## 人机协作模式
-
-| 模式 | 描述 | 适用场景 | Skill 实现 |
-|:-----|:-----|:---------|:-----------|
-| autopilot | AI 自动执行 | 数据汇总、报告生成 | 无需确认，直接写入 context |
-| copilot | AI 建议，人工确认 | 方案设计、优先级排序 | 生成结果，等待用户确认 |
-| manual | 人工主导，AI 辅助 | 战略决策、创意工作 | 提供模板，用户填写 |
-
----
-
 ## Git 工作流
 
 ### Commit 规范

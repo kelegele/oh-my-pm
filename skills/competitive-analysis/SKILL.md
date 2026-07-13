@@ -4,8 +4,7 @@ description: 竞品功能对比分析，生成对比矩阵并识别战略机会�
 layer: perception
 input-from: market-intelligence
 output-to: product-positioning,prioritization,prd-gen
-mode-support: [autopilot, copilot, manual]
-version: 0.2.0
+version: 0.2.1
 ---
 
 # Competitive Analysis
@@ -161,14 +160,6 @@ Choose the appropriate depth based on your needs:
 | `overview` | Quick competitive check | Core features compared, 3 recommendations |
 | `detailed` | Standard analysis (default) | Full feature matrix, gap analysis, 5 recommendations |
 | `deep-dive` | Strategic decisions | User experience review, pricing analysis, user sentiment, 10 recommendations |
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Completes full analysis automatically, generates report |
-| `copilot` | Shows comparison matrix, waits for your confirmation on recommendations |
-| `manual` | Provides competitor information, you complete the analysis |
 
 ## Quality Standards
 

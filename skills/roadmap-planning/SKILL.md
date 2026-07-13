@@ -4,8 +4,7 @@ description: 创建产品路线图，包含里程碑、时间表和战略对齐�
 layer: strategy
 input-from: prioritization,product-positioning
 output-to: prd-gen,iteration-planning
-mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.1.1
 ---
 
 # Roadmap Planning
@@ -177,14 +176,6 @@ Before delivering, the roadmap should:
 - Balance new features with tech debt
 - Allow flexibility for changes
 - Communicate clearly to all audiences
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Generates roadmap from priorities and constraints |
-| `copilot` | Drafts roadmap, validates milestones with you |
-| `manual` | Provides roadmap templates, you complete |
 
 ## Context Integration
 

@@ -4,8 +4,7 @@ description: 进行用户研究，包括访谈、调研和画像创建。当用�
 layer: perception
 input-from: market-intelligence
 output-to: product-positioning,prd-gen,prioritization
-mode-support: [autopilot, copilot, manual]
-version: 0.2.0
+version: 0.2.1
 ---
 
 # User Research
@@ -279,14 +278,6 @@ Before delivering, the research should:
 - Search record is included proving searches were executed for industry data
 - Link insights to actionable recommendations
 - Be valid JSON for downstream skills
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Generates personas and insights from provided data |
-| `copilot` | Drafts personas, waits for your validation |
-| `manual` | Provides research templates, you conduct analysis |
 
 ## Context Integration
 

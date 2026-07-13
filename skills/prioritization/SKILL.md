@@ -4,8 +4,7 @@ description: 使用 RICE、MoSCoW 等框架对功能和计划进行优先级排�
 layer: strategy
 input-from: user-research,feedback-synthesis,market-intelligence
 output-to: roadmap-planning,prd-gen,iteration-planning
-mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.1.1
 ---
 
 # Prioritization
@@ -207,14 +206,6 @@ Before delivering, the prioritization should:
 - Identify dependencies and risks
 - Be defensible and explainable to stakeholders
 - Leave room for unexpected opportunities
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Applies framework, generates ranked list |
-| `copilot` | Shows scores, gets your input on strategic factors |
-| `manual` | Provides framework templates, you complete scoring |
 
 ## Context Integration
 

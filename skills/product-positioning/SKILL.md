@@ -4,8 +4,7 @@ description: 定义产品定位、差异化策略和价值主张。当用户需�
 layer: strategy
 input-from: competitive-analysis,user-research,market-intelligence
 output-to: roadmap-planning,prioritization,prd-gen
-mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.1.1
 ---
 
 # Product Positioning
@@ -166,14 +165,6 @@ Before delivering, the positioning should:
 - Resonate with target customer
 - Guide product and marketing decisions
 - Include proof points
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Generates complete positioning from research data |
-| `copilot` | Drafts positioning, validates key points with you |
-| `manual` | Provides positioning frameworks, you complete |
 
 ## Context Integration
 

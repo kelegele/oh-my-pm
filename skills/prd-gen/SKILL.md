@@ -4,8 +4,7 @@ description: 从功能需求生成结构化产品需求文档（PRD）。当用�
 layer: design
 input-from: product-positioning,prioritization,competitive-analysis
 output-to: requirement-review,prototype-design
-mode-support: [autopilot, copilot, manual]
-version: 0.5.0
+version: 0.5.1
 context-requirements:
   - scenario: iteration
     required: [current_feature_desc, ui_state, iteration_goal]
@@ -534,14 +533,6 @@ Before delivering, the PRD should include:
 - [ ] 成功指标 quantified (North Star + process + outcome, if 第9章 selected)
 - [ ] Dependencies documented
 - [ ] Exclusion constraints verified (no tech/API/DB content)
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Generates complete PRD automatically, writes to file |
-| `copilot` | Shows PRD outline, confirms each section with you before finalizing |
-| `manual` | Provides PRD template, you fill in the content |
 
 ## Context Integration
 

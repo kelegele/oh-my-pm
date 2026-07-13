@@ -295,14 +295,6 @@ Subagents are automatically recognized and called by Claude Code—no explicit t
 
 ## Usage Guide
 
-### Human-AI Collaboration Modes
-
-| Mode | Description | Use Case |
-|:-----|:-------------|:-----------|
-| `autopilot` | AI auto-executes, human reviews only | Data monitoring, report generation |
-| `copilot` | AI suggests, human decides & confirms | PRD generation, solution design |
-| `manual` | Human leads, AI assists | Strategic decisions, creative work |
-
 ### Directory Structure
 
 ```

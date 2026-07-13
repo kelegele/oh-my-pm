@@ -4,8 +4,7 @@ description: 分析和优化业务流程与工作流。当用户需要改进流�
 layer: design
 input-from: feedback-synthesis,impact-analysis
 output-to: prd-gen,iteration-planning
-mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.1.1
 ---
 
 # Process Optimization
@@ -170,14 +169,6 @@ Before delivering, the optimization should:
 - Consider stakeholder perspectives
 - Include measurement plan
 - Balance automation with human judgment
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Analyzes process, generates optimization plan |
-| `copilot` | Identifies issues, validates solutions with you |
-| `manual` | Provides analysis frameworks, you complete |
 
 ## Context Integration
 

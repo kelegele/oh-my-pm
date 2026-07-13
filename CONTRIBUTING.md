@@ -69,7 +69,6 @@ description: 简洁描述（使用 skill-creator 的 pushy 描述原则）
 layer: design
 input-from: competitive-analysis
 output-to: requirement-review
-mode-support: [autopilot, copilot, manual]
 version: 0.1.0
 ---
 
@@ -92,9 +91,6 @@ version: 0.1.0
 
 ## Quality Standards
 [质量检查清单]
-
-## Collaboration Modes
-[三种模式的区别]
 
 ## Context Integration
 [读写哪些 context 文件]
@@ -158,16 +154,6 @@ Context 文件存放在 `docs/product/` 目录：
 | prd-draft.md | Markdown | PRD 文档 |
 | iteration-plan.json | JSON | 迭代计划 |
 | current-workflow.json | JSON | 工作流状态 |
-
-## 三种协作模式
-
-每个 Skill 应支持三种模式：
-
-| 模式 | 描述 | 适用场景 |
-|:-----|:-----|:-----|
-| autopilot | AI 自动执行，人工审阅 | 数据汇总、报告生成 |
-| copilot | AI 建议，人工确认 | 方案设计、优先级排序 |
-| manual | 人工主导，AI 辅助 | 战略决策、创意工作 |
 
 ## 五层架构
 

@@ -3,8 +3,7 @@ name: requirement-review
 description: 促进需求评审会议和干系人对齐。当用户需要与干系人评审需求、对功能达成一致、运行 PRD 评审，或说"评审这个 PRD"、"获得批准"、"需求评审会议"时使用。即使没有明确说"需求评审"，当用户正在准备干系人会议或需要对需求达成一致时也应激活。
 layer: delivery
 input-from: prd-gen
-mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.1.1
 ---
 
 # Requirement Review
@@ -181,14 +180,6 @@ Before concluding, ensure:
 - Concerns are acknowledged with plans to address
 - PRD is updated to reflect decisions
 - Sign-off is obtained from key stakeholders
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Generates agenda, pre-read, and meeting template |
-| `copilot` | Drafts materials, reviews key discussion points with you |
-| `manual` | Provides templates, you customize and facilitate |
 
 ## Context Integration
 

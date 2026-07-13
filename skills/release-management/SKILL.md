@@ -4,8 +4,7 @@ description: 规划并执行产品发布，包含质量检查和沟通。当用�
 layer: delivery
 input-from: project-coordination
 output-to: impact-analysis
-mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.1.1
 ---
 
 # Release Management
@@ -236,14 +235,6 @@ Before releasing, ensure:
 - Stakeholders are informed of timeline
 - Monitoring and alerting are configured
 - Success criteria are defined and measurable
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Generates complete release plan from project status |
-| `copilot` | Drafts plan, validates key decisions with you |
-| `manual` | Provides templates, you customize |
 
 ## Context Integration
 

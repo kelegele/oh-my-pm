@@ -4,8 +4,7 @@ description: 监控产品指标、检测异常并跟踪 KPI。当用户需要设
 layer: perception
 input-from: prd-gen
 output-to: impact-analysis,iteration-planning
-mode-support: [autopilot, copilot, manual]
-version: 0.2.0
+version: 0.2.1
 ---
 
 # Data Monitoring
@@ -183,14 +182,6 @@ Before delivering, the monitoring setup should:
 - Include actionable alert messages
 - Provide context for metric interpretation
 - Specify data sources and collection methods
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Sets up monitoring with recommended thresholds |
-| `copilot` | Proposes metrics and thresholds, confirms with you |
-| `manual` | Provides monitoring templates, you configure |
 
 ## Context Integration
 

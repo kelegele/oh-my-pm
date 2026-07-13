@@ -4,8 +4,7 @@ description: 汇总和综合来自多个来源的用户反馈。当用户需要�
 layer: validation
 input-from: release-management
 output-to: iteration-planning,prioritization,user-research
-mode-support: [autopilot, copilot, manual]
-version: 0.1.0
+version: 0.1.1
 ---
 
 # Feedback Synthesis
@@ -247,14 +246,6 @@ Before delivering, ensure synthesis:
 - Identifies trends, not just snapshots
 - Provides actionable recommendations
 - Triggers appropriate feedback loops
-
-## Collaboration Modes
-
-| Mode | How It Works |
-|:---|:---|
-| `autopilot` | Aggregates, categorizes, synthesizes automatically |
-| `copilot` | Drafts analysis, validates themes with you |
-| `manual` | Provides templates, you complete analysis |
 
 ## Context Integration
 
