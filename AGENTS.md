@@ -101,7 +101,6 @@ All intermediate outputs are stored in `docs/product/` directory:
 | File | Layer | Flow |
 |:-----|:------|:-----|
 | `competitive-analysis.json` | Perception | → prd-gen, positioning |
-| `personas.json` | Perception | → positioning, prd-gen |
 | `market-analysis.json` | Perception | → positioning |
 | `user-research.json` | Perception | → positioning |
 | `clarification-result.json` | Perception | → prd-gen |

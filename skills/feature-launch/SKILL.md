@@ -4,7 +4,7 @@ description: 编排从 PRD 到上线后分析的完整功能发布工作流。�
 layer: workflow
 input-from: prd-gen
 output-to: impact-analysis,iteration-planning
-version: 0.8.1
+version: 0.8.2
 ---
 
 # Feature Launch Workflow
@@ -158,8 +158,8 @@ Orchestrates end-to-end feature launch process spanning:
 - Step 3.2: 调用 `/feedback-synthesis`
 
 **输出**：
-- `docs/product/.ompm/impact-analysis/{feature-name}-{date}.json`
-- `docs/product/.ompm/feedback-synthesis/{feature-name}-{date}.json`
+- `docs/product/.ompm/impact-analysis.json`
+- `docs/product/.ompm/feedback-synthesis.json`
 - `docs/product/post-launch-report.md`
 
 **质量门控**：
@@ -279,8 +279,8 @@ validation_gates:
 - `docs/product/review-notes/*.md` - 评审记录
 - `docs/product/project-plan/*.md` - 项目计划
 - `docs/product/release-plan/*.md` - 发布计划
-- `docs/product/.ompm/impact-analysis/*.json` - 效果分析
-- `docs/product/.ompm/feedback-synthesis/*.json` - 反馈综合
+- `docs/product/.ompm/impact-analysis.json` - 效果分析
+- `docs/product/.ompm/feedback-synthesis.json` - 反馈综合
 
 ---
 

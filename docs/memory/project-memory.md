@@ -111,11 +111,11 @@ oh-my-pm/
 **阶段定义**:
 | Stage ID | 名称 | 关键输出 |
 |:---------|:-----|:----------|
-| S0 | Setup | workflow_tracking.json |
-| S1 | Perception | market_data.json, personas.json |
+| S0 | Setup | current-workflow.json |
+| S1 | Perception | market-analysis.json, user-research.json |
 | S2 | Strategy | positioning.md, roadmap.md |
 | S4 | Delivery | project_plan.md, release_notes.md |
-| S5 | Validation | impact.json, feedback.json |
+| S5 | Validation | impact-analysis.json, feedback-synthesis.json |
 
 ### 5. 原型方案演变 (v0.5.0 → v0.7.0)
 

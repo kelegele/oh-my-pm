@@ -150,7 +150,7 @@ graph TB
         E3["iteration-planning\n迭代规划"]
     end
 
-    L1 -->|"docs/product/\nmarket_data.json\npersonas.json\ncompetitive-analysis.json"| L2
+    L1 -->|"docs/product/\nmarket-analysis.json\nuser-research.json\ncompetitive-analysis.json"| L2
     L2 -->|"docs/product/\npositioning.md\nroadmap.md\nprioritization.json"| L3
     L3 -->|"docs/product/\nprd/*.md\nprototypes/*.html"| L4
     L4 -->|"docs/product/\nproject-plan.md\nrelease-notes.md"| L5
@@ -168,7 +168,7 @@ graph TB
 - `competitive-analysis` → 功能对比矩阵、差异化分析
 - `data-monitoring` → 指标基线、异常告警
 
-**输出**：`docs/product/.ompm/competitive-analysis.json`、`docs/product/.ompm/personas.json` 等
+**输出**：`docs/product/.ompm/competitive-analysis.json`、`docs/product/.ompm/user-research.json` 等
 
 **你该怎么用**：
 > "这个市场有多大？趋势怎样？" → market-intelligence
@@ -228,7 +228,7 @@ graph TB
 - `feedback-synthesis` → 用户反馈主题分析
 - `iteration-planning` → 基于效果 + 反馈制定下一轮迭代计划
 
-**输出**：`docs/product/.ompm/impact.json`、`docs/product/.ompm/iteration-plan.json`
+**输出**：`docs/product/.ompm/impact-analysis.json`、`docs/product/.ompm/iteration-plan.json`
 
 **你该怎么用**：
 > "上线效果怎么样？" → impact-analysis
@@ -302,12 +302,12 @@ Oh-My-PM 执行后会在 `docs/product/` 目录生成以下文件：
 | 文件 | 说明 | 何时产生 |
 |:-----|:-----|:---------|
 | `docs/product/.ompm/competitive-analysis.json` | 竞品对比矩阵 | competitive-analysis |
-| `docs/product/.ompm/personas.json` | 用户画像数据 | user-research |
+| `docs/product/.ompm/user-research.json` | 用户研究数据 | user-research |
 | `docs/product/roadmap.md` | 产品路线图 | roadmap-planning |
 | `docs/product/prd/*.md` | PRD 文档（带日期命名） | prd-gen |
 | `docs/product/prototypes/*.html` | HTML 交互原型 | prototype-design |
 | `docs/product/.ompm/current-workflow.json` | 工作流状态（自动追踪） | 所有 workflows |
-| `docs/product/.ompm/impact.json` | 上线效果数据 | impact-analysis |
+| `docs/product/.ompm/impact-analysis.json` | 上线效果数据 | impact-analysis |
 | `docs/product/.ompm/iteration-plan.json` | 迭代计划 | iteration-planning |
 
 ---

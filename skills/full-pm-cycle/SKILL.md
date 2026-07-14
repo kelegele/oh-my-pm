@@ -4,7 +4,7 @@ description: 编排从市场研究到上线后分析的完整产品管理周期�
 layer: workflow
 input-from: user
 output-to: iteration-planning
-version: 0.8.1
+version: 0.8.2
 ---
 
 # Full PM Cycle Workflow
@@ -89,8 +89,7 @@ Orchestrates complete product management lifecycle across all five layers:
 **输出**：
 - `docs/product/.ompm/market-analysis.json`
 - `docs/product/.ompm/user-research.json`
-- `docs/product/.ompm/user-personas.json`
-- `docs/product/.ompm/competitive-analysis/{feature-name}-{date}.json` + `.md`
+- `docs/product/.ompm/competitive-analysis.json` + `docs/product/competitive-analysis/{feature-name}-{date}.md`
 
 **质量门控**：
 - ✅ 市场研究完成 - 市场规模、趋势、机会点
@@ -253,8 +252,8 @@ Orchestrates complete product management lifecycle across all five layers:
 - Step 5.3: 调用 `/iteration-planning`
 
 **输出**：
-- `docs/product/.ompm/impact-analysis/{feature-name}-{date}.json`
-- `docs/product/.ompm/feedback-synthesis/{feature-name}-{date}.json`
+- `docs/product/.ompm/impact-analysis.json`
+- `docs/product/.ompm/feedback-synthesis.json`
 - `docs/product/.ompm/iteration-plan.json`
 - `docs/product/post-launch-report.md`
 
@@ -429,8 +428,7 @@ validation_gates:
 - `docs/product/product-package/` - 完整产品包目录
   - `market-analysis.json`
   - `user-research.json`
-  - `user-personas.json`
-  - `competitive-analysis/`
+  - `competitive-analysis.json`
   - `positioning.md`
   - `roadmap.md`
   - `prioritization.json`

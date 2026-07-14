@@ -54,7 +54,7 @@ oh-my-pm/
 |:-----|:----------|:----------|:-----|:-----|
 | **competitive-analysis** | `skills/competitive-analysis/SKILL.md` | 分析竞品, 对比, 竞品分析 | 竞品列表 | `docs/product/.ompm/competitive-analysis.json` |
 | **market-intelligence** | `skills/market-intelligence/SKILL.md` | 市场分析, 行业趋势, 市场研究 | 行业信息 | 市场洞察报告 |
-| **user-research** | `skills/user-research/SKILL.md` | 用户访谈, 用户画像, 用户研究 | 访谈数据 | `docs/product/.ompm/personas.json` |
+| **user-research** | `skills/user-research/SKILL.md` | 用户访谈, 用户画像, 用户研究 | 访谈数据 | `docs/product/.ompm/user-research.json` |
 | **data-monitoring** | `skills/data-monitoring/SKILL.md` | 监控指标, 数据看板, 指标分析 | 指标数据 | 异常告警 |
 
 ### Strategy Layer (策略规划层)
@@ -84,7 +84,7 @@ oh-my-pm/
 
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
-| **impact-analysis** | `skills/impact-analysis/SKILL.md` | 效果分析, 上线复盘, 效果评估 | 埋点数据 | `docs/product/.ompm/impact.json` |
+| **impact-analysis** | `skills/impact-analysis/SKILL.md` | 效果分析, 上线复盘, 效果评估 | 埋点数据 | `docs/product/.ompm/impact-analysis.json` |
 | **feedback-synthesis** | `skills/feedback-synthesis/SKILL.md` | 反馈分析, 用户反馈, 反馈汇总 | 反馈数据 | 反馈分类 |
 | **iteration-planning** | `skills/iteration-planning/SKILL.md` | 迭代规划, 版本排期, sprint planning | 效果+反馈 | `docs/product/.ompm/iteration-plan.json` |
 
@@ -128,13 +128,13 @@ oh-my-pm/
 | 文件 | 格式 | 用途 | 读写 Skills |
 |:-----|:-----|:-----|:-----------|
 | `docs/product/.ompm/competitive-analysis.json` | JSON | 竞品分析结果 | competitive-analysis → prd-gen |
-| `docs/product/.ompm/personas.json` | JSON | 用户画像数据 | user-research |
+| `docs/product/.ompm/user-research.json` | JSON | 用户研究数据（含 personas） | user-research |
 | `docs/product/roadmap.md` | Markdown | 产品路线图 | roadmap-planning |
 | `docs/product/.ompm/prd-draft.md` | Markdown | PRD 文档草稿 | prd-gen |
 | `docs/product/prd/<日期>-<名称>.md` | Markdown | 版本化 PRD 文档 | prd-gen |
 | `docs/product/prototypes/*.html` | HTML | HTML 原型文件 | 推荐使用 HTML 直接生成原型 |
 | `docs/product/.ompm/current-workflow.json` | JSON | 工作流状态追踪 | 全部 workflows |
-| `docs/product/.ompm/impact.json` | JSON | 效果分析数据 | impact-analysis |
+| `docs/product/.ompm/impact-analysis.json` | JSON | 效果分析数据 | impact-analysis |
 | `docs/product/.ompm/iteration-plan.json` | JSON | 迭代计划 | iteration-planning |
 | `docs/product/.ompm/market-analysis.json` | JSON | 市场分析数据 | market-intelligence |
 

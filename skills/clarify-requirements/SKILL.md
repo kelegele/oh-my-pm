@@ -4,7 +4,7 @@ description: 感知阶段的信息收集与需求澄清。在进入 PRD 生成�
 layer: perception
 input-from: user
 output-to: competitive-analysis,market-intelligence,user-research,prd-gen
-version: 0.1.1
+version: 0.1.2
 ---
 
 # Clarify Requirements
@@ -59,7 +59,7 @@ digraph clarify {
 检查 `docs/product/` 目录中已有的感知数据：
 
 - `docs/product/.ompm/market-analysis.json` — 市场情报
-- `docs/product/.ompm/competitive-analysis/*.json` — 竞品分析
+- `docs/product/.ompm/competitive-analysis.json` — 竞品分析
 - `docs/product/.ompm/user-research.json` — 用户研究
 - `docs/product/positioning.md` — 产品定位
 - `docs/product/.ompm/prioritization.json` — 优先级排序
@@ -193,7 +193,7 @@ digraph clarify {
 
 **Reads:**
 - `docs/product/.ompm/market-analysis.json` — 市场情报
-- `docs/product/.ompm/competitive-analysis/*.json` — 竞品分析
+- `docs/product/.ompm/competitive-analysis.json` — 竞品分析
 - `docs/product/.ompm/user-research.json` — 用户研究
 - `docs/product/positioning.md` — 产品定位
 

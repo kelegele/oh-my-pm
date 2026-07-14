@@ -4,7 +4,7 @@ description: 在一个工作流中生成包含竞品分析的完整 PRD。当用
 layer: workflow
 input-from: user
 output-to: requirement-review
-version: 0.8.1
+version: 0.8.2
 ---
 
 # Quick PRD Workflow
@@ -93,10 +93,9 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 - Step 1.3: 调用 `/user-research`
 
 **输出**：
-- `docs/product/.ompm/competitive-analysis/{feature-name}-{date}.json` + `.md`
+- `docs/product/.ompm/competitive-analysis.json` + `docs/product/competitive-analysis/{feature-name}-{date}.md`
 - `docs/product/.ompm/market-analysis.json`
 - `docs/product/.ompm/user-research.json`
-- `docs/product/.ompm/user-personas.json`
 
 **质量门控**：
 - ✅ 竞品分析完成 - 2+ 个竞品功能对比
@@ -283,8 +282,8 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 - Step 5.3: 调用 `/iteration-planning`
 
 **输出**：
-- `docs/product/.ompm/impact-analysis/{feature-name}-{date}.json`
-- `docs/product/.ompm/feedback-synthesis/{feature-name}-{date}.json`
+- `docs/product/.ompm/impact-analysis.json`
+- `docs/product/.ompm/feedback-synthesis.json`
 - `docs/product/.ompm/iteration-plan.json`
 
 **质量门控**：
@@ -421,7 +420,7 @@ validation_gates:
 **读取**：
 - `docs/product/.ompm/current-workflow.json` - 当前工作流状态
 - `docs/product/prd/*.md` - PRD 文档
-- `docs/product/.ompm/competitive-analysis/*.json` - 竞品分析数据
+- `docs/product/.ompm/competitive-analysis.json` - 竞品分析数据
 - `docs/product/prototypes/*.html` - HTML 原型
 
 **写入**：
@@ -429,8 +428,8 @@ validation_gates:
 - `docs/product/review-notes/*.md` - 评审记录
 - `docs/product/project-plan/*.md` - 项目计划
 - `docs/product/release-plan/*.md` - 发布计划
-- `docs/product/.ompm/impact-analysis/*.json` - 效果分析
-- `docs/product/.ompm/feedback-synthesis/*.json` - 反馈综合
+- `docs/product/.ompm/impact-analysis.json` - 效果分析
+- `docs/product/.ompm/feedback-synthesis.json` - 反馈综合
 - `docs/product/.ompm/iteration-plan.json` - 迭代计划
 
 ---

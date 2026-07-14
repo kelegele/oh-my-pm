@@ -4,7 +4,7 @@ description: 竞品功能对比分析，生成对比矩阵并识别战略机会�
 layer: perception
 input-from: market-intelligence
 output-to: product-positioning,prioritization,prd-gen
-version: 0.2.1
+version: 0.2.2
 ---
 
 # Competitive Analysis
@@ -86,7 +86,7 @@ The following rules are mandatory for this skill. They are inlined here for stan
 
 The skill generates two outputs:
 
-1. **JSON file** (`docs/product/.ompm/competitive-analysis/{feature-name}-{date}.json`) - Structured data for other skills to consume
+1. **JSON file** (`docs/product/.ompm/competitive-analysis.json`) - Structured data for other skills to consume
 2. **Markdown report** - Human-readable analysis with tables and recommendations
 
 ### JSON Output Format
@@ -183,9 +183,8 @@ This skill reads from and writes to the shared context:
 - `docs/product/.ompm/market-analysis.json` - Market trends that inform competitive landscape
 
 **Writes:**
-- `docs/product/.ompm/competitive-analysis/{feature-name}-{date}.json` - Analysis results for other skills (prd-gen, product-positioning)
-- `docs/product/competitive-analysis/{feature-name}-{date}.md` - Human-readable markdown report
-- Legacy: `docs/product/.ompm/competitive-analysis.json` for backward compatibility
+- `docs/product/.ompm/competitive-analysis.json` - Analysis results for other skills (prd-gen, product-positioning)
+- `docs/product/competitive-analysis/{feature-name}-{date}.md` - Human-readable markdown report (versioned artifact)
 
 ## Example Usage
 

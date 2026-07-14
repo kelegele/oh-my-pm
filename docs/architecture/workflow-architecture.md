@@ -132,13 +132,13 @@ sequenceDiagram
     PM->>MR: market-researcher 分析市场
     PM->>CA: competitive-analyst 分析竞品
     PM->>UI: user-interviewer 创建画像
-    MR->>CTX: 写入 market-data.json
+    MR->>CTX: 写入 market-analysis.json
     CA->>CTX: 写入 competitive-analysis.json
-    UI->>CTX: 写入 personas.json
+    UI->>CTX: 写入 user-research.json
 
     Note over PM,CTX: 阶段 2: 策略规划
     PM->>PP: 基于感知层输出写定位
-    PP->>CTX: 读取 market-data + competitive + personas
+    PP->>CTX: 读取 market-analysis + competitive + user-research
     PP->>CTX: 写入 positioning.md
     PM->>RM: 基于定位写路线图
     RM->>CTX: 读取 positioning.md → roadmap.md
@@ -152,7 +152,7 @@ sequenceDiagram
     PM->>PD: 基于 PRD 生成原型
     PD->>CTX: 读取 prd/*.md → prototypes/*.html
 
-    PM-->>CC: 完整周期完成，更新 workflow_tracking.json
+    PM-->>CC: 完整周期完成，更新 current-workflow.json
     CC-->>U: 展示完整产物清单
 ```
 
@@ -282,7 +282,7 @@ graph TB
 ```mermaid
 stateDiagram-v2
     [*] --> S0_Setup: 用户触发工作流
-    S0_Setup --> S1_Perception: 创建 workflow_tracking.json
+    S0_Setup --> S1_Perception: 创建 current-workflow.json
     S1_Perception --> S1_Quality: 执行感知层 Skills
     S1_Quality --> S2_Strategy: 质量门控通过
     S1_Quality --> S1_Perception: 需要补充数据
