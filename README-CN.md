@@ -5,7 +5,7 @@
 > 面向产品经理的 AI Agent 工作流系统
 
 [![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-0.9.0-blue)](https://github.com/kelegele/oh-my-pm/releases)
+[![Version](https://img.shields.io/badge/Version-0.9.3-blue)](https://github.com/kelegele/oh-my-pm/releases)
 [![Skills](https://img.shields.io/badge/Skills-20-blue)](skills/)
 [![Agents](https://img.shields.io/badge/Agents-8-purple)](agents/)
 
@@ -279,6 +279,7 @@ oh-my-pm/
 | v0.5.1 | 移除 Figma 依赖，切换 HTML 原型 | ✅ |
 | v0.6.0 | HTML 原型生成（迭代 + 新产品模式） | ✅ |
 | v0.9.0 | 扁平化 Skill 目录，支持按需安装单个 Skill | ✅ |
+| v0.9.3 | 修复 context 传递契约（统一扁平 .ompm 模型）+ 文档版本同步 | ✅ |
 | v1.0.0 | 企业版与集成能力 | ⏳ |
 
 ---

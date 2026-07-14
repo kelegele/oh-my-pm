@@ -352,6 +352,7 @@ oh-my-pm/
 | v0.5.1 | Remove Figma dependency, switch to HTML prototypes (19 Skills) | ✅ |
 | v0.6.0 | HTML prototype generation (iteration + new product modes) | ✅ |
 | v0.9.0 | Flat skill directory, standalone install per skill | ✅ |
+| v0.9.3 | Fix context-passing contract (flat .ompm model) + doc version sync | ✅ |
 | v1.0.0 | Enterprise edition & integrations | ⏳ |
 
 See [Project Board](https://github.com/users/kelegele/projects/4) for full planning.

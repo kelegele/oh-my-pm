@@ -182,7 +182,7 @@ oh-my-pm/
 ```
 ┌─────────────────────────────────────────────────┐
 │  Perception Layer (需求感知)                    │
-│  skills/ (4 Skills)                            │
+│  skills/ (5 Skills)                            │
 │  agents/perception/ (4 Subagents)               │
 │  输出: market_data, personas, competitive       │
 └─────────────────────────────────────────────────┘
@@ -246,11 +246,16 @@ oh-my-pm/
 
 ## 版本信息
 
-- **当前版本**: v0.9.1
-- **最后更新**: 2026-03-27
-- **组件总数**: 19 Skills + 8 Subagents + 4 Commands
+- **当前版本**: v0.9.3
+- **最后更新**: 2026-07-14
+- **组件总数**: 20 Skills + 8 Subagents + 4 Commands
 
-### 最近变更 (v0.9.1)
+### 最近变更 (v0.9.3)
+
+- 统一 context 传递契约为扁平 .ompm 模型
+- 修复文档版本号与组件计数漂移
+
+### v0.9.1
 
 - 恢复 `prototype-design` Skill（HTML-only，移除 Pencil 集成）
 - Design 层恢复为 3 个 Skills: prd-gen + prototype-design + process-optimization

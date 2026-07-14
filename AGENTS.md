@@ -8,7 +8,7 @@ Oh-My-PM is an AI Agent workflow system for Product Managers, implemented as a *
 
 The system features a **5-layer architecture** with **20 Skills** (17 domain + 3 workflows) and **8 Subagents**, covering the complete product management lifecycle from requirement sensing to value validation.
 
-Current plugin version: **0.9.0** (see `.claude-plugin/plugin.json`). See `docs/planning/roadmap.md` for full version history.
+Current plugin version: **0.9.3** (see `.claude-plugin/plugin.json`). See `docs/planning/roadmap.md` for full version history.
 
 ## Commands
 

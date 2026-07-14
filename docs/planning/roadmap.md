@@ -2,7 +2,15 @@
 
 ## 版本历史
 
-### v0.8.0 - Plan-and-Execute 架构 (当前)
+### v0.9.3 - Context 契约修复与文档同步 (当前)
+
+**已完成**:
+- ✅ 统一 context 传递契约为扁平 .ompm 模型（移除 dated/nested 写入与 personas.json 分裂）
+- ✅ 修复文档版本号与组件计数漂移（plugin/AGENTS/README/roadmap/CODEMAPS/subagent-architecture）
+
+---
+
+### v0.8.0 - Plan-and-Execute 架构
 
 
 **已完成**:
@@ -72,16 +80,16 @@
 
 ---
 
-## 当前状态 (v0.8.0)
+## 当前状态 (v0.9.3)
 
 ### 组件统计
 
 | 组件类型 | 数量 | 状态 |
 |:---------|:-----:|:-----|
 | **Skills** | 20 | ✅ 完成 |
-| - Perception Layer | 4 | ✅ |
+| - Perception Layer | 5 | ✅ |
 | - Strategy Layer | 3 | ✅ |
-| - Design Layer | 4 | ✅ |
+| - Design Layer | 3 | ✅ |
 | - Delivery Layer | 3 | ✅ |
 | - Validation Layer | 3 | ✅ |
 | - Workflows | 3 | ✅ |
@@ -137,49 +145,51 @@
 
 | Skill | 版本 | 文件 |
 |:-----|:-----|:-----|
-| competitive-analysis | 0.1.0 | skills/competitive-analysis/SKILL.md |
-| market-intelligence | 0.1.0 | skills/market-intelligence/SKILL.md |
-| user-research | 0.1.0 | skills/user-research/SKILL.md |
-| data-monitoring | 0.1.0 | skills/data-monitoring/SKILL.md |
+| competitive-analysis | 0.2.2 | skills/competitive-analysis/SKILL.md |
+| market-intelligence | 0.2.1 | skills/market-intelligence/SKILL.md |
+| user-research | 0.2.1 | skills/user-research/SKILL.md |
+| data-monitoring | 0.2.1 | skills/data-monitoring/SKILL.md |
+| clarify-requirements | 0.1.2 | skills/clarify-requirements/SKILL.md |
 
 ### Strategy Layer (策略规划层)
 
 | Skill | 版本 | 文件 |
 |:-----|:-----|:-----|
-| product-positioning | 0.1.0 | skills/product-positioning/SKILL.md |
-| roadmap-planning | 0.1.0 | skills/roadmap-planning/SKILL.md |
-| prioritization | 0.1.0 | skills/prioritization/SKILL.md |
+| product-positioning | 0.1.1 | skills/product-positioning/SKILL.md |
+| roadmap-planning | 0.1.1 | skills/roadmap-planning/SKILL.md |
+| prioritization | 0.1.1 | skills/prioritization/SKILL.md |
 
 ### Design Layer (方案设计层)
 
 | Skill | 版本 | 文件 |
 |:-----|:-----|:-----|
-| prd-gen | 0.3.0 | skills/prd-gen/SKILL.md |
-| process-optimization | 0.1.0 | skills/process-optimization/SKILL.md |
+| prd-gen | 0.5.1 | skills/prd-gen/SKILL.md |
+| prototype-design | 0.7.1 | skills/prototype-design/SKILL.md |
+| process-optimization | 0.1.1 | skills/process-optimization/SKILL.md |
 
 ### Delivery Layer (交付协调层)
 
 | Skill | 版本 | 文件 |
 |:-----|:-----|:-----|
-| requirement-review | 0.1.0 | skills/requirement-review/SKILL.md |
-| project-coordination | 0.1.0 | skills/project-coordination/SKILL.md |
-| release-management | 0.1.0 | skills/release-management/SKILL.md |
+| requirement-review | 0.1.1 | skills/requirement-review/SKILL.md |
+| project-coordination | 0.1.1 | skills/project-coordination/SKILL.md |
+| release-management | 0.1.1 | skills/release-management/SKILL.md |
 
 ### Validation Layer (价值验证层)
 
 | Skill | 版本 | 文件 |
 |:-----|:-----|:-----|
-| impact-analysis | 0.1.0 | skills/impact-analysis/SKILL.md |
-| feedback-synthesis | 0.1.0 | skills/feedback-synthesis/SKILL.md |
-| iteration-planning | 0.1.0 | skills/iteration-planning/SKILL.md |
+| impact-analysis | 0.1.1 | skills/impact-analysis/SKILL.md |
+| feedback-synthesis | 0.1.1 | skills/feedback-synthesis/SKILL.md |
+| iteration-planning | 0.1.1 | skills/iteration-planning/SKILL.md |
 
 ### Workflows Layer (工作流编排层)
 
 | Workflow | 版本 | 文件 |
 |:--------|:-----|:-----|
-| quick-prd | 0.2.0 | skills/quick-prd/SKILL.md |
-| full-pm-cycle | 0.1.0 | skills/full-pm-cycle/SKILL.md |
-| feature-launch | 0.1.0 | skills/feature-launch/SKILL.md |
+| quick-prd | 0.8.2 | skills/quick-prd/SKILL.md |
+| full-pm-cycle | 0.8.2 | skills/full-pm-cycle/SKILL.md |
+| feature-launch | 0.8.2 | skills/feature-launch/SKILL.md |
 
 ---
 

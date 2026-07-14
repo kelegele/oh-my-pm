@@ -1,6 +1,6 @@
 manifest:
   plugin: oh-my-pm
-  version: 0.9.0
+  version: 0.9.3
 skills:
 - file: skills/competitive-analysis/SKILL.md
   layer: perception

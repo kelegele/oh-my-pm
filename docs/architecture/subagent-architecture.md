@@ -2,7 +2,7 @@
 
 ## 概述
 
-Oh-My-PM v0.3.0 引入了 **Subagent 混合架构**，在原有 19 个 Skills 基础上，增加了 8 个专业化 Subagents，实现上下文隔离、模型优化和知识积累。
+Oh-My-PM v0.3.0 引入了 **Subagent 混合架构**，在原有 20 个 Skills 基础上，增加了 8 个专业化 Subagents，实现上下文隔离、模型优化和知识积累。
 
 ## 架构设计
 
@@ -33,7 +33,7 @@ Oh-My-PM v0.3.0 引入了 **Subagent 混合架构**，在原有 19 个 Skills �
 
 ### 1. market-researcher
 
-**文件**: `.claude/agents/perception/market-researcher.md`
+**文件**: `agents/perception/market-researcher.md`
 
 ```yaml
 model: haiku          # 快速 web 搜索
@@ -49,7 +49,7 @@ memory: project        # 市场知识积累
 
 ### 2. competitive-analyst
 
-**文件**: `.claude/agents/perception/competitive-analyst.md`
+**文件**: `agents/perception/competitive-analyst.md`
 
 ```yaml
 model: sonnet         # 综合分析
@@ -64,7 +64,7 @@ memory: project        # 竞品知识库
 
 ### 3. user-interviewer
 
-**文件**: `.claude/agents/perception/user-interviewer.md`
+**文件**: `agents/perception/user-interviewer.md`
 
 ```yaml
 model: sonnet         # 深度分析
@@ -79,7 +79,7 @@ memory: project        # 用户研究模式
 
 ### 4. data-monitor
 
-**文件**: `.claude/agents/perception/data-monitor.md`
+**文件**: `agents/perception/data-monitor.md`
 
 ```yaml
 model: haiku          # 轻量查询
@@ -96,7 +96,7 @@ memory: project        # 指标基线
 
 ### 5. process-optimizer
 
-**文件**: `.claude/agents/design/process-optimizer.md`
+**文件**: `agents/design/process-optimizer.md`
 
 ```yaml
 model: sonnet              # 分析任务
@@ -112,7 +112,7 @@ memory: project            # 流程优化知识
 
 ### 6. impact-analyst
 
-**文件**: `.claude/agents/validation/impact-analyst.md`
+**文件**: `agents/validation/impact-analyst.md`
 
 ```yaml
 model: sonnet         # 效果分析
@@ -127,7 +127,7 @@ memory: project        # 分析框架
 
 ### 7. feedback-collector
 
-**文件**: `.claude/agents/validation/feedback-collector.md`
+**文件**: `agents/validation/feedback-collector.md`
 
 ```yaml
 model: haiku          # 轻量汇总
@@ -142,7 +142,7 @@ memory: project        # 反馈模式
 
 ### 8. pm-orchestrator
 
-**文件**: `.claude/agents/workflows/pm-orchestrator.md`
+**文件**: `agents/workflows/pm-orchestrator.md`
 
 ```yaml
 model: inherit                       # 继承主对话
