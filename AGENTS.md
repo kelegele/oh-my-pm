@@ -168,7 +168,7 @@ Memory enables cross-session learning without polluting main conversation contex
 
 1. Create directory: `skills/skill-name/`
 2. Create `SKILL.md` with YAML frontmatter (`name`, `description`, `layer`, `version`)
-3. Validate frontmatter manually — `tests/test-skills.sh` only checks 5 MVP skills, not new ones (see Testing below); extend its `test_skill_file` list if you want CI coverage
+3. Frontmatter is auto-validated by `tests/test-skills.sh` (auto-discovers all `skills/*/SKILL.md`, checks `name`/`description`/`layer`/`version`, name↔dir consistency, valid layer, semver version, and context-passing contract) — no manual extension needed for a new skill
 4. Update `.claude-plugin/plugin.json` — add `./skills/skill-name/` to the `skills` array
 
 ### Adding a New Subagent
@@ -180,11 +180,14 @@ Memory enables cross-session learning without polluting main conversation contex
 ### Testing
 
 ```bash
-# Skill structure validation (checks YAML frontmatter + name/description fields)
+# Skill structure validation: auto-discovers all skills/*/SKILL.md,
+# validates frontmatter (name/description/layer/version), name↔dir consistency,
+# valid layer, semver version, and a context-passing contract guard
+# (fails on forbidden legacy filenames like personas.json / impact.json).
 bash tests/test-skills.sh
 ```
 
-Note: `tests/test-skills.sh` only **hardcodes 5 MVP skills** (competitive-analysis, clarify-requirements, prd-gen, iteration-planning, quick-prd) plus the `docs/product/` directory — it does **not** auto-discover all 20 skills. A newly added skill is not exercised by this script; verify its frontmatter manually or extend the script's `test_skill_file` list.
+The script auto-discovers every `skills/*/SKILL.md`; a newly added skill is covered automatically. The contract guard fails if any skill/doc references a retired context filename (`personas.json`, `user-personas.json`, `market-data.json`, `impact.json`, `feedback.json`, `workflow_tracking.json`) — these were unified into the flat `.ompm/<name>.json` model in v0.9.3.
 
 Skills are triggered by natural language in Claude Code or Codex — test by simulating user prompts.
 

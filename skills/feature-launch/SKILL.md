@@ -467,7 +467,7 @@ validation_gates:
       "skill": "impact-analysis",
       "started_at": "2026-03-17T10:45:00Z",
       "completed_at": "2026-03-17T10:50:00Z",
-      "outputs": ["impact.json"]
+      "outputs": ["impact-analysis.json"]
     }
   ],
   "started_at": "2026-03-17T10:00:00Z",

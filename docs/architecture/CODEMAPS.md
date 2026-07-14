@@ -254,6 +254,7 @@ oh-my-pm/
 
 - 统一 context 传递契约为扁平 .ompm 模型
 - 修复文档版本号与组件计数漂移
+- test-skills 全量覆盖 + frontmatter 校验 + context 契约回归守卫
 
 ### v0.9.1
 

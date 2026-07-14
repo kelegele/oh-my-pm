@@ -5,8 +5,9 @@
 ### v0.9.3 - Context 契约修复与文档同步 (当前)
 
 **已完成**:
-- ✅ 统一 context 传递契约为扁平 .ompm 模型（移除 dated/nested 写入与 personas.json 分裂）
+- ✅ 统一 context 传递契约为扁平 .ompm 模型（移除 dated/nested 写入与 personas 文件名分裂）
 - ✅ 修复文档版本号与组件计数漂移（plugin/AGENTS/README/roadmap/CODEMAPS/subagent-architecture）
+- ✅ test-skills 全量覆盖 + frontmatter 校验 + context 契约回归守卫
 
 ---
 
