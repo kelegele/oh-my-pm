@@ -1,6 +1,6 @@
 manifest:
   plugin: oh-my-pm
-  version: 1.0.0
+  version: 1.1.0
 skills:
 - file: skills/competitive-analysis/SKILL.md
   layer: perception
@@ -95,4 +95,12 @@ skills:
   - 功能发布
   - 发布协调
   - 发布工作流
+  type: workflow
+- file: skills/ompm/SKILL.md
+  layer: workflow
+  name: ompm
+  triggers:
+  - 产品管理
+  - 下一步该做什么
+  - PM 工作入口
   type: workflow

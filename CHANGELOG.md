@@ -5,6 +5,19 @@ All notable changes to Oh-My-PM will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-07-28
+
+可移植性版本：skills 层自完备，`npx skills add`（任意 agent）安装即获完整能力。
+
+### Added
+- **`ompm` skill（第 12 个）**：全局意图路由从 `commands/ompm.md` 移植为 skill（唯一权威），command 变为激活它的 shim——非 Claude 宿主不再丢失路由能力
+- **Execution Profile（执行建议）段**：4 个有 subagent 对的 skill（market-research、competitive-analysis、retrospective、feedback-synthesis）内嵌模型建议/工具姿态/记忆文件约定（`docs/product/.ompm/memory/<skill>.md`），profile 为跨宿主契约，`agents/*.md` 是其 Claude Code 特化实现
+- AGENTS.md 新增安装通道功能矩阵与"skill 不得硬编码宿主专属工具名"约定
+
+### Changed
+- **工具名去硬编码**：5 个 skill 中 12 处 `AskUserQuestion`、5 处 `mcp__*` 改为"能力描述为主、宿主示例为辅"（如"向用户提问（宿主有结构化提问工具时使用，如 Claude Code 的 AskUserQuestion）"）
+- competitive-analysis 正文不再引用 `agents/` 仓内路径（skill 自完备）
+
 ## [1.0.0] - 2026-07-28
 
 简化重构版本：设计逻辑对齐 product-manager-workflow（证据纪律）与 dbskill（单入口路由），交付层取消，20 Skills → 11。

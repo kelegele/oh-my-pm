@@ -4,9 +4,9 @@
 
 ## 插件概述
 
-Oh-My-PM 是一套基于 **Skills 插件**的产品经理工作流系统，可安装到 Claude Code 和 Codex。通过 **11 个专业 Skills**（8 个领域 Skills + 3 个工作流编排）+ **6 个 Subagents** + **4 个 Commands**，以「三层主线（感知 → 策略 → 设计）+ 验证辅助」实现完整产品管理闭环。
+Oh-My-PM 是一套基于 **Skills 插件**的产品经理工作流系统，可安装到 Claude Code 和 Codex。通过 **12 个专业 Skills**（8 个领域 Skills + 4 个工作流编排）+ **6 个 Subagents** + **4 个 Commands**，以「三层主线（感知 → 策略 → 设计）+ 验证辅助」实现完整产品管理闭环。
 
-当前版本：**1.0.0**（权威版本源见 `plugin.json`）
+当前版本：**1.1.0**（权威版本源见 `plugin.json`）
 
 ### 核心特性
 
@@ -143,7 +143,7 @@ PRD 完善（含预审尾门）
 
 ---
 
-## 全部 Skills (11 个)
+## 全部 Skills (12 个)
 
 ### 可独立使用的领域 Skills (8 个)
 
@@ -205,12 +205,13 @@ PRD 完善（含预审尾门）
 
 ---
 
-### 工作流编排 Skills (3 个)
+### 工作流编排 Skills (4 个)
 
-以下 Skills 编排多个 Skills 和 Subagents，适合完整场景，不需要手动调用单个 Skill：
+以下 Skills 编排多个 Skills 和 Subagents（或承担全局路由），适合完整场景，不需要手动调用单个 Skill：
 
 | Workflow | 编排内容 | 调用的 Subagents | 适用场景 |
 |:---------|:---------|:----------------|:---------|
+| **ompm** | 全局意图路由：读对话上下文 + `current-workflow.json`，推荐最有价值的下一步 skill/workflow | - | 不确定下一步做什么、任意自然语言 PM 请求 |
 | **quick-prd** | full-pm-cycle 薄预设：竞品分析 + PRD 生成（含策略确认门控） | `competitive-analyst` | 快速输出带竞品上下文的 PRD |
 | **full-pm-cycle** | 三层主线：感知 → 策略 → 设计，含验证复盘 | 全部 6 个 Subagents | 新产品从 0 到 1 规划 |
 | **feature-launch** | PRD 预审 + 发布 checklist/灰度策略 + 效果复盘 | `impact-analyst`, `feedback-collector` | 功能发布端到端协调 |
@@ -219,6 +220,7 @@ PRD 完善（含预审尾门）
 - 日常 PRD 任务用 `quick-prd`
 - 新产品规划用 `full-pm-cycle`
 - 功能上线用 `feature-launch`
+- 不知道下一步做什么用 `ompm`
 
 ---
 
@@ -272,7 +274,7 @@ Subagents 是独立运行的 AI 代理，支持隔离执行和记忆积累，会
 | **/quick-prd** | `quick-prd` | 快速生成带竞品分析的 PRD | `/quick-prd "用户改版" 淘宝 京东` |
 | **/full-pm-cycle** | `full-pm-cycle` | 完整产品管理周期 (0-1) | `/full-pm-cycle "新项目管理工具"` |
 | **/feature-launch** | `feature-launch` | 功能发布工作流 | `/feature-launch "用户注册流程"` |
-| **/ompm** | - | 全局意图路由：无参/自然语言时读上下文 + current-workflow.json 推荐下一步 | `/ompm quick-prd "..."` 或 `/ompm help` |
+| **/ompm** | `ompm` | 激活 ompm skill 的 shim：全局意图路由（无参/自然语言时读上下文 + current-workflow.json 推荐下一步） | `/ompm quick-prd "..."` 或 `/ompm help` |
 
 ### 调用方式
 
@@ -358,7 +360,7 @@ npx skills add . -a codex
 
 # 版本历史
 
-当前版本 **1.0.0**，完整版本历史见 [CHANGELOG.md](../CHANGELOG.md)。
+当前版本 **1.1.0**，完整版本历史见 [CHANGELOG.md](../CHANGELOG.md)。
 
 ---
 

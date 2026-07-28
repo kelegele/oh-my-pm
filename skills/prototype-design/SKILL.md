@@ -1,6 +1,6 @@
 ---
 name: prototype-design
-description: 创建交互式原型以验证设计方案。支持 HTML 原型输出格式。当用户需要设计 UI/UX、创建原型、设计用户流程，或说"创建原型"、"设计这个功能"、"UI 原型"时使用。支持迭代模式（基于现有样式）和新产品模式（自定义设计规范）。
+description: '创建交互式原型以验证设计方案。支持 HTML 原型输出格式。当用户需要设计 UI/UX、创建原型、设计用户流程，或说"创建原型"、"设计这个功能"、"UI 原型"时使用。支持迭代模式（基于现有样式）和新产品模式（自定义设计规范）。 Also triggers on: create a prototype, design this feature, UI prototype, HTML prototype.'
 layer: design
 input-from: prd-gen,market-research
 output-to: feature-launch
@@ -37,7 +37,7 @@ output-to: feature-launch
 
 生成任何原型前，必须先检测场景模式：
 
-使用 `AskUserQuestion` 确定模式：
+向用户提问确定模式（**宿主有结构化提问工具时使用**，如 Claude Code 的 `AskUserQuestion`；否则以编号选项列表提问并等待回复）：
 
 ```markdown
 ### Q: 请选择原型生成模式
@@ -60,7 +60,7 @@ output-to: feature-launch
 
 原型失败最常见的原因不是画得不好，而是**画错了页面、用错了风格**。一旦开画，返工成本极高；而提前用三十秒对齐"画什么、怎么画"，几乎能消除"与原系统毫无关系"的灾难性产出。所以这一步不可省略、不可由 agent 代答。
 
-向用户提交一份**确认单**并等待明确确认（`AskUserQuestion` 或等用户回复"确认/继续"）。确认单须包含以下内容：
+向用户提交一份**确认单**并等待明确确认（结构化提问，或等用户回复"确认/继续"）。确认单须包含以下内容：
 
 ### 1.1 画什么（页面范围）
 
@@ -287,7 +287,7 @@ tailwind.config = {
 
 #### Step 3.1: 确认设计规范
 
-使用 `AskUserQuestion` 收集设计偏好：
+向用户提问收集设计偏好：
 
 ```markdown
 ### Q: 请选择设计风格

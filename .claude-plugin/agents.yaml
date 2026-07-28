@@ -2,7 +2,7 @@
 # 用于 Claude Code 自动发现和加载 Subagents
 
 manifest:
-  version: "1.0.0"
+  version: "1.1.0"
   plugin: "oh-my-pm"
   description: "产品经理 AI Agent 工作流系统 - Subagents"
 

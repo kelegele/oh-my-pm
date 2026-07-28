@@ -1,6 +1,6 @@
 ---
 name: full-pm-cycle
-description: 编排从市场研究到上线后分析的完整产品管理周期。用于综合产品规划、0-1 产品开发，或当用户说"完整产品计划"、"完整 PM 周期"、"从研究到上线"时使用。支持 HTML 原型输出格式。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。
+description: '编排从市场研究到上线后分析的完整产品管理周期。用于综合产品规划、0-1 产品开发，或当用户说"完整产品计划"、"完整 PM 周期"、"从研究到上线"时使用。支持 HTML 原型输出格式。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。 Also triggers on: complete product plan, full PM cycle, from research to launch, 0 to 1 product development.'
 layer: workflow
 input-from: user
 output-to: retrospective
@@ -503,7 +503,7 @@ validation_gates:
    - Prioritization 结果（来自 `docs/product/.ompm/prioritization.json`）— 前 N 项及 RICE 分数
    - Roadmap 亮点（完整模式，来自 `docs/product/roadmap.md`）— 关键里程碑
 
-2. **使用 AskUserQuestion 让用户确认**：
+2. **向用户提问让其确认**（**宿主有结构化提问工具时使用**，如 Claude Code 的 `AskUserQuestion`；否则以编号选项列表提问并等待回复）：
 
    | Option | Description |
    |:-------|:------------|

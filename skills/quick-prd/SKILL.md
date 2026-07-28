@@ -1,6 +1,6 @@
 ---
 name: quick-prd
-description: 在一个工作流中生成包含竞品分析的完整 PRD。当用户需要带竞品上下文的 PRD、想要快速记录功能、说"写一个带竞品对比的 PRD"、或需要综合的产品需求文档时使用。当用户提到创建 PRD 并附带竞品研究，或说"分析竞品并写需求"、"快速为 X 写 PRD"时激活。支持 HTML 原型输出格式。
+description: '在一个工作流中生成包含竞品分析的完整 PRD。当用户需要带竞品上下文的 PRD、想要快速记录功能、说"写一个带竞品对比的 PRD"、或需要综合的产品需求文档时使用。当用户提到创建 PRD 并附带竞品研究，或说"分析竞品并写需求"、"快速为 X 写 PRD"时激活。支持 HTML 原型输出格式。 Also triggers on: write a PRD with competitive analysis, analyze competitors and write requirements, quick PRD for X.'
 layer: workflow
 input-from: user
 output-to: feature-launch

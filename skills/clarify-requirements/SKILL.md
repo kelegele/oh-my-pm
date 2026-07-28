@@ -1,6 +1,6 @@
 ---
 name: clarify-requirements
-description: 感知阶段的信息收集与需求澄清。在进入 PRD 生成前，系统性地识别缺失信息、逐步确认、生成 PRD 内容方案供用户审阅。当用户提供需求描述但信息不完整，或说"帮我梳理一下需求"、"还缺什么信息"、"先确认下需求再生成"时使用。
+description: '感知阶段的信息收集与需求澄清。在进入 PRD 生成前，系统性地识别缺失信息、逐步确认、生成 PRD 内容方案供用户审阅。当用户提供需求描述但信息不完整，或说"帮我梳理一下需求"、"还缺什么信息"、"先确认下需求再生成"时使用。 Also triggers on: help me organize my requirements, what info is missing, confirm requirements before generating the PRD.'
 layer: perception
 input-from: user
 output-to: market-research,competitive-analysis,prd-gen
@@ -73,7 +73,7 @@ digraph clarify {
 
 ### Step 2: Scenario Detection
 
-使用 `AskUserQuestion` 确定需求场景：
+向用户提问确定需求场景（**宿主有结构化提问工具时使用**，如 Claude Code 的 `AskUserQuestion`；否则以编号选项列表提问并等待回复）：
 
 **Q: 请选择需求场景**
 
@@ -99,7 +99,7 @@ digraph clarify {
 
 **核心规则：每条缺失信息单独提问，绝不一次性抛出多个问题。**
 
-对每个缺失项，使用 `AskUserQuestion` 提问，优先使用多选格式：
+对每个缺失项，逐一结构化提问，优先使用多选格式：
 
 **示例问题模板**：
 
@@ -164,7 +164,7 @@ digraph clarify {
 
 ### Step 6: User Approval
 
-使用 `AskUserQuestion` 让用户审阅方案：
+向用户提问，让用户审阅方案：
 
 **Q: 请审阅 PRD 内容方案**
 
@@ -207,7 +207,7 @@ digraph clarify {
 ## Quality Standards
 
 - 每个必需字段已确认或标记为 pending
-- 至少一次 `AskUserQuestion` 用于场景确认
+- 至少一次结构化提问用于场景确认
 - PRD 内容方案包含 9 章概要 + 关键决策点
 - 用户已明确批准方案
 - 澄清结果已保存到 `docs/product/.ompm/clarification-result.json`

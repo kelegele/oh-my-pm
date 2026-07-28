@@ -6,10 +6,10 @@
 
 [![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
 [![Version](https://img.shields.io/github/v/release/kelegele/oh-my-pm)](https://github.com/kelegele/oh-my-pm/releases)
-[![Skills](https://img.shields.io/badge/Skills-11-blue)](skills/)
+[![Skills](https://img.shields.io/badge/Skills-12-blue)](skills/)
 [![Agents](https://img.shields.io/badge/Agents-6-purple)](agents/)
 
-**3-Layer Core + Validation Loop · 6 Subagents · 11 Professional Skills · Complete Product Lifecycle**
+**3-Layer Core + Validation Loop · 6 Subagents · 12 Professional Skills · Complete Product Lifecycle**
 
 [Quick Start](#quick-start) • [Skills](#all-skills) • [Subagents](#subagents-architecture) • [中文文档](README-CN.md)
 
@@ -69,6 +69,13 @@ npx skills add kelegele/oh-my-pm --skill prd-gen -a codex
 npx skills add kelegele/oh-my-pm --list
 ```
 
+### Installation Channels
+
+| Channel | What you get | Notes |
+|:--------|:-------------|:------|
+| `npx skills add kelegele/oh-my-pm -a <agent>` | All **12 Skills** — the complete PM workflow capability (intent routing, evidence discipline, execution profiles all live in the skills layer) | Works with any agent: Claude Code, Codex, Cursor, Copilot… |
+| Claude Code marketplace plugin | Everything in the 12 Skills, **plus 6 Subagents** (isolated execution + persistent memory) **and 4 slash Commands** (quick entry points) | Enhanced experience for Claude Code |
+
 ### Manual Installation
 
 ```bash
@@ -98,11 +105,11 @@ cd oh-my-pm
 /ompm help  # Show help
 ```
 
-`/ompm` is also the **global intent router**: invoked with no arguments or with a natural-language request, it reads the current context plus `docs/product/.ompm/current-workflow.json` and recommends the most valuable next step.
+`/ompm` is a shim that activates the **ompm skill** — the global intent router: invoked with no arguments or with a natural-language request, it reads the current context plus `docs/product/.ompm/current-workflow.json` and recommends the most valuable next step.
 
 #### Skills (Natural Language Triggering)
 
-11 Skills trigger automatically through natural language:
+12 Skills trigger automatically through natural language:
 
 ```bash
 # Direct conversation—system identifies and calls the relevant Skill
@@ -118,7 +125,7 @@ cd oh-my-pm
 
 ## 3-Layer Core + Validation Loop
 
-The main line runs **Perception → Strategy → Design**; validation skills close the feedback loop. The former Delivery layer is folded in: PRD pre-review is now a `prd-gen` tail gate, and release checklists / rollout strategy live in `feature-launch`. Three workflow orchestrators (`quick-prd` / `full-pm-cycle` / `feature-launch`) sit on top.
+The main line runs **Perception → Strategy → Design**; validation skills close the feedback loop. The former Delivery layer is folded in: PRD pre-review is now a `prd-gen` tail gate, and release checklists / rollout strategy live in `feature-launch`. On top sit 4 workflow skills: the `ompm` global intent router (front door) plus three orchestrators (`quick-prd` / `full-pm-cycle` / `feature-launch`).
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -249,6 +256,7 @@ Subagents are automatically recognized and called by Claude Code—no explicit t
 
 | Workflow | Install | Function | Trigger Examples |
 |:----------|:--------|:---------|:-----------------|
+| `ompm` | `--skill ompm` | Global intent router (front door): reads context + current-workflow.json, recommends the most valuable next step | "What should I do next", "Continue", any PM request |
 | `quick-prd` | `--skill quick-prd` | Thin preset of full-pm-cycle: competitive analysis + PRD | "Quick PRD", "Requirements with competitive analysis" |
 | `full-pm-cycle` | `--skill full-pm-cycle` | Complete product lifecycle (0-1) | "Complete product planning", "0-1 product" |
 | `feature-launch` | `--skill feature-launch` | Feature launch workflow (release checklist & rollout strategy) | "Feature launch", "Launch coordination" |
@@ -279,7 +287,7 @@ oh-my-pm/
 │   ├── perception/      # Market research, competitive analysis, user research
 │   ├── validation/      # Impact analysis, feedback aggregation
 │   └── workflows/       # PM orchestrator
-├── skills/                        # Skill plugin directory (11)
+├── skills/                        # Skill plugin directory (12)
 │   ├── competitive-analysis/      # layer: perception
 │   ├── market-research/           # layer: perception
 │   ├── clarify-requirements/      # layer: perception
@@ -288,6 +296,7 @@ oh-my-pm/
 │   ├── prototype-design/          # layer: design
 │   ├── retrospective/             # layer: validation
 │   ├── feedback-synthesis/        # layer: validation
+│   ├── ompm/                      # layer: workflow (global intent router)
 │   ├── quick-prd/                 # layer: workflow
 │   ├── full-pm-cycle/             # layer: workflow
 │   └── feature-launch/            # layer: workflow
@@ -320,6 +329,7 @@ oh-my-pm/
 | v0.9.0 | Flat skill directory, standalone install per skill | ✅ |
 | v0.9.3 | Fix context-passing contract (flat .ompm model) + doc version sync | ✅ |
 | v1.0.0 | Simplified architecture: 3-layer core + validation loop (11 Skills, 6 Subagents) | ✅ |
+| v1.1.0 | Portability overhaul: new `ompm` intent-router skill (12 Skills total); `npx skills add` on any agent delivers full capability | ✅ |
 
 See [Project Board](https://github.com/users/kelegele/projects/4) for full planning.
 

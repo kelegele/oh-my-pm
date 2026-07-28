@@ -1,6 +1,6 @@
 # Oh-My-PM 代码地图
 
-> 项目结构和组件快速导航指南（v1.0.0：三层主线（感知 → 策略 → 设计）+ 验证辅助）
+> 项目结构和组件快速导航指南（v1.1.0：三层主线（感知 → 策略 → 设计）+ 验证辅助）
 
 ---
 
@@ -8,7 +8,7 @@
 
 ```
 oh-my-pm/
-├── skills/                    # 核心 Skills (11个，扁平结构)
+├── skills/                    # 核心 Skills (12个，扁平结构)
 │   ├── competitive-analysis/
 │   ├── market-research/
 │   ├── clarify-requirements/
@@ -17,6 +17,7 @@ oh-my-pm/
 │   ├── prototype-design/
 │   ├── retrospective/
 │   ├── feedback-synthesis/
+│   ├── ompm/
 │   ├── quick-prd/
 │   ├── full-pm-cycle/
 │   └── feature-launch/
@@ -70,6 +71,7 @@ oh-my-pm/
 
 | Workflow | 文件路径 | 触发关键词 | 调用的 Skills |
 |:--------|:----------|:----------|:-------------|
+| **ompm** | `skills/ompm/SKILL.md` | 接下来做什么, 不知道做什么, ompm | 无（读对话上下文 + `docs/product/.ompm/current-workflow.json`，推荐最合适的 skill/workflow） |
 | **quick-prd** | `skills/quick-prd/SKILL.md` | 快速 PRD, 带竞品分析的 PRD | competitive-analysis → prd-gen（full-pm-cycle 薄预设） |
 | **full-pm-cycle** | `skills/full-pm-cycle/SKILL.md` | 完整产品规划, 0-1 产品, 产品全周期 | 全部 8 个领域 Skills |
 | **feature-launch** | `skills/feature-launch/SKILL.md` | 功能发布, 发布协调, 发布工作流 | prd-gen（预审尾门）→ 发布 checklist/灰度策略 → retrospective → feedback-synthesis |
@@ -98,7 +100,7 @@ oh-my-pm/
 | **/quick-prd** | `commands/quick-prd.md` | `<功能描述> [竞品...]` | skills/quick-prd/SKILL.md |
 | **/full-pm-cycle** | `commands/full-pm-cycle.md` | `<产品名称> [type]` | skills/full-pm-cycle/SKILL.md |
 | **/feature-launch** | `commands/feature-launch.md` | `<功能名称> [日期]` | skills/feature-launch/SKILL.md |
-| **/ompm** | `commands/ompm.md` | 自然语言 / `<命令> [参数...]` / `help` / `?` | 全局意图路由：无参/自然语言时读上下文 + current-workflow.json 推荐下一步；workflow 名直派到以上 3 个 workflow |
+| **/ompm** | `commands/ompm.md` | 自然语言 / `<命令> [参数...]` / `help` / `?` | 激活 `ompm` skill 的 shim（路由逻辑在 skill 内：无参/自然语言时读上下文 + current-workflow.json 推荐下一步）；workflow 名直派到以上 3 个 workflow |
 
 ---
 
@@ -225,11 +227,17 @@ oh-my-pm/
 
 ## 版本信息
 
-- **当前版本**: v1.0.0
+- **当前版本**: v1.1.0
 - **最后更新**: 2026-07-28
-- **组件总数**: 11 Skills + 6 Subagents + 4 Commands
+- **组件总数**: 12 Skills + 6 Subagents + 4 Commands
 
-### 最近变更 (v1.0.0)
+### 最近变更 (v1.1.0)
+
+- 新增 `ompm` Skill（layer: workflow）：全局意图路由，原 `commands/ompm.md` 的路由逻辑移植进 skill，`/ompm` 命令变为激活它的 shim；Skills 11 → 12，工作流类 4 个（ompm / quick-prd / full-pm-cycle / feature-launch）
+- 可移植性改造：`npx skills add`（任意 agent：codex / cursor / copilot…）安装 12 个 Skills 即获完整 PM 工作流能力（路由、证据纪律、Execution Profile 全在 skills 层）；Claude Code marketplace 插件额外提供 6 Subagents + 4 Commands 增强
+- market-research / competitive-analysis / retrospective / feedback-synthesis 新增 `## Execution Profile (执行建议)` 段（模型建议、工具姿态、记忆文件、对应 subagent）
+
+### v1.0.0
 
 - 架构简化：五层 → 三层主线（感知 → 策略 → 设计）+ 验证辅助；交付层取消（PRD 预审并入 prd-gen 尾门，发布 checklist/灰度策略并入 feature-launch）
 - Skill 合并：market-intelligence + user-research → market-research；positioning + prioritization + roadmap → product-strategy；impact-analysis + iteration-planning → retrospective

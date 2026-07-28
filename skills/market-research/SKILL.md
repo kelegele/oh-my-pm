@@ -1,6 +1,6 @@
 ---
 name: market-research
-description: 统一的市场与用户研究入口：市场面收集市场趋势、行业报告并识别机会（TAM-SAM-SOM）；用户面进行用户访谈、调研与画像创建。当用户需要市场研究、行业分析、趋势识别、市场规模分析，或需要了解用户需求、创建用户画像、进行用户访谈，或说"X 市场发生了什么"、"用户想要什么"、"用户研究"时使用。即使没有明确说"市场研究"或"用户研究"，当用户正在研究某个市场或行业，或试图理解用户行为、需求与痛点时也应激活。
+description: '统一的市场与用户研究入口：市场面收集市场趋势、行业报告并识别机会（TAM-SAM-SOM）；用户面进行用户访谈、调研与画像创建。当用户需要市场研究、行业分析、趋势识别、市场规模分析，或需要了解用户需求、创建用户画像、进行用户访谈，或说"X 市场发生了什么"、"用户想要什么"、"用户研究"时使用。即使没有明确说"市场研究"或"用户研究"，当用户正在研究某个市场或行业，或试图理解用户行为、需求与痛点时也应激活。 Also triggers on: market research, what is happening in the X market, market sizing, what do users want, user research.'
 layer: perception
 input-from: user
 output-to: product-strategy,competitive-analysis,prd-gen
@@ -432,3 +432,10 @@ User: "Analyze these user interviews"
 User: "先研究下市场规模，再帮我做用户画像"
 → 组合执行：市场面 → 用户面
 ```
+
+## Execution Profile (执行建议)
+
+- **模型建议**：轻量(haiku 级)——宿主支持多模型/子代理时按此分配；单模型宿主忽略
+- **工具姿态**：读写 + 联网搜索——遵循最小权限
+- **记忆文件**：`docs/product/.ompm/memory/market-research.md`——跨会话积累经验（优质信源、领域基线、分析框架）；执行开始时读取、结束时更新；文件不存在则新建
+- **Claude Code 增强**：本 profile 在该宿主由 market-researcher subagent 以隔离上下文实现

@@ -1,6 +1,6 @@
 ---
 name: competitive-analysis
-description: 竞品功能对比分析，生成对比矩阵并识别战略机会。当用户提到竞品、竞品研究、功能对比、"竞品有什么"、"对比XX产品"、市场定位，或需要了解竞争格局时使用。即使没有明确说"竞品分析"，当用户明显在评估自己产品与竞品差异时也应激活。
+description: '竞品功能对比分析，生成对比矩阵并识别战略机会。当用户提到竞品、竞品研究、功能对比、"竞品有什么"、"对比XX产品"、市场定位，或需要了解竞争格局时使用。即使没有明确说"竞品分析"，当用户明显在评估自己产品与竞品差异时也应激活。 Also triggers on: competitive analysis, what do competitors offer, compare X products, feature comparison.'
 layer: perception
 input-from: market-research
 output-to: product-strategy,prd-gen
@@ -17,7 +17,7 @@ output-to: product-strategy,prd-gen
 
 ## Execution Methodology
 
-本 skill 生成竞品情报：竞品有什么功能、强在哪里、差异化机会在哪里，输出服务于功能优先级排序与产品定位。具体执行方法论（竞品识别与映射、多源采集与交叉验证、对比矩阵构建与 parity 评分、差距分析与战略机会识别框架、各 `analysis_depth` 的执行细节、Markdown 报告模板）由 `competitive-analyst` subagent 承载，见 `agents/perception/competitive-analyst.md`。独立使用本 skill 时，按本文件契约执行并输出即可。
+本 skill 生成竞品情报：竞品有什么功能、强在哪里、差异化机会在哪里，输出服务于功能优先级排序与产品定位。具体执行方法论（竞品识别与映射、多源采集与交叉验证、对比矩阵构建与 parity 评分、差距分析与战略机会识别框架、各 `analysis_depth` 的执行细节、Markdown 报告模板）：独立使用时按本文件契约执行并输出；Claude Code 宿主由 `competitive-analyst` subagent 承载，见末尾 Execution Profile。
 
 ## Anti-Hallucination Rules (Self-Contained)
 
@@ -116,3 +116,10 @@ The following rules are mandatory for this skill. They are inlined here for stan
 
 - **Reads:** `docs/product/.ompm/market-analysis.json` - Market trends that inform competitive landscape
 - **Writes:** `docs/product/.ompm/competitive-analysis.json` - Analysis results for other skills (prd-gen, product-strategy); `docs/product/competitive-analysis/{feature-name}-{date}.md` - Human-readable markdown report (versioned artifact)
+
+## Execution Profile (执行建议)
+
+- **模型建议**：标准(sonnet 级)——宿主支持多模型/子代理时按此分配；单模型宿主忽略
+- **工具姿态**：读写 + 联网搜索——遵循最小权限
+- **记忆文件**：`docs/product/.ompm/memory/competitive-analysis.md`——跨会话积累经验（优质信源、领域基线、分析框架）；执行开始时读取、结束时更新；文件不存在则新建
+- **Claude Code 增强**：本 profile 在该宿主由 competitive-analyst subagent 以隔离上下文实现

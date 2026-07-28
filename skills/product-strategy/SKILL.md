@@ -1,6 +1,6 @@
 ---
 name: product-strategy
-description: 一次性产出产品策略三件套：定位声明、优先级排序（RICE/MoSCoW）与产品路线图，三段一条主线（定位定权重、权重定排序、排序定排期）。当用户需要产品定位、差异化策略、定义价值主张，或需要对待办事项排序、决定先构建什么、用 RICE/MoSCoW 给功能排名，或需要创建路线图、定义里程碑、规划产品方向，或说"我们如何定位 X"、"我们有什么不同"、"给这个排优先级"、"我们应该先构建什么"、"创建路线图"、"我们的计划是什么"、"下季度路线图"时使用。即使没有明确说"定位"、"优先级排序"或"路线图"，当用户正在制定产品战略、对竞争项目进行排名、规划产品时间线或向干系人沟通产品方向时也应激活。
+description: '一次性产出产品策略三件套：定位声明、优先级排序（RICE/MoSCoW）与产品路线图，三段一条主线（定位定权重、权重定排序、排序定排期）。当用户需要产品定位、差异化策略、定义价值主张，或需要对待办事项排序、决定先构建什么、用 RICE/MoSCoW 给功能排名，或需要创建路线图、定义里程碑、规划产品方向，或说"我们如何定位 X"、"我们有什么不同"、"给这个排优先级"、"我们应该先构建什么"、"创建路线图"、"我们的计划是什么"、"下季度路线图"时使用。即使没有明确说"定位"、"优先级排序"或"路线图"，当用户正在制定产品战略、对竞争项目进行排名、规划产品时间线或向干系人沟通产品方向时也应激活。 Also triggers on: product positioning, prioritize this with RICE, what should we build first, create a roadmap, next quarter roadmap.'
 layer: strategy
 input-from: market-research,competitive-analysis,clarify-requirements,feedback-synthesis
 output-to: prd-gen,retrospective

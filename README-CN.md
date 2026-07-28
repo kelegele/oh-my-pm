@@ -5,11 +5,11 @@
 > 面向产品经理的 AI Agent 工作流系统
 
 [![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.0-blue)](https://github.com/kelegele/oh-my-pm/releases)
-[![Skills](https://img.shields.io/badge/Skills-11-blue)](skills/)
+[![Version](https://img.shields.io/badge/Version-1.1.0-blue)](https://github.com/kelegele/oh-my-pm/releases)
+[![Skills](https://img.shields.io/badge/Skills-12-blue)](skills/)
 [![Agents](https://img.shields.io/badge/Agents-6-purple)](agents/)
 
-**三层主线 + 验证辅助 · 6 个 Subagents · 11 个专业 Skills · 完整产品闭环**
+**三层主线 + 验证辅助 · 6 个 Subagents · 12 个专业 Skills · 完整产品闭环**
 
 [快速开始](#快速开始) • [全部 Skills](#全部-skills) • [Subagents](#subagents-架构) • [English](README.md)
 
@@ -42,7 +42,7 @@ Oh-My-PM 是一套面向产品经理的 AI Agent 工作流系统，以 **Claude 
 ### 安装 (Claude Code)
 
 ```bash
-# 安装全部 11 个 skills
+# 安装全部 12 个 skills
 npx skills add kelegele/oh-my-pm -a claude-code
 
 # 安装单个 skill
@@ -68,6 +68,13 @@ npx skills add kelegele/oh-my-pm --skill prd-gen -a codex
 npx skills add kelegele/oh-my-pm --list
 ```
 
+### 安装通道功能矩阵
+
+| 安装通道 | 获得能力 | 说明 |
+|:---------|:---------|:-----|
+| `npx skills add kelegele/oh-my-pm -a <agent>` | 全部 **12 个 Skills** —— 完整 PM 工作流能力（意图路由、证据纪律、Execution Profile 全在 skills 层） | 任意 agent 均可：Claude Code、Codex、Cursor、Copilot… |
+| Claude Code marketplace 插件 | 12 个 Skills 全能力，**外加 6 个 Subagents**（隔离执行 + 持久记忆）**和 4 个 slash Commands**（快捷入口） | Claude Code 的增强体验 |
+
 ### 使用
 
 #### Commands（直接调用）
@@ -80,11 +87,11 @@ npx skills add kelegele/oh-my-pm --list
 /ompm help  # 显示所有可用命令和 skills
 ```
 
-`/ompm` 同时也是**全局意图路由**：无参数或输入自然语言需求时，会读取当前上下文和 `docs/product/.ompm/current-workflow.json`，推荐当前最有价值的下一步。
+`/ompm` 命令是激活 **ompm skill**（全局意图路由）的 shim：无参数或输入自然语言需求时，会读取当前上下文和 `docs/product/.ompm/current-workflow.json`，推荐当前最有价值的下一步。
 
 #### Skills（自然语言触发）
 
-11 个 Skills 通过自然语言自动触发：
+12 个 Skills 通过自然语言自动触发：
 
 ```bash
 "帮我分析一下 Notion 和飞书文档的竞品差异"    # → competitive-analysis
@@ -97,7 +104,7 @@ npx skills add kelegele/oh-my-pm --list
 
 ## 三层主线 + 验证辅助
 
-主线为 **感知 → 策略 → 设计**；验证技能辅助形成反馈闭环。原交付层已并入：PRD 预审成为 `prd-gen` 尾门，发布 checklist / 灰度策略并入 `feature-launch`。顶层由 3 个工作流编排器（`quick-prd` / `full-pm-cycle` / `feature-launch`）串接。
+主线为 **感知 → 策略 → 设计**；验证技能辅助形成反馈闭环。原交付层已并入：PRD 预审成为 `prd-gen` 尾门，发布 checklist / 灰度策略并入 `feature-launch`。顶层由 4 个工作流类 Skill 组成：全局意图路由 `ompm`（前门）+ 3 个编排器（`quick-prd` / `full-pm-cycle` / `feature-launch`）。
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -157,6 +164,7 @@ npx skills add kelegele/oh-my-pm --list
 
 | Workflow | 安装 | 功能 | 触发示例 |
 |:---------|:-----|:-----|:---------|
+| `ompm` | `--skill ompm` | 全局意图路由（前门）：读对话上下文 + current-workflow.json，推荐最有价值的下一步 | "接下来做什么"、"继续"、任意 PM 请求 |
 | `quick-prd` | `--skill quick-prd` | full-pm-cycle 薄预设：竞品分析 + PRD 一体化 | "快速 PRD"、"带竞品分析的需求" |
 | `full-pm-cycle` | `--skill full-pm-cycle` | 完整产品周期 (0-1) | "完整产品规划"、"0-1 产品" |
 | `feature-launch` | `--skill feature-launch` | 功能发布工作流（发布 checklist + 灰度策略） | "功能发布"、"发布协调" |
@@ -220,7 +228,7 @@ oh-my-pm/
 │   ├── perception/            # 市场研究、竞品分析、用户研究
 │   ├── validation/            # 效果分析、反馈汇总
 │   └── workflows/             # PM 编排器
-├── skills/                    # Skill 插件目录 (11)
+├── skills/                    # Skill 插件目录 (12)
 │   ├── competitive-analysis/  # layer: perception
 │   ├── market-research/       # layer: perception
 │   ├── clarify-requirements/  # layer: perception
@@ -229,6 +237,7 @@ oh-my-pm/
 │   ├── prototype-design/      # layer: design
 │   ├── retrospective/         # layer: validation
 │   ├── feedback-synthesis/    # layer: validation
+│   ├── ompm/                  # layer: workflow（全局意图路由）
 │   ├── quick-prd/             # layer: workflow
 │   ├── full-pm-cycle/         # layer: workflow
 │   └── feature-launch/        # layer: workflow
@@ -254,6 +263,7 @@ oh-my-pm/
 | v0.9.0 | 扁平化 Skill 目录，支持按需安装单个 Skill | ✅ |
 | v0.9.3 | 修复 context 传递契约（统一扁平 .ompm 模型）+ 文档版本同步 | ✅ |
 | v1.0.0 | 简化架构：三层主线 + 验证辅助（11 Skills / 6 Subagents） | ✅ |
+| v1.1.0 | 可移植性改造：新增 `ompm` 意图路由 Skill（共 12 Skills）；任意 agent 经 `npx skills add` 即获全能力 | ✅ |
 
 ---
 

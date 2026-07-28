@@ -2,7 +2,46 @@
 
 ## 版本历史
 
-### v0.9.3 - Context 契约修复与文档同步 (当前)
+### v1.1.0 - 可移植性改造 (当前)
+
+**已完成**:
+- ✅ `npx skills add` 任意 agent（codex/cursor/copilot…）安装 12 个 Skills 即获全能力（路由、证据纪律、执行画像）
+- ✅ `ompm` 全局意图路由移植为第 12 个 Skill（唯一权威），command 变为激活它的 shim
+- ✅ 4 个 Skill 新增 Execution Profile 跨宿主契约（模型建议/工具姿态/记忆文件），`agents/*.md` 为其 Claude Code 实现
+- ✅ Skill 体工具名去硬编码（能力描述为主、宿主示例为辅）
+
+---
+
+### v1.0.0 - 简化重构
+
+**已完成**:
+- ✅ 五层架构简化为三层主线（感知→策略→设计）+ 验证辅助，Skills 20 → 11
+- ✅ Skill 合并：market-intelligence+user-research→market-research；positioning+prioritization+roadmap→product-strategy；impact-analysis+iteration-planning→retrospective
+- ✅ 取消交付层：PRD 预审并入 prd-gen 尾门，发布 checklist/灰度并入 feature-launch；删除 data-monitoring/process-optimization/project-coordination
+- ✅ Subagents 8 → 6（删除 data-monitor、process-optimizer）；全局证据纪律内联 5 个产出型 Skill
+
+---
+
+### v0.10.0 - 行为测试与可执行契约
+
+**已完成**:
+- ✅ Evals 行为测试体系（`evals/`，`claude -p` headless 真实模型断言）
+- ✅ 可执行上下文契约：`contracts/*.schema.json`（9 份）+ 最小示例 + `validate_contracts.py` / `validate-context.sh`
+- ✅ quick-prd 薄预设化：编排逻辑收敛到 full-pm-cycle（`mode: quick` + S2.5 策略确认硬门控）
+- ✅ 删除 Skill 级版本号，plugin.json 成为唯一版本源
+
+---
+
+### v0.9.4 - 契约统一修复
+
+**已完成**:
+- ✅ `agents/` 上下文路径统一为扁平 `.ompm/<name>.json` 契约
+- ✅ 版本号同步：marketplace.json / agents.yaml 对齐 plugin.json；skills.yaml layer 统一为单数 `workflow`
+- ✅ 修复多处 Skill/Agent 文案笔误与过期内容；契约守卫扩展扫描 `agents/` 目录
+
+---
+
+### v0.9.3 - Context 契约修复与文档同步
 
 **已完成**:
 - ✅ 统一 context 传递契约为扁平 .ompm 模型（移除 dated/nested 写入与 personas 文件名分裂）
@@ -81,21 +120,22 @@
 
 ---
 
-## 当前状态 (v0.9.3)
+## 当前状态 (v1.1.0)
 
 ### 组件统计
 
 | 组件类型 | 数量 | 状态 |
 |:---------|:-----:|:-----|
-| **Skills** | 20 | ✅ 完成 |
-| - Perception Layer | 5 | ✅ |
-| - Strategy Layer | 3 | ✅ |
-| - Design Layer | 3 | ✅ |
-| - Delivery Layer | 3 | ✅ |
-| - Validation Layer | 3 | ✅ |
-| - Workflows | 3 | ✅ |
-| **Subagents** | 8 | ✅ 完成 |
+| **Skills** | 12 | ✅ 完成 |
+| - Perception Layer | 3 | ✅ |
+| - Strategy Layer | 1 | ✅ |
+| - Design Layer | 2 | ✅ |
+| - Validation Layer | 2 | ✅ |
+| - Workflows（含 ompm 路由） | 4 | ✅ |
+| **Subagents** | 6 | ✅ 完成 |
 | **Commands** | 4 | ✅ 完成 |
+
+（交付层已于 v1.0.0 取消：PRD 预审 → prd-gen 尾门，发布 checklist/灰度 → feature-launch。）
 
 ### 功能特性
 
@@ -142,55 +182,22 @@
 
 ## Skill 完整清单
 
-### Perception Layer (需求感知层)
+> Skill 级版本号已于 v0.10.0 移除，`plugin.json` 为唯一版本源。当前共 12 个 Skills。
 
-| Skill | 版本 | 文件 |
-|:-----|:-----|:-----|
-| competitive-analysis | 0.2.2 | skills/competitive-analysis/SKILL.md |
-| market-intelligence | 0.2.1 | skills/market-intelligence/SKILL.md |
-| user-research | 0.2.1 | skills/user-research/SKILL.md |
-| data-monitoring | 0.2.1 | skills/data-monitoring/SKILL.md |
-| clarify-requirements | 0.1.2 | skills/clarify-requirements/SKILL.md |
-
-### Strategy Layer (策略规划层)
-
-| Skill | 版本 | 文件 |
-|:-----|:-----|:-----|
-| product-positioning | 0.1.1 | skills/product-positioning/SKILL.md |
-| roadmap-planning | 0.1.1 | skills/roadmap-planning/SKILL.md |
-| prioritization | 0.1.1 | skills/prioritization/SKILL.md |
-
-### Design Layer (方案设计层)
-
-| Skill | 版本 | 文件 |
-|:-----|:-----|:-----|
-| prd-gen | 0.5.1 | skills/prd-gen/SKILL.md |
-| prototype-design | 0.7.1 | skills/prototype-design/SKILL.md |
-| process-optimization | 0.1.1 | skills/process-optimization/SKILL.md |
-
-### Delivery Layer (交付协调层)
-
-| Skill | 版本 | 文件 |
-|:-----|:-----|:-----|
-| requirement-review | 0.1.1 | skills/requirement-review/SKILL.md |
-| project-coordination | 0.1.1 | skills/project-coordination/SKILL.md |
-| release-management | 0.1.1 | skills/release-management/SKILL.md |
-
-### Validation Layer (价值验证层)
-
-| Skill | 版本 | 文件 |
-|:-----|:-----|:-----|
-| impact-analysis | 0.1.1 | skills/impact-analysis/SKILL.md |
-| feedback-synthesis | 0.1.1 | skills/feedback-synthesis/SKILL.md |
-| iteration-planning | 0.1.1 | skills/iteration-planning/SKILL.md |
-
-### Workflows Layer (工作流编排层)
-
-| Workflow | 版本 | 文件 |
-|:--------|:-----|:-----|
-| quick-prd | 0.8.2 | skills/quick-prd/SKILL.md |
-| full-pm-cycle | 0.8.2 | skills/full-pm-cycle/SKILL.md |
-| feature-launch | 0.8.2 | skills/feature-launch/SKILL.md |
+| Skill | Layer | 文件路径 |
+|:------|:------|:---------|
+| clarify-requirements | perception | skills/clarify-requirements/SKILL.md |
+| competitive-analysis | perception | skills/competitive-analysis/SKILL.md |
+| market-research | perception | skills/market-research/SKILL.md |
+| product-strategy | strategy | skills/product-strategy/SKILL.md |
+| prd-gen | design | skills/prd-gen/SKILL.md |
+| prototype-design | design | skills/prototype-design/SKILL.md |
+| feedback-synthesis | validation | skills/feedback-synthesis/SKILL.md |
+| retrospective | validation | skills/retrospective/SKILL.md |
+| ompm | workflow | skills/ompm/SKILL.md |
+| quick-prd | workflow | skills/quick-prd/SKILL.md |
+| full-pm-cycle | workflow | skills/full-pm-cycle/SKILL.md |
+| feature-launch | workflow | skills/feature-launch/SKILL.md |
 
 ---
 
@@ -201,8 +208,6 @@
 | market-researcher | Perception | haiku | agents/perception/market-researcher.md |
 | competitive-analyst | Perception | sonnet | agents/perception/competitive-analyst.md |
 | user-interviewer | Perception | sonnet | agents/perception/user-interviewer.md |
-| data-monitor | Perception | haiku | agents/perception/data-monitor.md |
-| process-optimizer | Design | sonnet | agents/design/process-optimizer.md |
 | impact-analyst | Validation | sonnet | agents/validation/impact-analyst.md |
 | feedback-collector | Validation | haiku | agents/validation/feedback-collector.md |
 | pm-orchestrator | Workflows | inherit | agents/workflows/pm-orchestrator.md |

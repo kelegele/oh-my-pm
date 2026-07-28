@@ -4,7 +4,7 @@
 
 ## 项目概述
 
-Oh-My-PM 是基于 Claude Code Skill 插件的产品经理 AI Agent 工作流系统。通过五层架构和专业化 Skills，实现产品管理任务的自动化。
+Oh-My-PM 是面向产品经理的 AI Agent 工作流系统，以跨 Agent 的 Skills 插件形式分发（`npx skills add` 安装到 Claude Code / Codex / Cursor 等 70+ agent；Claude Code marketplace 插件额外提供 subagent 与命令增强）。通过三层主线（感知→策略→设计）+ 验证辅助和专业化 Skills，实现产品管理任务的自动化。
 
 ## 如何贡献
 
@@ -38,23 +38,15 @@ git checkout -b fix/issue-description
 
 ```
 skills/                        # Flat structure, layer info in SKILL.md frontmatter
-├── competitive-analysis/      # layer: perception
-├── market-intelligence/       # layer: perception
-├── user-research/             # layer: perception
-├── data-monitoring/           # layer: perception
 ├── clarify-requirements/      # layer: perception
-├── product-positioning/       # layer: strategy
-├── roadmap-planning/          # layer: strategy
-├── prioritization/            # layer: strategy
+├── competitive-analysis/      # layer: perception
+├── market-research/           # layer: perception
+├── product-strategy/          # layer: strategy
 ├── prd-gen/                   # layer: design
 ├── prototype-design/          # layer: design
-├── process-optimization/      # layer: design
-├── requirement-review/        # layer: delivery
-├── project-coordination/      # layer: delivery
-├── release-management/        # layer: delivery
-├── impact-analysis/           # layer: validation
 ├── feedback-synthesis/        # layer: validation
-├── iteration-planning/        # layer: validation
+├── retrospective/             # layer: validation
+├── ompm/                      # layer: workflow（全局意图路由）
 ├── quick-prd/                 # layer: workflow
 ├── full-pm-cycle/             # layer: workflow
 └── feature-launch/            # layer: workflow
@@ -68,8 +60,7 @@ name: skill-name
 description: 简洁描述（使用 skill-creator 的 pushy 描述原则）
 layer: design
 input-from: competitive-analysis
-output-to: requirement-review
-version: 0.1.0
+output-to: prd-gen
 ---
 
 # Skill Name
@@ -106,7 +97,7 @@ version: 0.1.0
 ./tests/test-skills.sh
 
 # 手动测试触发
-# 在 Claude Code 中使用各种输入测试 Skill 触发率
+# 在 Claude Code 或 Codex 中使用各种输入测试 Skill 触发率
 ```
 
 #### 6. 提交 PR
@@ -146,23 +137,26 @@ Type:
 
 ### Context 文件规范
 
-Context 文件存放在 `docs/product/` 目录：
+机器可读上下文统一为扁平 `docs/product/.ompm/<name>.json` 模型（字段契约见 `contracts/*.schema.json`），人读文档放 `docs/product/` 旁侧：
 
 | 文件 | 格式 | 用途 |
 |:-----|:-----|:-----|
-| competitive-analysis.json | JSON | 竞品分析结果 |
-| prd-draft.md | Markdown | PRD 文档 |
-| iteration-plan.json | JSON | 迭代计划 |
-| current-workflow.json | JSON | 工作流状态 |
+| `.ompm/competitive-analysis.json` | JSON | 竞品分析结果 |
+| `.ompm/prioritization.json` | JSON | 优先级排序 |
+| `.ompm/iteration-plan.json` | JSON | 迭代计划 |
+| `.ompm/current-workflow.json` | JSON | 工作流状态 |
+| `prd/*.md` | Markdown | PRD 文档 |
 
-## 五层架构
+## 三层主线 + 验证辅助
 
-| 层级 | 职责 | 示例 Skills |
+| 层级 | 职责 | Skills |
 |:-----|:-----|:------------|
-| Perception | 需求感知 | market-intelligence, user-research |
-| Strategy | 策略规划 | product-positioning, roadmap-planning |
-| Delivery | 交付协调 | requirement-review, release-management |
-| Validation | 价值验证 | impact-analysis, iteration-planning |
+| Perception | 需求感知 | clarify-requirements, competitive-analysis, market-research |
+| Strategy | 策略规划 | product-strategy |
+| Design | 方案设计 | prd-gen, prototype-design |
+| Validation（辅助） | 价值验证 | feedback-synthesis, retrospective |
+
+（交付层已于 v1.0.0 取消：PRD 预审并入 prd-gen 尾门，发布 checklist/灰度策略并入 feature-launch。）
 
 ## 测试指南
 
@@ -174,7 +168,10 @@ Context 文件存放在 `docs/product/` 目录：
 # 结构测试
 ./tests/test-skills.sh
 
-# 手动测试（在 Claude Code 中）
+# 行为测试（真实模型调用，可选）
+bash evals/run-evals.sh [skill-name]
+
+# 手动测试（在 Claude Code 或 Codex 中）
 "分析淘宝和京东的个人中心功能"
 "写一个暗色主题功能的 PRD"
 "规划下个迭代"

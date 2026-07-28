@@ -8,9 +8,11 @@ This file provides guidance to Claude Code and Codex when working with code in t
 
 Oh-My-PM is an AI Agent workflow system for Product Managers, implemented as a **Skills plugin** installable into Claude Code and Codex. There is no application code, build step, or runtime of its own — the repository is a curated set of Markdown prompt definitions (Skills, Subagents, Commands), HTML prototype templates, and one bash test script.
 
-The system features a **3-layer core (Perception → Strategy → Design) + Validation loop** with **11 Skills** (8 domain + 3 workflows), **6 Subagents**, and **4 Commands**. The former Delivery layer was retired in v1.0.0: PRD pre-review lives in prd-gen's tail gate, release checklists/strategy live in feature-launch.
+The system features a **3-layer core (Perception → Strategy → Design) + Validation loop** with **12 Skills** (8 domain + 4 workflows, incl. the `ompm` intent router), **6 Subagents**, and **4 Commands**. The former Delivery layer was retired in v1.0.0: PRD pre-review lives in prd-gen's tail gate, release checklists/strategy live in feature-launch.
 
-Current plugin version: **1.0.0** (see `.claude-plugin/plugin.json` — the single version source). See `docs/planning/roadmap.md` and `CHANGELOG.md` for version history.
+**Portability (v1.1.0+)**: the `skills/` layer is self-sufficient — `npx skills add` (any agent: codex, cursor, copilot…) installs all 12 skills with full capability (routing, evidence discipline, execution profiles included). The Claude Code marketplace plugin adds host-specific enhancements on top: 6 subagents (isolated execution, model tiering) and 4 slash commands (quick entry, incl. the `/ompm` shim). Skill bodies must not hard-code host-specific tool names (e.g. `AskUserQuestion`, `mcp__*`) except inside "e.g. on Claude Code…" example phrasing.
+
+Current plugin version: **1.1.0** (see `.claude-plugin/plugin.json` — the single version source). See `docs/planning/roadmap.md` and `CHANGELOG.md` for version history.
 
 ## Commands
 
@@ -80,13 +82,13 @@ Installing with `npx skills add .` copies the skills into `.agents/skills/` and 
 
 | Component | Count | Purpose |
 |:----------|:------|:--------|
-| **Skills** | 11 | Prompt injection for workflow triggering |
+| **Skills** | 12 | Prompt injection for workflow triggering |
 | **Subagents** | 6 | Isolated execution with optimized models |
 | **Commands** | 4 | Direct CLI invocation |
 
 **Key Difference**: Skills share main conversation context; Subagents run in isolation with custom model selection (haiku/sonnet/opus) and persistent memory.
 
-**Division of labor (v0.10.0+)**: when a domain has both a Skill and a Subagent, the **Skill stays thin** (trigger conditions, input parameters, output contract — JSON schema + quality standards — and stage gates) while the **Subagent carries the depth** (execution methodology, analysis frameworks, detailed procedures). Reference pair: `skills/competitive-analysis/SKILL.md` ↔ `agents/perception/competitive-analyst.md`. Domains that need no model/tool isolation should be Skill-only; new components must follow this split.
+**Division of labor (v0.10.0+)**: when a domain has both a Skill and a Subagent, the **Skill stays thin** (trigger conditions, input parameters, output contract — JSON schema + quality standards — and stage gates) while the **Subagent carries the depth** (execution methodology, analysis frameworks, detailed procedures). Reference pair: `skills/competitive-analysis/SKILL.md` ↔ `agents/perception/competitive-analyst.md`. Domains that need no model/tool isolation should be Skill-only; new components must follow this split. Since v1.1.0, such skills also carry an `## Execution Profile` section (model tier, tool posture, memory file) — that profile is the cross-host contract, and `agents/*.md` frontmatter is its Claude Code realization; **change one, change the other**.
 
 ### Skills Breakdown
 
@@ -96,7 +98,7 @@ Installing with `npx skills add .` copies the skills into `.agents/skills/` and 
 | **Strategy** (1) | product-strategy | Positioning → prioritization → roadmap |
 | **Design** (2) | prd-gen, prototype-design | PRD (+pre-review gate), HTML prototypes |
 | **Validation** (2) | feedback-synthesis, retrospective | Feedback clustering, data-fed retro + iteration plan |
-| **Workflows** (3) | quick-prd, full-pm-cycle, feature-launch | Multi-skill orchestration |
+| **Workflows** (4) | ompm, quick-prd, full-pm-cycle, feature-launch | Intent routing, multi-skill orchestration |
 
 ### Context Passing
 
@@ -146,7 +148,7 @@ All workflows follow the **Plan-and-Execute pattern** with:
 | **full-pm-cycle** | `/full-pm-cycle "product"` | Complete 0-1 product lifecycle (canonical stage definitions) |
 | **feature-launch** | `/feature-launch "feature"` | Feature launch coordination |
 
-The 4th command, **`ompm`**, is the **global intent router**: `/ompm <any natural-language request>` (or no args) reads conversation context + `docs/product/.ompm/current-workflow.json` and routes to the most valuable next skill/workflow with a one-line rationale. It also remains a workflow dispatcher (`/ompm <workflow> [args...] | help | ?`) — e.g. `/ompm quick-prd "用户改版" 淘宝 京东`. The bare `/quick-prd` etc. are shorthand.
+The 4th command, **`ompm`**, is a thin shim that activates the **`ompm` skill** — the **global intent router** (routing logic lives in `skills/ompm/SKILL.md`, the canonical source): natural-language input (or no args) reads conversation context + `docs/product/.ompm/current-workflow.json` and routes to the most valuable next skill/workflow with a one-line rationale. It also accepts direct workflow dispatch (`/ompm <workflow> [args...] | help | ?`) — e.g. `/ompm quick-prd "用户改版" 淘宝 京东`. The bare `/quick-prd` etc. are shorthand.
 
 Skills themselves do **not** support `/skill-name` explicit invocation — they trigger through natural language or workflows.
 
@@ -187,9 +189,10 @@ Memory enables cross-session learning without polluting main conversation contex
 
 ### Content Conventions
 
-- Skill and agent definitions are **prompt documents, not code**: write them as instructions to the executing agent. Bodies mix Chinese and English (matching the existing files); YAML frontmatter keys stay in English.
+- Skill and agent definitions are **prompt documents, not code**: write them as instructions to the executing agent. YAML frontmatter keys stay in English.
+- **Language policy (dual-track, v1.1.0+)**: `description` fields are user-facing triggers — Chinese-first (our users) **plus an `Also triggers on: …` English phrase suffix** for international routing. Bodies mix Chinese and English: prose follows the user's language (Chinese), while structural tokens (frontmatter keys, layer names, stage IDs, filenames, framework names like RICE/HARD GATE) stay in English and must match across files verbatim. `README.md` (English) and `README-CN.md` (Chinese) are maintained as a synced pair with cross-links; `docs/` is Chinese-first.
 - Every `skills/<name>/SKILL.md` starts with YAML frontmatter. Required fields: `name` (must equal the directory name), `description` (includes natural-language trigger phrases), `layer` (one of `perception`, `strategy`, `design`, `delivery`, `validation`, `workflow`). Workflow skills additionally declare `input-from` / `output-to` for context routing. **SKILL.md files do not carry a `version` field** — plugin.json is the only version source (see Versioning & Commits).
-- Each skill must be **standalone-installable**: inline any shared rules it needs instead of referencing files outside its directory.
+- Each skill must be **standalone-installable**: inline any shared rules it needs instead of referencing files outside its directory. Skill bodies must not hard-code host-specific tool names (e.g. `AskUserQuestion`, `mcp__*`) as direct instructions — describe the capability first ("ask the user via the host's structured-question tool"), with host names only in "e.g. on Claude Code…" example phrasing.
 
 ### Adding a New Skill
 
@@ -216,7 +219,7 @@ Memory enables cross-session learning without polluting main conversation contex
 bash tests/test-skills.sh
 ```
 
-The script auto-discovers every `skills/*/SKILL.md`; a newly added skill is covered automatically. Expected result: 14 passed (11 skills + 3 contract checks), 0 failed.
+The script auto-discovers every `skills/*/SKILL.md`; a newly added skill is covered automatically. Expected result: 15 passed (12 skills + 3 contract checks), 0 failed.
 
 Behavioral evals live in `evals/` (one YAML case per scenario, run via `bash evals/run-evals.sh [skill-name]`, requires the `claude` CLI and makes real model calls). They complement the structural tests — run them when editing skill bodies; see `evals/README.md`.
 

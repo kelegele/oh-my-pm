@@ -1,6 +1,6 @@
 ---
 name: prd-gen
-description: 从功能需求生成结构化产品需求文档（PRD）。当用户想要创建 PRD、记录新功能、编写产品规格、形式化用户故事、说"为 X 写 PRD"、需要记录需求、或正在准备产品评审会议时使用。即使没有明确说"PRD"，当用户需要包含用户故事、验收标准和成功指标的结构化产品文档时也应激活。
+description: '从功能需求生成结构化产品需求文档（PRD）。当用户想要创建 PRD、记录新功能、编写产品规格、形式化用户故事、说"为 X 写 PRD"、需要记录需求、或正在准备产品评审会议时使用。即使没有明确说"PRD"，当用户需要包含用户故事、验收标准和成功指标的结构化产品文档时也应激活。 Also triggers on: write a PRD, product requirements doc, user stories and acceptance criteria.'
 layer: design
 input-from: product-strategy,competitive-analysis,market-research,clarify-requirements
 output-to: prototype-design,retrospective
@@ -35,7 +35,7 @@ Activate this skill when:
 
 **Before generating any PRD content, you MUST identify the scenario.**
 
-Use `AskUserQuestion` to determine which scenario applies:
+Ask the user which scenario applies (use the host's structured-question tool if available, e.g. `AskUserQuestion` on Claude Code; otherwise present a numbered option list and wait for the reply):
 
 ### Q: 请选择 PRD 生成场景
 
@@ -51,15 +51,15 @@ Once scenario is identified, collect required context:
 
 | Scenario | Required Information | Collection Method |
 |:---------|:--------------------|:------------------|
-| **迭代更新** | 1. 当前功能描述<br>2. UI 状态（截图/HTML/链接）<br>3. 迭代目标 | User input + AskUserQuestion for UI state option |
+| **迭代更新** | 1. 当前功能描述<br>2. UI 状态（截图/HTML/链接）<br>3. 迭代目标 | User input + structured question for UI state option |
 | **新功能** | 1. 产品整体架构<br>2. 设计规范（组件库/交互模式）<br>3. 入口位置 | Read from `docs/product/` or user input |
 | **0-1 新产品** | 1. 产品背景与目标用户<br>2. 资源约束<br>3. 参考产品 | User input + competitive analysis |
 
 **UI State Collection for Iteration Updates**:
 When user selects "迭代更新", ask how they want to provide current UI state:
-- **截图** - User provides screenshot, use `mcp__zai-mcp-server__ui_to_artifact` or `mcp__4_5v_mcp__analyze_image`
+- **截图** - User provides screenshot; read it with the host's image-understanding capability (on Claude Code, e.g. `mcp__4_5v_mcp__analyze_image` / `mcp__zai-mcp-server__ui_to_artifact` MCP tools; other hosts use their built-in image reading)
 - **HTML 文件** - User provides local HTML path, use `Read` tool to parse DOM structure
-- **在线链接** - User provides URL, use `mcp__web_reader__webReader` (no login required)
+- **在线链接** - User provides URL; read it with the host's web-reading capability (on Claude Code, e.g. `mcp__web_reader__webReader`; other hosts use their built-in web access) (no login required)
 
 ### Step 0.5: Information Gap Analysis & PRD Plan (CRITICAL — HARD GATE)
 
@@ -71,7 +71,7 @@ After scenario detection and context collection:
 
 1. **Gap Analysis**: Compare user-provided information against `context-requirements` for this scenario. List every missing required field. Also check `docs/product/` for existing perception data (market-analysis.json, competitive-analysis, user-research.json, positioning.md).
 
-2. **One Question At A Time**: For each missing item, ask the user using `AskUserQuestion` with multiple choice options. Do NOT bundle multiple questions into one message.
+2. **One Question At A Time**: For each missing item, ask the user with a structured question offering multiple choice options. Do NOT bundle multiple questions into one message.
 
    | Missing Item | Example Question |
    |:-------------|:-----------------|
@@ -109,7 +109,7 @@ After scenario detection and context collection:
 
 4.5. **Chapter Selection** (HARD GATE — Before presenting PRD Plan):
 
-Present chapter selection to user via `AskUserQuestion` with multiSelect. Due to the 4-option limit, split into 3 sequential questions. Build `selected_chapters` and `excluded_chapters` lists from responses, and update the PRD Plan table's「选中」column accordingly.
+Present chapter selection to the user as a structured multi-select question. If the host's question tool limits options (e.g. 4-option limit), split into 3 sequential questions. Build `selected_chapters` and `excluded_chapters` lists from responses, and update the PRD Plan table's「选中」column accordingly.
 
 **Question 1 — Core Chapters (第0-3章):**
 
@@ -143,7 +143,7 @@ Present chapter selection to user via `AskUserQuestion` with multiSelect. Due to
 
 **After collecting selections:** Update the PRD Plan table's「选中」column to reflect user choices (✅ for selected, ❌ for excluded).
 
-5. **User Approval**: Use `AskUserQuestion` to present the PRD Plan (with chapter selections) and get explicit approval:
+5. **User Approval**: Present the PRD Plan (with chapter selections) to the user via a structured question and get explicit approval:
 
    | Option | Description |
    |:-------|:------------|
@@ -187,7 +187,7 @@ Present chapter selection to user via `AskUserQuestion` with multiSelect. Due to
 "参考图: https://s3.aws.com/bucket/screenshot.png"
 ```
 
-使用 `mcp__4_5v_mcp__analyze_image` 或 `mcp__zai-mcp-server__ui_to_artifact` 工具读取远程图片。
+使用宿主可用的图片理解能力读取远程图片（Claude Code 中为 `mcp__4_5v_mcp__analyze_image` / `mcp__zai-mcp-server__ui_to_artifact` 等 MCP 工具；其他宿主用自带读图能力）。
 
 **推荐图床：**
 - imgur.com (免费，无需注册)
@@ -237,7 +237,7 @@ pngpaste ~/screenshot.png
 当用户提供图片后：
 
 1. **本地路径** → 使用 `Read` 工具直接读取
-2. **远程 URL** → 使用 `mcp__4_5v_mcp__analyze_image` 或 `mcp__zai-mcp-server__ui_to_artifact`
+2. **远程 URL** → 使用宿主可用的图片理解能力读取（Claude Code 中为 `mcp__4_5v_mcp__analyze_image` / `mcp__zai-mcp-server__ui_to_artifact` 等 MCP 工具；其他宿主用自带读图能力）
 3. **分析图片内容** → 提取 UI 结构、布局、交互元素
 4. **生成 PRD** → 基于图片分析结果生成需求文档
 
@@ -261,7 +261,7 @@ After scenario detection, context collection, and information clarification:
 
 The generation process ensures complete, actionable PRDs:
 
-1. **Scenario Detection** - Use AskUserQuestion to identify iteration/new-feature/new-product
+1. **Scenario Detection** - Ask the user a structured question to identify iteration/new-feature/new-product
 2. **Context Collection** - Gather required information based on scenario type
 3. **Information Gap Analysis** - Identify missing info, ask one question at a time
 4. **Chapter Selection** - User selects which PRD chapters to generate (multiSelect)

@@ -24,7 +24,7 @@ Oh-My-PM 是 Claude Code Skill 插件项目，测试主要验证：
 # 测试快速 PRD 工作流
 "快速生成带竞品对比的 PRD：用户个人中心改版，对比淘宝和京东"
 
-# 测试迭代规划
+# 测试复盘与迭代规划（retrospective）
 "规划 Sprint 13，基于以下反馈：登录页面有用户反馈崩溃"
 ```
 
@@ -36,7 +36,7 @@ Oh-My-PM 是 Claude Code Skill 插件项目，测试主要验证：
 |:---|:---|
 | competitive-analysis | "XX产品有什么功能？" |
 | prd-gen | "写一个PRD文档" / "记录这个需求" |
-| iteration-planning | "下个迭代做什么？" |
+| retrospective | "下个迭代做什么？" |
 
 ### 方式三：单元测试 Context Schema
 
@@ -109,7 +109,7 @@ competitors = ["淘宝", "京东"]
 - [ ] 描述了功能但未说 "竞品分析" → 触发 competitive-analysis
 - [ ] 直接说 "对比 XX 和 YY" → 触发 competitive-analysis
 - [ ] 说 "写个 PRD" → 触发 prd-gen
-- [ ] 说 "下个迭代做什么" → 触发 iteration-planning
+- [ ] 说 "下个迭代做什么" → 触发 retrospective
 
 ### 输出质量测试
 
@@ -172,7 +172,7 @@ yaml-validator skills/competitive-analysis/SKILL.md
 
 ## 下一步
 
-1. 手动测试 MVP 的 3 个 Skills
+1. 手动测试 12 个 Skills 的触发与执行
 2. 根据测试结果调整 description 提高触发率
 3. 添加更多测试用例
 4. 考虑添加自动化测试（如使用 expect 脚本）

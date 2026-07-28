@@ -1,6 +1,6 @@
 ---
 name: retrospective
-description: 上线后数据复盘并滚动产出下轮迭代计划。当用户需要评估上线结果、衡量功能成功、分析上线后指标，或说"效果分析"、"上线复盘"、"衡量影响"、"表现如何"时使用；也用于规划迭代、冲刺、回顾、对待办事项排序、分配团队容量，或说"迭代规划"、"规划下一个冲刺"、"我们应该构建什么"、"待办排序"、"回顾"时激活。即使没有明确说"复盘"或"迭代规划"，当用户正在评估发布结果或决定接下来做什么时也应激活。
+description: '上线后数据复盘并滚动产出下轮迭代计划。当用户需要评估上线结果、衡量功能成功、分析上线后指标，或说"效果分析"、"上线复盘"、"衡量影响"、"表现如何"时使用；也用于规划迭代、冲刺、回顾、对待办事项排序、分配团队容量，或说"迭代规划"、"规划下一个冲刺"、"我们应该构建什么"、"待办排序"、"回顾"时激活。即使没有明确说"复盘"或"迭代规划"，当用户正在评估发布结果或决定接下来做什么时也应激活。 Also triggers on: launch retrospective, how did this feature perform, measure impact, plan the next sprint, iteration planning.'
 layer: validation
 input-from: feedback-synthesis,prd-gen
 output-to: market-research,product-strategy,prd-gen
@@ -349,3 +349,10 @@ User: "用户说找不到新功能入口，这值得做吗？"
 3. **看分层，不只看均值** - Segment by user type, geography, etc.
 4. **定量 + 定性** - Metrics + feedback = insights
 5. **每个发现都要有着落** - 进迭代 backlog、进 A/B 验证方案，或明确闭环路由去向
+
+## Execution Profile (执行建议)
+
+- **模型建议**：标准(sonnet 级)——宿主支持多模型/子代理时按此分配；单模型宿主忽略
+- **工具姿态**：读写（无需联网，指标数据由用户提供）——遵循最小权限
+- **记忆文件**：`docs/product/.ompm/memory/retrospective.md`——跨会话积累经验（优质信源、领域基线、分析框架）；执行开始时读取、结束时更新；文件不存在则新建
+- **Claude Code 增强**：本 profile 在该宿主由 impact-analyst subagent 以隔离上下文实现

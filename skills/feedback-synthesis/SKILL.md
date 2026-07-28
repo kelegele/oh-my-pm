@@ -1,6 +1,6 @@
 ---
 name: feedback-synthesis
-description: 汇总和综合来自多个来源的用户反馈。当用户需要分析用户反馈、对反馈主题进行分类、了解用户情绪，或说"分析反馈"、"用户在说什么"、"综合反馈"时使用。即使没有明确说"反馈综合"，当用户正在处理来自任何来源的用户反馈时也应激活。
+description: '汇总和综合来自多个来源的用户反馈。当用户需要分析用户反馈、对反馈主题进行分类、了解用户情绪，或说"分析反馈"、"用户在说什么"、"综合反馈"时使用。即使没有明确说"反馈综合"，当用户正在处理来自任何来源的用户反馈时也应激活。 Also triggers on: analyze feedback, what are users saying, synthesize user feedback.'
 layer: validation
 input-from: user
 output-to: retrospective,product-strategy
@@ -281,3 +281,10 @@ User: "What are the top complaints?"
 3. **Segment users** - Different users have different needs
 4. **Track trends** - Is it getting better or worse?
 5. **Close the loop** - Let users know their feedback matters
+
+## Execution Profile (执行建议)
+
+- **模型建议**：轻量(haiku 级)——宿主支持多模型/子代理时按此分配；单模型宿主忽略
+- **工具姿态**：读写（无需联网，反馈材料由用户提供）——遵循最小权限
+- **记忆文件**：`docs/product/.ompm/memory/feedback-synthesis.md`——跨会话积累经验（优质信源、领域基线、分析框架）；执行开始时读取、结束时更新；文件不存在则新建
+- **Claude Code 增强**：本 profile 在该宿主由 feedback-collector subagent 以隔离上下文实现

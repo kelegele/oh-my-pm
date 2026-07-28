@@ -1,6 +1,6 @@
 ---
 name: feature-launch
-description: 编排从 PRD 到上线后分析的完整功能发布工作流。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。当准备发布功能、协调功能发布，或用户说"发布这个功能"、"功能发布计划"、"从 PRD 到上线"时使用。
+description: '编排从 PRD 到上线后分析的完整功能发布工作流。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。当准备发布功能、协调功能发布，或用户说"发布这个功能"、"功能发布计划"、"从 PRD 到上线"时使用。 Also triggers on: launch this feature, feature launch plan, from PRD to launch.'
 layer: workflow
 input-from: prd-gen
 output-to: retrospective
