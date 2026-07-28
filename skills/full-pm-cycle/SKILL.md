@@ -293,6 +293,13 @@ Orchestrates complete product management lifecycle across all five layers:
   "product_type": "new-product | new-feature | pivot",
   "started_at": "ISO 8601 时间戳",
   "updated_at": "最后更新时间 (ISO 8601)",
+  "rejected_directions": [
+    {
+      "direction": "用户明确放弃的方向（如 做积分商城）",
+      "reason": "否决理由",
+      "rejected_at": "否决时间 (ISO 8601)"
+    }
+  ],
   "outputs": {
     "market_analysis": "文件路径",
     "user_research": "文件路径",
@@ -311,6 +318,13 @@ Orchestrates complete product management lifecycle across all five layers:
   }
 }
 ```
+
+**`rejected_directions` 写入时机**（可选字段，无否决记录时可省略）：
+
+- **S2.5 Strategy Confirmation Gate**：用户否决策略方案中的某个方向时，将被否决的方向与理由追加记录到该列表
+- **各阶段执行中**：用户明确放弃某方向时，随时追加记录
+- 每条记录包含三个字段：`direction`（被放弃的方向）、`reason`（否决理由）、`rejected_at`（否决时间，ISO 8601）
+- 后续阶段提出新方向前，先对照该列表，避免重走已否决路径
 
 ---
 

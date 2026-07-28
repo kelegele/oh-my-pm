@@ -288,3 +288,7 @@ User: "What are the top complaints?"
 - **工具姿态**：读写（无需联网，反馈材料由用户提供）——遵循最小权限
 - **记忆文件**：`docs/product/.ompm/memory/feedback-synthesis.md`——跨会话积累经验（优质信源、领域基线、分析框架）；执行开始时读取、结束时更新；文件不存在则新建
 - **Claude Code 增强**：本 profile 在该宿主由 feedback-collector subagent 以隔离上下文实现
+
+## 下一步
+
+本 skill 完成后，如果用户没有明确下一步，引导用户使用 ompm skill 做意图路由——它会读取本轮产出和当前状态，判断最有价值的下一步。不要替用户预设固定长链；output-to 声明的是数据流向，不是强制路径。

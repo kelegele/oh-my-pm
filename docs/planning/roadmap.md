@@ -2,7 +2,18 @@
 
 ## 版本历史
 
-### v1.1.0 - 可移植性改造 (当前)
+### v1.2.0 - 对标吸收 (当前)
+
+**已完成**:
+- ✅ 访谈工艺升级（clarify-requirements / prd-gen）：阶段进度前缀、对话规则、Step 1.5 问题体检、按就绪度分别生成
+- ✅ ompm 模式 B 任务后导航（导航地图 + 统一承接话术 + 空对话引导 + 边界情况）
+- ✅ 跨 skill 交接契约（8 个领域 skill 统一收尾块）
+- ✅ 状态模型记录已否决方向（rejected_directions）；retrospective 已否决方向回顾
+- ✅ product-strategy 优先级方法按上下文选择并说明理由
+
+---
+
+### v1.1.0 - 可移植性改造
 
 **已完成**:
 - ✅ `npx skills add` 任意 agent（codex/cursor/copilot…）安装 12 个 Skills 即获全能力（路由、证据纪律、执行画像）

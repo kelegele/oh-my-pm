@@ -5,6 +5,22 @@ All notable changes to Oh-My-PM will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-07-28
+
+对标吸收版本：融合 product-manager-workflow 的访谈工艺与 dbskill 的路由交互（差距清单见 `docs/planning/reference-repo-comparison.md`）。
+
+### Added
+- **clarify-requirements 访谈工艺**：提问带 `当前阶段：N/M` 进度前缀；新增「对话规则」（不复读用户回答、宽泛回答给 2-4 选项收敛、分阶段具体问法）；新增 Step 1.5 问题体检（无定义核心词先定义、隐含假设追问证据）；PRD 章节按就绪度分别生成（⚠️ 章节暂缓）
+- **ompm 模式 B：任务后导航**：对话中已有 skill 产出时按导航地图（8 个领域 skill 的结论信号→下一步→理由）路由，统一承接话术；新增空对话引导与边界情况（多需求/超范围/上下文直判）
+- **跨 skill 交接契约**：8 个领域 skill 末尾统一「下一步」收尾块（引导 ompm 路由，不预设固定长链）
+- **状态模型记录已否决方向**：`current-workflow.json` 新增可选 `rejected_directions` 字段（契约向后兼容）；retrospective 复盘模板加「已否决方向回顾」
+- **product-strategy 方法选择**：优先级方法按上下文选择（RICE/MoSCoW/Kano/value-cost）并强制说明情境理由
+- evals 新增 2 案（ompm 任务后导航、clarify 访谈工艺），总计 18 案
+
+### Changed
+- prd-gen 完整度检查门支持逐章节就绪度判断；Step 0.5 提问加阶段进度前缀
+- AGENTS.md 新增 ompm 导航地图维护规矩
+
 ## [1.1.0] - 2026-07-28
 
 可移植性版本：skills 层自完备，`npx skills add`（任意 agent）安装即获完整能力。

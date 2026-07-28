@@ -97,9 +97,22 @@ Better /      \ Faster
 
 ### Step 3: 优先级排序（应用权重）
 
-收集候选事项（功能、计划、backlog 项），用 Step 2 的权重校准后打分，结果写入 `docs/product/.ompm/prioritization.json`。
+收集候选事项（功能、计划、backlog 项），结果写入 `docs/product/.ompm/prioritization.json`。排序分两步：**先按情境选择方法，再应用 Step 2 的战略权重校准**——方法选择发生在权重应用之前。
 
-**RICE（默认框架）**
+**方法选择（按上下文）**
+
+| 当前情境 | 适用方法 |
+|:---------|:---------|
+| 数据充分、有规模估算（用户数与投入可量化） | **RICE** |
+| 干系人沟通/对齐导向（要对"做什么、不做什么"达成共识） | **MoSCoW** |
+| 用户分层明显、要区分基本/期望/兴奋型需求 | **Kano** |
+| 快速取舍、维度少（只需粗略分先后） | **value-cost 矩阵** |
+
+**硬规则**：选定方法后，必须用一句话说明为什么这个方法适合当前情境（团队规模 / 数据可得性 / 决策场景），并把方法与理由记入输出——`prioritization.json` 的 `framework` 与 `framework_rationale` 字段，或报告开头。
+
+选定方法后用其结构打分，并应用 Step 2 推导的战略权重校准。最常用的两个方法结构如下；Kano（Basic / Performance / Excitement 分类）与 value-cost 矩阵（价值-成本四象限）结构简单，随用随画即可。
+
+**RICE**
 
 ```
 RICE = (Reach × Impact × Confidence) / Effort
@@ -215,6 +228,7 @@ We [statement of primary differentiation].
 {
   "prioritization": {
     "framework": "RICE",
+    "framework_rationale": "数据可得性高：Reach 与 Effort 有历史数据支撑，RICE 可量化排序",
     "timestamp": "2026-07-28T...",
     "constraints": {
       "capacity": 50,
@@ -336,3 +350,7 @@ User: "What's our product plan for this year?"
 3. **rationale 比分数重要** — 每条排名理由都要能讲给干系人听
 4. **主题式路线图** — 按战略主题而非功能清单组织，为变化留余地
 5. **预留 buffer** — 排期不做 100% 利用率，给意外机会留空间
+
+## 下一步
+
+本 skill 完成后，如果用户没有明确下一步，引导用户使用 ompm skill 做意图路由——它会读取本轮产出和当前状态，判断最有价值的下一步。不要替用户预设固定长链；output-to 声明的是数据流向，不是强制路径。

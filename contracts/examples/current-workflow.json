@@ -7,5 +7,17 @@
   "current_stage": "S1",
   "completed_stages": ["S0"],
   "started_at": "2026-07-28T09:00:00Z",
-  "updated_at": "2026-07-28T09:15:00Z"
+  "updated_at": "2026-07-28T09:15:00Z",
+  "rejected_directions": [
+    {
+      "direction": "做积分商城",
+      "reason": "与定位偏离，S2.5 门控时用户否决",
+      "rejected_at": "2026-07-28T09:10:00Z"
+    },
+    {
+      "direction": "先做 Web 端再考虑移动端",
+      "reason": "目标用户以移动端为主，S1 阶段用户明确放弃",
+      "rejected_at": "2026-07-28T09:05:00Z"
+    }
+  ]
 }

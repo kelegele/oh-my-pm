@@ -14,7 +14,7 @@ Oh-My-PM 的全局入口：理解你想做什么，路由到最合适的 skill �
 
 ## 路由判定
 
-按以下优先级处理输入：
+按以下优先级处理输入：**help → workflow 直派 → 模式 B 任务后导航 → 意图路由（一般规则）→ 空对话引导**。
 
 ### 1. Help Detection
 
@@ -53,6 +53,45 @@ Oh-My-PM 的全局入口：理解你想做什么，路由到最合适的 skill �
 **Step 3 — 路由并用一句话说明理由**，然后激活对应 skill / workflow。例如：
 
 > 你已有竞品分析和定位文档，但还没有 PRD —— 最有价值的下一步是生成 PRD，启动 `quick-prd`。
+
+### 模式 B：任务后导航
+
+**判定**：当前对话中已有任何 skill 的产出（竞品报告、PRD、复盘结论等）→ 进入任务后导航。
+
+**优先级**：模式 B 先于「意图路由 Step 2 的一般规则」执行——有产出按下方导航地图续接，无产出才按一般规则判断。
+
+**导航地图**：
+
+| 来源 skill | 结论信号 | 下一步 | 理由 |
+|:-----------|:---------|:-------|:-----|
+| clarify-requirements | 方案已批准 | `prd-gen` | 信息已齐，直接生成 |
+| clarify-requirements | 发现缺市场/竞品数据 | `market-research` / `competitive-analysis` | 先补齐感知层数据，再回来生成 |
+| competitive-analysis | 找到差异化机会 | `product-strategy` | 机会转定位 |
+| competitive-analysis | 要落成具体需求 | `prd-gen` | 对比结论直接转功能需求 |
+| market-research | 市场/用户结论已出 | `product-strategy` | 结论转定位与优先级 |
+| product-strategy | 定位/优先级/路线图完成 | `prd-gen` | 策略落 PRD |
+| prd-gen | PRD 已定稿 | `prototype-design` 或 `feature-launch` | 先验证交互，或直接准备发布 |
+| prototype-design | 原型已验证 | `feature-launch` | 进入发布准备 |
+| feedback-synthesis | 主题已聚类 | `retrospective` | 与上线指标对照复盘 |
+| retrospective | 迭代计划已出 | `market-research` 或 `prd-gen` | 下一轮：验证新方向，或写新需求 |
+
+**路由话术**统一为：
+
+> 刚才 {skill} 的核心结果是 {X}——下一步先用 **{skill}**，因为 {理由}。
+
+随后立即执行对应 skill，不让用户重新输入。
+
+### 空对话引导
+
+**判定**：无输入参数，且对话中也没有可用于判断的信息（无产出、无进行中工作流、无明确话题）→ 输出下方固定引导话术，然后等待，不罗列完整菜单：
+
+> 把你现在想处理的事情直接发过来——可以是一个需求、一段材料、一个想法，信息不完整也可以。想看全部能力，输入 `help`。
+
+### 边界情况
+
+- 用户同时提多个需求 → 问"先解决哪个？一个一个来。"
+- 需求超出能力图范围 → 明示能力清单，不编造能力
+- 上下文足以判断 → 直接路由，不重复索取用户已提供的信息
 
 ---
 

@@ -26,6 +26,18 @@
     "updated_at": { "type": "string" },
     "product_name": { "type": "string" },
     "product_type": { "type": "string" },
-    "outputs": { "type": "object" }
+    "outputs": { "type": "object" },
+    "rejected_directions": {
+      "type": "array",
+      "description": "用户明确放弃的方向及理由（避免重走已否决路径；可选，向后兼容）",
+      "items": {
+        "type": "object",
+        "properties": {
+          "direction": { "type": "string" },
+          "reason": { "type": "string" },
+          "rejected_at": { "type": "string" }
+        }
+      }
+    }
   }
 }

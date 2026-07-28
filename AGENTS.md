@@ -12,7 +12,7 @@ The system features a **3-layer core (Perception → Strategy → Design) + Vali
 
 **Portability (v1.1.0+)**: the `skills/` layer is self-sufficient — `npx skills add` (any agent: codex, cursor, copilot…) installs all 12 skills with full capability (routing, evidence discipline, execution profiles included). The Claude Code marketplace plugin adds host-specific enhancements on top: 6 subagents (isolated execution, model tiering) and 4 slash commands (quick entry, incl. the `/ompm` shim). Skill bodies must not hard-code host-specific tool names (e.g. `AskUserQuestion`, `mcp__*`) except inside "e.g. on Claude Code…" example phrasing.
 
-Current plugin version: **1.1.0** (see `.claude-plugin/plugin.json` — the single version source). See `docs/planning/roadmap.md` and `CHANGELOG.md` for version history.
+Current plugin version: **1.2.0** (see `.claude-plugin/plugin.json` — the single version source). See `docs/planning/roadmap.md` and `CHANGELOG.md` for version history.
 
 ## Commands
 
@@ -148,7 +148,9 @@ All workflows follow the **Plan-and-Execute pattern** with:
 | **full-pm-cycle** | `/full-pm-cycle "product"` | Complete 0-1 product lifecycle (canonical stage definitions) |
 | **feature-launch** | `/feature-launch "feature"` | Feature launch coordination |
 
-The 4th command, **`ompm`**, is a thin shim that activates the **`ompm` skill** — the **global intent router** (routing logic lives in `skills/ompm/SKILL.md`, the canonical source): natural-language input (or no args) reads conversation context + `docs/product/.ompm/current-workflow.json` and routes to the most valuable next skill/workflow with a one-line rationale. It also accepts direct workflow dispatch (`/ompm <workflow> [args...] | help | ?`) — e.g. `/ompm quick-prd "用户改版" 淘宝 京东`. The bare `/quick-prd` etc. are shorthand.
+The 4th command, **`ompm`**, is a thin shim that activates the **`ompm` skill** — the **global intent router** (routing logic lives in `skills/ompm/SKILL.md`, the canonical source). Routing chain: `help/?` → direct workflow dispatch (`/ompm quick-prd "用户改版" 淘宝 京东`) → **post-task navigation** (when the conversation already contains a skill's output, route by its conclusion signal via the navigation map) → general intent routing (reads `docs/product/.ompm/current-workflow.json` + conversation context) → empty-dialog guidance. The bare `/quick-prd` etc. are shorthand.
+
+**Maintenance rule (v1.2.0+)**: adding or removing a skill requires syncing the `ompm` skill's navigation map and capability map in the same change.
 
 Skills themselves do **not** support `/skill-name` explicit invocation — they trigger through natural language or workflows.
 

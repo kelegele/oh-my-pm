@@ -1,0 +1,20 @@
+# 任务后导航：对话中已有 skill 产出时，ompm 应按导航地图
+# 基于"结论信号"路由下一步并说明理由，而不是回到一般规则。
+# 本例前置产出为 competitive-analysis（发现差异化机会），
+# 导航地图规定 → product-strategy（机会转定位）或 prd-gen。
+# 断言：提及其中一个目标 skill + 理由/承接类措辞。
+name: 任务后导航按结论信号路由
+prompt: |
+  刚才 competitive-analysis 完成了我们对 Notion 和飞书文档的竞品对比，
+  核心结论是发现了三个差异化机会：离线编辑、块级评论、权限继承。
+  用户输入：/ompm
+
+  请按 ompm 的路由规则处理。
+assert_must_contain_any:
+  - product-strategy
+  - prd-gen
+assert_must_contain_any:
+  - 因为
+  - 下一步
+  - 先用
+  - 核心结果

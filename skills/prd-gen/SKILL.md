@@ -65,6 +65,17 @@ When user selects "迭代更新", ask how they want to provide current UI state:
 
 **HARD GATE**: Do NOT proceed to Industry Benchmark Check or PRD generation until this step is complete and user has approved the plan.
 
+**阶段进度显式化**：交互阶段每次向用户提问，都必须以 `当前阶段：N/M 阶段名` 开头（与 clarify-requirements 同一套格式），让用户随时掌握进度。prd-gen 的阶段划分：
+
+| 阶段 | 阶段名 | 对应步骤 |
+|:-----|:-------|:---------|
+| 1/4 | 场景确认 | Scenario Detection |
+| 2/4 | 逐项确认 | Step 0.5 缺口提问（提问前缀进一步细化为 `当前阶段：2/4 逐项确认 · 第 x/y 项`，x 为当前项序号、y 为缺失项总数） |
+| 3/4 | 章节选择 | Step 0.5 Chapter Selection |
+| 4/4 | 方案审阅 | Step 0.5 User Approval |
+
+Gap Analysis、PRD Plan 生成、Industry Benchmark Check 与正文生成为内部处理步骤，无需前缀。
+
 **Explicit-Skip Protocol（用户显式拒绝交互时）**: If the user explicitly forbids questions (e.g. "别问了，直接写"), you MAY skip the interactive gates — but then you MUST start the output with an **假设声明** block listing every assumption made (scenario, selected/excluded chapters, target product, key defaults), so the user can correct them. The 假设声明同时充当 Evidence Discipline 的完整度清单：未确认信息标【待确认】、无证据断言标【未验证】（见下文 Evidence Discipline），不得脑补填默认值。Never skip silently.
 
 After scenario detection and context collection:
@@ -296,7 +307,7 @@ Before generating PRD content, note:
 
 1. **缺失信息标记【待确认】**：任何无法从输入或上下文获得的信息，标记为【待确认】，不得脑补填默认值。
 2. **证据追溯【未验证】**：用户需求/市场断言必须追问证据来源；无证据的标记为【未验证】并注明所需验证方式。
-3. **完整度检查门**：正式输出交付物前，先输出信息完整度清单（已确认 ✅ / 待确认 ⚠️ / 未验证 ❓），经用户确认后才生成正文。
+3. **完整度检查门**：正式输出交付物前，先输出信息完整度清单（已确认 ✅ / 待确认 ⚠️ / 未验证 ❓），经用户确认后才生成正文。清单按**逐章节就绪度**判断：信息不足的章节在清单中标注原因（缺什么信息）并暂缓生成，信息充足的章节正常生成——按就绪度分别生成，而非全有或全无。
 
 **与 Explicit-Skip Protocol（Step 0.5）的关系**: 证据纪律是输出纪律（信息标注与交付前自查），Explicit-Skip 是交互纪律（用户显式拒绝交互时的降级处理），两者互补不冲突。Explicit-Skip 场景下完整度清单不免除 — 与「假设声明」合并输出，但不再等待用户确认；假设声明中的未确认信息同样按本节规则标注【待确认】/【未验证】。
 
@@ -645,3 +656,7 @@ User: "Document the user onboarding feature"
 User: "I need user stories for the checkout flow"
 → Generates PRD section focused on checkout user stories
 ```
+
+## 下一步
+
+本 skill 完成后，如果用户没有明确下一步，引导用户使用 ompm skill 做意图路由——它会读取本轮产出和当前状态，判断最有价值的下一步。不要替用户预设固定长链；output-to 声明的是数据流向，不是强制路径。
