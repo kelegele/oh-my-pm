@@ -56,6 +56,7 @@ oh-my-pm/
 | **market-intelligence** | `skills/market-intelligence/SKILL.md` | 市场分析, 行业趋势, 市场研究 | 行业信息 | 市场洞察报告 |
 | **user-research** | `skills/user-research/SKILL.md` | 用户访谈, 用户画像, 用户研究 | 访谈数据 | `docs/product/.ompm/user-research.json` |
 | **data-monitoring** | `skills/data-monitoring/SKILL.md` | 监控指标, 数据看板, 指标分析 | 指标数据 | 异常告警 |
+| **clarify-requirements** | `skills/clarify-requirements/SKILL.md` | 梳理需求, 需求澄清, 还缺什么信息 | 需求描述 | `docs/product/.ompm/clarification-result.json` |
 
 ### Strategy Layer (策略规划层)
 
@@ -70,6 +71,7 @@ oh-my-pm/
 | Skill | 文件路径 | 触发关键词 | 输入 | 输出 |
 |:-----|:----------|:----------|:-----|:-----|
 | **prd-gen** | `skills/prd-gen/SKILL.md` | 写 PRD, 需求文档, 产品需求 | 需求描述 | `docs/product/prd/*.md` |
+| **prototype-design** | `skills/prototype-design/SKILL.md` | 创建原型, 设计这个功能, UI 原型 | PRD 文档 | `docs/product/prototypes/*.html` |
 | **process-optimization** | `skills/process-optimization/SKILL.md` | 流程优化, 提效, 流程改进 | 现有流程 | 优化建议 |
 
 ### Delivery Layer (交付协调层)
@@ -92,7 +94,8 @@ oh-my-pm/
 
 | Workflow | 文件路径 | 触发关键词 | 调用的 Skills |
 |:--------|:----------|:----------|:-------------|
-| **full-pm-cycle** | `skills/full-pm-cycle/SKILL.md` | 完整产品规划, 0-1 产品, 产品全周期 | 全部 15 个 Skills |
+| **quick-prd** | `skills/quick-prd/SKILL.md` | 快速 PRD, 带竞品分析的 PRD | competitive-analysis → prd-gen |
+| **full-pm-cycle** | `skills/full-pm-cycle/SKILL.md` | 完整产品规划, 0-1 产品, 产品全周期 | 全部 17 个领域 Skills |
 | **feature-launch** | `skills/feature-launch/SKILL.md` | 功能发布, 发布协调, 发布工作流 | prd-gen → requirement-review → release-management → impact-analysis |
 
 ---
@@ -184,14 +187,14 @@ oh-my-pm/
 │  Perception Layer (需求感知)                    │
 │  skills/ (5 Skills)                            │
 │  agents/perception/ (4 Subagents)               │
-│  输出: market_data, personas, competitive       │
+│  输出: .ompm/market-analysis.json 等            │
 └─────────────────────────────────────────────────┘
                        ↓ docs/product/
 ┌─────────────────────────────────────────────────┐
 │  Strategy Layer (策略规划)                      │
 │  skills/ (3 Skills)                            │
-│  输入: market_data from Perception            │
-│  输出: positioning, roadmap, priorities        │
+│  输入: .ompm/*.json from Perception            │
+│  输出: positioning.md, roadmap.md              │
 └─────────────────────────────────────────────────┘
                        ↓ docs/product/
 ┌─────────────────────────────────────────────────┐
@@ -199,7 +202,7 @@ oh-my-pm/
 │  skills/ (3 Skills)                            │
 │  agents/design/ (1 Subagent)                    │
 │  输入: priorities from Strategy               │
-│  输出: prd, prd            │
+│  输出: prd/*.md, prototypes/*.html           │
 └─────────────────────────────────────────────────┘
                        ↓ docs/product/
 ┌─────────────────────────────────────────────────┐
@@ -214,7 +217,7 @@ oh-my-pm/
 │  skills/ (3 Skills)                            │
 │  agents/validation/ (2 Subagents)                │
 │  输入: project_plan from Delivery               │
-│  输出: impact, feedback, iteration_plan     │
+│  输出: .ompm/impact-analysis.json 等        │
 └─────────────────────────────────────────────────┘
                        ↓ docs/product/
                   (反馈回环到 Perception)
@@ -246,11 +249,16 @@ oh-my-pm/
 
 ## 版本信息
 
-- **当前版本**: v0.9.3
-- **最后更新**: 2026-07-14
+- **当前版本**: v0.9.4
+- **最后更新**: 2026-07-28
 - **组件总数**: 20 Skills + 8 Subagents + 4 Commands
 
-### 最近变更 (v0.9.3)
+### 最近变更 (v0.9.4)
+
+- 补齐缺失组件索引（clarify-requirements / prototype-design / quick-prd）
+- 五层架构数据流图更新为扁平 `.ompm/<name>.json` 命名
+
+### v0.9.3
 
 - 统一 context 传递契约为扁平 .ompm 模型
 - 修复文档版本号与组件计数漂移

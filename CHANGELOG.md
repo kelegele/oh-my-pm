@@ -5,6 +5,21 @@ All notable changes to Oh-My-PM will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.4] - 2026-07-28
+
+### Fixed
+- `agents/` 上下文路径统一为扁平 `.ompm/<name>.json` 契约（competitive-analyst、pm-orchestrator）
+- `pm-orchestrator` 工具白名单补充 `AskUserQuestion`
+- 版本号同步：`marketplace.json`、`agents.yaml` 对齐 `plugin.json`
+- `skills.yaml` layer 命名统一为单数 `workflow`
+- 修复 `competitive-analysis` SKILL.md 重复标题、`quick-prd` SKILL.md 残缺行、`feedback-collector` 笔误、`feature-launch` 过期示例日期
+- `tests/test-skills.sh` 契约守卫扩展扫描 `agents/` 目录
+
+### Docs
+- 修正 `.claude-plugin/README.md` 过时内容（组件数量、移除 Figma MCP 残留）
+- 修正 `workflow-architecture.md` / `CODEMAPS.md` 的旧上下文文件名与缺失组件
+- `templates/prototype/README.md` 重写为模板使用说明，原修复报告移至 `docs/planning/prototype-generation-fix-summary.md`
+
 ## [0.3.1] - 2026-03-13
 
 ### Added

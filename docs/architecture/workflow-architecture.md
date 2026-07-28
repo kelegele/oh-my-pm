@@ -1,4 +1,4 @@
-# Oh-My-PM 工作流架构 (v0.8.0)
+# Oh-My-PM 工作流架构 (v0.9.4)
 
 Oh-My-PM 采用 **5 层架构** + **Plan-and-Execute 模式**，覆盖需求感知→策略规划→方案设计→交付协调→价值验证完整闭环。
 
@@ -67,7 +67,7 @@ sequenceDiagram
 
     U->>CC: "基于这个分析写 PRD"
     CC->>SK: 识别触发词 → prd-gen
-    SK->>CTX: 读取 competitive-analysis.json
+    SK->>CTX: 读取 .ompm/competitive-analysis.json
     SK->>SK: 识别场景：迭代/新功能/0-1
     SK-->>CC: 生成 PRD 文档
     CC->>CTX: 写入 docs/product/prd/feature-name.md
@@ -83,6 +83,8 @@ sequenceDiagram
 
 ## Command 工作流详解
 
+4 个 Command 中，`/ompm` 是**工作流调度器**（`/ompm <workflow> [args...]`，支持 `help` / `?`），作为 quick-prd / full-pm-cycle / feature-launch 三个工作流的命名空间主入口；`/quick-prd` 等裸命令是等价的简写形式。
+
 ### /quick-prd — 竞品分析 + PRD
 
 ```mermaid
@@ -97,10 +99,10 @@ sequenceDiagram
     U->>CC: /quick-prd "用户中心改版" 淘宝 京东
     CC->>CA: 启动竞品分析流程
     CA->>CA: 分析淘宝/京东用户中心功能
-    CA->>CTX: 写入 competitive-analysis.json
+    CA->>CTX: 写入 .ompm/competitive-analysis.json
     CA-->>CC: 输出对比矩阵
     CC->>PG: 传入竞品分析结果 + 需求描述
-    PG->>CTX: 读取 competitive-analysis.json
+    PG->>CTX: 读取 .ompm/competitive-analysis.json
     PG->>PG: 生成 8 章节 PRD
     PG->>CTX: 写入 prd/user-center-redesign.md
     PG-->>CC: 返回 PRD 文档
@@ -132,9 +134,9 @@ sequenceDiagram
     PM->>MR: market-researcher 分析市场
     PM->>CA: competitive-analyst 分析竞品
     PM->>UI: user-interviewer 创建画像
-    MR->>CTX: 写入 market-analysis.json
-    CA->>CTX: 写入 competitive-analysis.json
-    UI->>CTX: 写入 user-research.json
+    MR->>CTX: 写入 .ompm/market-analysis.json
+    CA->>CTX: 写入 .ompm/competitive-analysis.json
+    UI->>CTX: 写入 .ompm/user-research.json
 
     Note over PM,CTX: 阶段 2: 策略规划
     PM->>PP: 基于感知层输出写定位
@@ -143,7 +145,7 @@ sequenceDiagram
     PM->>RM: 基于定位写路线图
     RM->>CTX: 读取 positioning.md → roadmap.md
     PM->>PR: 基于路线图排优先级
-    PR->>CTX: 读取 roadmap.md → prioritization.json
+    PR->>CTX: 读取 roadmap.md → .ompm/prioritization.json
 
     Note over PM,CTX: 阶段 3: 方案设计
     PM->>PG: 基于策略层输出写 PRD
@@ -152,7 +154,7 @@ sequenceDiagram
     PM->>PD: 基于 PRD 生成原型
     PD->>CTX: 读取 prd/*.md → prototypes/*.html
 
-    PM-->>CC: 完整周期完成，更新 current-workflow.json
+    PM-->>CC: 完整周期完成，更新 .ompm/current-workflow.json
     CC-->>U: 展示完整产物清单
 ```
 
@@ -174,28 +176,28 @@ sequenceDiagram
     U->>CC: /feature-launch "用户注册流程"
     CC->>RR: 启动需求评审
     RR->>RR: 生成评审清单 + 干系人确认
-    RR->>CTX: 写入 requirement-review.json
+    RR->>CTX: 写入 review-notes/[feature]-review.md
 
     CC->>PC: 启动项目协调
     PC->>PC: 制定任务分配 + 时间线
-    PC->>CTX: 写入 project-plan.md
+    PC->>CTX: 写入 project-plan-[feature].md
 
     CC->>RM: 启动发布管理
     RM->>RM: 生成发布包 + 上线检查清单
-    RM->>CTX: 写入 release-checklist.md
+    RM->>CTX: 写入 release-plan-[feature].md
 
     Note over CC,CTX: 功能上线后 7-14 天
     CC->>IA: 启动效果分析
     IA->>CTX: 读取目标指标
-    IA->>CTX: 写入 impact-analysis.json
+    IA->>CTX: 写入 .ompm/impact-analysis.json
 
     CC->>FB: 启动反馈汇总
     FB->>CTX: 读取用户反馈
-    FB->>CTX: 写入 feedback-themes.json
+    FB->>CTX: 写入 .ompm/feedback-synthesis.json
 
     CC->>IP: 启动迭代规划
     IP->>CTX: 读取 impact + feedback
-    IP->>CTX: 写入 iteration-plan.md
+    IP->>CTX: 写入 .ompm/iteration-plan.json
 
     CC-->>U: 展示发布复盘报告
 ```
@@ -365,6 +367,10 @@ stateDiagram-v2
 ```
 
 ## 版本历史
+
+### v0.9.4
+- 上下文文件名统一为扁平 `.ompm/<name>.json` 契约（v0.9.3 起）
+- 补充 `/ompm` 工作流调度器说明
 
 ### v0.8.0
 - 新增 Mermaid 可视化工作流架构

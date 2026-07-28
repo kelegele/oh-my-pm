@@ -4,7 +4,7 @@ description: 在一个工作流中生成包含竞品分析的完整 PRD。当用
 layer: workflow
 input-from: user
 output-to: requirement-review
-version: 0.8.2
+version: 0.8.3
 ---
 
 # Quick PRD Workflow
@@ -12,7 +12,7 @@ version: 0.8.2
 
 ## What This Workflow Does
 
-Orchestrates multiple skills to produce a complete PRD with competitive context. First analyzes competitors (if provided), then generates PRD incorporating those insights. Finally, creates prototype in user-selected format (HTML).
+Orchestrates multiple skills to produce a complete PRD with competitive context. First analyzes competitors (if provided), then generates PRD incorporating those insights. Finally, creates an HTML prototype.
 
 ## Workflow Architecture
 
@@ -38,8 +38,7 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 | S0 | Setup | - | S1 | Perception |
 | S1 | Perception | 市场研究完成 | S2 | Strategy |
 | S2 | Strategy | 定位完成 | S3 | Design |
-| S3 | Design | PRD 完整 | S4 | Delivery |
-| S3 | Design | 原型验证 | S5 | Validation |
+| S3 | Design | PRD 完整、原型验证 | S4 | Delivery |
 | S4 | Delivery | 需求评审 | S5 | Validation |
 
 **阶段执行顺序**：S0 → S1 → S2 → S3 → S4 → S5
@@ -88,9 +87,9 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 6. **User must approve** the Perception Summary before entering skill invocation.
 
 **技能调用**：
-- Step 1.1: 调用 `/competitive-analysis`
-- Step 1.2: 调用 `/market-intelligence`
-- Step 1.3: 调用 `/user-research`
+- Step 1.1: 调用 competitive-analysis 技能
+- Step 1.2: 调用 market-intelligence 技能
+- Step 1.3: 调用 user-research 技能
 
 **输出**：
 - `docs/product/.ompm/competitive-analysis.json` + `docs/product/competitive-analysis/{feature-name}-{date}.md`
@@ -130,9 +129,9 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 3. 优先级排序 - `prioritization` skill
 
 **技能调用**：
-- Step 2.1: 调用 `/product-positioning`
-- Step 2.2: 调用 `/roadmap-planning`
-- Step 2.3: 调用 `/prioritization`
+- Step 2.1: 调用 product-positioning 技能
+- Step 2.2: 调用 roadmap-planning 技能
+- Step 2.3: 调用 prioritization 技能
 
 **输出**：
 - `docs/product/positioning.md`
@@ -192,20 +191,16 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 2. 原型设计 - `prototype-design` skill（HTML）
 
 **技能调用**：
-- Step 3.1: 调用 `/prd-gen`
-- 
+- Step 3.1: 调用 prd-gen 技能
+- Step 3.2: 调用 prototype-design 技能
 
 **输出**：
 - `docs/product/prd/{feature-name}-{date}-v{version}.md`
 - `docs/product/prototypes/{feature-name}.html`（如选择）
 
-**原型格式选择**：
+**原型输出**：
 
-在 PRD 生成后，询问用户选择原型输出格式：
-
-| Option | Description | 输出位置 |
-|:-------|-------------|:-----------|
-| **HTML 原型** | 可在浏览器直接预览、演示交互 | `docs/product/prototypes/{name}.html` |
+原型统一输出为 HTML 格式，保存至 `docs/product/prototypes/{name}.html`，可直接在浏览器预览、演示交互。
 
 **质量门控**：
 - ✅ PRD 完整（9 章节 + 行业基准）
@@ -238,9 +233,9 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 3. 发布管理 - `release-management` skill
 
 **技能调用**：
-- Step 4.1: 调用 `/requirement-review`
-- Step 4.2: 调用 `/project-coordination`
-- Step 4.3: 调用 `/release-management`
+- Step 4.1: 调用 requirement-review 技能
+- Step 4.2: 调用 project-coordination 技能
+- Step 4.3: 调用 release-management 技能
 
 **输出**：
 - `docs/product/review-notes/[feature]-review.md`
@@ -277,9 +272,9 @@ Orchestrates multiple skills to produce a complete PRD with competitive context.
 3. 迭代规划 - `iteration-planning` skill
 
 **技能调用**：
-- Step 5.1: 调用 `/impact-analysis`
-- Step 5.2: 调用 `/feedback-synthesis`
-- Step 5.3: 调用 `/iteration-planning`
+- Step 5.1: 调用 impact-analysis 技能
+- Step 5.2: 调用 feedback-synthesis 技能
+- Step 5.3: 调用 iteration-planning 技能
 
 **输出**：
 - `docs/product/.ompm/impact-analysis.json`

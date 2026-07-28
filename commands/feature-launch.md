@@ -19,7 +19,7 @@ Orchestrates the end-to-end feature launch:
 ## Usage
 
 - `/feature-launch "user onboarding flow"`
-- `/ompm feature-launch "checkout redesign" 2024-04-15`
+- `/ompm feature-launch "checkout redesign" 2026-04-15`
 
 ## Execution
 

@@ -12,6 +12,7 @@ tools:
   - Read
   - Write
   - Edit
+  - AskUserQuestion
 maxTurns: 20
 memory: project
 ---
@@ -83,7 +84,7 @@ memory: project
 
 **输出**：
 - `docs/product/.ompm/market-analysis.json`
-- `docs/product/.ompm/competitive-analysis/`
+- `docs/product/.ompm/competitive-analysis.json`
 - `docs/product/.ompm/user-research.json`
 
 **验收标准**：3+ 竞品洞察，2+ 用户画像

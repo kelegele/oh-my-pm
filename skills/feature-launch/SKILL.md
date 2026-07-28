@@ -4,7 +4,7 @@ description: 编排从 PRD 到上线后分析的完整功能发布工作流。�
 layer: workflow
 input-from: prd-gen
 output-to: impact-analysis,iteration-planning
-version: 0.8.2
+version: 0.8.3
 ---
 
 # Feature Launch Workflow
@@ -75,8 +75,8 @@ Orchestrates end-to-end feature launch process spanning:
 2. 原型设计 - `prototype-design` skill（验证）
 
 **技能调用**：
-- Step 1.1: 调用 `/prd-gen` 生成最终 PRD
-- Step 1.2: 调用 `/prototype-design` 验证或创建原型
+- Step 1.1: 调用 prd-gen 技能生成最终 PRD
+- Step 1.2: 调用 prototype-design 技能验证或创建原型
 
 **输出**：
 - `docs/product/prd/{feature-name}-final-v{version}.md`
@@ -116,9 +116,9 @@ Orchestrates end-to-end feature launch process spanning:
 3. 发布管理 - `release-management` skill
 
 **技能调用**：
-- Step 2.1: 调用 `/requirement-review`
-- Step 2.2: 调用 `/project-coordination`
-- Step 2.3: 调用 `/release-management`
+- Step 2.1: 调用 requirement-review 技能
+- Step 2.2: 调用 project-coordination 技能
+- Step 2.3: 调用 release-management 技能
 
 **输出**：
 - `docs/product/review-notes/[feature]-review.md`
@@ -154,8 +154,8 @@ Orchestrates end-to-end feature launch process spanning:
 2. 反馈综合 - `feedback-synthesis` skill
 
 **技能调用**：
-- Step 3.1: 调用 `/impact-analysis`
-- Step 3.2: 调用 `/feedback-synthesis`
+- Step 3.1: 调用 impact-analysis 技能
+- Step 3.2: 调用 feedback-synthesis 技能
 
 **输出**：
 - `docs/product/.ompm/impact-analysis.json`

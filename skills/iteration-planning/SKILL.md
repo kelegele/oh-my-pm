@@ -4,7 +4,7 @@ description: 基于效果分析和用户反馈规划下一个产品迭代。当�
 layer: validation
 input-from: impact-analysis,feedback-synthesis
 output-to: user-research,prd-gen
-version: 0.1.1
+version: 0.1.2
 ---
 
 # Iteration Planning
@@ -137,9 +137,9 @@ This iteration, monitor:
 
 ## Feedback Loop
 The following findings trigger new analysis cycles:
-- New user pain points → Activate `/user-research`
-- Competitor feature changes → Activate `/competitive-analysis`
-- Requirement changes → Activate `/prd-gen`
+- New user pain points → Activate user-research skill
+- Competitor feature changes → Activate competitive-analysis skill
+- Requirement changes → Activate prd-gen skill
 
 ## Next Steps
 1. [ ] Run iteration planning meeting
@@ -194,9 +194,9 @@ This skill reads from and writes to the shared context:
 - Updates `docs/product/.ompm/current-workflow.json` - State transition
 
 **Feedback Loop:**
-- New user problems discovered → Suggests `/user-research`
-- Validation failed → Suggests `/prd-gen` for redesign
-- Competitor research needed → Suggests `/competitive-analysis`
+- New user problems discovered → Suggests activating user-research
+- Validation failed → Suggests prd-gen for redesign
+- Competitor research needed → Suggests activating competitive-analysis
 
 ## Example Usage
 

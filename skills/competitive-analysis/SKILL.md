@@ -4,7 +4,7 @@ description: 竞品功能对比分析，生成对比矩阵并识别战略机会�
 layer: perception
 input-from: market-intelligence
 output-to: product-positioning,prioritization,prd-gen
-version: 0.2.2
+version: 0.2.3
 ---
 
 # Competitive Analysis
@@ -33,8 +33,6 @@ The analysis follows a systematic approach:
 3. **Build comparison matrix** - Create side-by-side feature comparison
 4. **Analyze gaps** - Identify missing features, unique advantages, opportunities
 5. **Generate recommendations** - Provide actionable strategic insights
-
-## Anti-Hallucination Rules
 
 ## Anti-Hallucination Rules (Self-Contained)
 

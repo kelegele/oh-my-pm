@@ -107,10 +107,11 @@ test_context_contract() {
     echo "Testing context-passing contract..."
     local contract_failed=0
 
-    # 扫描可执行契约面：skills + .claude-plugin 清单
+    # 扫描可执行契约面：skills + agents + .claude-plugin 清单
     # （docs/AGENTS/README 可能在 changelog 中合法提及旧文件名，故不扫描）
     local scan_paths=(
         "$SKILLS_DIR"
+        "$PROJECT_ROOT/agents"
         "$PROJECT_ROOT/.claude-plugin"
     )
 

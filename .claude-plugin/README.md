@@ -1,18 +1,21 @@
-# Oh-My-PM Plugin for Claude Code
+# Oh-My-PM Plugin for Claude Code / Codex
 
 > 面向产品经理的 AI Agent 工作流系统 — 完整产品管理闭环
 
 ## 插件概述
 
-Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系统。通过 **18 个专业 Skills** + **8 个 Subagents** + **4 个 Commands**，实现从需求感知到价值验证的完整产品管理闭环。
+Oh-My-PM 是一套基于 **Skills 插件**的产品经理工作流系统，可安装到 Claude Code 和 Codex。通过 **20 个专业 Skills**（17 个领域 Skills + 3 个工作流编排）+ **8 个 Subagents** + **4 个 Commands**，实现从需求感知到价值验证的完整产品管理闭环。
+
+当前版本：**0.9.4**（权威版本源见 `plugin.json`）
 
 ### 核心特性
 
 | 特性 | 说明 |
 |:-----|:-----|
 | **五层工作流架构** | 需求感知 → 策略规划 → 方案设计 → 交付协调 → 价值验证 |
-| **场景驱动 PRD** | 迭代更新/新功能/0-1 产品，基于行业最佳实践 |
+| **Plan-and-Execute 模式** | 完整的阶段定义、状态追踪和质量门控（Stage Gates） |
 | **Subagent 记忆系统** | 8 个独立 Subagent，支持跨会话知识积累 |
+| **HTML 原型输出** | 原型设计直接生成 HTML，无需外部设计工具 |
 
 ---
 
@@ -53,6 +56,7 @@ Oh-My-PM 是一套基于 **Claude Code Skill** 插件的产品经理工作流系
 
 **流程说明**：
 ```
+场景识别 → 竞品分析（可选）→ 策略确认门控 → PRD 生成
 ```
 
 **调用的 Skills 和 Subagents**：
@@ -99,6 +103,7 @@ PRD 生成 → 原型设计
 |:-----|:-----------|:--------------|
 | **感知层** | `competitive-analysis`, `user-research`, `market-intelligence` | `competitive-analyst`, `user-interviewer`, `market-researcher` |
 | **策略层** | `product-positioning`, `roadmap-planning`, `prioritization` | - |
+| **设计层** | `prd-gen`, `prototype-design` | - |
 | **交付层** | `requirement-review`, `project-coordination`, `release-management` | - |
 | **验证层** | `impact-analysis`, `feedback-synthesis`, `iteration-planning` | `impact-analyst`, `feedback-collector` |
 
@@ -141,11 +146,11 @@ PRD 完善 → 需求评审 → 项目规划
 
 ## 全部 Skills (20 个)
 
-### 可独立使用的 Skills (16 个)
+### 可独立使用的领域 Skills (17 个)
 
 以下 Skills 可单独调用，无需依赖其他 Skills，适合单点任务：
 
-#### 📊 需求感知层 (Perception) - 4 个
+#### 📊 需求感知层 (Perception) - 5 个
 
 | Skill | 可独立使用 | 功能描述 | 适用场景 |
 |:-----|:----------:|:---------|:---------|
@@ -153,12 +158,14 @@ PRD 完善 → 需求评审 → 项目规划
 | **market-intelligence** | ✅ | 市场情报收集，识别行业趋势和市场机会 | 评估市场规模、分析行业趋势 |
 | **user-research** | ✅ | 用户研究与画像创建，设计访谈脚本 | 创建用户画像、设计访谈问题 |
 | **data-monitoring** | ✅ | 产品指标监控与异常检测，建立数据基线 | 监控 DAU/转化率、分析数据异常 |
+| **clarify-requirements** | ✅ | 需求澄清，系统性识别缺失信息并逐步确认 | 需求描述不完整、生成 PRD 前先梳理需求 |
 
 **触发示例**：
 - "分析淘宝和京东的个人中心功能"
 - "AI 写作助手的市场规模有多大"
 - "帮我创建目标用户画像"
 - "DAU 突然下降了，帮我分析"
+- "帮我梳理一下需求，看看还缺什么信息"
 
 ---
 
@@ -177,16 +184,17 @@ PRD 完善 → 需求评审 → 项目规划
 
 ---
 
-#### 🎨 方案设计层 (Design) - 4 个
+#### 🎨 方案设计层 (Design) - 3 个
 
 | Skill | 可独立使用 | 功能描述 | 适用场景 |
 |:-----|:----------:|:---------|:---------|
 | **prd-gen** | ✅ | 结构化 PRD 生成，支持三种场景识别 | 快速生成 PRD 文档 |
+| **prototype-design** | ✅ | 交互式 HTML 原型设计，验证设计方案 | 创建原型、设计用户流程 |
 | **process-optimization** | ✅ | 业务流程分析与优化建议 | 优化业务流程、提升效率 |
 
 **触发示例**：
 - "写一个用户改版的 PRD"
-- "设计这个功能的交互流程"
+- "设计这个功能的交互原型"
 - "优化我们的代码审查流程"
 
 ---
@@ -227,6 +235,7 @@ PRD 完善 → 需求评审 → 项目规划
 
 | Workflow | 编排内容 | 调用的 Subagents | 适用场景 |
 |:---------|:---------|:----------------|:---------|
+| **quick-prd** | 竞品分析 + PRD 生成（含策略确认门控） | `competitive-analyst` | 快速输出带竞品上下文的 PRD |
 | **full-pm-cycle** | 完整五层：感知→策略→设计→交付→验证 | 全部 8 个 Subagents | 新产品从 0 到 1 规划 |
 | **feature-launch** | PRD 完善 + 评审 + 发布 + 效果分析 | `impact-analyst`, `feedback-collector` | 功能发布端到端协调 |
 
@@ -239,7 +248,7 @@ PRD 完善 → 需求评审 → 项目规划
 
 ## 全部 Subagents (8 个)
 
-Subagents 是独立运行的 AI 代理，支持工作树隔离和记忆积累，会被 Skills 自动调用。
+Subagents 是独立运行的 AI 代理，支持隔离执行和记忆积累，会被 Skills 自动调用。
 
 ### 📊 感知层 Subagents (4 个)
 
@@ -317,15 +326,34 @@ Subagents 是独立运行的 AI 代理，支持工作树隔离和记忆积累，
 
 ---
 
+## 上下文文件约定
+
+Skills 之间通过机器可读的中间产物传递上下文，统一采用扁平式 **`docs/product/.ompm/<name>.json`** 命名；人类可读文档（PRD、定位、路线图等）放在 `docs/product/` 下：
+
+| 文件 | 产出层 | 流向 |
+|:-----|:------|:-----|
+| `.ompm/competitive-analysis.json` | 感知 | → prd-gen, positioning |
+| `.ompm/market-analysis.json` | 感知 | → positioning |
+| `.ompm/user-research.json` | 感知 | → positioning |
+| `.ompm/clarification-result.json` | 感知 | → prd-gen |
+| `.ompm/prioritization.json` | 策略 | → design, delivery |
+| `.ompm/impact-analysis.json` | 验证 | → iteration-planning |
+| `.ompm/feedback-synthesis.json` | 验证 | → iteration-planning |
+| `.ompm/iteration-plan.json` | 验证 | → 下一周期 |
+| `.ompm/current-workflow.json` | 全部 | 工作流状态追踪 |
+
+---
+
 ## 安装
 
 ```bash
-# 克隆仓库
-git clone https://github.com/kelegele/oh-my-pm.git
-cd oh-my-pm
+# 从 GitHub 安装
+npx skills add kelegele/oh-my-pm -a claude-code   # Claude Code
+npx skills add kelegele/oh-my-pm -a codex          # Codex
 
-# 通过 --plugin-dir 加载
-claude --plugin-dir /path/to/oh-my-pm
+# 从本地仓库安装
+npx skills add . -a claude-code
+npx skills add . -a codex
 ```
 
 > **注意**：Skills 通过自然语言自动触发，无需手动配置。
@@ -344,14 +372,14 @@ claude --plugin-dir /path/to/oh-my-pm
 
 ---
 
+# 原型设计（prototype-design）
 
-
-### 两种模式
+直接生成 **HTML 原型**，支持两种模式：
 
 | 模式 | 要求 | 说明 |
 |:-----|:-----|:-----|
-| **迭代更新** | 当前 UI 截图/HTML/链接 | 匹配现有风格，标注修改点 |
-| **新功能/新产品** | 设计参考/组件库 | 基于参考生成，严禁凭空想象 |
+| **迭代模式** | 当前 UI 截图/HTML/链接 | 匹配现有风格，标注修改点 |
+| **新产品模式** | 设计参考/组件库 | 基于参考生成，严禁凭空想象 |
 
 ### 修改标注
 
@@ -359,82 +387,11 @@ claude --plugin-dir /path/to/oh-my-pm
 - 🟡 黄色 = 修改
 - 🔴 红色 = 删除
 
-
-
-**方式一：Remote MCP Server（推荐）**
-
-编辑 `~/.claude/settings.json`，添加：
-
-```json
-{
-  "mcpServers": {
-    "figma": {
-      "command": "npx",
-      "args": ["-y", "@figma/mcp-server"],
-      "env": {
-        "FIGMA_ACCESS_TOKEN": "你的_figma_token"
-      }
-    }
-  }
-}
-```
-
-**方式二：Desktop MCP Server**
-
-
-```json
-{
-  "mcpServers": {
-    "figma-desktop": {
-      "args": ["--mcp"]
-    }
-  }
-}
-```
-
-2. 点击头像 → Settings → Security
-3. Personal access tokens → Generate new token
-4. 复制 token 并粘贴到配置中
-
-**配置完成后，重启 Claude Code 生效。**
-
-官方文档：https://help.figma.com/hc/en-us/articles/32132100833559
-
 ---
 
 # 版本历史
 
-### v0.5.0 (2026-03-13)
-- `prd-gen` PRD 输出结构重大升级
-- 对齐标准 PRD 模板（9章结构）
-- 新增：文档基本信息、修订记录
-- 新增：用户痛点（第2.2节）
-- 新增：用户体验流程（第5章）
-- 新增：独立原型设计章节（第7章）
-- 新增：独立成功指标章节（第9章，拆分北极星/过程/结果指标）
-- 提升非功能性需求为独立章节（第4章）
-
-### v0.4.2 (2026-03-13)
-- `figma-prototype` 新增 HTML 原型 fallback 模式
-
-### v0.4.1 (2026-03-13)
-- `figma-prototype` Skill 新增前置条件指引
-
-### v0.4.0 (2026-03-13)
-- 20 个 Skills (新增 figma-prototype)
-- Commands 支持 (4 个命令)
-- 双调用模式 (直接 + 命名空间)
-
-### v0.3.0 (2026-03-12)
-- Subagent 混合架构
-- 8 个 Subagents + 记忆系统
-
-### v0.2.0 (2026-03-12)
-- 完整五层架构 (19 Skills)
-- 三个工作流编排器
-
-### v0.1.0 (2026-03-11)
-- MVP 版本 (4 Skills)
+当前版本 **0.9.4**，完整版本历史见 [CHANGELOG.md](../CHANGELOG.md)。
 
 ---
 

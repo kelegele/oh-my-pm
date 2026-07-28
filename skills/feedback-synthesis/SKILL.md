@@ -4,7 +4,7 @@ description: 汇总和综合来自多个来源的用户反馈。当用户需要�
 layer: validation
 input-from: release-management
 output-to: iteration-planning,prioritization,user-research
-version: 0.1.1
+version: 0.1.2
 ---
 
 # Feedback Synthesis
@@ -204,8 +204,8 @@ Week 4  |█████████| 4.3/5 - Recovery After Fix
 
 This analysis triggers the following actions:
 - **New high-severity bugs** → Engineering escalation
-- **Common feature requests** → Consider for `/prioritization`
-- **Declining sentiment trend** → Activate `/user-research`
+- **Common feature requests** → Consider for prioritization
+- **Declining sentiment trend** → Activate user-research skill
 - **UX patterns** → Update design system
 
 ## Appendices

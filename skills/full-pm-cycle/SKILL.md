@@ -4,7 +4,7 @@ description: 编排从市场研究到上线后分析的完整产品管理周期�
 layer: workflow
 input-from: user
 output-to: iteration-planning
-version: 0.8.2
+version: 0.8.3
 ---
 
 # Full PM Cycle Workflow
@@ -82,9 +82,9 @@ Orchestrates complete product management lifecycle across all five layers:
 3. 竞品分析 - `competitive-analysis` skill
 
 **技能调用**：
-- Step 1.1: 调用 `/market-intelligence`
-- Step 1.2: 调用 `/user-research`
-- Step 1.3: 调用 `/competitive-analysis`
+- Step 1.1: 调用 market-intelligence 技能
+- Step 1.2: 调用 user-research 技能
+- Step 1.3: 调用 competitive-analysis 技能
 
 **输出**：
 - `docs/product/.ompm/market-analysis.json`
@@ -124,9 +124,9 @@ Orchestrates complete product management lifecycle across all five layers:
 3. 优先级排序 - `prioritization` skill
 
 **技能调用**：
-- Step 2.1: 调用 `/product-positioning`
-- Step 2.2: 调用 `/roadmap-planning`
-- Step 2.3: 调用 `/prioritization`
+- Step 2.1: 调用 product-positioning 技能
+- Step 2.2: 调用 roadmap-planning 技能
+- Step 2.3: 调用 prioritization 技能
 
 **输出**：
 - `docs/product/positioning.md`
@@ -162,8 +162,8 @@ Orchestrates complete product management lifecycle across all five layers:
 2. 原型设计 - `prototype-design` skill（HTML）
 
 **技能调用**：
-- Step 3.1: 调用 `/prd-gen`
-- Step 3.2: 调用 `/prototype-design`
+- Step 3.1: 调用 prd-gen 技能
+- Step 3.2: 调用 prototype-design 技能
 
 **原型格式选择**：
 
@@ -208,9 +208,9 @@ Orchestrates complete product management lifecycle across all five layers:
 3. 发布管理 - `release-management` skill
 
 **技能调用**：
-- Step 4.1: 调用 `/requirement-review`
-- Step 4.2: 调用 `/project-coordination`
-- Step 4.3: 调用 `/release-management`
+- Step 4.1: 调用 requirement-review 技能
+- Step 4.2: 调用 project-coordination 技能
+- Step 4.3: 调用 release-management 技能
 
 **输出**：
 - `docs/product/review-notes/[feature]-review.md`
@@ -247,9 +247,9 @@ Orchestrates complete product management lifecycle across all five layers:
 3. 迭代规划 - `iteration-planning` skill
 
 **技能调用**：
-- Step 5.1: 调用 `/impact-analysis`
-- Step 5.2: 调用 `/feedback-synthesis`
-- Step 5.3: 调用 `/iteration-planning`
+- Step 5.1: 调用 impact-analysis 技能
+- Step 5.2: 调用 feedback-synthesis 技能
+- Step 5.3: 调用 iteration-planning 技能
 
 **输出**：
 - `docs/product/.ompm/impact-analysis.json`

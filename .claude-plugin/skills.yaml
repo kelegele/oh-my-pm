@@ -1,6 +1,6 @@
 manifest:
   plugin: oh-my-pm
-  version: 0.9.3
+  version: 0.9.4
 skills:
 - file: skills/competitive-analysis/SKILL.md
   layer: perception
@@ -129,14 +129,14 @@ skills:
   - 版本排期
   - sprint planning
 - file: skills/quick-prd/SKILL.md
-  layer: workflows
+  layer: workflow
   name: quick-prd
   triggers:
   - 快速 PRD
   - 带竞品分析的需求
   type: workflow
 - file: skills/full-pm-cycle/SKILL.md
-  layer: workflows
+  layer: workflow
   name: full-pm-cycle
   triggers:
   - 完整产品规划
@@ -144,7 +144,7 @@ skills:
   - 产品全周期
   type: workflow
 - file: skills/feature-launch/SKILL.md
-  layer: workflows
+  layer: workflow
   name: feature-launch
   triggers:
   - 功能发布
