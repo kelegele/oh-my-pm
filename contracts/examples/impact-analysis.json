@@ -1,0 +1,21 @@
+{
+  "status": "mixed",
+  "goal_achievement": {
+    "goals_total": 4,
+    "goals_met": 3,
+    "details": [
+      { "metric": "Activation Rate", "target": "40%", "actual": "52%", "status": "exceeded" },
+      { "metric": "Retention (Day 7)", "target": "60%", "actual": "58%", "status": "slightly_below" }
+    ]
+  },
+  "metrics": {
+    "analysis_period": { "start": "2026-07-01", "end": "2026-07-28" },
+    "core_metrics": [
+      { "metric": "DAU", "before": 1000, "after": 1200, "change": "+20%", "significance": "significant" }
+    ]
+  },
+  "recommendations": [
+    "Improve feature discovery with in-app tutorial",
+    "Monitor increased API load and plan capacity"
+  ]
+}

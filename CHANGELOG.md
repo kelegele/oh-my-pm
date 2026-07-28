@@ -5,6 +5,45 @@ All notable changes to Oh-My-PM will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-07-28
+
+简化重构版本：设计逻辑对齐 product-manager-workflow（证据纪律）与 dbskill（单入口路由），交付层取消，20 Skills → 11。
+
+### Added
+- **全局证据纪律**：缺失信息标【待确认】、无证据断言标【未验证】、正式输出前信息完整度检查门，逐字内联于 clarify-requirements、market-research、product-strategy、prd-gen、retrospective
+- **/ompm 全局意图路由**：自然语言/无参调用时读取对话上下文 + current-workflow.json，推荐"当前最有价值的下一步"并说明理由；workflow 直派用法保持兼容
+- **prd-gen 预审尾门**：生成后自审清单 + 工程/设计/业务三视角挑战 + 预审记录，吸收自 requirement-review 的可执行内核
+- **feature-launch 发布内核**：灰度放量计划、回滚计划、上线 24h 监控基线、五类上线前 checklist，吸收自 release-management
+- **retrospective A/B 验证方案模板**（假设/指标/样本周期/判定标准）
+- evals 新增 2 个 /ompm 路由用例；run-evals.sh 支持 commands/ 回退定位
+
+### Changed
+- **架构叙事**：五层架构退役，改为三层主线（感知→策略→设计）+ 验证辅助
+- **Skill 合并**：market-intelligence+user-research → market-research；product-positioning+prioritization+roadmap-planning → product-strategy；impact-analysis+iteration-planning → retrospective（合并均保持 .ompm 契约文件名与 schema 不变）
+- full-pm-cycle 各阶段补"必答问题"清单（对齐访谈主线：背景触发→…→验证复盘）
+- prd-gen 证据纪律与 Explicit-Skip Protocol 关系明确化
+
+### Removed
+- **Skill 删除**：data-monitoring、project-coordination、process-optimization（无真实数据接入）、requirement-review、release-management（内核已并入 prd-gen / feature-launch）
+- **Subagent 删除**：data-monitor、process-optimizer（现 6 个）
+
+## [0.10.0] - 2026-07-28
+
+### Added
+- **Evals 行为测试体系**：`evals/` 目录，14 个 YAML 用例覆盖 prd-gen / quick-prd / full-pm-cycle / feature-launch（含 S2.5 硬门控对抗用例），`bash evals/run-evals.sh [skill]` 通过 `claude -p` headless 跑真实模型断言
+- **可执行上下文契约**：`contracts/*.schema.json`（9 份，字段取自各 skill 声明的输出结构）+ `contracts/examples/` 最小合法示例
+- `tests/validate_contracts.py` 纯标准库 schema 校验器；`bin/validate-context.sh <json-file>` 运行期自检工具
+- `tests/test-skills.sh` 新增两项检查：`input-from`/`output-to` 声明合法性（防笔误）、contracts examples vs schemas 校验（总计数 21 → 23）
+- `full-pm-cycle` 新增 `## Execution Modes`：`mode: quick` 阶段裁剪定义 + S2.5 Strategy Confirmation 硬门控（自 quick-prd 迁入，两种模式均生效）
+
+### Changed
+- **quick-prd 薄预设化**：`skills/quick-prd/SKILL.md` 从 479 行重写为 35 行预设壳，编排逻辑唯一权威收敛到 full-pm-cycle（`/quick-prd` 命令与触发关键词不变）
+- **Skill 薄 / Agent 厚分工试点**：competitive-analysis SKILL.md 瘦身至 118 行（契约面零丢失），执行方法论下沉至 competitive-analyst agent（112 → 165 行）
+- `AGENTS.md` 新增 Skill vs Subagent 分工原则；`docs/product/` 产物路径说明
+
+### Removed
+- 删除全部 20 个 SKILL.md frontmatter 的 `version` 字段 —— `plugin.json` 成为唯一版本源（skills.yaml / agents.yaml / marketplace.json 跟随同步）
+
 ## [0.9.4] - 2026-07-28
 
 ### Fixed

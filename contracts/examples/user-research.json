@@ -1,0 +1,37 @@
+{
+  "research": {
+    "id": "ur-20260728-001",
+    "timestamp": "2026-07-28T08:00:00Z",
+    "goal": "Understand PM documentation pain points",
+    "method": "interviews",
+    "participants": 6,
+    "personas": [
+      {
+        "name": "Product Manager Alice",
+        "role": "PM at B2B SaaS",
+        "goals": ["Ship PRDs faster", "Keep stakeholders aligned"],
+        "pain_points": ["Scattered context across tools", "Repetitive competitive research"],
+        "behaviors": ["Writes PRDs in docs", "Tracks competitors in spreadsheets"],
+        "confidence": "medium",
+        "source": { "type": "interview", "url_or_reference": "interview-2026-07-28-01", "fetched_at": "2026-07-28T08:00:00Z" }
+      }
+    ],
+    "key_insights": [
+      { "insight": "PMs spend ~30% of writing time re-gathering context", "confidence": "medium", "evidence_count": 4, "total_participants": 6 }
+    ],
+    "quotes": [
+      { "user": "PM Alice", "quote": "I rewrite the same competitor section every quarter", "source": "interview-2026-07-28-01" }
+    ],
+    "recommendations": [
+      "Persist research outputs as reusable context",
+      "Auto-refresh competitive sections in PRDs"
+    ]
+  },
+  "search_record": {
+    "search_queries_used": ["product manager documentation pain points study 2026"],
+    "sources_accessed": [
+      { "url": "https://example.com/pm-survey", "title": "PM survey 2026", "used_for": "industry benchmark data" }
+    ]
+  },
+  "last_updated": "2026-07-28T08:00:00Z"
+}

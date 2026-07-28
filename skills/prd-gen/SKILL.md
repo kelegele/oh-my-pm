@@ -2,9 +2,8 @@
 name: prd-gen
 description: 从功能需求生成结构化产品需求文档（PRD）。当用户想要创建 PRD、记录新功能、编写产品规格、形式化用户故事、说"为 X 写 PRD"、需要记录需求、或正在准备产品评审会议时使用。即使没有明确说"PRD"，当用户需要包含用户故事、验收标准和成功指标的结构化产品文档时也应激活。
 layer: design
-input-from: product-positioning,prioritization,competitive-analysis
-output-to: requirement-review,prototype-design
-version: 0.5.1
+input-from: product-strategy,competitive-analysis,market-research,clarify-requirements
+output-to: prototype-design,retrospective
 context-requirements:
   - scenario: iteration
     required: [current_feature_desc, ui_state, iteration_goal]
@@ -65,6 +64,8 @@ When user selects "迭代更新", ask how they want to provide current UI state:
 ### Step 0.5: Information Gap Analysis & PRD Plan (CRITICAL — HARD GATE)
 
 **HARD GATE**: Do NOT proceed to Industry Benchmark Check or PRD generation until this step is complete and user has approved the plan.
+
+**Explicit-Skip Protocol（用户显式拒绝交互时）**: If the user explicitly forbids questions (e.g. "别问了，直接写"), you MAY skip the interactive gates — but then you MUST start the output with an **假设声明** block listing every assumption made (scenario, selected/excluded chapters, target product, key defaults), so the user can correct them. The 假设声明同时充当 Evidence Discipline 的完整度清单：未确认信息标【待确认】、无证据断言标【未验证】（见下文 Evidence Discipline），不得脑补填默认值。Never skip silently.
 
 After scenario detection and context collection:
 
@@ -150,7 +151,7 @@ Present chapter selection to user via `AskUserQuestion` with multiSelect. Due to
    | **调整章节选择** | 重新勾选要生成的章节 |
    | **需要调整方案** | 修改 PRD Plan 后重新确认 |
    | **我有更多信息要补充** | 回到 Step 0.5 补充信息，重新生成方案 |
-   | **先补充感知数据** | 调用 competitive-analysis / user-research / market-intelligence |
+   | **先补充感知数据** | 调用 market-research / competitive-analysis |
 
 **Anti-Pattern**: "I have enough info, let me just generate" — forbidden. Even with minimal gaps, present the plan and get approval.
 
@@ -270,7 +271,8 @@ The generation process ensures complete, actionable PRDs:
 8. **Gather context** - Read market analysis, competitive insights, user research
 9. **Assemble sections** - Build only the SELECTED PRD sections with appropriate detail
 10. **Verify completeness** - Check against quality standards (selected chapters only)
-11. **Generate output** - Write to `docs/product/prd/{feature-name}-{date}-v{version}.md`
+11. **Pre-delivery self-review** - Run the PRD 预审尾门 (chapter self-check + stakeholder perspective challenge); fix blockers or mark【待确认】
+12. **Generate output** - Write to `docs/product/prd/{feature-name}-{date}-v{version}.md`（含尾部「预审记录」一节）
 
 **Content Constraints (HARD RULES):**
 
@@ -289,6 +291,14 @@ Before generating PRD content, note:
 | `requirements` | string | Yes | Feature description or user story to document |
 | `target_audience` | string | No | Target user segment or persona |
 | `context_refs` | list | No | Related context files to reference |
+
+## Evidence Discipline (证据纪律)
+
+1. **缺失信息标记【待确认】**：任何无法从输入或上下文获得的信息，标记为【待确认】，不得脑补填默认值。
+2. **证据追溯【未验证】**：用户需求/市场断言必须追问证据来源；无证据的标记为【未验证】并注明所需验证方式。
+3. **完整度检查门**：正式输出交付物前，先输出信息完整度清单（已确认 ✅ / 待确认 ⚠️ / 未验证 ❓），经用户确认后才生成正文。
+
+**与 Explicit-Skip Protocol（Step 0.5）的关系**: 证据纪律是输出纪律（信息标注与交付前自查），Explicit-Skip 是交互纪律（用户显式拒绝交互时的降级处理），两者互补不冲突。Explicit-Skip 场景下完整度清单不免除 — 与「假设声明」合并输出，但不再等待用户确认；假设声明中的未确认信息同样按本节规则标注【待确认】/【未验证】。
 
 ## Output Structure
 
@@ -438,7 +448,7 @@ The PRD follows this structure (aligned with standard PRD template). **IMPORTANT
 - [ ] 合规分析报告已附 (如果有，提供路径)
 - [ ] 等待合规审查 (如需要，安排合规专家评审)
 
-**备注**: 本节内容由合规专家提供或参考 `release-management` skill 的 Legal/Compliance 检查清单。
+**备注**: 本章为 prd-gen 自包含的合规自查——按 7.1/7.2 逐项确认产品涉及的数据类型对应的法规要求与第三方服务合规性；涉及强监管领域（金融、医疗、未成年人等）时，先安排合规专家评审再定稿。
 
 ## 8. 原型设计
 ### 8.1 原型链接
@@ -468,6 +478,22 @@ The PRD follows this structure (aligned with standard PRD template). **IMPORTANT
 ## 附录
 - 参考文档: [链接]
 - 竞品分析: [链接]
+
+## 预审记录
+
+> 本节由「PRD 预审尾门」自动生成，记录 PM 自审结果，不属于章节选择范围，不代表干系人已评审通过。
+
+### 自审问题清单
+| 问题 | 严重度 | 所在章节 | 处理方式 |
+|:-----|:-------|:---------|:---------|
+| XXX | 阻塞/非阻塞 | 第X章 | 已修复 / 【待确认】: 说明 |
+
+### 干系人视角挑战
+| 视角 | 问题 | 回答 |
+|:-----|:-----|:-----|
+| 工程 | XXX | 答案 / 【待确认】 |
+| 设计 | XXX | 答案 / 【待确认】 |
+| 业务 | XXX | 答案 / 【待确认】 |
 ```
 
 ## User Story Format
@@ -533,6 +559,52 @@ Before delivering, the PRD should include:
 - [ ] 成功指标 quantified (North Star + process + outcome, if 第9章 selected)
 - [ ] Dependencies documented
 - [ ] Exclusion constraints verified (no tech/API/DB content)
+- [ ] PRD 预审尾门已通过（阻塞问题已修复或标【待确认】，「预审记录」已附加到 PRD 尾部）
+
+## PRD 预审尾门 (Pre-Delivery Self-Review Gate)
+
+**HARD GATE**: PRD 正文生成完成、写入 `docs/product/prd/` 交付之前，必须通过本节自审。这是 PM 自审（self-review），不是评审会议 — 不模拟"开会"、不追求"获得批准"，目标是诚实地暴露 PRD 当前的缺口与风险。
+
+### 1. 生成后自审 (Chapter-by-Chapter Self-Check)
+
+对已生成的每个章节逐项检查：
+
+| 检查项 | 不通过的表现 |
+|:-------|:-------------|
+| **逻辑漏洞** | 前后章节矛盾（如功能列表与用户旅程不一致）、目标与范围脱节 |
+| **模糊表述** | "合理"、"尽量"、"较快"、"用户友好"等无法判定的措辞 |
+| **验收标准可验收性** | 无法写成 Given/When/Then、无明确预期结果、依赖主观判断 |
+| **边界情况** | 缺少异常流程、空态/满态、权限边界、极端输入 |
+| **指标可衡量性** | 成功指标缺基线值/目标值/测量方式（若第9章选中） |
+| **范围一致性** | 不包含范围（1.3.2）与功能列表（3.1）存在冲突 |
+
+发现问题分两档：
+- **阻塞问题（Blocker）**: 导致工程无法评估、设计无法开展或验收无法执行的问题
+- **非阻塞问题**: 可在后续迭代中澄清的细节，记录但不阻碍交付
+
+### 2. 干系人视角挑战 (Stakeholder Perspective Challenge)
+
+模拟三个视角对 PRD 提出质疑，每个视角提出 2-3 个最尖锐的问题：
+
+| 视角 | 挑战重点 | 示例问题 |
+|:-----|:---------|:---------|
+| **工程** | 可实现性 / 工作量 | "这个交互在现有架构下是否需要重构？" "性能指标在当前数据量级下是否现实？" "P0 功能的工作量是否被低估？" |
+| **设计** | 交互完整性 | "异常流程和空态的界面表现定义了吗？" "从页面 B 回退到页面 A 的路径是什么？" |
+| **业务** | 指标可衡量性 | "北极星指标的基线值从哪里来？" "如何区分功能带来的指标变化与自然波动？" "目标值的设定依据是什么？" |
+
+**要求**: 问题必须具体（指向 PRD 中的章节/条目），不允许泛泛而问；某视角确实提不出具体问题时，如实说明"该视角未发现阻塞疑问"，不得编造问题凑数。
+
+### 3. 预审记录（附加到 PRD 尾部）
+
+自审与挑战结果写入 PRD 尾部的「预审记录」一节（格式见 Output Structure 模板末尾）。该节**不属于章节选择范围，始终生成**，并声明：本记录为 PM 自审结果，不代表干系人已评审通过。
+
+### 4. 交付条件 (Exit Criteria)
+
+- 所有**阻塞问题**已修复，或在 PRD 中标注【待确认】并说明所需确认人与确认方式
+- 「预审记录」一节已附加到 PRD 尾部
+- 非阻塞问题已在交付说明中告知用户
+
+**禁止**: 发现阻塞问题仍原样交付、在交付说明中含糊带过 — 诚实定位优于表面完整。
 
 ## Context Integration
 

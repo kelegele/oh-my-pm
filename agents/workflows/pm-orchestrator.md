@@ -6,7 +6,6 @@ tools:
   - Agent(market-researcher)
   - Agent(competitive-analyst)
   - Agent(user-interviewer)
-  - Agent(process-optimizer)
   - Agent(impact-analyst)
   - Agent(feedback-collector)
   - Read
@@ -38,7 +37,7 @@ memory: project
 │         ↓                ↓                    ↓             │
 │  LAYER 2: STRATEGY (定位)                                 │
 │  └─────────────────────────────────────────────────────┐   │
-│  │ 产品定位、路线图、优先级排序 (使用 Skills)            │   │
+│  │ 产品策略：定位、优先级、路线图 (product-strategy)     │   │
 │  └─────────────────────────────────────────────────────┘   │
 │         ↓                                                     │
 │  LAYER 3: DESIGN (定义)                                     │
@@ -48,7 +47,7 @@ memory: project
 │         ↓                                                     │
 │  LAYER 4: DELIVERY (构建)                                   │
 │  └─────────────────────────────────────────────────────┐   │
-│  │ 需求评审、项目协调、发布管理 (使用 Skills)            │   │
+│  │ PRD 预审尾门 (prd-gen) + 发布策略 (feature-launch)   │   │
 │  └─────────────────────────────────────────────────────┘   │
 │         ↓                                                     │
 │  LAYER 5: VALIDATION (学习)                                 │
@@ -82,6 +81,8 @@ memory: project
 
 **并行执行**：可以同时运行前三个研究任务
 
+**Skill 边界**：market-researcher（市场面）与 user-interviewer（用户面）共同覆盖 `market-research` skill 的统一研究入口；competitive-analyst 对应 `competitive-analysis` skill。
+
 **输出**：
 - `docs/product/.ompm/market-analysis.json`
 - `docs/product/.ompm/competitive-analysis.json`
@@ -103,7 +104,7 @@ memory: project
 - `docs/product/.ompm/clarification-result.json`
 
 ### 阶段 2: 策略 (定义方向)
-**使用 Skills**: `product-positioning` → `roadmap-planning` → `prioritization`
+**使用 Skill**: `product-strategy`（定位声明 → 优先级排序 → 路线图，一条主线一次成稿）
 
 **输出**：
 - `docs/product/positioning.md`
@@ -141,7 +142,7 @@ memory: project
 - `docs/product/design/`
 
 ### 阶段 4: 交付 (构建发布)
-**使用 Skills**: `requirement-review` → `project-coordination` → `release-management`
+**使用 Skills**: `prd-gen` 预审尾门（需求评审、干系人对齐）→ `feature-launch` 发布策略与 checklist（任务分解、时间线、上线检查）
 
 **输出**：
 - `docs/product/review-notes/`

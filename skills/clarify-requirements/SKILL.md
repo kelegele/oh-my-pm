@@ -3,8 +3,7 @@ name: clarify-requirements
 description: 感知阶段的信息收集与需求澄清。在进入 PRD 生成前，系统性地识别缺失信息、逐步确认、生成 PRD 内容方案供用户审阅。当用户提供需求描述但信息不完整，或说"帮我梳理一下需求"、"还缺什么信息"、"先确认下需求再生成"时使用。
 layer: perception
 input-from: user
-output-to: competitive-analysis,market-intelligence,user-research,prd-gen
-version: 0.1.2
+output-to: market-research,competitive-analysis,prd-gen
 ---
 
 # Clarify Requirements
@@ -25,6 +24,12 @@ version: 0.1.2
 ## Anti-Pattern: "信息够了，直接生成吧"
 
 **禁止**。即使你认为信息已经足够，也必须呈现方案并获得用户批准。"简单"需求更容易因为遗漏关键信息而导致 PRD 返工。
+
+## Evidence Discipline (证据纪律)
+
+1. **缺失信息标记【待确认】**：任何无法从输入或上下文获得的信息，标记为【待确认】，不得脑补填默认值。
+2. **证据追溯【未验证】**：用户需求/市场断言必须追问证据来源；无证据的标记为【未验证】并注明所需验证方式。
+3. **完整度检查门**：正式输出交付物前，先输出信息完整度清单（已确认 ✅ / 待确认 ⚠️ / 未验证 ❓），经用户确认后才生成正文。
 
 ## Process Flow
 
@@ -110,9 +115,21 @@ digraph clarify {
 - 在 PRD 方案中将这些项标记为 `[待补充]`
 - 不阻塞流程，但明确标注缺失
 
+**信息状态跟踪（证据纪律）**：澄清过程中产出的每一条信息都必须带状态标签：
+
+| 状态 | 含义 | 标记 |
+|:-----|:-----|:-----|
+| 已确认 | 用户明确提供并确认的信息 | ✅ |
+| 待确认 | 无法从输入或上下文获得、用户稍后补充的信息 | ⚠️【待确认】 |
+| 未验证 | 用户提供的断言但无证据来源（如市场数据、用户反馈结论） | ❓【未验证】，并注明所需验证方式 |
+
+- 用户确认的回答 → 标记为已确认 ✅
+- 用户说"稍后提供" → 标记为【待确认】⚠️，**不得脑补填默认值**
+- 用户给出断言但无证据 → 追问证据来源；仍无证据的标记为【未验证】❓，注明所需验证方式（如"需竞品实测"、"需用户访谈"）
+
 ### Step 5: Generate PRD Plan
 
-基于已收集的信息，生成 PRD 内容方案：
+基于已收集的信息，生成 PRD 内容方案。**本方案即证据纪律中"完整度检查门"的实例**：`已收集信息` / `待补充项` 两节就是信息完整度清单，逐项携带状态（已确认 ✅ / 待确认 ⚠️ / 未验证 ❓），必须经用户确认后才生成 PRD 正文。
 
 ```markdown
 ## PRD 内容方案
@@ -121,11 +138,11 @@ digraph clarify {
 - **场景类型**: 迭代更新 / 新功能 / 0-1 新产品
 - **核心需求**: [一句话概括]
 
-### 已收集信息
-- [列出用户已提供的所有信息]
+### 已收集信息（信息完整度清单）
+- [列出用户已提供的所有信息，逐项标注状态：已确认 ✅ / 待确认 ⚠️ / 未验证 ❓（未验证项注明所需验证方式）]
 
 ### 待补充项
-- [列出 pending 项，标注 [待补充]]
+- [列出 pending 项，标注 [待补充]，即【待确认】项]
 
 ### 预计生成的 PRD 章节
 | 章节 | 内容概要 | 依赖 |
@@ -156,7 +173,7 @@ digraph clarify {
 | **确认，按此方案生成 PRD** | 进入 PRD 生成流程 |
 | **需要调整方案** | 回到 Step 5 修改方案 |
 | **我有更多信息要补充** | 回到 Step 4 补充信息，重新生成方案 |
-| **先回到感知阶段** | 调用 competitive-analysis / user-research 等 skill 补充感知数据 |
+| **先回到感知阶段** | 调用 market-research / competitive-analysis 等 skill 补充感知数据 |
 
 ### Step 7: Save Clarification Result
 
@@ -181,6 +198,12 @@ digraph clarify {
 }
 ```
 
+**与证据纪律的映射（JSON 字段名保持契约稳定，不得更改）**：
+
+- `collected_info` 对应状态为**已确认 ✅** 的信息
+- `pending_items` 对应 **【待确认】⚠️** 项——用户说"稍后提供"的缺失信息在此落库
+- **【未验证】❓** 项：将断言内容放入 `collected_info`，并在 `pending_items` 中追加对应验证任务（`reason` 注明所需验证方式）
+
 ## Quality Standards
 
 - 每个必需字段已确认或标记为 pending
@@ -203,8 +226,7 @@ digraph clarify {
 **Output To:**
 - `prd-gen` — 需求澄清作为 PRD 生成输入
 - `competitive-analysis` — 如需补充竞品分析
-- `user-research` — 如需补充用户研究
-- `market-intelligence` — 如需补充市场情报
+- `market-research` — 如需补充市场情报或用户研究
 
 ## Example Usage
 

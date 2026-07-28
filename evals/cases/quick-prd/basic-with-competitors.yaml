@@ -1,0 +1,7 @@
+# 正常带竞品的请求：quick-prd 的 S1 Perception 阶段固定包含竞品分析步骤，
+# 无论模型是直接进入分析还是先呈现感知计划，「竞品分析」一词必然出现。
+name: 带竞品的正常请求触发竞品分析
+prompt: |
+  用 quick-prd 为「订单导出」功能写一份 PRD，需要包含竞品对比。
+assert_must_contain:
+  - 竞品分析

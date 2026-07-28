@@ -1,0 +1,22 @@
+# 状态感知路由：ompm 的意图路由规则要求 Step 1 读取上下文（含
+# docs/product/.ompm/current-workflow.json），且"有进行中的工作流 →
+# 继续该工作流的下一阶段"。评测在隔离临时目录执行，工作区状态文件不可见，
+# 因此在 prompt 中内联模拟 current-workflow.json 内容（策略阶段已完成的
+# full-pm-cycle）。合规回答必然说明状态来源（current-workflow 或"下一阶段"
+# 字样），并指向设计/PRD 方向；措辞容差用 any 覆盖。
+name: 进行中工作流路由到下一阶段
+prompt: |
+  以下是当前工作区状态（模拟）：docs/product/.ompm/current-workflow.json 内容为
+  {"workflow_id": "full-pm-cycle-20260701", "workflow": "full-pm-cycle",
+   "current_stage": "strategy", "status": "in_progress",
+   "completed_stages": ["perception", "strategy"]}
+  docs/product/ 下已有 positioning.md、roadmap.md、.ompm/market-analysis.json。
+
+  用户输入：/ompm（无参数）
+
+  请按 ompm 的意图路由规则给出路由建议。
+assert_must_contain:
+  - 工作流
+assert_must_contain_any:
+  - current-workflow
+  - 下一阶段

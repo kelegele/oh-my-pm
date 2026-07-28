@@ -1,0 +1,9 @@
+# 发布时间线：skill 的 Stage Details 全部使用 T 倒计时记法
+# （T-4 to T-3 weeks、T-7 to T-1 days、T-day、T+1 day），
+# 忠实的发布计划必然沿用「T-」表述。
+name: 发布计划含 T 倒计时时间线
+prompt: |
+  会员系统的 PRD 已定稿并通过评审，目标发布日期是 8 周后。
+  请用 feature-launch 工作流给出从现在到上线的发布计划和时间线。
+assert_must_contain:
+  - T-

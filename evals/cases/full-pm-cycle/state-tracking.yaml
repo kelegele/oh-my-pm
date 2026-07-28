@@ -1,0 +1,8 @@
+# 状态追踪：S0 Setup 固定初始化 docs/product/.ompm/current-workflow.json，
+# 凡涉及状态管理的忠实回答必然引用该文件名。
+name: 工作流状态追踪文件
+prompt: |
+  请用 full-pm-cycle 为「智能台灯」产品启动完整 PM 周期，
+  先说明你会如何跟踪工作流状态，再开始执行。
+assert_must_contain:
+  - current-workflow.json

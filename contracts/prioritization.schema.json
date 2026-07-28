@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "prioritization context contract",
+  "description": "docs/product/.ompm/prioritization.json 轻量契约，仅约束顶层 required 字段与类型。字段来源：skills/prioritization/SKILL.md「Output Structure → Prioritization Format」。",
+  "type": "object",
+  "required": ["prioritization"],
+  "properties": {
+    "prioritization": { "type": "object" }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "analysis": {
+    "id": "mi-20260728-001",
+    "timestamp": "2026-07-28T09:30:00Z",
+    "market": "AI-powered product management tools",
+    "market_size": {
+      "tam": { "value": "$12B", "confidence": "medium", "source": { "url": "https://example.com/report", "source_name": "Industry report", "fetched_at": "2026-07-28T09:30:00Z" } },
+      "sam": { "value": "$2B", "confidence": "medium", "source": { "url": "https://example.com/report", "source_name": "Industry report", "fetched_at": "2026-07-28T09:30:00Z" } },
+      "som": { "value": "Unknown", "confidence": "low", "source": { "url": "https://example.com/report", "source_name": "Internal estimate", "fetched_at": "2026-07-28T09:30:00Z" } }
+    },
+    "growth_rate": { "value": "18% CAGR", "confidence": "medium", "source": { "url": "https://example.com/report", "source_name": "Industry report", "fetched_at": "2026-07-28T09:30:00Z" } },
+    "key_trends": [
+      { "trend": "Agentic PM workflows", "confidence": "high", "source": { "url": "https://example.com/trends", "source_name": "Trend analysis", "fetched_at": "2026-07-28T09:30:00Z" } }
+    ],
+    "key_players": [
+      { "name": "Notion", "market_share": "Unknown", "confidence": "low", "source": { "url": "https://example.com/players", "source_name": "Market overview", "fetched_at": "2026-07-28T09:30:00Z" } }
+    ],
+    "opportunities": [
+      { "opportunity": "PM-specific agent tooling underserved", "confidence": "medium", "basis": "Competitor focus analysis" }
+    ],
+    "threats": [
+      { "threat": "Platform vendors bundling PM features", "confidence": "medium", "source": { "url": "https://example.com/threats", "source_name": "Industry report", "fetched_at": "2026-07-28T09:30:00Z" } }
+    ]
+  },
+  "search_record": {
+    "search_queries_used": ["AI product management tools market size 2026"],
+    "sources_accessed": [
+      { "url": "https://example.com/report", "title": "Industry report", "used_for": "market size data" }
+    ]
+  },
+  "last_updated": "2026-07-28T09:30:00Z"
+}

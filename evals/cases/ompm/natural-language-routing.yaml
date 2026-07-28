@@ -1,0 +1,16 @@
+# 自然语言路由：ompm Step 3 要求"路由并用一句话说明理由"。输入明确是
+# 竞品话题，能力图中"竞品功能对比、差异化机会"固定指向 competitive-analysis，
+# 因此合规回答必然点名该 skill；理由表述措辞多样，用 any 覆盖常见说理标记
+# （因为 / 适合 / 用于 / 帮你）。
+name: 自然语言路由到 competitive-analysis 并说明理由
+prompt: |
+  用户输入：/ompm 我想分析一下竞品，看看我们和 Notion、飞书文档差在哪
+
+  请按 ompm 的意图路由规则处理该输入。
+assert_must_contain:
+  - competitive-analysis
+assert_must_contain_any:
+  - 因为
+  - 适合
+  - 用于
+  - 帮你

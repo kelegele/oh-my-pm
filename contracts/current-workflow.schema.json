@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "current-workflow context contract",
+  "description": "docs/product/.ompm/current-workflow.json 轻量契约，仅约束顶层 required 字段与类型。字段来源：skills/quick-prd/SKILL.md 与 skills/full-pm-cycle/SKILL.md「工作流状态管理 → 状态字段」；required 为两者共有的基础字段，product_name/product_type/outputs 为 full-pm-cycle 声明的可选扩展。",
+  "type": "object",
+  "required": [
+    "workflow_id",
+    "workflow_name",
+    "status",
+    "current_layer",
+    "current_skill",
+    "current_stage",
+    "completed_stages",
+    "started_at",
+    "updated_at"
+  ],
+  "properties": {
+    "workflow_id": { "type": "string" },
+    "workflow_name": { "type": "string" },
+    "status": { "type": "string" },
+    "current_layer": { "type": "string" },
+    "current_skill": { "type": "string" },
+    "current_stage": { "type": "string" },
+    "completed_stages": { "type": "array" },
+    "started_at": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "product_name": { "type": "string" },
+    "product_type": { "type": "string" },
+    "outputs": { "type": "object" }
+  }
+}

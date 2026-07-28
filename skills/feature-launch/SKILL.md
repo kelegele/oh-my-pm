@@ -3,8 +3,7 @@ name: feature-launch
 description: 编排从 PRD 到上线后分析的完整功能发布工作流。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。当准备发布功能、协调功能发布，或用户说"发布这个功能"、"功能发布计划"、"从 PRD 到上线"时使用。
 layer: workflow
 input-from: prd-gen
-output-to: impact-analysis,iteration-planning
-version: 0.8.3
+output-to: retrospective
 ---
 
 # Feature Launch Workflow
@@ -15,8 +14,8 @@ version: 0.8.3
 
 Orchestrates end-to-end feature launch process spanning:
 - **Design**: PRD finalization, prototype validation
-- **Delivery**: Requirement review, project coordination, release management
-- **Validation**: Impact analysis, feedback synthesis
+- **Delivery**: PRD 预审尾门（prd-gen）、发布策略与上线 checklist（本工作流内置）
+- **Validation**: Retrospective (impact + next iteration), feedback synthesis
 
 ---
 
@@ -30,8 +29,8 @@ Orchestrates end-to-end feature launch process spanning:
 |:---------|:-----|:---------|:----------|
 | S0 | Setup | 初始化 | 创建工作流状态文件 |
 | S1 | Design | 方案设计 | PRD 定稿、原型验证 |
-| S2 | Delivery | 交付协调 | 需求评审、项目计划、发布管理 |
-| S3 | Validation | 价值验证 | 效果分析、反馈综合 |
+| S2 | Delivery | 交付协调 | PRD 预审尾门、发布策略与上线 checklist |
+| S3 | Validation | 价值验证 | 复盘、反馈综合 |
 
 ---
 
@@ -108,17 +107,15 @@ Orchestrates end-to-end feature launch process spanning:
 
 ## Stage 2: Delivery (交付协调)
 
-**目标**：完成交付协调层的工作
+**目标**：完成交付协调层的 PRD 预审与发布准备
 
 **活动**：
-1. 需求评审 - `requirement-review` skill
-2. 项目计划 - `project-coordination` skill
-3. 发布管理 - `release-management` skill
+1. PRD 预审尾门 - `prd-gen` skill 的预审尾门（需求评审、干系人对齐）
+2. 发布计划 - 本工作流内置的发布策略与 checklist（任务分解、时间线、上线检查项，见下文 Launch Strategies 与 Release Checklist）
 
 **技能调用**：
-- Step 2.1: 调用 requirement-review 技能
-- Step 2.2: 调用 project-coordination 技能
-- Step 2.3: 调用 release-management 技能
+- Step 2.1: 运行 prd-gen 预审尾门，完成需求评审与干系人对齐
+- Step 2.2: 执行本工作流的发布策略与 checklist，制定发布计划
 
 **输出**：
 - `docs/product/review-notes/[feature]-review.md`
@@ -126,8 +123,8 @@ Orchestrates end-to-end feature launch process spanning:
 - `docs/product/release-plan-[feature].md`
 
 **质量门控**：
-- ✅ 需求评审完成 - 干系人对齐、签字确认
-- ✅ 项目计划完成 - 任务分配、时间线确认
+- ✅ PRD 预审尾门通过 - 干系人对齐、签字确认
+- ✅ 任务与时间线确认 - 任务分配、排期就绪
 - ✅ 发布准备完成 - 代码冻结、发布包就绪
 - **质量门控通过** - 进入 Validation 阶段
 
@@ -136,7 +133,7 @@ Orchestrates end-to-end feature launch process spanning:
 {
   "completed_stages": ["S0", "S1"],
   "current_layer": "delivery",
-  "current_skill": "release-management",
+  "current_skill": "feature-launch",
   "current_stage": "S2",
   "status": "in_progress",
   "updated_at": "{{ISO_8601}}"
@@ -150,11 +147,11 @@ Orchestrates end-to-end feature launch process spanning:
 **目标**：完成价值验证层的数据收集和分析
 
 **活动**：
-1. 效果分析 - `impact-analysis` skill
+1. 复盘 - `retrospective` skill（效果分析 + 迭代建议）
 2. 反馈综合 - `feedback-synthesis` skill
 
 **技能调用**：
-- Step 3.1: 调用 impact-analysis 技能
+- Step 3.1: 调用 retrospective 技能
 - Step 3.2: 调用 feedback-synthesis 技能
 
 **输出**：
@@ -163,7 +160,7 @@ Orchestrates end-to-end feature launch process spanning:
 - `docs/product/post-launch-report.md`
 
 **质量门控**：
-- ✅ 效果分析完成 - 目标达成度分析、关键指标收集
+- ✅ 复盘完成 - 目标达成度分析、关键指标收集、迭代方向明确
 - ✅ 反馈综合完成 - 用户反馈收集、主题分析、改进建议
 - **工作流完成** - 全部 4 个阶段完成
 
@@ -227,8 +224,8 @@ design_gates:
 ```yaml
 delivery_gates:
   S2_to_S3:
-    - requirement_review_complete:
-        - 需求评审完成
+    - prd_pre_review_passed:
+        - prd-gen 预审尾门通过
         - 干系人对齐
         - 签字确认
     - project_plan_complete:
@@ -245,9 +242,10 @@ delivery_gates:
 ```yaml
 validation_gates:
   S3_complete:
-    - impact_analysis_complete:
+    - retrospective_complete:
         - 目标达成度分析
         - 关键指标收集
+        - 迭代建议产出
     - feedback_synthesis_complete:
         - 反馈收集完成
         - 主题分析完成
@@ -304,14 +302,14 @@ validation_gates:
 
 ### Stage 2: Preparation (T-3 to T-1 weeks)
 
-**Requirement Review Meeting**:
+**PRD 预审尾门（prd-gen）**:
 1. 提前 48 小时分发 PRD 和原型
 2. 走查需求
 3. 讨论关注点和边界情况
 4. 记录决策
 5. 获得签字
 
-**Project Planning**:
+**发布计划（本工作流内置）**:
 1. 分解为任务
 2. 分配负责人和估算
 3. 识别依赖
@@ -319,31 +317,45 @@ validation_gates:
 5. 建立状态报告
 
 **Checklist**:
-- [ ] 干系人受邀参加评审
-- [ ] 项目计划包含任务和负责人
+- [ ] 干系人受邀参加预审
+- [ ] 发布计划包含任务和负责人
 - [ ] 风险登记册已创建
 - [ ] 沟通计划已准备
 
-**Stage Output**: 已批准的需求 + 项目计划
+**Stage Output**: 已批准的需求 + 发布计划
 
 ### Stage 3: Release (T-1 week to T+1 day)
 
-**Pre-Release (T-7 to T-1 days)**:
-- [ ] 代码完成并审查
-- [ ] QA 测试完成
-- [ ] 性能测试完成
-- [ ] 安全审查完成
-- [ ] 发布说明已起草
-- [ ] 沟通材料已准备
-- [ ] 支持团队已简报
+**Pre-Release Checklist (T-7 to T-1 days)**:
+
+工程：
+- [ ] 代码完成并审查，测试通过（unit / integration / e2e）
+- [ ] 无未解决的关键 bug；性能测试与安全审查完成
+- [ ] 数据库迁移与回滚方案已准备
+
+质量：
+- [ ] QA 测试完成，验收标准全部满足
+- [ ] 边界情况、兼容性、无障碍已验证
+
+产品：
+- [ ] PRD 需求逐条验证，成功指标与埋点已就绪
+- [ ] 功能开关（feature flag）已配置（如采用）
+
+文档与沟通：
+- [ ] 发布说明已起草，用户 / API 文档已更新
+- [ ] 公告与应用内通知已准备
+- [ ] 支持团队已简报，销售 / 客服与干系人已同步
+
+合规（如适用）：
+- [ ] 隐私与合规审查完成
 
 **Release Day (T-day)**:
 - [ ] 部署到预发布，冒烟测试
 - [ ] 部署到生产
 - [ ] 生产环境冒烟测试
-- [ ] 启用功能（或逐步放量）
-- [ ] 密切监控指标
-- [ ] 准备回滚
+- [ ] 启用功能（或按灰度放量计划逐步放量）
+- [ ] 密切监控指标（对照上线后 24 小时监控基线）
+- [ ] 准备回滚（对照回滚计划）
 
 **Post-Release (T+1 day)**:
 - [ ] 验证所有系统
@@ -368,12 +380,12 @@ validation_gates:
 - 记录学习
 
 **Checklist**:
-- [ ] 效果分析完成
+- [ ] 复盘完成（效果分析 + 迭代建议）
 - [ ] 反馈已综合
 - [ ] 成功/失败已确定
 - [ ] 后续步骤已识别
 
-**Stage Output**: 效果报告 + 建议
+**Stage Output**: 复盘报告 + 建议
 
 ---
 
@@ -385,6 +397,43 @@ validation_gates:
 | **Phased Rollout** | 大功能、高风险 | 可控、早期学习 | 完整上线时间长 |
 | **Feature Flag** | 非常风险、复杂 | 瞬间回滚 | 基础设施复杂 |
 | **Beta Release** | 需验证、反馈 | 早期获得反馈 | 信息泄露、支持负担 |
+
+### 灰度放量计划（Phased Rollout / Feature Flag）
+
+采用 Phased Rollout 或 Feature Flag 时，按阶段放量，每阶段设观察期与放量条件：
+
+| 阶段 | 范围 | 观察期 | 放量条件 | 状态 |
+|:-----|:-----|:-------|:---------|:-----|
+| 1 | 内部用户 / 白名单 | 1 天 | 无 P0 问题、核心指标无异常 | ⏳ |
+| 2 | 5%–10% 目标用户 | 1–3 天 | 错误率低于阈值、无集中负面反馈 | ⏳ |
+| 3 | 50% | 2–3 天 | 指标稳定 | ⏳ |
+| 4 | 100% 全量 | — | — | ⏳ |
+
+### 回滚计划
+
+| 触发条件 | 动作 | 负责人 |
+|:---------|:-----|:-------|
+| 发现关键 bug | 回滚到上一版本 / 关闭 feature flag | DevOps |
+| 错误率超阈值（如 > 5%） | 回滚并排查 | DevOps |
+| 性能劣化 | 回滚或扩容 | DevOps |
+
+### 上线后 24 小时监控基线
+
+| 指标 | 目标 | 告警阈值 | 负责人 |
+|:-----|:-----|:---------|:-------|
+| 错误率 | < 0.5% | > 1% | 工程 |
+| 延迟 (p95) | < 500ms | > 1s | 工程 |
+| 核心转化 | 不低于基线 | 下跌 > 10% | PM |
+| 支持工单 | 正常水位 | > 2 倍基线 | 支持 |
+
+### 发布类型与准备周期
+
+| 类型 | 说明 | 准备时间 | 风险级别 |
+|:-----|:-----|:---------|:---------|
+| **Hotfix** | 紧急生产修复 | 数小时 | 高 |
+| **Patch** | 仅缺陷修复 | 数天 | 低 |
+| **Minor** | 新功能、向后兼容 | 1–2 周 | 中 |
+| **Major** | 破坏性变更、重大功能 | 1–2 月 | 高 |
 
 ---
 
@@ -404,7 +453,7 @@ validation_gates:
    - 支持文档
 
 3. **Post-Launch Package** (after launch)
-   - 效果分析报告
+   - 复盘分析报告
    - 反馈综合
    - 经验总结
    - 建议
@@ -450,21 +499,21 @@ validation_gates:
     },
     {
       "stage": "S2",
-      "skill": "requirement-review",
+      "skill": "prd-gen",
       "started_at": "2026-03-17T10:15:00Z",
       "completed_at": "2026-03-17T10:25:00Z",
       "outputs": ["review-notes.md"]
     },
     {
       "stage": "S2",
-      "skill": "release-management",
+      "skill": "feature-launch",
       "started_at": "2026-03-17T10:30:00Z",
       "completed_at": "2026-03-17T10:40:00Z",
       "outputs": ["release-plan.md"]
     },
     {
       "stage": "S3",
-      "skill": "impact-analysis",
+      "skill": "retrospective",
       "started_at": "2026-03-17T10:45:00Z",
       "completed_at": "2026-03-17T10:50:00Z",
       "outputs": ["impact-analysis.json"]

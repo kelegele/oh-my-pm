@@ -1,0 +1,9 @@
+# 模糊输入：skill 规定 Scenario Detection 是 CRITICAL 第一步，
+# 模型必须先澄清场景（迭代更新/新功能/0-1 新产品）而非直接成文。
+# 断言场景选项中的两个固定用词。
+name: 模糊输入先澄清场景
+prompt: |
+  帮我写个 PRD。
+assert_must_contain:
+  - 迭代
+  - 新功能

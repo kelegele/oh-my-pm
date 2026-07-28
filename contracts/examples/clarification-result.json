@@ -1,0 +1,17 @@
+{
+  "scenario": "new_feature",
+  "collected_info": {
+    "feature_name": "账号体系改版",
+    "target_users": "新注册团队管理员",
+    "success_metric": "注册到激活转化率 ≥ 40%"
+  },
+  "pending_items": [
+    { "field": "ui_state", "reason": "用户稍后提供截图" }
+  ],
+  "prd_plan": {
+    "chapters_planned": ["第0章 背景", "第1章 目标", "第2章 用户故事", "第3章 功能范围", "第4章 交互设计", "第5章 边界情况", "第6章 数据指标", "第7章 风险", "第8章 里程碑"],
+    "key_decisions": ["保留旧登录态兼容一个版本", "SSO 纳入本期范围"],
+    "user_approved": true,
+    "approved_at": "2026-07-28T11:00:00Z"
+  }
+}

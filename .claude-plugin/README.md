@@ -4,17 +4,17 @@
 
 ## 插件概述
 
-Oh-My-PM 是一套基于 **Skills 插件**的产品经理工作流系统，可安装到 Claude Code 和 Codex。通过 **20 个专业 Skills**（17 个领域 Skills + 3 个工作流编排）+ **8 个 Subagents** + **4 个 Commands**，实现从需求感知到价值验证的完整产品管理闭环。
+Oh-My-PM 是一套基于 **Skills 插件**的产品经理工作流系统，可安装到 Claude Code 和 Codex。通过 **11 个专业 Skills**（8 个领域 Skills + 3 个工作流编排）+ **6 个 Subagents** + **4 个 Commands**，以「三层主线（感知 → 策略 → 设计）+ 验证辅助」实现完整产品管理闭环。
 
-当前版本：**0.9.4**（权威版本源见 `plugin.json`）
+当前版本：**1.0.0**（权威版本源见 `plugin.json`）
 
 ### 核心特性
 
 | 特性 | 说明 |
 |:-----|:-----|
-| **五层工作流架构** | 需求感知 → 策略规划 → 方案设计 → 交付协调 → 价值验证 |
+| **三层主线 + 验证辅助** | 感知 → 策略 → 设计为主线，验证（复盘 + 反馈）形成闭环；交付能力并入 prd-gen 预审尾门与 feature-launch |
 | **Plan-and-Execute 模式** | 完整的阶段定义、状态追踪和质量门控（Stage Gates） |
-| **Subagent 记忆系统** | 8 个独立 Subagent，支持跨会话知识积累 |
+| **Subagent 记忆系统** | 6 个独立 Subagent，支持跨会话知识积累 |
 | **HTML 原型输出** | 原型设计直接生成 HTML，无需外部设计工具 |
 
 ---
@@ -41,7 +41,7 @@ Oh-My-PM 是一套基于 **Skills 插件**的产品经理工作流系统，可�
 ```bash
 "帮我分析一下 Notion 和飞书文档的竞品差异"    # → competitive-analysis
 "写一个用户个人中心改版的 PRD"                # → prd-gen
-"分析我们上周发布的功能效果"                    # → impact-analysis
+"分析我们上周发布的功能效果"                    # → retrospective
 ```
 
 ---
@@ -86,26 +86,25 @@ Oh-My-PM 是一套基于 **Skills 插件**的产品经理工作流系统，可�
 
 **流程说明**：
 ```
-市场研究 → 用户研究 → 竞品分析 → 产品定位
+市场研究（市场 + 用户） → 竞品分析
     ↓
-路线图规划 → 优先级排序
+产品策略（定位 → 优先级 → 路线图）
     ↓
-PRD 生成 → 原型设计
+PRD 生成（含预审尾门） → 原型设计
     ↓
-需求评审 → 项目协调 → 发布管理
+发布协调（checklist + 灰度策略）
     ↓
-效果分析 → 反馈汇总 → 迭代规划
+效果复盘 → 反馈汇总 → 迭代规划
 ```
 
 **调用的 Skills 和 Subagents**：
 
 | 阶段 | 调用 Skills | 调用 Subagents |
 |:-----|:-----------|:--------------|
-| **感知层** | `competitive-analysis`, `user-research`, `market-intelligence` | `competitive-analyst`, `user-interviewer`, `market-researcher` |
-| **策略层** | `product-positioning`, `roadmap-planning`, `prioritization` | - |
+| **感知层** | `market-research`, `competitive-analysis` | `market-researcher`, `user-interviewer`, `competitive-analyst` |
+| **策略层** | `product-strategy` | - |
 | **设计层** | `prd-gen`, `prototype-design` | - |
-| **交付层** | `requirement-review`, `project-coordination`, `release-management` | - |
-| **验证层** | `impact-analysis`, `feedback-synthesis`, `iteration-planning` | `impact-analyst`, `feedback-collector` |
+| **验证层** | `retrospective`, `feedback-synthesis` | `impact-analyst`, `feedback-collector` |
 
 **使用示例**：
 ```bash
@@ -122,20 +121,20 @@ PRD 生成 → 原型设计
 
 **流程说明**：
 ```
-PRD 完善 → 需求评审 → 项目规划
+PRD 完善（含预审尾门）
     ↓
-发布计划 → 上线执行
+发布计划（checklist + 灰度策略）→ 上线执行
     ↓
-效果分析 → 反馈汇总
+效果复盘 → 反馈汇总
 ```
 
 **调用的 Skills 和 Subagents**：
 
 | 阶段 | 调用 Skills | 调用 Subagents |
 |:-----|:-----------|:--------------|
-| **准备阶段** | `requirement-review`, `project-coordination` | - |
-| **发布阶段** | `release-management` | - |
-| **验证阶段** | `impact-analysis`, `feedback-synthesis` | `impact-analyst`, `feedback-collector` |
+| **准备阶段** | `prd-gen`（预审尾门） | - |
+| **发布阶段** | `feature-launch`（发布 checklist / 灰度策略） | - |
+| **验证阶段** | `retrospective`, `feedback-synthesis` | `impact-analyst`, `feedback-collector` |
 
 **使用示例**：
 ```bash
@@ -144,88 +143,65 @@ PRD 完善 → 需求评审 → 项目规划
 
 ---
 
-## 全部 Skills (20 个)
+## 全部 Skills (11 个)
 
-### 可独立使用的领域 Skills (17 个)
+### 可独立使用的领域 Skills (8 个)
 
 以下 Skills 可单独调用，无需依赖其他 Skills，适合单点任务：
 
-#### 📊 需求感知层 (Perception) - 5 个
+#### 📊 需求感知层 (Perception) - 3 个
 
 | Skill | 可独立使用 | 功能描述 | 适用场景 |
 |:-----|:----------:|:---------|:---------|
 | **competitive-analysis** | ✅ | 竞品功能对比分析，生成对比矩阵和差异化建议 | 需要了解竞品功能、做差异化分析 |
-| **market-intelligence** | ✅ | 市场情报收集，识别行业趋势和市场机会 | 评估市场规模、分析行业趋势 |
-| **user-research** | ✅ | 用户研究与画像创建，设计访谈脚本 | 创建用户画像、设计访谈问题 |
-| **data-monitoring** | ✅ | 产品指标监控与异常检测，建立数据基线 | 监控 DAU/转化率、分析数据异常 |
+| **market-research** | ✅ | 市场情报与用户研究一体：行业趋势、市场机会、用户画像与访谈 | 评估市场规模、分析行业趋势、创建用户画像 |
 | **clarify-requirements** | ✅ | 需求澄清，系统性识别缺失信息并逐步确认 | 需求描述不完整、生成 PRD 前先梳理需求 |
 
 **触发示例**：
 - "分析淘宝和京东的个人中心功能"
 - "AI 写作助手的市场规模有多大"
 - "帮我创建目标用户画像"
-- "DAU 突然下降了，帮我分析"
 - "帮我梳理一下需求，看看还缺什么信息"
 
 ---
 
-#### 🎯 策略规划层 (Strategy) - 3 个
+#### 🎯 策略规划层 (Strategy) - 1 个
 
 | Skill | 可独立使用 | 功能描述 | 适用场景 |
 |:-----|:----------:|:---------|:---------|
-| **product-positioning** | ✅ | 产品定位与差异化策略，撰写定位声明 | 明确产品定位、梳理差异化优势 |
-| **roadmap-planning** | ✅ | 产品路线图规划，定义里程碑和时间表 | 制定产品路线图、版本规划 |
-| **prioritization** | ✅ | 需求优先级排序 (RICE/MoSCoW 框架) | 对需求池进行优先级排序 |
+| **product-strategy** | ✅ | 定位、价值主张、优先级 (RICE/MoSCoW) 与路线图一体规划 | 明确产品定位、排需求优先级、规划路线图 |
 
 **触发示例**：
 - "我们的产品应该如何定位"
-- "帮我规划 Q2 的产品路线图"
 - "这些需求怎么排优先级"
+- "帮我规划 Q2 的产品路线图"
 
 ---
 
-#### 🎨 方案设计层 (Design) - 3 个
+#### 🎨 方案设计层 (Design) - 2 个
 
 | Skill | 可独立使用 | 功能描述 | 适用场景 |
 |:-----|:----------:|:---------|:---------|
-| **prd-gen** | ✅ | 结构化 PRD 生成，支持三种场景识别 | 快速生成 PRD 文档 |
+| **prd-gen** | ✅ | 结构化 PRD 生成，支持三种场景识别，尾门内置需求预审 | 快速生成 PRD 文档 |
 | **prototype-design** | ✅ | 交互式 HTML 原型设计，验证设计方案 | 创建原型、设计用户流程 |
-| **process-optimization** | ✅ | 业务流程分析与优化建议 | 优化业务流程、提升效率 |
 
 **触发示例**：
 - "写一个用户改版的 PRD"
 - "设计这个功能的交互原型"
-- "优化我们的代码审查流程"
 
 ---
 
-#### 🚢 交付协调层 (Delivery) - 3 个
+#### 📈 价值验证层 (Validation) - 2 个
 
 | Skill | 可独立使用 | 功能描述 | 适用场景 |
 |:-----|:----------:|:---------|:---------|
-| **requirement-review** | ✅ | 需求评审会议组织，干系人对齐 | 组织需求评审会议 |
-| **project-coordination** | ✅ | 项目进度跟踪与风险管理 | 跟踪项目进度、识别风险 |
-| **release-management** | ✅ | 发布计划制定与上线检查清单 | 制定发布计划、准备上线检查 |
-
-**触发示例**：
-- "组织 PRD 评审会议"
-- "项目现在的状态怎么样"
-- "准备发布计划"
-
----
-
-#### 📈 价值验证层 (Validation) - 3 个
-
-| Skill | 可独立使用 | 功能描述 | 适用场景 |
-|:-----|:----------:|:---------|:---------|
-| **impact-analysis** | ✅ | 上线效果分析，目标达成度评估 | 分析功能上线效果 |
+| **retrospective** | ✅ | 上线效果复盘：目标达成分析 + 下轮迭代规划 | 分析功能上线效果、规划下一个迭代 |
 | **feedback-synthesis** | ✅ | 用户反馈汇总与主题分析 | 汇总分析用户反馈 |
-| **iteration-planning** | ✅ | 基于数据的迭代规划 | 规划下一个迭代 |
 
 **触发示例**：
 - "分析上周上线的功能效果"
-- "用户对我们有什么反馈"
 - "规划下一个 Sprint"
+- "用户对我们有什么反馈"
 
 ---
 
@@ -235,9 +211,9 @@ PRD 完善 → 需求评审 → 项目规划
 
 | Workflow | 编排内容 | 调用的 Subagents | 适用场景 |
 |:---------|:---------|:----------------|:---------|
-| **quick-prd** | 竞品分析 + PRD 生成（含策略确认门控） | `competitive-analyst` | 快速输出带竞品上下文的 PRD |
-| **full-pm-cycle** | 完整五层：感知→策略→设计→交付→验证 | 全部 8 个 Subagents | 新产品从 0 到 1 规划 |
-| **feature-launch** | PRD 完善 + 评审 + 发布 + 效果分析 | `impact-analyst`, `feedback-collector` | 功能发布端到端协调 |
+| **quick-prd** | full-pm-cycle 薄预设：竞品分析 + PRD 生成（含策略确认门控） | `competitive-analyst` | 快速输出带竞品上下文的 PRD |
+| **full-pm-cycle** | 三层主线：感知 → 策略 → 设计，含验证复盘 | 全部 6 个 Subagents | 新产品从 0 到 1 规划 |
+| **feature-launch** | PRD 预审 + 发布 checklist/灰度策略 + 效果复盘 | `impact-analyst`, `feedback-collector` | 功能发布端到端协调 |
 
 **使用建议**：
 - 日常 PRD 任务用 `quick-prd`
@@ -246,30 +222,23 @@ PRD 完善 → 需求评审 → 项目规划
 
 ---
 
-## 全部 Subagents (8 个)
+## 全部 Subagents (6 个)
 
 Subagents 是独立运行的 AI 代理，支持隔离执行和记忆积累，会被 Skills 自动调用。
 
-### 📊 感知层 Subagents (4 个)
+### 📊 感知层 Subagents (3 个)
 
 | Subagent | 模型 | 被 Skill 调用 | 功能描述 |
 |:---------|:-----|:-------------|:---------|
-| **market-researcher** | haiku | `market-intelligence` | 市场研究专家，分析市场规模和趋势 |
+| **market-researcher** | haiku | `market-research` | 市场研究专家，分析市场规模和趋势 |
 | **competitive-analyst** | sonnet | `competitive-analysis` | 竞品分析专家，支持 GitHub 代码分析 |
-| **user-interviewer** | sonnet | `user-research` | 用户研究专家，创建用户画像 |
-| **data-monitor** | haiku | `data-monitoring` | 数据监控专家，后台持续运行 |
-
-### 🎨 设计层 Subagents (1 个)
-
-| Subagent | 模型 | 被 Skill 调用 | 功能描述 |
-|:---------|:-----|:-------------|:---------|
-| **process-optimizer** | sonnet | `process-optimization` | 流程优化专家，只读模式分析 |
+| **user-interviewer** | sonnet | `market-research` | 用户研究专家，创建用户画像 |
 
 ### 📈 验证层 Subagents (2 个)
 
 | Subagent | 模型 | 被 Skill 调用 | 功能描述 |
 |:---------|:-----|:-------------|:---------|
-| **impact-analyst** | sonnet | `impact-analysis` | 效果分析专家 |
+| **impact-analyst** | sonnet | `retrospective` | 效果分析专家 |
 | **feedback-collector** | haiku | `feedback-synthesis` | 反馈汇总专家 |
 
 ### 🔄 工作流 Subagents (1 个)
@@ -287,8 +256,6 @@ Subagents 是独立运行的 AI 代理，支持隔离执行和记忆积累，会
 ├── market-researcher/    # 市场数据积累
 ├── competitive-analyst/  # 竞品知识库
 ├── user-interviewer/     # 用户研究模式
-├── data-monitor/         # 指标基线
-├── process-optimizer/    # 流程优化知识
 ├── impact-analyst/       # 效果分析框架
 ├── feedback-collector/   # 反馈主题模式
 └── pm-orchestrator/      # 工作流最佳实践
@@ -305,7 +272,7 @@ Subagents 是独立运行的 AI 代理，支持隔离执行和记忆积累，会
 | **/quick-prd** | `quick-prd` | 快速生成带竞品分析的 PRD | `/quick-prd "用户改版" 淘宝 京东` |
 | **/full-pm-cycle** | `full-pm-cycle` | 完整产品管理周期 (0-1) | `/full-pm-cycle "新项目管理工具"` |
 | **/feature-launch** | `feature-launch` | 功能发布工作流 | `/feature-launch "用户注册流程"` |
-| **/ompm** | - | 命名空间分发器 | `/ompm quick-prd "..."` 或 `/ompm help` |
+| **/ompm** | - | 全局意图路由：无参/自然语言时读上下文 + current-workflow.json 推荐下一步 | `/ompm quick-prd "..."` 或 `/ompm help` |
 
 ### 调用方式
 
@@ -332,13 +299,13 @@ Skills 之间通过机器可读的中间产物传递上下文，统一采用扁�
 
 | 文件 | 产出层 | 流向 |
 |:-----|:------|:-----|
-| `.ompm/competitive-analysis.json` | 感知 | → prd-gen, positioning |
-| `.ompm/market-analysis.json` | 感知 | → positioning |
-| `.ompm/user-research.json` | 感知 | → positioning |
+| `.ompm/competitive-analysis.json` | 感知 | → prd-gen, product-strategy |
+| `.ompm/market-analysis.json` | 感知 | → product-strategy |
+| `.ompm/user-research.json` | 感知 | → product-strategy |
 | `.ompm/clarification-result.json` | 感知 | → prd-gen |
-| `.ompm/prioritization.json` | 策略 | → design, delivery |
-| `.ompm/impact-analysis.json` | 验证 | → iteration-planning |
-| `.ompm/feedback-synthesis.json` | 验证 | → iteration-planning |
+| `.ompm/prioritization.json` | 策略 | → prd-gen, feature-launch |
+| `.ompm/impact-analysis.json` | 验证 | → retrospective（迭代规划输入） |
+| `.ompm/feedback-synthesis.json` | 验证 | → retrospective（迭代规划输入） |
 | `.ompm/iteration-plan.json` | 验证 | → 下一周期 |
 | `.ompm/current-workflow.json` | 全部 | 工作流状态追踪 |
 
@@ -391,7 +358,7 @@ npx skills add . -a codex
 
 # 版本历史
 
-当前版本 **0.9.4**，完整版本历史见 [CHANGELOG.md](../CHANGELOG.md)。
+当前版本 **1.0.0**，完整版本历史见 [CHANGELOG.md](../CHANGELOG.md)。
 
 ---
 

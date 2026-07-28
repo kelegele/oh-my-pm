@@ -2,37 +2,22 @@
 name: competitive-analysis
 description: 竞品功能对比分析，生成对比矩阵并识别战略机会。当用户提到竞品、竞品研究、功能对比、"竞品有什么"、"对比XX产品"、市场定位，或需要了解竞争格局时使用。即使没有明确说"竞品分析"，当用户明显在评估自己产品与竞品差异时也应激活。
 layer: perception
-input-from: market-intelligence
-output-to: product-positioning,prioritization,prd-gen
-version: 0.2.3
+input-from: market-research
+output-to: product-strategy,prd-gen
 ---
 
 # Competitive Analysis
 
-Generate competitive intelligence that drives product decisions.
-
-## What This Skill Does
-
-Analyzes competitor products to identify what features they have, where they excel, and where opportunities exist for differentiation. The output helps prioritize features and refine product positioning.
-
 ## When to Use
 
-Activate this skill when:
-- User mentions competitor names or asks "what do competitors offer"
-- Comparing features between products ("does X have feature Y?")
-- Evaluating market differentiation for a new feature
-- Preparing product positioning or strategy documents
-- User says things like "competitive analysis", "market research", "competitor comparison"
+- User mentions competitor names or asks "what do competitors offer" (e.g. "What features do ClickUp and Asana have that we don't?")
+- Comparing features between products ("does X have feature Y?", "Do competitors offer dark mode?")
+- Evaluating market differentiation for a new feature, or preparing product positioning / strategy documents
+- User says things like "competitive analysis", "market research", "competitor comparison" (e.g. "How does our pricing compare to Stripe and Braintree?" → `feature_focus="pricing"`)
 
-## How It Works
+## Execution Methodology
 
-The analysis follows a systematic approach:
-
-1. **Identify competitors** - Map user-provided names to known products
-2. **Gather feature data** - Collect information about what competitors offer
-3. **Build comparison matrix** - Create side-by-side feature comparison
-4. **Analyze gaps** - Identify missing features, unique advantages, opportunities
-5. **Generate recommendations** - Provide actionable strategic insights
+本 skill 生成竞品情报：竞品有什么功能、强在哪里、差异化机会在哪里，输出服务于功能优先级排序与产品定位。具体执行方法论（竞品识别与映射、多源采集与交叉验证、对比矩阵构建与 parity 评分、差距分析与战略机会识别框架、各 `analysis_depth` 的执行细节、Markdown 报告模板）由 `competitive-analyst` subagent 承载，见 `agents/perception/competitive-analyst.md`。独立使用本 skill 时，按本文件契约执行并输出即可。
 
 ## Anti-Hallucination Rules (Self-Contained)
 
@@ -78,14 +63,12 @@ The following rules are mandatory for this skill. They are inlined here for stan
 |:---|:---|:---|:---|
 | `competitors` | list | Yes | Competitor products or company names to analyze |
 | `feature_focus` | string | No | Specific feature area to focus on (e.g., "pricing", "user management") |
-| `analysis_depth` | string | No | `overview` (quick), `detailed` (standard, default), or `deep-dive` (comprehensive) |
+| `analysis_depth` | string | No | `overview` (quick), `detailed` (standard, default), or `deep-dive` (comprehensive) — 各深度执行细节由 agent 承载 |
 
 ## Output Structure
 
-The skill generates two outputs:
-
 1. **JSON file** (`docs/product/.ompm/competitive-analysis.json`) - Structured data for other skills to consume
-2. **Markdown report** - Human-readable analysis with tables and recommendations
+2. **Markdown report** - Human-readable analysis; 至少包含 Overview、Feature Comparison Matrix、Gap Analysis（Missing Features / Unique Advantages）、Strategic Recommendations（short/medium/long-term）四节，完整模板由 agent 承载
 
 ### JSON Output Format
 
@@ -121,78 +104,15 @@ The skill generates two outputs:
 }
 ```
 
-### Markdown Report Structure
-
-```markdown
-# Competitive Analysis Report
-
-## Overview
-- Competitors analyzed: X
-- Date: YYYY-MM-DD
-- Focus area: XXX
-
-## Feature Comparison Matrix
-| Feature | Our Product | Competitor A | Competitor B |
-|:--------|:------------|:-------------|:-------------|
-| Feature 1 | ✅ | ✅ | ⚠️ |
-
-## Gap Analysis
-### Missing Features
-- Feature X: Supported by competitors A and B, indicates market expectation...
-
-### Unique Advantages
-- Feature Z: Only we offer this, potential differentiator...
-
-## Strategic Recommendations
-1. Short-term: Address missing feature X for parity
-2. Medium-term: Leverage unique advantage Z in marketing
-3. Long-term: Consider差异化方向 Y
-```
-
-## Analysis Depth Levels
-
-Choose the appropriate depth based on your needs:
-
-| Depth | When to Use | What You Get |
-|:---|:---|:---|
-| `overview` | Quick competitive check | Core features compared, 3 recommendations |
-| `detailed` | Standard analysis (default) | Full feature matrix, gap analysis, 5 recommendations |
-| `deep-dive` | Strategic decisions | User experience review, pricing analysis, user sentiment, 10 recommendations |
-
 ## Quality Standards
 
-Before delivering, the analysis should:
-- Cover at least 2 competitors
-- Compare 5+ core feature areas
-- **ALL** feature claims have source URLs (competitor official page, docs, or verified third-party)
-- **ALL** data points have confidence rating (high/medium/low)
-- Features that cannot be verified are marked "Unknown" — do NOT fabricate
-- Facts and inferences are clearly distinguished
-- Search record is included proving searches were executed
+- Cover at least 2 competitors and compare 5+ core feature areas
 - Provide 3+ actionable recommendations based on real data
 - Distinguish between "missing features" and "strategic omissions"
 - Be valid JSON for downstream skills to consume
+- Pass the Anti-Hallucination Quality Gate above (source URLs, confidence ratings, "Unknown" marking, fact/inference separation, search record)
 
 ## Context Integration
 
-This skill reads from and writes to the shared context:
-
-**Reads:**
-- `docs/product/.ompm/market-analysis.json` - Market trends that inform competitive landscape
-
-**Writes:**
-- `docs/product/.ompm/competitive-analysis.json` - Analysis results for other skills (prd-gen, product-positioning)
-- `docs/product/competitive-analysis/{feature-name}-{date}.md` - Human-readable markdown report (versioned artifact)
-
-## Example Usage
-
-```
-User: "How does our pricing compare to Stripe and Braintree?"
-→ Activates competitive-analysis with feature_focus="pricing"
-
-User: "What features do ClickUp and Asana have that we don't?"
-→ Activates competitive-analysis for those competitors
-
-User: "Do competitors offer dark mode?"
-→ Activates competitive-analysis with feature_focus="dark mode"
-```
+- **Reads:** `docs/product/.ompm/market-analysis.json` - Market trends that inform competitive landscape
+- **Writes:** `docs/product/.ompm/competitive-analysis.json` - Analysis results for other skills (prd-gen, product-strategy); `docs/product/competitive-analysis/{feature-name}-{date}.md` - Human-readable markdown report (versioned artifact)

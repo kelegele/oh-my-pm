@@ -1,0 +1,11 @@
+{
+  "workflow_id": "wf-20260728-001",
+  "workflow_name": "quick-prd",
+  "status": "in_progress",
+  "current_layer": "perception",
+  "current_skill": "competitive-analysis",
+  "current_stage": "S1",
+  "completed_stages": ["S0"],
+  "started_at": "2026-07-28T09:00:00Z",
+  "updated_at": "2026-07-28T09:15:00Z"
+}

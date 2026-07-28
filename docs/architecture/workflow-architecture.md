@@ -1,47 +1,35 @@
-# Oh-My-PM 工作流架构 (v0.9.4)
+# Oh-My-PM 工作流架构 (v1.0.0)
 
-Oh-My-PM 采用 **5 层架构** + **Plan-and-Execute 模式**，覆盖需求感知→策略规划→方案设计→交付协调→价值验证完整闭环。
+Oh-My-PM 采用 **三层主线（感知 → 策略 → 设计）+ 验证辅助** 的架构 + **Plan-and-Execute 模式**，覆盖完整产品管理闭环。原交付层已取消：PRD 预审并入 `prd-gen` 尾门，发布 checklist / 灰度策略并入 `feature-launch`。
 
-## 5 层架构总览
+## 架构总览
 
 ```mermaid
 graph TB
-    subgraph L1["1. Perception 需求感知层"]
-        A1["market-intelligence\n市场情报"]
-        A2["user-research\n用户研究"]
-        A3["competitive-analysis\n竞品分析"]
-        A4["data-monitoring\n指标监控"]
+    subgraph L1["1. Perception 需求感知（主线）"]
+        A1["market-research\n市场 + 用户研究"]
+        A2["competitive-analysis\n竞品分析"]
+        A3["clarify-requirements\n需求澄清"]
     end
 
-    subgraph L2["2. Strategy 策略规划层"]
-        B1["product-positioning\n产品定位"]
-        B2["roadmap-planning\n路线图规划"]
-        B3["prioritization\n优先级排序"]
+    subgraph L2["2. Strategy 策略规划（主线）"]
+        B1["product-strategy\n定位 · 优先级 · 路线图"]
     end
 
-    subgraph L3["3. Design 方案设计层"]
-        C1["prd-gen\nPRD 生成"]
+    subgraph L3["3. Design 方案设计（主线）"]
+        C1["prd-gen\nPRD 生成（含预审尾门）"]
         C2["prototype-design\n原型设计"]
-        C3["process-optimization\n流程优化"]
     end
 
-    subgraph L4["4. Delivery 交付协调层"]
-        D1["requirement-review\n需求评审"]
-        D2["project-coordination\n项目协调"]
-        D3["release-management\n发布管理"]
-    end
-
-    subgraph L5["5. Validation 价值验证层"]
-        E1["impact-analysis\n效果分析"]
-        E2["feedback-synthesis\n反馈汇总"]
-        E3["iteration-planning\n迭代规划"]
+    subgraph V["Validation 价值验证（辅助）"]
+        E1["retrospective\n效果复盘 + 迭代规划"]
+        E2["feedback-synthesis\n反馈综合"]
     end
 
     L1 -->|"docs/product/"| L2
     L2 -->|"docs/product/"| L3
-    L3 -->|"docs/product/"| L4
-    L4 -->|"docs/product/"| L5
-    L5 -.->|"反馈循环"| L1
+    L3 -->|"docs/product/"| V
+    V -.->|"反馈循环"| L1
 ```
 
 ## 用户对话流
@@ -83,7 +71,7 @@ sequenceDiagram
 
 ## Command 工作流详解
 
-4 个 Command 中，`/ompm` 是**工作流调度器**（`/ompm <workflow> [args...]`，支持 `help` / `?`），作为 quick-prd / full-pm-cycle / feature-launch 三个工作流的命名空间主入口；`/quick-prd` 等裸命令是等价的简写形式。
+4 个 Command 中，`/ompm` 是**全局意图路由**：无参数或自然语言输入时，读取当前对话上下文 + `docs/product/.ompm/current-workflow.json`，判断"当前最有价值的下一步"并说明理由；输入 workflow 名（`quick-prd` / `full-pm-cycle` / `feature-launch`）时直派到对应工作流，`/quick-prd` 等裸命令是等价的简写形式。
 
 ### /quick-prd — 竞品分析 + PRD
 
@@ -120,9 +108,7 @@ sequenceDiagram
     participant MR as market-researcher (Haiku)
     participant CA as competitive-analyst (Sonnet)
     participant UI as user-interviewer (Sonnet)
-    participant PP as product-positioning
-    participant RM as roadmap-planning
-    participant PR as prioritization
+    participant PS as product-strategy
     participant PG as prd-gen
     participant PD as prototype-design
     participant CTX as docs/product/
@@ -139,16 +125,12 @@ sequenceDiagram
     UI->>CTX: 写入 .ompm/user-research.json
 
     Note over PM,CTX: 阶段 2: 策略规划
-    PM->>PP: 基于感知层输出写定位
-    PP->>CTX: 读取 market-analysis + competitive + user-research
-    PP->>CTX: 写入 positioning.md
-    PM->>RM: 基于定位写路线图
-    RM->>CTX: 读取 positioning.md → roadmap.md
-    PM->>PR: 基于路线图排优先级
-    PR->>CTX: 读取 roadmap.md → .ompm/prioritization.json
+    PM->>PS: 基于感知层输出定策略
+    PS->>CTX: 读取 market-analysis + competitive + user-research
+    PS->>CTX: 写入 positioning.md → .ompm/prioritization.json → roadmap.md
 
     Note over PM,CTX: 阶段 3: 方案设计
-    PM->>PG: 基于策略层输出写 PRD
+    PM->>PG: 基于策略输出写 PRD（尾门含预审）
     PG->>CTX: 读取 positioning + roadmap + priorities
     PG->>CTX: 写入 prd/project-mgmt.md
     PM->>PD: 基于 PRD 生成原型
@@ -165,39 +147,30 @@ sequenceDiagram
     autonumber
     participant U as 用户
     participant CC as Claude Code
-    participant RR as requirement-review
-    participant PC as project-coordination
-    participant RM as release-management
-    participant IA as impact-analysis
+    participant PG as prd-gen (预审尾门)
+    participant FL as feature-launch
+    participant RT as retrospective
     participant FB as feedback-synthesis
-    participant IP as iteration-planning
     participant CTX as docs/product/
 
     U->>CC: /feature-launch "用户注册流程"
-    CC->>RR: 启动需求评审
-    RR->>RR: 生成评审清单 + 干系人确认
-    RR->>CTX: 写入 review-notes/[feature]-review.md
+    CC->>PG: PRD 完善 + 预审尾门
+    PG->>PG: 完整性检查 + 预审清单
+    PG->>CTX: 更新 prd/[feature].md
 
-    CC->>PC: 启动项目协调
-    PC->>PC: 制定任务分配 + 时间线
-    PC->>CTX: 写入 project-plan-[feature].md
-
-    CC->>RM: 启动发布管理
-    RM->>RM: 生成发布包 + 上线检查清单
-    RM->>CTX: 写入 release-plan-[feature].md
+    CC->>FL: 启动发布协调
+    FL->>FL: 发布 checklist + 灰度策略
+    FL->>CTX: 写入 release-plan-[feature].md
 
     Note over CC,CTX: 功能上线后 7-14 天
-    CC->>IA: 启动效果分析
-    IA->>CTX: 读取目标指标
-    IA->>CTX: 写入 .ompm/impact-analysis.json
+    CC->>RT: 启动效果复盘
+    RT->>CTX: 读取目标指标
+    RT->>CTX: 写入 .ompm/impact-analysis.json
+    RT->>CTX: 写入 .ompm/iteration-plan.json
 
     CC->>FB: 启动反馈汇总
     FB->>CTX: 读取用户反馈
     FB->>CTX: 写入 .ompm/feedback-synthesis.json
-
-    CC->>IP: 启动迭代规划
-    IP->>CTX: 读取 impact + feedback
-    IP->>CTX: 写入 .ompm/iteration-plan.json
 
     CC-->>U: 展示发布复盘报告
 ```
@@ -250,8 +223,6 @@ graph TB
         MR["market-researcher\nHaiku + worktree"]
         CA["competitive-analyst\nSonnet + GitHub"]
         UI["user-interviewer\nSonnet + memory"]
-        DM["data-monitor\nHaiku + daemon"]
-        PO["process-optimizer\nSonnet + readonly"]
         IA["impact-analyst\nSonnet"]
         FC["feedback-collector\nHaiku"]
         PM["pm-orchestrator\nSonnet + parallel"]
@@ -267,8 +238,6 @@ graph TB
     MC -.->|"触发词匹配"| MR
     MC -.->|"触发词匹配"| CA
     MC -.->|"触发词匹配"| UI
-    MC -.->|"触发词匹配"| DM
-    MC -.->|"触发词匹配"| PO
     MC -.->|"触发词匹配"| IA
     MC -.->|"触发词匹配"| FC
     MC -.->|"触发词匹配"| PM
@@ -289,28 +258,35 @@ stateDiagram-v2
     S1_Quality --> S2_Strategy: 质量门控通过
     S1_Quality --> S1_Perception: 需要补充数据
 
-    S2_Strategy --> S2_Quality: 执行策略层 Skills
-    S2_Quality --> S3_Design: 质量门控通过
+    S2_Strategy --> S2_Quality: 执行策略层 Skill
+    S2_Quality --> S3_Design: 质量门控通过（策略确认硬门控）
     S2_Quality --> S2_Strategy: 需要调整策略
 
-    S3_Design --> S3_Quality: 执行设计层 Skills
-    S3_Quality --> S4_Delivery: 质量门控通过
+    S3_Design --> S3_Quality: 执行设计层 Skills（PRD 尾门含预审）
+    S3_Quality --> S4_Validation: 质量门控通过
     S3_Quality --> S3_Design: PRD 需要修改
 
-    S4_Delivery --> S4_Quality: 执行交付层 Skills
-    S4_Quality --> S5_Validation: 质量门控通过
-    S4_Quality --> S4_Delivery: 风险未解决
-
-    S5_Validation --> S5_Quality: 执行验证层 Skills
-    S5_Quality --> [*]: 完整周期完成
-    S5_Quality --> S1_Perception: 反馈循环重启
+    S4_Validation --> S4_Quality: 执行验证层 Skills
+    S4_Quality --> [*]: 完整周期完成
+    S4_Quality --> S1_Perception: 反馈循环重启
 
     state S1_Quality <<choice>>
     state S2_Quality <<choice>>
     state S3_Quality <<choice>>
     state S4_Quality <<choice>>
-    state S5_Quality <<choice>>
 ```
+
+### 阶段-层映射
+
+| 阶段 | 层 | 执行内容 |
+|:-----|:---|:---------|
+| S0 Setup | — | 初始化 `current-workflow.json` |
+| S1 Perception | 感知（主线 ①） | `market-research` · `competitive-analysis` · `clarify-requirements` |
+| S2 Strategy | 策略（主线 ②） | `product-strategy`（策略确认硬门控） |
+| S3 Design | 设计（主线 ③） | `prd-gen`（预审尾门） · `prototype-design` |
+| S4 Validation | 验证（辅助） | `retrospective` · `feedback-synthesis` |
+
+> 交付相关活动不再独立成阶段：PRD 预审是 `prd-gen` 的尾门（S3 内完成），发布 checklist / 灰度策略由 `feature-launch` 工作流承载。
 
 ## 质量门控标准
 
@@ -318,40 +294,30 @@ stateDiagram-v2
 
 | 门控 | 标准 | 指标 |
 |:-----|:-----|:-----|
-| 市场研究完成 | 3+ 竞品市场规模和趋势分析 | `market_size`, `growth_rate`, `key_players` |
-| 用户研究完成 | 3+ 用户访谈，2+ 用户画像 | `personas_created`, `interviews_conducted` |
+| 市场与用户研究完成 | 市场规模和趋势分析 + 3+ 用户访谈、2+ 用户画像 | `market_size`, `growth_rate`, `personas_created`, `interviews_conducted` |
 | 竞品分析完成 | 2+ 竞品功能对比 | `competitors_analyzed`, `matrix_complete` |
 
 ### Strategy 层
 
 | 门控 | 标准 | 指标 |
 |:-----|:-----|:-----|
-| 产品定位完成 | 定位声明 + 价值主张 + 差异化策略 | `positioning_created`, `value_proposition_clarity` |
-| 路线图完成 | 12 个月产品路线图 | `milestones_defined`, `timeline_set` |
-| 优先级完成 | RICE/MoSCoW 框架排序 | `rice_scores_calculated`, `moscow_decisions` |
+| 产品策略完成 | 定位声明 + RICE/MoSCoW 优先级排序 + 12 个月路线图 | `positioning_created`, `rice_scores_calculated`, `milestones_defined` |
 
 ### Design 层
 
 | 门控 | 标准 | 指标 |
 |:-----|:-----|:-----|
-| PRD 完整 | 8 章节 PRD 文档 | `all_sections_complete`, `user_stories_mapped` |
+| PRD 完整并通过预审 | 8 章节 PRD 文档 + prd-gen 预审尾门通过 | `all_sections_complete`, `user_stories_mapped`, `prereview_passed` |
 | 原型验证 | 原型生成 + 可用性确认 | `prototype_created`, `design_consistent` |
-
-### Delivery 层
-
-| 门控 | 标准 | 指标 |
-|:-----|:-----|:-----|
-| 需求评审完成 | 干系人评审会议 + 签字 | `review_held`, `stakeholders_aligned` |
-| 项目计划完成 | 任务分配 + 时间线确认 | `tasks_assigned`, `timeline_confirmed` |
-| 发布准备完成 | 代码冻结 + 上线检查清单 | `code_freeze`, `checklist_complete` |
 
 ### Validation 层
 
 | 门控 | 标准 | 指标 |
 |:-----|:-----|:-----|
-| 效果分析完成 | 上线 7-14 天目标达成分析 | `goals_achieved`, `variance_analyzed` |
+| 效果复盘完成 | 上线 7-14 天目标达成分析 + 下轮迭代计划 | `goals_achieved`, `variance_analyzed`, `next_iteration_planned` |
 | 反馈综合完成 | 用户反馈主题分析 | `themes_identified`, `improvements_mapped` |
-| 迭代规划完成 | 下一轮迭代计划 | `next_iteration_planned`, `success_metrics_defined` |
+
+> 交付相关检查不再独立设门：PRD 预审并入 Design 层 `prd-gen` 尾门；发布 checklist / 灰度策略检查由 `feature-launch` 工作流内部把关。
 
 ## 状态机
 
@@ -367,6 +333,12 @@ stateDiagram-v2
 ```
 
 ## 版本历史
+
+### v1.0.0
+- 五层架构退役，改为三层主线（感知 → 策略 → 设计）+ 验证辅助；交付层取消（PRD 预审并入 prd-gen 尾门，发布 checklist/灰度策略并入 feature-launch）
+- Skill 合并：market-intelligence + user-research → market-research；positioning + prioritization + roadmap → product-strategy；impact-analysis + iteration-planning → retrospective
+- 删除 data-monitoring / process-optimization / requirement-review / project-coordination / release-management；Subagent 8 → 6（删除 data-monitor、process-optimizer）
+- `/ompm` 升级为全局意图路由（无参/自然语言时读上下文 + current-workflow.json 推荐下一步）
 
 ### v0.9.4
 - 上下文文件名统一为扁平 `.ompm/<name>.json` 契约（v0.9.3 起）

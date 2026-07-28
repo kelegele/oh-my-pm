@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "competitive-analysis context contract",
+  "description": "docs/product/.ompm/competitive-analysis.json 轻量契约，仅约束顶层 required 字段与类型。字段来源：skills/competitive-analysis/SKILL.md「Output Structure → JSON Output Format」。",
+  "type": "object",
+  "required": ["analyses", "search_record", "last_updated"],
+  "properties": {
+    "analyses": { "type": "array" },
+    "search_record": { "type": "object" },
+    "last_updated": { "type": "string" }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "prioritization": {
+    "framework": "RICE",
+    "timestamp": "2026-07-28T12:00:00Z",
+    "constraints": {
+      "capacity": 20,
+      "timeframe": "Q3 2026"
+    },
+    "items": [
+      {
+        "id": "FEAT-001",
+        "name": "User onboarding flow",
+        "rice_score": 85,
+        "reach": 1000,
+        "impact": 2,
+        "confidence": 0.85,
+        "effort": 2,
+        "rank": 1,
+        "category": "Must Have",
+        "rationale": "High reach, high impact, moderate effort"
+      },
+      {
+        "id": "FEAT-002",
+        "name": "Dark mode",
+        "rice_score": 45,
+        "reach": 500,
+        "impact": 1,
+        "confidence": 0.9,
+        "effort": 1,
+        "rank": 2,
+        "category": "Should Have",
+        "rationale": "Moderate reach, low effort quick win"
+      }
+    ],
+    "summary": {
+      "total_items": 2,
+      "must_have": 1,
+      "should_have": 1,
+      "could_have": 0,
+      "wont_have": 0
+    }
+  }
+}

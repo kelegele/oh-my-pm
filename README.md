@@ -6,10 +6,10 @@
 
 [![License](https://img.shields.io/github/license/kelegele/oh-my-pm)](LICENSE)
 [![Version](https://img.shields.io/github/v/release/kelegele/oh-my-pm)](https://github.com/kelegele/oh-my-pm/releases)
-[![Skills](https://img.shields.io/badge/Skills-20-blue)](skills/)
-[![Agents](https://img.shields.io/badge/Agents-8-purple)](agents/)
+[![Skills](https://img.shields.io/badge/Skills-11-blue)](skills/)
+[![Agents](https://img.shields.io/badge/Agents-6-purple)](agents/)
 
-**5-Layer Architecture · 8 Subagents · 20 Professional Skills · Complete Product Lifecycle**
+**3-Layer Core + Validation Loop · 6 Subagents · 11 Professional Skills · Complete Product Lifecycle**
 
 [Quick Start](#quick-start) • [Skills](#all-skills) • [Subagents](#subagents-architecture) • [中文文档](README-CN.md)
 
@@ -25,7 +25,7 @@ Oh-My-PM is a comprehensive AI Agent workflow system for Product Managers, built
 
 | Feature | Description |
 |:---------|:-------------|
-| **5-Layer Architecture** | Complete closed-loop from requirement sensing to value validation |
+| **3-Layer Core + Validation** | Main line Perception → Strategy → Design, with validation skills closing the feedback loop |
 | **Scenario-Driven PRD** | Iteration updates / New features / 0-1 products — no random assumptions |
 | **Industry Benchmarking** | Auto-benchmark against best practices for professional output |
 | **HTML Prototype Generation** | Generate interactive HTML prototypes from PRDs |
@@ -98,50 +98,49 @@ cd oh-my-pm
 /ompm help  # Show help
 ```
 
+`/ompm` is also the **global intent router**: invoked with no arguments or with a natural-language request, it reads the current context plus `docs/product/.ompm/current-workflow.json` and recommends the most valuable next step.
+
 #### Skills (Natural Language Triggering)
 
-20 Skills trigger automatically through natural language:
+11 Skills trigger automatically through natural language:
 
 ```bash
 # Direct conversation—system identifies and calls the relevant Skill
 "Analyze the competitive differences between Notion and Feishu docs"  # → competitive-analysis
 "Write a PRD for user profile redesign"                 # → prd-gen
-"How did this feature perform after launch?"            # → impact-analysis
-"How should we position our product?"                   # → product-positioning
+"How did this feature perform after launch?"            # → retrospective
+"How should we position our product?"                   # → product-strategy
 ```
 
 **Note**: Skills do not support `/skill-name` explicit invocation—they trigger through natural language or workflows.
 
 ---
 
-## 5-Layer Architecture
+## 3-Layer Core + Validation Loop
+
+The main line runs **Perception → Strategy → Design**; validation skills close the feedback loop. The former Delivery layer is folded in: PRD pre-review is now a `prd-gen` tail gate, and release checklists / rollout strategy live in `feature-launch`. Three workflow orchestrators (`quick-prd` / `full-pm-cycle` / `feature-launch`) sit on top.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  Layer 1: Perception (Requirement)     4 Skills      │
-│  Market Intelligence · User Research · Competitive Analysis   │
-│  · Data Monitoring                                      │
+│  Main Line 1: Perception          3 Skills              │
+│  Competitive Analysis · Market Research · Clarify Requirements│
 └─────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────┐
-│  Layer 2: Strategy            3 Skills      │
-│  Product Positioning · Roadmap Planning · Prioritization │
+│  Main Line 2: Strategy            1 Skill               │
+│  Product Strategy (positioning · prioritization · roadmap)│
 └─────────────────────────────────────────────────────────┘
                               ↓
 ┌─────────────────────────────────────────────────────────┐
-│  Layer 3: Design              3 Skills                            │
-│  PRD Generation · Prototype Design · Process Optimization│
+│  Main Line 3: Design              2 Skills              │
+│  PRD Generation (with pre-review gate) · Prototype Design│
 └─────────────────────────────────────────────────────────┘
                               ↓
-┌─────────────────────────────────────────────────────────┐
-│  Layer 4: Delivery            3 Skills      │
-│  Requirement Review · Project Coordination · Release Management│
-└─────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────┐
-│  Layer 5: Validation          3 Skills      │
-│  Impact Analysis · Feedback Synthesis · Iteration Planning│
-└─────────────────────────────────────────────────────────┘
+┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐
+   Auxiliary: Validation          2 Skills
+   Retrospective (impact + iteration) · Feedback Synthesis
+   ──→ feedback loop back to Perception
+└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
 ```
 
 ---
@@ -162,22 +161,15 @@ Subagents are specialized AI agents that run in isolated contexts with custom sy
 | **Persistent Memory** | None | Supports cross-session knowledge accumulation |
 | **Use Case** | Simple prompt injection | High-capacity output isolation |
 
-### 8 Subagents
+### 6 Subagents
 
-#### 📊 Perception Layer (4)
+#### 📊 Perception Layer (3)
 
 | Subagent | Model | Features | Trigger Examples |
 |:----------|:--------|:----------|:-----------------|
 | `market-researcher` | haiku | Worktree isolation | "Analyze X market", "Industry trends" |
 | `competitive-analyst` | sonnet | GitHub code analysis | "Competitive analysis", "Compare XX and YY" |
 | `user-interviewer` | sonnet | User research memory | "Create user persona", "User interviews" |
-| `data-monitor` | haiku | Background daemon | "Monitor metrics", "Data dashboard" |
-
-#### 🎨 Design Layer (1)
-
-| Subagent | Model | Features | Trigger Examples |
-|:----------|:--------|:----------|:-----------------|
-| `process-optimizer` | sonnet | Read-only mode | "Process optimization", "Efficiency solutions" |
 
 #### 📈 Validation Layer (2)
 
@@ -201,8 +193,6 @@ Each subagent has an independent memory directory (`.claude/agent-memory/`) for 
 ├── market-researcher/    # Market data accumulation
 ├── competitive-analyst/  # Competitor knowledge base
 ├── user-interviewer/     # User research patterns
-├── data-monitor/         # Metrics baseline
-├── process-optimizer/    # Process optimization knowledge
 ├── impact-analyst/       # Impact analysis framework
 ├── feedback-collector/   # Feedback theme patterns
 └── pm-orchestrator/      # Workflow best practices
@@ -232,50 +222,36 @@ Subagents are automatically recognized and called by Claude Code—no explicit t
 | Skill | Install | Function | Trigger Examples |
 |:-------|:--------|:---------|:-----------------|
 | `competitive-analysis` | `--skill competitive-analysis` | Competitive feature comparison & strategic opportunity identification | "Analyze competitors", "Compare XX and YY" |
-| `market-intelligence` | `--skill market-intelligence` | Market trend collection & industry analysis | "Market analysis", "Industry trends" |
-| `user-research` | `--skill user-research` | User research, interviews & persona creation | "User interviews", "Create user persona" |
-| `data-monitoring` | `--skill data-monitoring` | Product metrics monitoring & anomaly detection | "Monitor metrics", "Data dashboard" |
+| `market-research` | `--skill market-research` | Market trends, industry analysis & user research / personas | "Market analysis", "Industry trends", "User research" |
 | `clarify-requirements` | `--skill clarify-requirements` | Requirement clarification & information gap analysis | "Clarify requirements", "What info is missing" |
 
 ### 🎯 Strategy Layer
 
 | Skill | Install | Function | Trigger Examples |
 |:-------|:--------|:---------|:-----------------|
-| `product-positioning` | `--skill product-positioning` | Product positioning & differentiation strategy | "Product positioning", "Differentiation strategy" |
-| `roadmap-planning` | `--skill roadmap-planning` | Product roadmap with milestones & timeline | "Product roadmap", "Version planning" |
-| `prioritization` | `--skill prioritization` | Prioritization (RICE/MoSCoW frameworks) | "Prioritization", "Feature priority" |
+| `product-strategy` | `--skill product-strategy` | Positioning, prioritization (RICE/MoSCoW) & roadmap in one pass | "Product positioning", "Feature priority", "Product roadmap" |
 
 ### 🎨 Design Layer
 
 | Skill | Install | Function | Trigger Examples |
 |:-------|:--------|:---------|:-----------------|
-| `prd-gen` | `--skill prd-gen` | Structured PRD generation (scenario-driven) | "Write PRD", "Requirements document" |
+| `prd-gen` | `--skill prd-gen` | Structured PRD generation (scenario-driven, with pre-review tail gate) | "Write PRD", "Requirements document" |
 | `prototype-design` | `--skill prototype-design` | HTML prototype generation (iteration + new product modes) | "Design prototype", "HTML prototype", "UI flow" |
-| `process-optimization` | `--skill process-optimization` | Business process optimization & workflow improvement | "Process optimization", "Efficiency solutions" |
-
-### 🚢 Delivery Layer
-
-| Skill | Install | Function | Trigger Examples |
-|:-------|:--------|:---------|:-----------------|
-| `requirement-review` | `--skill requirement-review` | Requirement review & stakeholder alignment | "Requirement review", "Review meeting" |
-| `project-coordination` | `--skill project-coordination` | Project progress tracking & risk management | "Project status", "Progress tracking" |
-| `release-management` | `--skill release-management` | Release planning & launch checklist | "Release plan", "Launch checklist" |
 
 ### 📈 Validation Layer
 
 | Skill | Install | Function | Trigger Examples |
 |:-------|:--------|:---------|:-----------------|
-| `impact-analysis` | `--skill impact-analysis` | Post-launch impact analysis & goal comparison | "Impact analysis", "Post-launch review" |
+| `retrospective` | `--skill retrospective` | Post-launch impact analysis & next-iteration planning | "Impact analysis", "Post-launch review", "Plan next sprint" |
 | `feedback-synthesis` | `--skill feedback-synthesis` | User feedback aggregation & analysis | "Feedback analysis", "User feedback" |
-| `iteration-planning` | `--skill iteration-planning` | Data-driven iteration planning | "Iteration planning", "Version scheduling" |
 
 ### 🔄 Workflow Orchestrators
 
 | Workflow | Install | Function | Trigger Examples |
 |:----------|:--------|:---------|:-----------------|
-| `quick-prd` | `--skill quick-prd` | Competitive analysis + PRD integration | "Quick PRD", "Requirements with competitive analysis" |
+| `quick-prd` | `--skill quick-prd` | Thin preset of full-pm-cycle: competitive analysis + PRD | "Quick PRD", "Requirements with competitive analysis" |
 | `full-pm-cycle` | `--skill full-pm-cycle` | Complete product lifecycle (0-1) | "Complete product planning", "0-1 product" |
-| `feature-launch` | `--skill feature-launch` | Feature launch workflow | "Feature launch", "Launch coordination" |
+| `feature-launch` | `--skill feature-launch` | Feature launch workflow (release checklist & rollout strategy) | "Feature launch", "Launch coordination" |
 
 ---
 
@@ -299,29 +275,19 @@ Subagents are automatically recognized and called by Claude Code—no explicit t
 
 ```
 oh-my-pm/
-├── agents/              # Subagent definitions (8) - at root!
-│   ├── perception/      # Market research, competitive analysis, user research, data monitoring
-│   ├── design/          # Process optimization
+├── agents/              # Subagent definitions (6) - at root!
+│   ├── perception/      # Market research, competitive analysis, user research
 │   ├── validation/      # Impact analysis, feedback aggregation
 │   └── workflows/       # PM orchestrator
-├── skills/                        # Skill plugin directory (20)
+├── skills/                        # Skill plugin directory (11)
 │   ├── competitive-analysis/      # layer: perception
+│   ├── market-research/           # layer: perception
 │   ├── clarify-requirements/      # layer: perception
-│   ├── market-intelligence/       # layer: perception
-│   ├── user-research/             # layer: perception
-│   ├── data-monitoring/           # layer: perception
-│   ├── product-positioning/       # layer: strategy
-│   ├── roadmap-planning/          # layer: strategy
-│   ├── prioritization/            # layer: strategy
+│   ├── product-strategy/          # layer: strategy
 │   ├── prd-gen/                   # layer: design
 │   ├── prototype-design/          # layer: design
-│   ├── process-optimization/      # layer: design
-│   ├── requirement-review/        # layer: delivery
-│   ├── project-coordination/      # layer: delivery
-│   ├── release-management/        # layer: delivery
-│   ├── impact-analysis/           # layer: validation
+│   ├── retrospective/             # layer: validation
 │   ├── feedback-synthesis/        # layer: validation
-│   ├── iteration-planning/        # layer: validation
 │   ├── quick-prd/                 # layer: workflow
 │   ├── full-pm-cycle/             # layer: workflow
 │   └── feature-launch/            # layer: workflow
@@ -353,7 +319,7 @@ oh-my-pm/
 | v0.6.0 | HTML prototype generation (iteration + new product modes) | ✅ |
 | v0.9.0 | Flat skill directory, standalone install per skill | ✅ |
 | v0.9.3 | Fix context-passing contract (flat .ompm model) + doc version sync | ✅ |
-| v1.0.0 | Enterprise edition & integrations | ⏳ |
+| v1.0.0 | Simplified architecture: 3-layer core + validation loop (11 Skills, 6 Subagents) | ✅ |
 
 See [Project Board](https://github.com/users/kelegele/projects/4) for full planning.
 

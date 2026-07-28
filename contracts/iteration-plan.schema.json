@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "iteration-plan context contract",
+  "description": "docs/product/.ompm/iteration-plan.json 轻量契约，仅约束顶层 required 字段与类型。字段来源：skills/iteration-planning/SKILL.md「Output Structure → JSON Output Format」。",
+  "type": "object",
+  "required": [
+    "iteration_id",
+    "previous_iteration",
+    "created_at",
+    "planned_items",
+    "capacity_allocation",
+    "metrics_to_track",
+    "next_steps"
+  ],
+  "properties": {
+    "iteration_id": { "type": "string" },
+    "previous_iteration": { "type": "string" },
+    "created_at": { "type": "string" },
+    "planned_items": { "type": "array" },
+    "capacity_allocation": { "type": "object" },
+    "metrics_to_track": { "type": "array" },
+    "next_steps": { "type": "array" }
+  }
+}

@@ -2,7 +2,7 @@
 # 用于 Claude Code 自动发现和加载 Subagents
 
 manifest:
-  version: "0.9.4"
+  version: "1.0.0"
   plugin: "oh-my-pm"
   description: "产品经理 AI Agent 工作流系统 - Subagents"
 
@@ -33,24 +33,6 @@ subagents:
         - 用户画像
         - user research
         - 用户研究
-
-    - name: data-monitor
-      file: agents/perception/data-monitor.md
-      triggers:
-        - 监控指标
-        - 数据看板
-        - monitor metrics
-        - 指标分析
-
-  # ========== 方案设计层 ==========
-  design:
-    - name: process-optimizer
-      file: agents/design/process-optimizer.md
-      triggers:
-        - 流程优化
-        - 提效方案
-        - optimize process
-        - 效率改进
 
   # ========== 价值验证层 ==========
   validation:

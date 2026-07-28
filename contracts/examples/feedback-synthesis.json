@@ -1,0 +1,24 @@
+{
+  "summary": {
+    "period": { "start": "2026-07-01", "end": "2026-07-28" },
+    "total_items": 120,
+    "primary_sources": ["support tickets", "app reviews", "in-app feedback"],
+    "top_themes": ["Onboarding confusion", "Export requests", "Praise for speed"]
+  },
+  "categories": {
+    "bugs": [{ "issue": "Export button unresponsive", "count": 12, "severity": "high" }],
+    "feature_requests": [{ "request": "Bulk export", "count": 38, "priority": "P0" }],
+    "ux": [{ "issue": "Can't find settings", "count": 21, "impact": "medium" }],
+    "praise": [{ "theme": "Fast sync", "count": 18 }]
+  },
+  "prioritized_items": [
+    { "item": "Fix export button", "type": "bug", "priority": "P0", "rationale": "Blocking workflow for enterprise users" },
+    { "item": "Bulk export", "type": "feature", "priority": "P1", "rationale": "Top requested feature (38 mentions)" }
+  ],
+  "sentiment": {
+    "overall": "neutral",
+    "nps": 12,
+    "trend": "declining",
+    "by_segment": { "enterprise": "positive", "free": "negative" }
+  }
+}

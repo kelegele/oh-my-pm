@@ -29,3 +29,6 @@ Thumbs.db
 
 # Oh-My-PM runtime intermediate state (local; not shared)
 docs/product/.ompm/
+
+# Evals model outputs (local; not shared)
+evals/.results/

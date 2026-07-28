@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "feedback-synthesis context contract",
+  "description": "docs/product/.ompm/feedback-synthesis.json 轻量契约，仅约束顶层 required 字段与类型。字段来源：skills/feedback-synthesis/SKILL.md「Output Structure」声明的四项输出（Feedback summary / Categorized items / Prioritized list / Sentiment analysis；该 skill 未声明显式 JSON 格式，字段对应其声明的输出项）。",
+  "type": "object",
+  "required": ["summary", "categories", "prioritized_items", "sentiment"],
+  "properties": {
+    "summary": { "type": "object" },
+    "categories": { "type": "object" },
+    "prioritized_items": { "type": "array" },
+    "sentiment": { "type": "object" }
+  }
+}

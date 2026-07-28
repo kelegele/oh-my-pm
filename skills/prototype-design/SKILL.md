@@ -2,9 +2,8 @@
 name: prototype-design
 description: 创建交互式原型以验证设计方案。支持 HTML 原型输出格式。当用户需要设计 UI/UX、创建原型、设计用户流程，或说"创建原型"、"设计这个功能"、"UI 原型"时使用。支持迭代模式（基于现有样式）和新产品模式（自定义设计规范）。
 layer: design
-input-from: prd-gen,user-research
-output-to: project-coordination,requirement-review
-version: 0.7.1
+input-from: prd-gen,market-research
+output-to: feature-launch
 ---
 
 # Prototype Design

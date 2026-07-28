@@ -1,0 +1,13 @@
+# 发布策略：skill 的 Launch Strategies 表含 Big Bang / Phased Rollout /
+# Feature Flag / Beta Release；高风险大用户量场景下模型应给出策略选择。
+# 中文表述通常为 灰度/分阶段/全量，英文则保留原名——any 断言覆盖各合规措辞。
+name: 高风险功能给出发布策略
+prompt: |
+  「消息推送」功能 PRD 已就绪，功能风险较高、用户量大。
+  请用 feature-launch 工作流制定发布策略并说明理由。
+assert_must_contain_any:
+  - 灰度
+  - 全量
+  - 分阶段
+  - phased
+  - big bang

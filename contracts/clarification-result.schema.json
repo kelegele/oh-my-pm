@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "clarification-result context contract",
+  "description": "docs/product/.ompm/clarification-result.json 轻量契约，仅约束顶层 required 字段与类型。字段来源：skills/clarify-requirements/SKILL.md「Step 7: Save Clarification Result」。",
+  "type": "object",
+  "required": ["scenario", "collected_info", "pending_items", "prd_plan"],
+  "properties": {
+    "scenario": { "type": "string" },
+    "collected_info": { "type": "object" },
+    "pending_items": { "type": "array" },
+    "prd_plan": { "type": "object" }
+  }
+}

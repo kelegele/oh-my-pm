@@ -60,17 +60,15 @@ test_skill_file() {
         return 1
     fi
 
-    local name desc layer version
+    local name desc layer
     name=$(get_field "$skill_file" "name")
     desc=$(get_field "$skill_file" "description")
     layer=$(get_field "$skill_file" "layer")
-    version=$(get_field "$skill_file" "version")
 
     local errs=""
     [ -z "$name" ] && errs="$errs name"
     [ -z "$desc" ] && errs="$errs description"
     [ -z "$layer" ] && errs="$errs layer"
-    [ -z "$version" ] && errs="$errs version"
     if [ -n "$errs" ]; then
         echo -e "${RED}FAILED${NC} - Missing/empty field(s):$errs"
         FAILED=$((FAILED + 1))
@@ -87,13 +85,6 @@ test_skill_file() {
     # layer 必须在合法集合内
     if ! echo "$VALID_LAYERS" | grep -q " $layer "; then
         echo -e "${RED}FAILED${NC} - invalid layer '$layer'"
-        FAILED=$((FAILED + 1))
-        return 1
-    fi
-
-    # version 形如 x.y.z
-    if ! echo "$version" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+$'; then
-        echo -e "${RED}FAILED${NC} - version '$version' not semver x.y.z"
         FAILED=$((FAILED + 1))
         return 1
     fi
@@ -133,6 +124,45 @@ test_context_contract() {
     fi
 }
 
+test_context_declarations() {
+    echo "Testing context declarations (input-from/output-to)..."
+    local decl_failed=0
+
+    for f in "${skill_files[@]}"; do
+        local skill_name=$(basename "$(dirname "$f")")
+        local field value entry
+        for field in input-from output-to; do
+            value=$(get_field "$f" "$field")
+            # 字段缺失不算错——并非所有 skill 都声明上下文路由
+            [ -z "$value" ] && continue
+            # 逗号分隔 → 空格分隔后按词拆分（同时容忍条目两侧空白）
+            for entry in ${value//,/ }; do
+                [ -z "$entry" ] && continue
+                if [ "$entry" != "user" ] && [ ! -d "$SKILLS_DIR/$entry" ]; then
+                    echo -e "${RED}FAILED${NC} - $skill_name: $field references unknown skill '$entry'"
+                    decl_failed=1
+                fi
+            done
+        done
+    done
+
+    if [ $decl_failed -eq 0 ]; then
+        echo -e "${GREEN}OK${NC} - all input-from/output-to entries resolve to skills or 'user'"
+        PASSED=$((PASSED + 1))
+    else
+        FAILED=$((FAILED + 1))
+    fi
+}
+
+test_contract_schemas() {
+    echo "Testing contract schemas (contracts/examples vs contracts/*.schema.json)..."
+    if python3 "$PROJECT_ROOT/tests/validate_contracts.py"; then
+        PASSED=$((PASSED + 1))
+    else
+        FAILED=$((FAILED + 1))
+    fi
+}
+
 # 测试全部 Skills
 echo "======================================"
 echo "Oh-My-PM Skills Test"
@@ -158,6 +188,12 @@ done
 
 echo ""
 test_context_contract
+
+echo ""
+test_context_declarations
+
+echo ""
+test_contract_schemas
 
 echo ""
 echo "======================================"

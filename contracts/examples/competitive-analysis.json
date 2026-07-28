@@ -1,0 +1,37 @@
+{
+  "analyses": [
+    {
+      "id": "ca-20260728-001",
+      "timestamp": "2026-07-28T10:00:00Z",
+      "competitors": ["Notion", "Feishu Docs"],
+      "feature_matrix": {
+        "AI writing": {
+          "our_product": "partial",
+          "notion": { "status": "supported", "confidence": "high" },
+          "feishu_docs": { "status": "supported", "confidence": "high" }
+        }
+      },
+      "gaps": {
+        "missing_features": [
+          { "feature": "Offline mode", "supported_by": ["Notion"], "confidence": "medium" }
+        ],
+        "unique_advantages": [
+          { "feature": "PM workflow templates", "confidence": "medium", "basis": "No competitor found offering this" }
+        ]
+      },
+      "opportunities": [
+        { "opportunity": "Bundle PRD workflow as differentiator", "confidence": "medium", "basis": "Gap in both competitors" }
+      ],
+      "recommendations": [
+        { "recommendation": "Close offline-mode gap before Q4", "priority": "high" }
+      ]
+    }
+  ],
+  "search_record": {
+    "search_queries_used": ["Notion AI features 2026", "Feishu Docs pricing"],
+    "sources_accessed": [
+      { "url": "https://www.notion.so/product", "title": "Notion Product", "used_for": "feature verification" }
+    ]
+  },
+  "last_updated": "2026-07-28T10:00:00Z"
+}

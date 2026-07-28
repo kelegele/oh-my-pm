@@ -2,9 +2,8 @@
 name: feedback-synthesis
 description: 汇总和综合来自多个来源的用户反馈。当用户需要分析用户反馈、对反馈主题进行分类、了解用户情绪，或说"分析反馈"、"用户在说什么"、"综合反馈"时使用。即使没有明确说"反馈综合"，当用户正在处理来自任何来源的用户反馈时也应激活。
 layer: validation
-input-from: release-management
-output-to: iteration-planning,prioritization,user-research
-version: 0.1.2
+input-from: user
+output-to: retrospective,product-strategy
 ---
 
 # Feedback Synthesis
@@ -205,7 +204,7 @@ Week 4  |█████████| 4.3/5 - Recovery After Fix
 This analysis triggers the following actions:
 - **New high-severity bugs** → Engineering escalation
 - **Common feature requests** → Consider for prioritization
-- **Declining sentiment trend** → Activate user-research skill
+- **Declining sentiment trend** → Activate market-research skill
 - **UX patterns** → Update design system
 
 ## Appendices
@@ -258,9 +257,9 @@ Before delivering, ensure synthesis:
 - `docs/product/feedback-reports/[period].md` - Full synthesis report
 
 **Read By:**
-- `iteration-planning` - Uses feedback for planning
-- `prioritization` - Incorporates requests into prioritization
-- `user-research` - Identifies areas needing deeper research
+- `retrospective` - Uses feedback for planning
+- `product-strategy` - Incorporates requests into prioritization
+- `market-research` - Identifies areas needing deeper research
 
 ## Example Usage
 

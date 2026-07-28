@@ -1,0 +1,30 @@
+{
+  "iteration_id": "sprint-13",
+  "previous_iteration": "sprint-12",
+  "created_at": "2026-07-28T13:00:00Z",
+  "planned_items": [
+    {
+      "id": "ITEM-001",
+      "type": "bug",
+      "title": "Fix export button unresponsive",
+      "priority_score": 80,
+      "estimated_effort": "3pts",
+      "source": "feedback"
+    },
+    {
+      "id": "ITEM-002",
+      "type": "feature",
+      "title": "Add bulk export feature",
+      "priority_score": 65,
+      "estimated_effort": "5pts",
+      "source": "impact"
+    }
+  ],
+  "capacity_allocation": {
+    "features": "60%",
+    "bugs": "20%",
+    "tech_debt": "20%"
+  },
+  "metrics_to_track": ["DAU", "conversion_rate", "NPS"],
+  "next_steps": ["1. Run iteration planning meeting", "2. Update roadmap"]
+}

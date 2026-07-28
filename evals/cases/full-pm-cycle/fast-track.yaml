@@ -1,0 +1,13 @@
+# Fast Track：skill 规定「已有市场/用户研究 → 从 Strategy 开始」。
+# 模型应明确表示跳过感知、从策略阶段继续。
+# any 断言覆盖「跳过」「从策略（阶段）开始」「Fast Track」三种合规表述。
+name: Fast Track 跳过感知从策略开始
+prompt: |
+  我们的记账 App 已完成市场研究和用户研究，数据都在。
+  用 full-pm-cycle 继续推进，已有数据的阶段不要重复做。
+assert_must_contain:
+  - 策略
+assert_must_contain_any:
+  - 跳过
+  - 从策略
+  - Fast Track

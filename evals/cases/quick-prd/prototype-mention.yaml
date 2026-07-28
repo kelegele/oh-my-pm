@@ -1,0 +1,8 @@
+# 原型提及：quick-prd 的 S3 Design 阶段固定包含 prototype-design（HTML 原型），
+# 原型统一输出为 HTML 格式——「原型」与「HTML」在流程说明中必然出现。
+name: 流程提及 HTML 原型
+prompt: |
+  用 quick-prd 为「直播间抽奖」功能写 PRD，最后需要能在浏览器里演示的原型。
+assert_must_contain:
+  - 原型
+  - HTML

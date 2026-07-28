@@ -2,7 +2,9 @@
 
 ## 概述
 
-Oh-My-PM v0.3.0 引入了 **Subagent 混合架构**，在原有 20 个 Skills 基础上，增加了 8 个专业化 Subagents，实现上下文隔离、模型优化和知识积累。
+Oh-My-PM v0.3.0 引入了 **Subagent 混合架构**，在 Skills 基础上增加专业化 Subagents，实现上下文隔离、模型优化和知识积累。当前版本（v1.0.0）为 **11 个 Skills + 6 个 Subagents**。
+
+> **v1.0.0 变更说明**: Subagent 从 8 个精简至 6 个 —— 删除 `data-monitor`（原 perception）和 `process-optimizer`（原 `agents/design/`，该目录已随交付层取消一并移除）；同时 Skill 边界收敛（market-intelligence + user-research 合并为 market-research，impact-analysis + iteration-planning 合并为 retrospective，process-optimization 删除），架构叙事统一为"三层主线（感知 → 策略 → 设计）+ 验证辅助"。
 
 ## 架构设计
 
@@ -22,12 +24,24 @@ Oh-My-PM v0.3.0 引入了 **Subagent 混合架构**，在原有 20 个 Skills �
 
 | 层级 | 策略 | 说明 |
 |:-----|:-----|:-----|
-| **Perception** | 4 个全转为 Subagent | 研究型任务，高输出，适合隔离 |
+| **Perception** | 3 个 Subagent | 研究型任务，高输出，适合隔离 |
 | **Strategy** | 保留 Skill | 需要频繁用户交互 |
-| **Design** | 混合 | prd-gen 保留，process-optimization 转为 Subagent |
-| **Delivery** | 保留 Skill | 项目协调需要主对话上下文 |
-| **Validation** | 2 个转 Subagent | data-monitoring 和 impact-analysis 适合隔离 |
+| **Design** | 保留 Skill | prd-gen（含预审尾门）、prototype-design 均需主对话上下文 |
+| **Validation** | 2 个转 Subagent | impact-analyst 和 feedback-collector 适合隔离 |
 | **Workflows** | 转为 Orchestrator Subagent | 协调其他 Subagent |
+
+（Delivery 层已于 v1.0.0 取消：PRD 预审并入 prd-gen 尾门，发布 checklist 与灰度策略并入 feature-launch。）
+
+### Skill ↔ Subagent 对应关系
+
+| Subagent | 对应 Skill | 说明 |
+|:---------|:-----------|:-----|
+| market-researcher | market-research | 原 market-intelligence + user-research 合并 |
+| user-interviewer | market-research | 同上，用户研究部分 |
+| competitive-analyst | competitive-analysis | 不变 |
+| impact-analyst | retrospective | 原 impact-analysis + iteration-planning 合并 |
+| feedback-collector | feedback-synthesis | 不变 |
+| pm-orchestrator | full-pm-cycle / quick-prd / feature-launch | 工作流编排 |
 
 ## Subagents 详解
 
@@ -77,40 +91,7 @@ memory: project        # 用户研究模式
 - "创建用户画像"
 - "分析用户访谈数据"
 
-### 4. data-monitor
-
-**文件**: `agents/perception/data-monitor.md`
-
-```yaml
-model: haiku          # 轻量查询
-background: true      # 后台监控
-maxTurns: 5           # 限制执行
-memory: project        # 指标基线
-```
-
-**用途**: 产品指标监控、异常检测、趋势分析
-
-**触发示例**:
-- "监控 DAU 指标"
-- "为什么转化率下降了？"
-
-### 5. process-optimizer
-
-**文件**: `agents/design/process-optimizer.md`
-
-```yaml
-model: sonnet              # 分析任务
-disallowedTools: [Edit]    # 只读模式
-memory: project            # 流程优化知识
-```
-
-**用途**: 流程优化、瓶颈分析、效率改进
-
-**触发示例**:
-- "优化代码审查流程"
-- "如何提高团队效率？"
-
-### 6. impact-analyst
+### 4. impact-analyst
 
 **文件**: `agents/validation/impact-analyst.md`
 
@@ -119,13 +100,13 @@ model: sonnet         # 效果分析
 memory: project        # 分析框架
 ```
 
-**用途**: 上线效果分析、目标达成评估、经验总结
+**用途**: 上线效果分析、目标达成评估、经验总结（对应 retrospective skill）
 
 **触发示例**:
 - "新功能上线效果如何？"
 - "我们达成目标了吗？"
 
-### 7. feedback-collector
+### 5. feedback-collector
 
 **文件**: `agents/validation/feedback-collector.md`
 
@@ -140,7 +121,7 @@ memory: project        # 反馈模式
 - "汇总用户反馈"
 - "用户在抱怨什么？"
 
-### 8. pm-orchestrator
+### 6. pm-orchestrator
 
 **文件**: `agents/workflows/pm-orchestrator.md`
 
@@ -166,8 +147,6 @@ memory: project                      # 工作流最佳实践
 ├── market-researcher/MEMORY.md
 ├── competitive-analyst/MEMORY.md
 ├── user-interviewer/MEMORY.md
-├── data-monitor/MEMORY.md
-├── process-optimizer/MEMORY.md
 ├── impact-analyst/MEMORY.md
 ├── feedback-collector/MEMORY.md
 └── pm-orchestrator/MEMORY.md
@@ -246,8 +225,8 @@ tools: [Agent(market-researcher), Agent(competitive-analyst)]
 
 | 模型 | 适用场景 |
 |:-----|:---------|
-| `haiku` | Web 搜索、轻量查询、监控任务 |
-| `sonnet` | 分析任务、代码审查、流程优化 |
+| `haiku` | Web 搜索、轻量汇总 |
+| `sonnet` | 分析任务、代码审查、深度研究 |
 | `opus` | 战略决策、复杂规划 |
 | `inherit` | 协调器、不确定的任务 |
 
@@ -270,8 +249,7 @@ memory: project  # 团队共享的知识积累
 ### 4. 限制执行时间
 
 ```yaml
-maxTurns: 5  # 防止无限循环
-background: true  # 长期监控任务
+maxTurns: 20  # 防止编排任务无限循环
 ```
 
 ## 故障排查

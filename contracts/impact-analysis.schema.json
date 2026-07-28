@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "impact-analysis context contract",
+  "description": "docs/product/.ompm/impact-analysis.json 轻量契约，仅约束顶层 required 字段与类型。字段来源：skills/impact-analysis/SKILL.md「Output Structure」声明的三项输出（Impact report / Scorecard / Recommendations）及报告模板中的 Status、Goal Achievement、Metric Analysis 段落（该 skill 未声明显式 JSON 格式，字段取自其声明的报告结构）。",
+  "type": "object",
+  "required": ["status", "goal_achievement", "metrics", "recommendations"],
+  "properties": {
+    "status": { "type": "string" },
+    "goal_achievement": { "type": "object" },
+    "metrics": { "type": "object" },
+    "recommendations": { "type": "array" }
+  }
+}

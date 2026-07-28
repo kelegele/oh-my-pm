@@ -1,0 +1,14 @@
+# 阶段正确：feature-launch 只编排 Design/Delivery/Validation 三层
+# （S1 Design 方案设计 → S2 Delivery 交付协调 → S3 Validation 价值验证），
+# 不包含感知层。阶段总览中三个英文阶段名是 skill 阶段表的主标签，必然出现；
+# 「感知」一词在该 SKILL.md 中不存在，出现即说明错误编排了感知层。
+name: 阶段编排不含感知层
+prompt: |
+  「深色模式」功能 PRD 已定稿，请用 feature-launch 工作流规划从 PRD 到上线后
+  分析的完整发布流程，先给出阶段编排总览。
+assert_must_contain:
+  - design
+  - delivery
+  - validation
+assert_must_not_contain:
+  - 感知

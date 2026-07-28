@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "user-research context contract",
+  "description": "docs/product/.ompm/user-research.json 轻量契约，仅约束顶层 required 字段与类型。字段来源：skills/user-research/SKILL.md「Output Structure → JSON Output Format」。",
+  "type": "object",
+  "required": ["research", "search_record", "last_updated"],
+  "properties": {
+    "research": { "type": "object" },
+    "search_record": { "type": "object" },
+    "last_updated": { "type": "string" }
+  }
+}

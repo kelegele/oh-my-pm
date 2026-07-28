@@ -3,8 +3,7 @@ name: full-pm-cycle
 description: 编排从市场研究到上线后分析的完整产品管理周期。用于综合产品规划、0-1 产品开发，或当用户说"完整产品计划"、"完整 PM 周期"、"从研究到上线"时使用。支持 HTML 原型输出格式。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。
 layer: workflow
 input-from: user
-output-to: iteration-planning
-version: 0.8.3
+output-to: retrospective
 ---
 
 # Full PM Cycle Workflow
@@ -13,11 +12,11 @@ version: 0.8.3
 ## What This Workflow Does
 
 Orchestrates complete product management lifecycle across all five layers:
-- **Perception**: Market research, user research, competitive analysis
-- **Strategy**: Positioning, roadmap, prioritization
-- **Design**: PRD generation, prototype design (HTML)
-- **Delivery**: Requirement review, project coordination, release management
-- **Validation**: Impact analysis, feedback synthesis
+- **Perception**: Market & user research, competitive analysis
+- **Strategy**: Product strategy (positioning, prioritization, roadmap)
+- **Design**: PRD generation (含预审尾门), prototype design (HTML)
+- **Delivery**: PRD 预审尾门确认、发布计划（采用 feature-launch 的发布策略与 checklist）
+- **Validation**: Retrospective (impact + iteration), feedback synthesis
 
 ---
 
@@ -30,11 +29,11 @@ Orchestrates complete product management lifecycle across all five layers:
 | Stage ID | 名称 | 对应层 | 说明 |
 |:---------|:-----|:---------|:----------|
 | S0 | Setup | 初始化 | 创建工作流状态文件 |
-| S1 | Perception | 需求感知 | 市场研究、用户画像、竞品分析 |
-| S2 | Strategy | 策略规划 | 产品定位、路线图规划、优先级排序 |
+| S1 | Perception | 需求感知 | 市场与用户研究、竞品分析 |
+| S2 | Strategy | 策略规划 | 产品策略（定位、优先级、路线图） |
 | S3 | Design | 方案设计 | PRD 生成、原型设计 |
-| S4 | Delivery | 交付协调 | 需求评审、项目计划、发布管理 |
-| S5 | Validation | 价值验证 | 效果分析、反馈综合、迭代规划 |
+| S4 | Delivery | 交付协调 | PRD 预审尾门、发布计划 |
+| S5 | Validation | 价值验证 | 复盘（效果分析+迭代规划）、反馈综合 |
 
 ---
 
@@ -44,7 +43,7 @@ Orchestrates complete product management lifecycle across all five layers:
 |:---------|:-----|:---------|:----------|
 | S0 | Setup | - | S1 | Perception |
 | S1 | Perception | 市场研究完成 | S2 | Strategy |
-| S2 | Strategy | 定位完成 | S3 | Design |
+| S2 | Strategy | 定位完成、S2.5 策略确认 | S3 | Design |
 | S3 | Design | PRD 完整 | S4 | Delivery |
 | S4 | Delivery | 发布完成 | S5 | Validation |
 
@@ -76,15 +75,15 @@ Orchestrates complete product management lifecycle across all five layers:
 
 **目标**：完成需求感知层的数据收集和分析
 
+**本阶段必答问题**：背景触发（为什么是现在做这件事）？用户场景（目标用户在什么场景遇到什么问题）？问题证据（什么证据表明这个问题真实且值得解决）？
+
 **活动**：
-1. 市场研究 - `market-intelligence` skill
-2. 用户研究 - `user-research` skill
-3. 竞品分析 - `competitive-analysis` skill
+1. 市场与用户研究 - `market-research` skill
+2. 竞品分析 - `competitive-analysis` skill
 
 **技能调用**：
-- Step 1.1: 调用 market-intelligence 技能
-- Step 1.2: 调用 user-research 技能
-- Step 1.3: 调用 competitive-analysis 技能
+- Step 1.1: 调用 market-research 技能（市场研究 + 用户研究）
+- Step 1.2: 调用 competitive-analysis 技能
 
 **输出**：
 - `docs/product/.ompm/market-analysis.json`
@@ -118,15 +117,13 @@ Orchestrates complete product management lifecycle across all five layers:
 
 **目标**：完成策略规划层的工作
 
+**本阶段必答问题**：目标（要达成什么业务/用户目标，做到什么程度）？优先级里程碑（先做什么后做什么，关键里程碑是什么）？
+
 **活动**：
-1. 产品定位 - `product-positioning` skill
-2. 路线图规划 - `roadmap-planning` skill
-3. 优先级排序 - `prioritization` skill
+1. 产品策略 - `product-strategy` skill（定位、优先级、路线图）
 
 **技能调用**：
-- Step 2.1: 调用 product-positioning 技能
-- Step 2.2: 调用 roadmap-planning 技能
-- Step 2.3: 调用 prioritization 技能
+- Step 2.1: 调用 product-strategy 技能，依次产出定位声明与价值主张、RICE/MoSCoW 优先级、12 个月路线图
 
 **输出**：
 - `docs/product/positioning.md`
@@ -144,7 +141,7 @@ Orchestrates complete product management lifecycle across all five layers:
 {
   "completed_stages": ["S0", "S1"],
   "current_layer": "strategy",
-  "current_skill": "prioritization",
+  "current_skill": "product-strategy",
   "current_stage": "S2",
   "status": "in_progress",
   "updated_at": "{{ISO_8601}}"
@@ -156,6 +153,8 @@ Orchestrates complete product management lifecycle across all five layers:
 ## Stage 3: Design
 
 **目标**：完成方案设计层的 PRD 生成和原型创建
+
+**本阶段必答问题**：边界（本期做什么、明确不做什么）？指标（如何衡量这个功能成功）？
 
 **活动**：
 1. PRD 生成 - `prd-gen` skill
@@ -200,17 +199,17 @@ Orchestrates complete product management lifecycle across all five layers:
 
 ## Stage 4: Delivery
 
-**目标**：完成交付协调层的工作
+**目标**：完成交付协调层的 PRD 预审与发布准备
+
+**本阶段必答问题**：约束风险（技术、资源、时间上的硬约束是什么，最大的风险是什么）？
 
 **活动**：
-1. 需求评审 - `requirement-review` skill
-2. 项目计划 - `project-coordination` skill
-3. 发布管理 - `release-management` skill
+1. PRD 预审尾门 - `prd-gen` skill 的预审尾门（需求评审、干系人对齐）
+2. 发布计划 - 采用 `feature-launch` 工作流的发布策略与 checklist（任务分解、时间线、上线检查项）
 
 **技能调用**：
-- Step 4.1: 调用 requirement-review 技能
-- Step 4.2: 调用 project-coordination 技能
-- Step 4.3: 调用 release-management 技能
+- Step 4.1: 运行 prd-gen 预审尾门，完成需求评审与干系人对齐
+- Step 4.2: 按 feature-launch 的发布策略与 checklist 制定发布计划（发布策略选择、任务分解、上线检查）
 
 **输出**：
 - `docs/product/review-notes/[feature]-review.md`
@@ -218,8 +217,8 @@ Orchestrates complete product management lifecycle across all five layers:
 - `docs/product/release-plan-[feature].md`
 
 **质量门控**：
-- ✅ 需求评审完成 - 干系人对齐、签字确认
-- ✅ 项目计划完成 - 任务分配、时间线确认
+- ✅ PRD 预审尾门通过 - 干系人对齐、签字确认
+- ✅ 任务与时间线确认 - 任务分配、排期就绪
 - ✅ 发布准备完成 - 代码冻结、发布包就绪
 - **质量门控通过** - 进入 Validation 阶段
 
@@ -228,7 +227,7 @@ Orchestrates complete product management lifecycle across all five layers:
 {
   "completed_stages": ["S0", "S1", "S2", "S3"],
   "current_layer": "delivery",
-  "current_skill": "release-management",
+  "current_skill": "prd-gen",
   "current_stage": "S4",
   "status": "in_progress",
   "updated_at": "{{ISO_8601}}"
@@ -241,15 +240,15 @@ Orchestrates complete product management lifecycle across all five layers:
 
 **目标**：完成价值验证层的数据收集和分析
 
+**本阶段必答问题**：验证复盘（上线结果是否验证了当初的判断，下一步怎么迭代）？
+
 **活动**：
-1. 效果分析 - `impact-analysis` skill
+1. 复盘 - `retrospective` skill（效果分析 + 迭代规划；A/B 验证方案由其输出模板承载）
 2. 反馈综合 - `feedback-synthesis` skill
-3. 迭代规划 - `iteration-planning` skill
 
 **技能调用**：
-- Step 5.1: 调用 impact-analysis 技能
+- Step 5.1: 调用 retrospective 技能
 - Step 5.2: 调用 feedback-synthesis 技能
-- Step 5.3: 调用 iteration-planning 技能
 
 **输出**：
 - `docs/product/.ompm/impact-analysis.json`
@@ -258,7 +257,7 @@ Orchestrates complete product management lifecycle across all five layers:
 - `docs/product/post-launch-report.md`
 
 **质量门控**：
-- ✅ 效果分析完成 - 目标达成度分析、关键指标收集
+- ✅ 复盘完成 - 目标达成度分析、关键指标收集、迭代方向明确
 - ✅ 反馈综合完成 - 用户反馈收集、主题分析、改进建议
 - ✅ 迭代规划完成 - 下一轮迭代计划制定
 - **工作流完成** - 全部 5 个阶段完成
@@ -268,7 +267,7 @@ Orchestrates complete product management lifecycle across all five layers:
 {
   "completed_stages": ["S0", "S1", "S2", "S3", "S4"],
   "current_layer": "validation",
-  "current_skill": "iteration-planning",
+  "current_skill": "retrospective",
   "current_stage": "S5",
   "status": "completed",
   "updated_at": "{{ISO_8601}}"
@@ -375,8 +374,8 @@ design_gates:
 ```yaml
 delivery_gates:
   S4_to_S5:
-    - requirement_review_complete:
-        - 需求评审完成
+    - prd_pre_review_passed:
+        - prd-gen 预审尾门通过
         - 干系人对齐
         - 签字确认
     - project_plan_complete:
@@ -393,14 +392,13 @@ delivery_gates:
 ```yaml
 validation_gates:
   S5_complete:
-    - impact_analysis_complete:
+    - retrospective_complete:
         - 目标达成度分析
         - 关键指标收集
+        - 下一轮迭代计划制定
     - feedback_synthesis_complete:
         - 反馈收集完成
         - 主题分析完成
-    - iteration_planning_complete:
-        - 下一轮迭代计划制定
 ```
 
 ---
@@ -467,6 +465,68 @@ validation_gates:
 
 ---
 
+## Execution Modes
+
+除完整模式外，本工作流支持通过 `mode` 参数选择预设执行路径。`mode` 与 Fast Track / Deep Dive / Parallel 等自定义选项**正交**：mode 决定执行哪些阶段，自定义选项决定阶段内如何执行，二者可叠加。未指定 `mode` 时按完整模式执行。
+
+| Mode | 适用场景 | 阶段路径 |
+|:-----|:---------|:---------|
+| `full`（默认） | 0-1 产品规划、完整 PM 周期 | S0 → S1 → S2 → S2.5 → S3 → S4 → S5 |
+| `quick` | 带竞品上下文的快速 PRD（quick-prd 预设） | S0 → S1 → S2 → S2.5 → S3（S4/S5 可选） |
+
+### mode: quick
+
+面向"快速产出带竞品分析的 PRD"场景的阶段裁剪：
+
+**S1 Perception（精简）**：
+- 只运行 `competitive-analysis`；用户给出竞品名单时，直接按名单运行竞品分析
+- `market-research` 可选（用户要求时执行，默认跳过用户研究部分）
+
+**S2 Strategy（轻量）**：
+- `product-strategy` 轻量（定位声明 + 价值主张 + RICE/MoSCoW 优先级，跳过路线图）
+
+**S2.5 Strategy Confirmation Gate（硬门控）**：见下文。quick 模式下强制执行，未获用户确认不得进入 S3。
+
+**S3 Design（同完整模式）**：
+- `prd-gen` + `prototype-design`（HTML 原型）
+
+**S4 / S5（可选）**：
+- 精简为可选阶段，仅当用户明确要求时执行
+
+### Stage 2.5: Strategy Confirmation Gate (HARD GATE)
+
+**在 S2 完成后、进入 S3 前执行此门控。**
+
+1. **向用户展示完整的策略层产出**：
+   - Positioning Statement（来自 `docs/product/positioning.md`）
+   - Key messages 和 value proposition
+   - Prioritization 结果（来自 `docs/product/.ompm/prioritization.json`）— 前 N 项及 RICE 分数
+   - Roadmap 亮点（完整模式，来自 `docs/product/roadmap.md`）— 关键里程碑
+
+2. **使用 AskUserQuestion 让用户确认**：
+
+   | Option | Description |
+   |:-------|:------------|
+   | **✅ 确认，进入 Design 阶段** | 进入 Stage 3 |
+   | **✏️ 需要调整定位/优先级** | 留在 Stage 2，修订相关 skill |
+   | **⏸️ 回到 Perception 补充信息** | 回到 Stage 1 |
+   | **📋 查看完整策略文档** | 先读全文档再决定 |
+
+3. **仅当用户明确选择"✅ 确认，进入 Design 阶段"时**，才能进入 Stage 3。
+4. 如果用户选择修订，回到相关 skill 进行 refinement。
+5. 将确认记录到 `docs/product/.ompm/current-workflow.json`。
+
+**Explicit-Skip Protocol（用户显式拒绝交互时）**：若用户明确授权跳过所有确认（如"别问了直接生成"），可豁免本门控的交互环节，但必须：a) 显式声明"代为自动确认"及授权范围（一次性，不延及后续）；b) 在进入 S3 前列出**假设声明**（场景、竞品名单、关键策略默认值），未确认项标【待确认】、无证据项标【未验证】。不允许静默跳过。
+
+**生效范围**：
+
+| Mode | 门控行为 |
+|:-----|:---------|
+| `quick` | 强制执行；仅可按上方 Explicit-Skip Protocol 豁免 |
+| `full`（默认） | 默认生效；使用 Fast Track 跳过前置阶段时可一并跳过 |
+
+---
+
 ## 示例：工作流执行轨迹
 
 ```json
@@ -478,7 +538,7 @@ validation_gates:
   "execution_trace": [
     {
       "stage": "S1",
-      "skill": "market-intelligence",
+      "skill": "market-research",
       "started_at": "2026-03-17T10:00:00Z",
       "completed_at": "2026-03-17T10:05:00Z",
       "outputs": ["market-analysis.json"]
@@ -492,7 +552,7 @@ validation_gates:
     },
     {
       "stage": "S2",
-      "skill": "product-positioning",
+      "skill": "product-strategy",
       "started_at": "2026-03-17T10:15:00Z",
       "completed_at": "2026-03-17T10:20:00Z",
       "outputs": ["positioning.md"]
@@ -506,14 +566,14 @@ validation_gates:
     },
     {
       "stage": "S4",
-      "skill": "requirement-review",
+      "skill": "prd-gen",
       "started_at": "2026-03-17T10:35:00Z",
       "completed_at": "2026-03-17T10:45:00Z",
       "outputs": ["review-notes.md"]
     },
     {
       "stage": "S5",
-      "skill": "impact-analysis",
+      "skill": "retrospective",
       "started_at": "2026-03-17T10:50:00Z",
       "completed_at": "2026-03-17T11:00:00Z",
       "outputs": ["impact-analysis.json"]
