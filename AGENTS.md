@@ -12,7 +12,7 @@ The system features a **3-layer core (Perception → Strategy → Design) + Vali
 
 **Portability (v1.1.0+)**: the `skills/` layer is self-sufficient — `npx skills add` (any agent: codex, cursor, copilot…) installs all 12 skills with full capability (routing, evidence discipline, execution profiles included). The Claude Code marketplace plugin adds host-specific enhancements on top: 6 subagents (isolated execution, model tiering) and 4 slash commands (quick entry, incl. the `/ompm` shim). Skill bodies must not hard-code host-specific tool names (e.g. `AskUserQuestion`, `mcp__*`) except inside "e.g. on Claude Code…" example phrasing.
 
-Current plugin version: **1.2.0** (see `.claude-plugin/plugin.json` — the single version source). See `docs/planning/roadmap.md` and `CHANGELOG.md` for version history.
+Current plugin version: **1.3.0** (see `.claude-plugin/plugin.json` — the single version source). See `docs/planning/roadmap.md` and `CHANGELOG.md` for version history.
 
 ## Commands
 
@@ -195,6 +195,7 @@ Memory enables cross-session learning without polluting main conversation contex
 - **Language policy (dual-track, v1.1.0+)**: `description` fields are user-facing triggers — Chinese-first (our users) **plus an `Also triggers on: …` English phrase suffix** for international routing. Bodies mix Chinese and English: prose follows the user's language (Chinese), while structural tokens (frontmatter keys, layer names, stage IDs, filenames, framework names like RICE/HARD GATE) stay in English and must match across files verbatim. `README.md` (English) and `README-CN.md` (Chinese) are maintained as a synced pair with cross-links; `docs/` is Chinese-first.
 - Every `skills/<name>/SKILL.md` starts with YAML frontmatter. Required fields: `name` (must equal the directory name), `description` (includes natural-language trigger phrases), `layer` (one of `perception`, `strategy`, `design`, `delivery`, `validation`, `workflow`). Workflow skills additionally declare `input-from` / `output-to` for context routing. **SKILL.md files do not carry a `version` field** — plugin.json is the only version source (see Versioning & Commits).
 - Each skill must be **standalone-installable**: inline any shared rules it needs instead of referencing files outside its directory. Skill bodies must not hard-code host-specific tool names (e.g. `AskUserQuestion`, `mcp__*`) as direct instructions — describe the capability first ("ask the user via the host's structured-question tool"), with host names only in "e.g. on Claude Code…" example phrasing.
+- **Lazy loading (v1.3.0+)**: keep flow, gates, and discipline in `SKILL.md`; move bulky output templates and reference material into `references/` **inside the same skill directory** (installed together, so standalone-installability is preserved), and point to them with one-line "read `references/x.md` when generating Y" instructions. Reference: `skills/prd-gen/references/`.
 
 ### Adding a New Skill
 

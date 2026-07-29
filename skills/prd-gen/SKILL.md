@@ -168,89 +168,7 @@ Present chapter selection to the user as a structured multi-select question. If 
 
 ### TUI 环境下的图片处理指南
 
-在终端 (TUI) 环境下，用户可以通过以下方式提供图片：
-
-#### 方式一：本地文件路径（最简单）
-
-直接提供图片的本地路径，使用 Read 工具读取：
-
-```bash
-# 用户对话示例
-"分析这个 UI 截图: /Users/fh/Desktop/screenshot.png"
-"当前界面: ~/Screenshots/ui-2025-03-12.png"
-"参考图片: ./docs/product/images/reference.png"
-```
-
-**支持的路径格式：**
-- 绝对路径: `/Users/fh/Desktop/screenshot.png`
-- 家目录缩写: `~/Screenshots/ui.png`
-- 相对路径: `./images/ui.png`
-
-**支持的图片格式：** PNG, JPG, JPEG, WebP, GIF
-
-#### 方式二：在线图片 URL
-
-用户将图片上传到图床/云存储后提供 URL：
-
-```bash
-# 用户对话示例
-"UI 截图: https://i.imgur.com/xyz.png"
-"参考图: https://s3.aws.com/bucket/screenshot.png"
-```
-
-使用宿主可用的图片理解能力读取远程图片（Claude Code 中为 `mcp__4_5v_mcp__analyze_image` / `mcp__zai-mcp-server__ui_to_artifact` 等 MCP 工具；其他宿主用自带读图能力）。
-
-**推荐图床：**
-- imgur.com (免费，无需注册)
-- GitHub (作为 issue 附件)
-- 云存储 (AWS S3, 阿里云 OSS)
-
-#### 方式三：终端截图命令
-
-引导用户使用终端截图工具快速生成截图：
-
-**macOS:**
-```bash
-# 截取选定区域（交互式）
-screencapture -i ~/screenshot.png
-
-# 截取整个窗口
-screencapture -w ~/screenshot.png
-
-# 截取整个屏幕
-screencapture ~/screenshot.png
-```
-
-**Linux:**
-```bash
-# ImageMagick (需先安装: sudo apt install imagemagick)
-import ~/screenshot.png
-
-# gnome-screenshot (Ubuntu/GNOME)
-gnome-screenshot -a -f ~/screenshot.png
-
-#spectacle (KDE)
-spectacle -r -o ~/screenshot.png
-```
-
-#### 方式四：粘贴板直接获取（macOS）
-
-```bash
-# 安装 pngpaste 工具
-brew install pngpaste
-
-# 将粘贴板的图片保存为文件
-pngpaste ~/screenshot.png
-```
-
-#### 处理流程
-
-当用户提供图片后：
-
-1. **本地路径** → 使用 `Read` 工具直接读取
-2. **远程 URL** → 使用宿主可用的图片理解能力读取（Claude Code 中为 `mcp__4_5v_mcp__analyze_image` / `mcp__zai-mcp-server__ui_to_artifact` 等 MCP 工具；其他宿主用自带读图能力）
-3. **分析图片内容** → 提取 UI 结构、布局、交互元素
-4. **生成 PRD** → 基于图片分析结果生成需求文档
+TUI 环境下用户提供图片的完整处理方式（本地文件路径、在线图片 URL、终端截图命令、macOS 剪贴板获取）见 `references/image-input.md`（本 skill 目录下），用户提供图片时按需读取。
 
 ### Industry Benchmark Check
 
@@ -308,224 +226,19 @@ Before generating PRD content, note:
 1. **缺失信息标记【待确认】**：任何无法从输入或上下文获得的信息，标记为【待确认】，不得脑补填默认值。
 2. **证据追溯【未验证】**：用户需求/市场断言必须追问证据来源；无证据的标记为【未验证】并注明所需验证方式。
 3. **完整度检查门**：正式输出交付物前，先输出信息完整度清单（已确认 ✅ / 待确认 ⚠️ / 未验证 ❓），经用户确认后才生成正文。清单按**逐章节就绪度**判断：信息不足的章节在清单中标注原因（缺什么信息）并暂缓生成，信息充足的章节正常生成——按就绪度分别生成，而非全有或全无。
+4. **可追溯**：正式输出中的关键结论必须能追溯到以下来源之一：已确认的用户输入、引用的证据（含 URL）、或用户的显式决策；无法追溯的结论视为脑补，删除或改标【待确认】。
 
 **与 Explicit-Skip Protocol（Step 0.5）的关系**: 证据纪律是输出纪律（信息标注与交付前自查），Explicit-Skip 是交互纪律（用户显式拒绝交互时的降级处理），两者互补不冲突。Explicit-Skip 场景下完整度清单不免除 — 与「假设声明」合并输出，但不再等待用户确认；假设声明中的未确认信息同样按本节规则标注【待确认】/【未验证】。
 
 ## Output Structure
 
-The PRD follows this structure (aligned with standard PRD template). **IMPORTANT: This template shows all possible chapters. Generate ONLY the chapters selected by the user. Skip unselected chapters entirely. Do NOT generate technical architecture, API specifications, or database designs under any circumstances.**
+生成 PRD 正文时，读取 `references/prd-template.md`（本 skill 目录下）获取完整 PRD 模板（文档基本信息、修订记录、第 0-9 章、附录与尾部「预审记录」节）；章节写作细则（如第 3.2 节用户故事格式）见 `references/chapter-guide.md`。
 
-```markdown
-# [Feature Name] PRD
-
-## 文档基本信息
-- **文档版本**: v1.0
-- **创建日期**: YYYY-MM-DD
-- **最后更新**: YYYY-MM-DD
-- **文档状态**: Draft/Review/Approved
-- **创建人**: [用户名]
-- **审阅人**: [待定]
-
-## 修订记录
-| 版本 | 日期 | 修订内容 | 修订人 |
-|:-----|:-----|:---------|:-------|
-| v1.0 | YYYY-MM-DD | 初始版本 | [创建人] |
-
-## 0. 行业对标分析
-### 0.1 参考产品
-| 产品 | 关键功能 | 采纳/差异化 |
-|:-----|:---------|:-----------|
-| [竞品A] | XXX | 采纳其 XXX 模式，因为... |
-| [竞品B] | XXX | 差异化点在于... |
-
-### 0.2 最佳实践总结
-- **交互模式**: [采用的行业标准交互模式]
-- **核心差异化**: [本方案的独特之处]
-
-## 1. 项目概述
-### 1.1 项目背景
-[市场背景、竞争背景、用户需求背景]
-
-### 1.2 项目目标
-#### 1.2.1 核心目标
-- [可量化的核心目标]
-
-#### 1.2.2 次要目标
-- [支撑性目标]
-
-### 1.3 项目范围
-#### 1.3.1 包含范围
-- [本次迭代/功能包含的内容]
-
-#### 1.3.2 不包含范围
-- [明确不在本次范围内的事项]
-
-## 2. 业务分析
-### 2.1 目标用户
-| 用户角色 | 描述 | 核心需求 |
-|:---------|:-----|:---------|
-| 用户A | [来自用户研究] | XXX |
-| 用户B | [来自用户研究] | XXX |
-
-### 2.2 用户痛点
-| 痛点ID | 痛点描述 | 影响程度 |
-|:-------|:---------|:---------|
-| P-001 | XXX | 高/中/低 |
-| P-002 | XXX | 高/中/低 |
-
-### 2.3 市场分析
-[行业趋势、竞争格局、市场机会点]
-
-## 3. 功能需求
-### 3.1 核心功能列表
-| 功能ID | 功能名称 | 优先级 | 描述 |
-|:-------|:---------|:-------|:-----|
-| F-001 | XXX | P0/P1/P2 | XXX |
-| F-002 | XXX | P0/P1/P2 | XXX |
-
-### 3.2 用户故事
-#### US-1: [功能名称]
-**作为** [用户角色]
-**我希望** [功能描述]
-**以便** [业务价值]
-
-**验收标准**:
-- Given [前置条件]
-- When [执行操作]
-- Then [预期结果]
-
-**优先级**: P0/P1/P2
-**估算**: X Story Points
-
-#### US-2: [功能名称]
-...
-
-### 3.3 功能详情
-#### F-001: [功能名称]
-**描述**: [详细功能描述]
-
-**交互流程**:
-1. 步骤一
-2. 步骤二
-3. 步骤三
-
-**边界情况**:
-- 正常流程: ...
-- 异常情况: ...
-
-## 4. 非功能性需求
-### 4.1 性能需求
-- 页面响应时间 < XXXms
-- 支持 XXX 并发用户
-### 4.2 安全需求
-- 数据加密存储
-- 用户权限控制
-### 4.3 可用性需求
-- 系统可用性 > 99.9%
-### 4.4 兼容性需求
-- iOS 14+, Android 10+
-- 主流浏览器兼容
-
-## 5. 用户体验流程
-### 5.1 用户旅程
-[关键用户路径描述]
-1. 用户进入 → 2. 执行操作 → 3. 达成目标
-
-### 5.2 页面流程图
-[页面跳转关系说明]
-- 页面A → 页面B → 页面C
-
-## 6. 项目风险与应对
-> 注：本节仅包含产品/业务风险，不包含技术实现风险（技术风险由开发团队在技术方案中评估）
-| 风险ID | 风险描述 | 概率 | 影响 | 应对措施 |
-|:-------|:---------|:-----|:-----|:---------|
-| R-001 | XXX | 高/中/低 | 高/中/低 | XXX |
-| R-002 | XXX | 高/中/低 | 高/中/低 | XXX |
-
-## 7. 合规建议
-
-### 7.1 合规要点概述
-[合规专家审查的关键要点摘要]
-
-### 7.2 风险提示
-| 风险类别 | 说明 | 建议 |
-|:---------|:-----|:-----|
-| 隐私合规 | [涉及用户数据的处理方式] | [合规建议] |
-| 内容合规 | [涉及的内容审核要点] | [合规建议] |
-| 数据安全 | [数据存储和传输要求] | [合规建议] |
-| 第三方合规 | [依赖的第三方服务合规性] | [合规建议] |
-
-### 7.3 合规报告附件
-- [ ] 合规分析报告已附 (如果有，提供路径)
-- [ ] 等待合规审查 (如需要，安排合规专家评审)
-
-**备注**: 本章为 prd-gen 自包含的合规自查——按 7.1/7.2 逐项确认产品涉及的数据类型对应的法规要求与第三方服务合规性；涉及强监管领域（金融、医疗、未成年人等）时，先安排合规专家评审再定稿。
-
-## 8. 原型设计
-### 8.1 原型链接
-- **HTML**: [本地路径]
-- 待生成...
-
-### 8.2 设计说明
-- **设计参考**: [来源]
-- **设计风格**: [描述]
-
-## 9. 成功指标
-### 9.1 北极星指标
-- [核心业务指标]: 目标值
-
-### 9.2 过程指标
-| 指标名称 | 基线值 | 目标值 | 测量方式 |
-|:---------|:-------|:-------|:---------|
-| XXX | 0 | 100 | 事件统计 |
-| XXX | 0 | 100 | 用户行为分析 |
-
-### 9.3 结果指标
-| 指标名称 | 基线值 | 目标值 | 测量方式 |
-|:---------|:-------|:-------|:---------|
-| XXX | 0 | 100 | 数据分析 |
-| XXX | 0 | 100 | 业务报表 |
-
-## 附录
-- 参考文档: [链接]
-- 竞品分析: [链接]
-
-## 预审记录
-
-> 本节由「PRD 预审尾门」自动生成，记录 PM 自审结果，不属于章节选择范围，不代表干系人已评审通过。
-
-### 自审问题清单
-| 问题 | 严重度 | 所在章节 | 处理方式 |
-|:-----|:-------|:---------|:---------|
-| XXX | 阻塞/非阻塞 | 第X章 | 已修复 / 【待确认】: 说明 |
-
-### 干系人视角挑战
-| 视角 | 问题 | 回答 |
-|:-----|:-----|:-----|
-| 工程 | XXX | 答案 / 【待确认】 |
-| 设计 | XXX | 答案 / 【待确认】 |
-| 业务 | XXX | 答案 / 【待确认】 |
-```
+**IMPORTANT: The template shows all possible chapters. Generate ONLY the chapters selected by the user. Skip unselected chapters entirely. Do NOT generate technical architecture, API specifications, or database designs under any circumstances.**
 
 ## User Story Format
 
-Each user story follows this template:
-
-```
-US-{NN}: [Brief feature description]
-
-As a [user role]
-I want [feature description]
-So that [business value]
-
-**Acceptance Criteria**:
-- Given [precondition]
-- When [I do X]
-- Then [expected outcome]
-
-**Priority**: P0/P1/P2
-**Estimate**: X story points
-```
+用户故事的完整格式模板（US 编号、"作为...我希望...以便..." 结构、Given/When/Then 验收标准、优先级与估算）见 `references/chapter-guide.md`（本 skill 目录下），生成第 3.2 节时读取。
 
 ## Quality Standards
 
@@ -607,7 +320,7 @@ Before delivering, the PRD should include:
 
 ### 3. 预审记录（附加到 PRD 尾部）
 
-自审与挑战结果写入 PRD 尾部的「预审记录」一节（格式见 Output Structure 模板末尾）。该节**不属于章节选择范围，始终生成**，并声明：本记录为 PM 自审结果，不代表干系人已评审通过。
+自审与挑战结果写入 PRD 尾部的「预审记录」一节（格式见 `references/prd-template.md` 模板末尾）。该节**不属于章节选择范围，始终生成**，并声明：本记录为 PM 自审结果，不代表干系人已评审通过。
 
 ### 4. 交付条件 (Exit Criteria)
 

@@ -5,6 +5,19 @@ All notable changes to Oh-My-PM will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-07-28
+
+P2 吸收收尾：模板懒加载 + 新手引导 + 可追溯规则。
+
+### Added
+- **ompm 新手引导模式**："新手/新手入门/第一次用"或首次使用（docs/product 无产物）时输出教程（能交付什么/怎么工作/怎么开始）并立即接续首次实战，路由链路更新为 help → 直派 → 新手引导 → 模式 B → 意图路由 → 空对话引导
+- **证据纪律第 4 条「可追溯」**：关键结论必须能追溯到已确认输入、引用证据或用户显式决策，否则视为脑补——5 个产出型 skill 逐字内联
+- clarify-requirements Step 1.5 问题体检新增第三类陷阱：逻辑错误（相关当因果/幸存者偏差）
+- evals codex 路径实测通过（`EVAL_CLI=codex`）；eval 断言跨宿主措辞容差加固（feature-launch 时间线记法、full-pm-cycle 阶段名中英兼容）
+
+### Changed
+- **prd-gen 模板懒加载**：SKILL.md 662 → 375 行，PRD 模板/用户故事格式/图片输入指南拆至 `skills/prd-gen/references/`（随 skill 目录整体安装，standalone 性保持）；该模式已写入 AGENTS.md 约定
+
 ## [1.2.0] - 2026-07-28
 
 对标吸收版本：融合 product-manager-workflow 的访谈工艺与 dbskill 的路由交互（差距清单见 `docs/planning/reference-repo-comparison.md`）。

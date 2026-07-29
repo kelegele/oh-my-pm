@@ -1,13 +1,24 @@
-# 完整周期：full-pm-cycle 的阶段表固定为五层
-# （需求感知/策略规划/方案设计/交付协调/价值验证），
-# 任何忠实的整体规划输出都会包含这五个层名。
+# 完整周期：full-pm-cycle 的阶段框架为 S1-S5 五段
+# （感知/策略/设计/交付/验证），忠实规划输出会覆盖全部五段。
+# 每层断言做中英文容差（Perception/Strategy/Design/Delivery/Validation）。
 name: 完整周期五层阶段齐全
 prompt: |
   为一款面向大学生的记账 App 跑一遍完整的产品管理周期（full-pm-cycle），
   先给出整体阶段规划。
-assert_must_contain:
+assert_must_contain_any:
   - 感知
+  - Perception
+assert_must_contain_any:
   - 策略
+  - Strategy
+assert_must_contain_any:
   - 设计
+  - Design
+assert_must_contain_any:
   - 交付
+  - Delivery
+  - 发布
+assert_must_contain_any:
   - 验证
+  - Validation
+  - 复盘
