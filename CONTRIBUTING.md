@@ -186,10 +186,12 @@ bash evals/run-evals.sh [skill-name]
 
 ## 发布流程
 
-1. 更新版本号
-2. 更新 CHANGELOG.md
-3. 创建 git tag
-4. 推送到 main
+1. 全部检查通过：`bash tests/test-skills.sh`（15 passed）+ `bash evals/run-evals.sh --check`；改动了 skill 正文时跑对应行为 evals
+2. 更新版本号：`.claude-plugin/plugin.json`（唯一版本源）+ `skills.yaml` / `agents.yaml` / `marketplace.json` 三个清单同步 + AGENTS.md 头部
+3. 更新 CHANGELOG.md
+4. 提交并推送到 main
+5. 打 tag：`git tag -a v<x.y.z> -m "…"` + `git push origin v<x.y.z>`
+6. 发 GitHub Release：`gh release create v<x.y.z>`，notes 取自 CHANGELOG——每个版本都要有 Release
 
 ## 许可证
 

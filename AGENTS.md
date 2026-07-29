@@ -236,6 +236,14 @@ Skills are triggered by natural language in Claude Code or Codex — test behavi
 - Breaking changes bump major, new features bump minor, bug fixes bump patch.
 - Record notable changes in `CHANGELOG.md` (Keep a Changelog format).
 
+### Release Process (established at v1.3.0 — keep this rhythm)
+
+1. All checks green: `bash tests/test-skills.sh` (15 passed) + `bash evals/run-evals.sh --check`; run behavioral evals on affected skills when their bodies changed.
+2. Bump version in the 4 manifests + AGENTS.md, add CHANGELOG entry.
+3. Commit and push to `main`.
+4. `git tag -a v<x.y.z> -m "…"` and `git push origin v<x.y.z>`.
+5. `gh release create v<x.y.z> --title "v<x.y.z> - <name>" --notes <from CHANGELOG>` — every version gets a GitHub Release.
+
 ## Security Considerations
 
 - The repo contains no application code and no secrets; the risk surface is **prompt content**. Never commit API keys, tokens, or user data into skills, agent definitions, or `docs/product/` outputs.
