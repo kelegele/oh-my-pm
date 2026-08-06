@@ -1,27 +1,35 @@
 ---
 name: feature-launch
-description: '编排从 PRD 到上线后分析的完整功能发布工作流。采用 Plan-and-Execute 模式，包含完整的阶段定义、状态追踪和质量门控。当准备发布功能、协调功能发布，或用户说"发布这个功能"、"功能发布计划"、"从 PRD 到上线"时使用。 Also triggers on: launch this feature, feature launch plan, from PRD to launch.'
+description: '从 PRD 到上线后分析的功能发布物料与编排。核心是一套发布物料库——发布策略选型、灰度放量、回滚计划、上线后监控基线、分阶段 checklist（见 references/launch-playbook.md）；另提供可选的 Plan-and-Execute 编排（PRD 定稿→发布→复盘）。当准备发布功能、协调功能发布，或用户说"发布这个功能"、"功能发布计划"、"从 PRD 到上线"、"灰度计划"、"回滚方案"、"上线 checklist"、"发布策略"时使用。 Also triggers on: launch this feature, feature launch plan, from PRD to launch, release checklist, rollout plan, rollback plan.'
 layer: workflow
 input-from: prd-gen
 output-to: retrospective
 ---
 
-# Feature Launch Workflow
+# Feature Launch
 
-完整的从 PRD 到上线后分析的功能发布工作流，采用 **Plan-and-Execute 模式**。
+从 PRD 到上线后分析的功能发布：**物料库为主，Plan-and-Execute 编排为可选骨架**。
 
 ## What This Workflow Does
 
-Orchestrates end-to-end feature launch process spanning:
-- **Design**: PRD finalization, prototype validation
-- **Delivery**: PRD 预审尾门（prd-gen）、发布策略与上线 checklist（本工作流内置）
-- **Validation**: Retrospective (impact + next iteration), feedback synthesis
+两类能力，按需取用：
+
+1. **发布物料库**（核心价值）—— 发布策略选型、灰度放量计划、回滚计划、上线后监控基线、分阶段 checklist、风险管理。PM 每次发布都要现编、又易漏的东西。
+   - **read `references/launch-playbook.md`** when planning a release（定类型、选策略、画灰度、备回滚、设监控、过 checklist）。
+
+2. **可选 Plan-and-Execute 编排** —— 当你要走完整的"PRD 定稿 → 发布 → 复盘"四阶段流水线时，按下文骨架执行（带状态追踪与质量门控）。**轻量发布可跳过编排，直接取用物料库。**
 
 ---
 
-## Workflow Architecture
+## Workflow Architecture（可选骨架）
 
-本工作流采用 **Plan-and-Execute 模式**组织，确保完整的阶段定义、状态追踪和质量门控。
+> ⚠️ 下面的四阶段编排是**可选**的。多数发布只需 read `references/launch-playbook.md` 取用对应物料；只有需要完整阶段定义、状态追踪和质量门控的全流程协调时，才走这条骨架。
+
+本编排采用 **Plan-and-Execute 模式**，Spans:
+
+- **Design**: PRD finalization, prototype validation
+- **Delivery**: PRD 预审尾门（prd-gen）、发布策略与上线 checklist（read `references/launch-playbook.md`）
+- **Validation**: Retrospective (impact + next iteration), feedback synthesis
 
 ### 五层对应阶段
 
@@ -38,9 +46,9 @@ Orchestrates end-to-end feature launch process spanning:
 
 | Stage ID | 名称 | 质量门控 | 下阶段 |
 |:---------|:-----|:---------|:----------|
-| S0 | Setup | - | S1 | Design |
-| S1 | Design | PRD 定稿 + 原型验证 | S2 | Delivery |
-| S2 | Delivery | 发布完成 | S3 | Validation |
+| S0 | Setup | - | S1 |
+| S1 | Design | PRD 定稿 + 原型验证 | S2 |
+| S2 | Delivery | 发布完成 | S3 |
 | S3 | Validation | 效果评估 | 完成 |
 
 **阶段执行顺序**：S0 → S1 → S2 → S3
@@ -84,8 +92,6 @@ Orchestrates end-to-end feature launch process spanning:
 **质量门控**：
 - ✅ PRD 完整（9 章）
 - ✅ 原型已验证
-
-
 - **质量门控通过** - 进入 Delivery 阶段
 
 **状态更新**：
@@ -111,11 +117,11 @@ Orchestrates end-to-end feature launch process spanning:
 
 **活动**：
 1. PRD 预审尾门 - `prd-gen` skill 的预审尾门（需求评审、干系人对齐）
-2. 发布计划 - 本工作流内置的发布策略与 checklist（任务分解、时间线、上线检查项，见下文 Launch Strategies 与 Release Checklist）
+2. 发布计划 - **read `references/launch-playbook.md`** 取用发布策略选型、灰度放量、回滚、监控基线与分阶段 checklist，制定发布计划
 
 **技能调用**：
 - Step 2.1: 运行 prd-gen 预审尾门，完成需求评审与干系人对齐
-- Step 2.2: 执行本工作流的发布策略与 checklist，制定发布计划
+- Step 2.2: 按 launch-playbook 物料制定发布计划（任务分解、时间线、上线检查项）
 
 **输出**：
 - `docs/product/review-notes/[feature]-review.md`
@@ -282,161 +288,6 @@ validation_gates:
 
 ---
 
-## Stage Details
-
-### Stage 1: Design Finalization (T-4 to T-3 weeks)
-
-**Checklist**:
-- [ ] PRD 包括所有完整章节
-- [ ] 成功指标定义且可测量
-- [ ] 边界情况已识别
-- [ ] 原型已创建并审查
-- [ ] 用户测试完成（如适用）
-
-**Decision Points**:
-- 功能范围确认？
-- 时间线现实吗？
-- 资源可用吗？
-
-**Stage Output**: 准备评审的 PRD + 已验证的原型
-
-### Stage 2: Preparation (T-3 to T-1 weeks)
-
-**PRD 预审尾门（prd-gen）**:
-1. 提前 48 小时分发 PRD 和原型
-2. 走查需求
-3. 讨论关注点和边界情况
-4. 记录决策
-5. 获得签字
-
-**发布计划（本工作流内置）**:
-1. 分解为任务
-2. 分配负责人和估算
-3. 识别依赖
-4. 规划风险
-5. 建立状态报告
-
-**Checklist**:
-- [ ] 干系人受邀参加预审
-- [ ] 发布计划包含任务和负责人
-- [ ] 风险登记册已创建
-- [ ] 沟通计划已准备
-
-**Stage Output**: 已批准的需求 + 发布计划
-
-### Stage 3: Release (T-1 week to T+1 day)
-
-**Pre-Release Checklist (T-7 to T-1 days)**:
-
-工程：
-- [ ] 代码完成并审查，测试通过（unit / integration / e2e）
-- [ ] 无未解决的关键 bug；性能测试与安全审查完成
-- [ ] 数据库迁移与回滚方案已准备
-
-质量：
-- [ ] QA 测试完成，验收标准全部满足
-- [ ] 边界情况、兼容性、无障碍已验证
-
-产品：
-- [ ] PRD 需求逐条验证，成功指标与埋点已就绪
-- [ ] 功能开关（feature flag）已配置（如采用）
-
-文档与沟通：
-- [ ] 发布说明已起草，用户 / API 文档已更新
-- [ ] 公告与应用内通知已准备
-- [ ] 支持团队已简报，销售 / 客服与干系人已同步
-
-合规（如适用）：
-- [ ] 隐私与合规审查完成
-
-**Release Day (T-day)**:
-- [ ] 部署到预发布，冒烟测试
-- [ ] 部署到生产
-- [ ] 生产环境冒烟测试
-- [ ] 启用功能（或按灰度放量计划逐步放量）
-- [ ] 密切监控指标（对照上线后 24 小时监控基线）
-- [ ] 准备回滚（对照回滚计划）
-
-**Post-Release (T+1 day)**:
-- [ ] 验证所有系统
-- [ ] 发送公告
-- [ ] 监控支持渠道
-- [ ] 检查指标
-
-**Stage Output**: 功能上线且稳定
-
-### Stage 4: Validation (T+1 to T+14 days)
-
-**Immediate (T+1 to T+7 days)**:
-- 监控错误率和性能
-- 跟踪采用指标
-- 快速响应问题
-- 收集初始反馈
-
-**Analysis (T+7 to T+14 days)**:
-- 对比成功指标
-- 分析用户反馈
-- 识别改进点
-- 记录学习
-
-**Checklist**:
-- [ ] 复盘完成（效果分析 + 迭代建议）
-- [ ] 反馈已综合
-- [ ] 成功/失败已确定
-- [ ] 后续步骤已识别
-
-**Stage Output**: 复盘报告 + 建议
-
----
-
-## Launch Strategies
-
-| Strategy | When to Use | Pros | Cons |
-|:---|:---|:---|:---|
-| **Big Bang** | 小改动、低风险 | 简单、信息清晰 | 风险高、回滚困难 |
-| **Phased Rollout** | 大功能、高风险 | 可控、早期学习 | 完整上线时间长 |
-| **Feature Flag** | 非常风险、复杂 | 瞬间回滚 | 基础设施复杂 |
-| **Beta Release** | 需验证、反馈 | 早期获得反馈 | 信息泄露、支持负担 |
-
-### 灰度放量计划（Phased Rollout / Feature Flag）
-
-采用 Phased Rollout 或 Feature Flag 时，按阶段放量，每阶段设观察期与放量条件：
-
-| 阶段 | 范围 | 观察期 | 放量条件 | 状态 |
-|:-----|:-----|:-------|:---------|:-----|
-| 1 | 内部用户 / 白名单 | 1 天 | 无 P0 问题、核心指标无异常 | ⏳ |
-| 2 | 5%–10% 目标用户 | 1–3 天 | 错误率低于阈值、无集中负面反馈 | ⏳ |
-| 3 | 50% | 2–3 天 | 指标稳定 | ⏳ |
-| 4 | 100% 全量 | — | — | ⏳ |
-
-### 回滚计划
-
-| 触发条件 | 动作 | 负责人 |
-|:---------|:-----|:-------|
-| 发现关键 bug | 回滚到上一版本 / 关闭 feature flag | DevOps |
-| 错误率超阈值（如 > 5%） | 回滚并排查 | DevOps |
-| 性能劣化 | 回滚或扩容 | DevOps |
-
-### 上线后 24 小时监控基线
-
-| 指标 | 目标 | 告警阈值 | 负责人 |
-|:-----|:-----|:---------|:-------|
-| 错误率 | < 0.5% | > 1% | 工程 |
-| 延迟 (p95) | < 500ms | > 1s | 工程 |
-| 核心转化 | 不低于基线 | 下跌 > 10% | PM |
-| 支持工单 | 正常水位 | > 2 倍基线 | 支持 |
-
-### 发布类型与准备周期
-
-| 类型 | 说明 | 准备时间 | 风险级别 |
-|:-----|:-----|:---------|:---------|
-| **Hotfix** | 紧急生产修复 | 数小时 | 高 |
-| **Patch** | 仅缺陷修复 | 数天 | 低 |
-| **Minor** | 新功能、向后兼容 | 1–2 周 | 中 |
-| **Major** | 破坏性变更、重大功能 | 1–2 月 | 高 |
-
----
-
 ## Output Structure
 
 ### Final Deliverables
@@ -457,20 +308,6 @@ validation_gates:
    - 反馈综合
    - 经验总结
    - 建议
-
----
-
-## Risk Management
-
-常见发布风险和缓解措施：
-
-| Risk | Probability | Impact | Mitigation |
-|:-----|:------------|:-------|:-----------|
-| Critical bug | Medium | High | 彻底 QA、回滚计划 |
-| Low adoption | High | High | 内部测试、营销推动 |
-| Performance issues | Low | High | 负载测试、渐进发布 |
-| Negative feedback | Medium | Medium | Beta 测试、支持准备 |
-| Scope creep | Medium | Medium | 严格变更流程 |
 
 ---
 
@@ -523,3 +360,9 @@ validation_gates:
   "updated_at": "2026-03-17T10:50:00Z"
 }
 ```
+
+---
+
+## 下一步
+
+本 skill 完成后，如果用户没有明确下一步，引导用户使用 ompm skill 做意图路由——它会读取本轮产出和当前状态，判断最有价值的下一步。不要替用户预设固定长链；output-to 声明的是数据流向，不是强制路径。

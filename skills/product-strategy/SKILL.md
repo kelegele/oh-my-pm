@@ -24,6 +24,18 @@ Define where to win, decide what to build, plan when to build it — 一条主�
 
 上游改动沿主线传导：定位变 → 权重变 → 排序变 → 排期变，三份交付物始终一致。
 
+### 分段触发模式
+
+三件套支持**分段独立请求**，不必每次都跑完整链路：
+
+| 请求 | 行为 |
+|:-----|:-----|
+| 只要定位（"我们如何定位 X"） | 产 `positioning.md`，推导战略权重留存备用 |
+| 只要排序（"给这个排优先级"/"用 RICE 排一下"） | **若已有 `positioning.md`，复用其战略权重校准**；否则先补定位主轴再排序 |
+| 只要路线图（"创建路线图"/"下季度路线图"） | **若已有 `prioritization.json`，按其 rank 映射**；否则先补排序再排期 |
+
+完整链路（定位→排序→路线图）仍是默认推荐——一次成稿保证三份交付物一致；但轻量场景允许只产出被请求的那一份，已有的上游产物作为权重/排序来源自动复用。
+
 ## When to Use
 
 Activate this skill when:
@@ -156,7 +168,7 @@ RICE = (Reach × Impact × Confidence) / Effort
 
 ## Output Structure
 
-一次成稿产出三份交付物（**契约路径固定，下游按旧路径引用**）：
+完整链路产出三份交付物（**契约路径固定，下游按旧路径引用**）；分段模式只产被请求的那一份，已有上游产物自动复用：
 
 1. `docs/product/positioning.md` — 定位声明与战略权重
 2. `docs/product/.ompm/prioritization.json` — 机器可读的排序结果

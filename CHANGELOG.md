@@ -5,6 +5,16 @@ All notable changes to Oh-My-PM will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-08-07
+
+减负版本：策略可分段、发布物料库化，让轻量用户不再背重流程。
+
+### Changed
+- **product-strategy 分段触发**：定位 / 排序 / 路线图支持独立请求——已有 `positioning.md` 复用其战略权重排序，已有 `prioritization.json` 复用其 rank 排期；完整链路仍为默认推荐，轻量场景只产出被请求的那一份
+- **feature-launch 物料库懒加载**：发布策略选型、灰度放量、回滚、上线后监控基线、分阶段 checklist、风险管理拆至 `skills/feature-launch/references/launch-playbook.md`（随 skill 目录整体安装，standalone 性保持）；四阶段 Plan-and-Execute 编排降级为**可选骨架**（轻量发布直接取用物料库）
+- ompm 能力图「我要发版」描述同步更新（物料库 + 可选编排）；导航地图不变
+- feature-launch 正文顺带修正 Workflow Stages 表多列格式 bug
+
 ## [1.3.0] - 2026-07-28
 
 P2 吸收收尾：模板懒加载 + 新手引导 + 可追溯规则。

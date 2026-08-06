@@ -12,7 +12,7 @@ The system features a **3-layer core (Perception → Strategy → Design) + Vali
 
 **Portability (v1.1.0+)**: the `skills/` layer is self-sufficient — `npx skills add` (any agent: codex, cursor, copilot…) installs all 12 skills with full capability (routing, evidence discipline, execution profiles included). The Claude Code marketplace plugin adds host-specific enhancements on top: 6 subagents (isolated execution, model tiering) and 4 slash commands (quick entry, incl. the `/ompm` shim). Skill bodies must not hard-code host-specific tool names (e.g. `AskUserQuestion`, `mcp__*`) except inside "e.g. on Claude Code…" example phrasing.
 
-Current plugin version: **1.3.0** (see `.claude-plugin/plugin.json` — the single version source). See `docs/planning/roadmap.md` and `CHANGELOG.md` for version history.
+Current plugin version: **1.4.0** (see `.claude-plugin/plugin.json` — the single version source). See `docs/planning/roadmap.md` and `CHANGELOG.md` for version history.
 
 ## Commands
 
@@ -158,7 +158,7 @@ Skills themselves do **not** support `/skill-name` explicit invocation — they 
 
 | Path | Purpose |
 |:-----|:--------|
-| `skills/*/SKILL.md` | Skill definitions (11 skills, flat directory structure) |
+| `skills/*/SKILL.md` | Skill definitions (12 skills, flat directory structure) |
 | `agents/*/*.md` | Subagent specifications (perception/ validation/ workflows/) |
 | `commands/*.md` | CLI command definitions |
 | `.claude-plugin/plugin.json` | Plugin manifest (Skills + Agents + Commands) — **canonical version source** |
